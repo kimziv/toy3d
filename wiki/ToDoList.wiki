@@ -1,0 +1,5 @@
+#summary One-sentence summary of this page.
+
+  * API 如何包装：宏、虚类、。。。
+  * code style
+  * CMake 管理代码
