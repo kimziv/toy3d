@@ -3,3 +3,4 @@
   * API 如何包装：宏、虚类、。。。
   * code style
   * CMake 管理代码
+  * Data / Renderer 。Data部分与 OpenGL 无关
