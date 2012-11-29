@@ -3,13 +3,19 @@
 = Introduction =
 
 文件名：Toy3dTexture.h Toy3dTexture.cpp
+
 类名： T3DTexture  T3DWorld
 
+{{{
+
 class T3DTexture {
+
     mWidth;
 
     load();
 };
+
+}}}
 
 = Details =
 
