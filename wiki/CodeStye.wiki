@@ -36,6 +36,31 @@ TOY3D_END_NAMESPACE
 
  * cpp 文件
 
+{{{
+
+#include "Toy3DWorld.h"
+
+TOY3D_BEGIN_NAMESPACE
+
+    World::World()
+    {
+
+    }
+
+    World::~World() 
+    {
+    }
+
+
+
+TOY3D_END_NAMESPACE
+
+
+
+}}}
+
+
+
 = Details =
 
 Add your content here.  Format your content with:
