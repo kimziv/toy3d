@@ -4,18 +4,36 @@
 
 文件名：Toy3dTexture.h Toy3dTexture.cpp
 
-类名： T3DTexture  T3DWorld
+类名： Texture  World
+
+ * 头文件：
+
+
 
 {{{
 
-class T3DTexture {
+#ifndef _TOY3D_WORLD_H
+#define _TOY3D_WORLD_H
 
-    mWidth;
 
-    load();
-};
+TOY3D_BEGIN_NAMESPACE
+
+    class Texture 
+    {
+
+        mWidth;
+
+        load();
+    };
 
 }}}
+
+TOY3D_END_NAMESPACE
+
+#endif
+
+
+ * cpp 文件
 
 = Details =
 
