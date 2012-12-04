@@ -26,12 +26,13 @@ TOY3D_BEGIN_NAMESPACE
         load();
     };
 
-}}}
+
 
 TOY3D_END_NAMESPACE
 
 #endif
 
+}}}
 
  * cpp 文件
 
