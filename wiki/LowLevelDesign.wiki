@@ -7,6 +7,32 @@ Add your content here.
 
 = ShaderProgram =
 
+{{{
+
+void World::startRendering ()
+{
+   //create AutoParamDataSource
+   AutoParamDataSource *source = new AutoParamDataSource ();
+   source->setProjectionMatrix();
+   source->setViewMatrix ();
+   
+   //update auto shader paramters
+   mShaderProgram->updateAutoParams (source);
+   delete source; 
+
+
+   //create Render operation
+   RenderOperation *ro = new RenderOperation ();
+   ro->setVertices (...);
+      
+   //draw scene
+   mRenderer->render(ro);
+   delete ro; 
+    
+}
+
+}}}
+
 Add your content here.  Format your content with:
   * Text in *bold* or _italic_
   * Headings, paragraphs, and lists
