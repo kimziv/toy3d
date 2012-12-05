@@ -12,6 +12,8 @@ void init ()
    paras->setNamedAutoConstant ("prjMat", AutoConstantType::T3D_PROJ_MAT);
    paras->setNamedAutoConstant ("viewMat",AutoConstantTyep::T3D_VEW_MAT);
    
+   ShaderProgram *shaderProgram = world->createShaderProgram();
+ 
    shaderProgram->bindProgramParameters(paras);
    
 }
@@ -31,7 +33,7 @@ void World::startRendering ()
    source->setViewMatrix ();
    
    //update auto shader paramters
-   mShaderProgram->updateAutoParams (source);
+   mShaderProgram->getParameters()->updateAutoParams (source);
    delete source; 
 
 
