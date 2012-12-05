@@ -5,7 +5,7 @@
 画四边形 rectangle.
 
 
-{{
+{{{
 
 World *world = NULL;
 
