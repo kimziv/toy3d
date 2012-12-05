@@ -20,8 +20,23 @@ void init ()
 
 }}}
 
+= Mesh =
 
-= ShaderProgram =
+{{{
+
+void setVertices (Real* vertices, int num)
+{
+    if (mVertices)
+        free (mVertices);
+
+    mVertices = (Real*)malloc (num * 3 * sizeof (Real));
+    memcpy (mVertices, vertices);
+    
+}
+
+}}}
+
+= Shader Program =
 
 {{{
 
