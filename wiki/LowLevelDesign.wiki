@@ -7,7 +7,14 @@
 
 {{{
 
+#define WINDOW_W   800
+#define WINDOW_H   480
+
+
 World *world = NULL;
+
+
+
 
 void init ()
 {
@@ -15,15 +22,32 @@ void init ()
    world = new World ();
 
 
+   //camera...
+   Camera *camera = world->createCamera ("camera1");
+   camera->lookAt (0.0, 0,0, 1.0, 0.0, 0,0, 0.0, 0.0, 1.0, 0.0);
+   camera->perspective (45.0, WINDOW_W/WINDOW_H, 1.0, 1000.0);
+
+
+
+   //shader...
+
    ShaderProgram *shaderProgram = world->createShaderProgram();
    shaderProgram->loadShaderSource ("rect.vert", "rect.frag");
 
-   ShaderProgramParameters *paras = new ShaderProgramParameters ();
-   paras->setNamedAutoConstant ("prjMat", );
-   paras->setNamedAutoConstant ("viewMat",AutoConstantTyep::T3D_VEW_MAT);
+   ShaderProgramParameters *params = new ShaderProgramParameters ();
+   paras->setNamedAutoConstant ("projMat", AutoConstantType::TOY3D_ACT_PROJECTION_MATRIX);
+
+   params->setNamedAutoConstant ("viewMat",AutoConstantType::TOY3D_ACT_VIEW_MATRIX);
+
+   params->setNamedAutoConstant ("worldMat",AutoConstantType::TOY3D_ACT_WORLD_MATRIX);
    
- 
-   shaderProgram->bindProgramParameters(paras);
+    
+   shaderProgram->bindShaderParameters(params);
+
+
+   //mesh...
+   
+      
    
 }
 
