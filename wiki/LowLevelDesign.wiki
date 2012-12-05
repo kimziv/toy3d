@@ -20,6 +20,26 @@ void init ()
 
 }}}
 
+
+= World =
+
+{{{
+
+class World 
+{
+    void startRendering();
+};
+
+void World::startRendering ()
+{
+    for (all mesh){
+        renderSystem->_render (mesh);
+    }
+}
+
+}}}
+
+
 = Mesh =
 
 {{{
