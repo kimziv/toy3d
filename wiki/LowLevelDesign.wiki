@@ -24,7 +24,21 @@ void init ()
 
 {{{
 
-void setVertices (Real* vertices, int num)
+class Mesh 
+{
+private:
+
+    Real *mVertices;
+
+public:
+    Mesh();
+    ~Mesh()
+
+    void setVertices (Real* vertices, int num);
+    RenderData *getRenderData ();
+};
+
+void Mesh::setVertices (Real* vertices, int num)
 {
     if (mVertices)
         free (mVertices);
@@ -33,6 +47,11 @@ void setVertices (Real* vertices, int num)
     memcpy (mVertices, vertices);
     
 }
+
+RenderData* Mesh::getRenderData ()
+{
+}
+
 
 }}}
 
