@@ -128,16 +128,16 @@ Camera* World::createCamera (char *name)
 }
 
 
-void World::startRendering ()
-{
-}
-
 
 void World::startRendering ()
 {
    //set AutoParamDataSource
-   mAutoParamDataSource.setProjectionMatrix(mCamera->getProjectionMatrix());
-   mAutoParamDataSource.setViewMatrix ();
+   
+   mAutoParamDataSource.setWorldMatrix (); //Fixme: where is world matrix value
+   mAutoParamDataSource.setViewMatrix (mCamera.getViewMatrix());
+   mAutoParamDataSource.setProjectionMatrix(mCamera.getProjectionMatrix());
+
+
    
    //update auto shader paramters
    mShaderProgram->getParameters()->updateAutoParams (source);
@@ -146,7 +146,7 @@ void World::startRendering ()
 
 
     for (int i = 0; i < mMeshCount; i++){
-        mRenderer.render(&mMesh[i]);
+        mRenderer.render(mMeshes[i]);
     }
 
 
