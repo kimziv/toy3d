@@ -40,11 +40,6 @@ int main ()
 
 }}}
 
-= Shader Program =
-
-
-
-
 
 = Common =
 
@@ -75,6 +70,33 @@ void World::startRendering ()
     for (all mesh){
         renderSystem->_render (mesh);
     }
+}
+
+}}}
+
+
+{{{
+
+void World::startRendering ()
+{
+   //create AutoParamDataSource
+   AutoParamDataSource *source = new AutoParamDataSource ();
+   source->setProjectionMatrix();
+   source->setViewMatrix ();
+   
+   //update auto shader paramters
+   mShaderProgram->getParameters()->updateAutoParams (source);
+   delete source; 
+
+
+   //create Render operation
+   RenderOperation *ro = new RenderOperation ();
+   ro->setVertices (...);
+      
+   //draw scene
+   mRenderer->render(ro);
+   delete ro; 
+    
 }
 
 }}}
@@ -117,31 +139,19 @@ RenderData* Mesh::getRenderData ()
 
 = Shader Program =
 
+
 {{{
 
-void World::startRendering ()
+enum AutoConstantType
 {
-   //create AutoParamDataSource
-   AutoParamDataSource *source = new AutoParamDataSource ();
-   source->setProjectionMatrix();
-   source->setViewMatrix ();
-   
-   //update auto shader paramters
-   mShaderProgram->getParameters()->updateAutoParams (source);
-   delete source; 
-
-
-   //create Render operation
-   RenderOperation *ro = new RenderOperation ();
-   ro->setVertices (...);
-      
-   //draw scene
-   mRenderer->render(ro);
-   delete ro; 
-    
+   TOY3D_ACT_WORLD_MATRIX,
+   TOY3D_ACT_VIEW_MATRIX,
+   TOY3D_ACT_PROJECTION_MATRIX, 
 }
 
+
 }}}
+
 
 Add your content here.  Format your content with:
   * Text in *bold* or _italic_
