@@ -2,17 +2,26 @@
 
 = sample code =
 
-Add your content here.
+画四边形 rectangle.
 
-{{{
+
+{{
+
+World *world = NULL;
 
 void init ()
 {
+
+   world = new World ();
+
+
+   ShaderProgram *shaderProgram = world->createShaderProgram();
+   shaderProgram->loadShaderSource ("rect.vert", "rect.frag");
+
    ShaderProgramParameters *paras = new ShaderProgramParameters ();
-   paras->setNamedAutoConstant ("prjMat", AutoConstantType::T3D_PROJ_MAT);
+   paras->setNamedAutoConstant ("prjMat", );
    paras->setNamedAutoConstant ("viewMat",AutoConstantTyep::T3D_VEW_MAT);
    
-   ShaderProgram *shaderProgram = world->createShaderProgram();
  
    shaderProgram->bindProgramParameters(paras);
    
@@ -22,7 +31,19 @@ void draw ()
 {
 }
 
+
+int main ()
+{
+    glutInit();
+}
+
+
 }}}
+
+= Shader Program =
+
+
+
 
 
 = Common =
