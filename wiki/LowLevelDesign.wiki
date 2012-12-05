@@ -201,7 +201,7 @@ enum AutoConstantType
 }
 
 
-}}}
+
 
 class ShaderProgramParams 
 {
@@ -242,6 +242,7 @@ void ShaderProgramParams::setNamedAutoConstant (AutoConstType type, char *name)
     }
 }
 
+}}}
 
 Add your content here.  Format your content with:
   * Text in *bold* or _italic_
