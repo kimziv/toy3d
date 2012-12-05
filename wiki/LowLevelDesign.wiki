@@ -18,8 +18,21 @@ void init ()
    
 }
 
+void draw ()
+{
+}
+
 }}}
 
+
+= Common =
+
+{{{
+
+typedef float Real;
+
+
+}}}
 
 = World =
 
