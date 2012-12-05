@@ -11,6 +11,15 @@
 #define WINDOW_H   480
 
 
+Real vertices[18] = {
+   1.0, 1.0, 1.0,
+   ...
+   ...
+};
+
+#define VERTEX_COUNT 6
+
+
 World *world = NULL;
 
 
@@ -46,8 +55,8 @@ void init ()
 
 
    //mesh...
-   
-      
+   Mesh *mesh = world->createMesh ();
+   mesh->setVertices (vertices, VERTEX_COUNT);
    
 }
 
@@ -70,11 +79,12 @@ int main ()
 {{{
 
 typedef float Real;
-
 typedef unsigned char uchar;
 typedef unsigned short ushort;
 typedef unsigned int uint;
 typedef unsigned long ulong;
+
+typedef signed int sint;
 
 
 
@@ -140,23 +150,21 @@ public:
     Mesh();
     ~Mesh()
 
-    void setVertices (Real* vertices, int num);
-    RenderData *getRenderData ();
+    void setVertices (Real* vertices, uint count);
+ 
 };
 
-void Mesh::setVertices (Real* vertices, int num)
+//count: vertex count
+void Mesh::setVertices (Real* vertices, int count)
 {
     if (mVertices)
         free (mVertices);
 
-    mVertices = (Real*)malloc (num * 3 * sizeof (Real));
+    mVertices = (Real*)malloc (count * 3 * sizeof (Real));
     memcpy (mVertices, vertices);
     
 }
 
-RenderData* Mesh::getRenderData ()
-{
-}
 
 
 }}}
