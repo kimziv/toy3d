@@ -4,6 +4,20 @@
 
 Add your content here.
 
+{{{
+
+void init ()
+{
+   ShaderProgramParameters *paras = new ShaderProgramParameters ();
+   paras->setNamedAutoConstant ("prjMat", AutoConstantType::T3D_PROJ_MAT);
+   paras->setNamedAutoConstant ("viewMat",AutoConstantTyep::T3D_VEW_MAT);
+   
+   shaderProgram->bindProgramParameters(paras);
+   
+}
+
+}}}
+
 
 = ShaderProgram =
 
