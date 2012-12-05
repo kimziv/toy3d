@@ -62,6 +62,8 @@ void init ()
 
 void draw ()
 {
+
+    world->startRendering();
 }
 
 
