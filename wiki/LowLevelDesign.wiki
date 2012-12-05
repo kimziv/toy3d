@@ -81,12 +81,12 @@ int main ()
 {{{
 
 typedef float Real;
-typedef unsigned char uchar;
-typedef unsigned short ushort;
-typedef unsigned int uint;
-typedef unsigned long ulong;
+typedef unsigned char Uchar;
+typedef unsigned short Ushort;
+typedef unsigned int Uint;
+typedef unsigned long Ulong;
 
-typedef signed int sint;
+typedef signed int Sint;
 
 
 
@@ -103,15 +103,8 @@ class World
 
 void World::startRendering ()
 {
-    for (all mesh){
-        renderSystem->_render (mesh);
-    }
 }
 
-}}}
-
-
-{{{
 
 void World::startRendering ()
 {
@@ -125,13 +118,13 @@ void World::startRendering ()
    delete source; 
 
 
-   //create Render operation
-   RenderOperation *ro = new RenderOperation ();
-   ro->setVertices (...);
-      
-   //draw scene
-   mRenderer->render(ro);
-   delete ro; 
+
+    for (int i = 0; i < mMeshCount; i++){
+        mRenderer.render(&mMesh[i]);
+    }
+
+
+
     
 }
 
