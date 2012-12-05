@@ -96,10 +96,37 @@ typedef signed int Sint;
 
 {{{
 
+#define MAX_MESH_COUNT  8
+
 class World 
 {
+    Camera mCamera;
+
+    Mesh* mMeshes[MAX_MESH_COUNT];
+    Uint mMeshCount;
+
+    Mesh *createMesh ();
     void startRendering();
 };
+
+Mesh* World::createMesh ()
+{
+    //FIXME:  Maybe need search current mesh array to see if it already exist.
+
+    Mesh *mesh = new Mesh();
+    mMeshes[mMeshCount++] = mesh;
+
+    return mesh;
+}
+
+
+Camera* World::createCamera (char *name)
+{
+    //FIXME:  need multiple cameras
+
+    return &mCamera;
+}
+
 
 void World::startRendering ()
 {
@@ -108,10 +135,9 @@ void World::startRendering ()
 
 void World::startRendering ()
 {
-   //create AutoParamDataSource
-   AutoParamDataSource *source = new AutoParamDataSource ();
-   source->setProjectionMatrix();
-   source->setViewMatrix ();
+   //set AutoParamDataSource
+   mAutoParamDataSource.setProjectionMatrix(mCamera->getProjectionMatrix());
+   mAutoParamDataSource.setViewMatrix ();
    
    //update auto shader paramters
    mShaderProgram->getParameters()->updateAutoParams (source);
