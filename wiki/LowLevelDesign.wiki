@@ -137,12 +137,10 @@ void World::startRendering ()
    mAutoParamDataSource.setViewMatrix (mCamera.getViewMatrix());
    mAutoParamDataSource.setProjectionMatrix(mCamera.getProjectionMatrix());
 
-
    
    //update auto shader paramters
-   mShaderProgram->getParameters()->updateAutoParams (source);
-   delete source; 
-
+   mShaderProgram->getParameters()->updateAutoConstParams (&mAutoParamDataSource);
+    
 
 
     for (int i = 0; i < mMeshCount; i++){
@@ -204,6 +202,45 @@ enum AutoConstantType
 
 
 }}}
+
+class ShaderProgramParams 
+{
+    AutoConstEntry* mAutoConstEntries[MAX_ENTRY_COUNT];
+    Uint mEntryCount;
+
+    ShaderProgramParams ();
+    ~ShaderProgramParams ();
+ 
+
+    void updateAutoConstParams (AutoParamDataSource *source);
+    void setNamedAutoConstant (AutoConstType type, char *name);
+
+}
+
+ShaderProgramParas::ShaderProgramParams()
+{
+    mEntryCount = 0;
+}
+
+void ShaderProgramParams::updateAutoConstParams (AutoParamDataSource *source)
+{
+    for (int i = 0; i < )
+}
+
+
+void ShaderProgramParams::setNamedAutoConstant (AutoConstType type, char *name)
+{
+
+    isExist = find(name);
+
+    if (!isExist) {
+
+        index = glGetIndexXXXXX(name);
+
+        AutoConstEntry *entry = new AutoConstEntry (type, name, index);
+        mAutoConstEntries[mEntryCount++];
+    }
+}
 
 
 Add your content here.  Format your content with:
