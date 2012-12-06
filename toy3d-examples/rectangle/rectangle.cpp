@@ -1,8 +1,18 @@
 
+
+#ifdef VC6
+
+#include <GL/glew.h>
+#include <GL/glut.h>
+
+
+#else
+
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
 
+#endif
 
 
 #include <toy3d/Toy3DCommon.h>
