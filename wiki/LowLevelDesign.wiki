@@ -217,16 +217,34 @@ class ShaderProgramParams
 
 }
 
-ShaderProgramParas::ShaderProgramParams()
+ShaderProgramParams::ShaderProgramParams()
 {
     mEntryCount = 0;
 }
 
 void ShaderProgramParams::updateAutoConstParams (AutoParamDataSource *source)
 {
-    for (int i = 0; i < )
-}
+    int i;
+    for ( i=0; i<mEntryCount; i++ )
+    {
+        switch( mAutoConstEntries[i]->type )
+        {
+        case TOY3D_ACT_WORLD_MATRIX:
 
+            break;
+
+        case TOY3D_ACT_VIEW_MATRIX:
+            break;
+
+        case TOY3D_ACT_PROJECTION_MATRIX:
+            break;
+
+        default:
+            break;
+        }
+    }
+    return;
+}
 
 void ShaderProgramParams::setNamedAutoConstant (AutoConstType type, char *name)
 {
