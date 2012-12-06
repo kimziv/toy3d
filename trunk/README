@@ -1,0 +1,32 @@
+
+Toy3D is an OpenGL ES toolkit to ease embedded 3D development. Main features include:
+
+  - Wrap OpenGL ES API
+  - Provide frequently-used 3D effect control/widget
+
+Toy3D is open source based on GPL.
+
+Toy3D arch is as following:  
+
+-----------------------------------------
+|               APP                     |
+-----------------------------------------
+|             Mobile3D                  |
+-----------------------------------------
+|            OpenGL ES API              |
+-----------------------------------------
+|               Kernel                  |
+-----------------------------------------
+|              Hardware                 |
+-----------------------------------------
+
+
+Mobile3D include: World, Camera, Mesh, Texture, Image.
+
+
+Mobile3D 0.1
+ - Initial version.
+ - Core modules include World, Camera, Mesh, Model, Model_am, Image, Texture.
+ - Some demos: triangle, rectangle, texture, blending  
+
+
