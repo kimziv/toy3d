@@ -21,8 +21,12 @@ Toy3D arch is as following:
 -----------------------------------------
 
 
+Toy3D include: World, Camera, Mesh, Texture, Image.
 
 
+Toy3D 0.1
+ - Initial version.
+ - Core modules include World, Camera, Mesh, Model, Model_am, Image, Texture.
+ - Some demos: triangle, rectangle, texture, blending  
 
-toy3d-lib:  the core lib code
-toy3d-examples: examples for toy3d
+
