@@ -21,12 +21,7 @@ Toy3D arch is as following:
 -----------------------------------------
 
 
-Mobile3D include: World, Camera, Mesh, Texture, Image.
 
 
-Mobile3D 0.1
- - Initial version.
- - Core modules include World, Camera, Mesh, Model, Model_am, Image, Texture.
- - Some demos: triangle, rectangle, texture, blending  
 
 
