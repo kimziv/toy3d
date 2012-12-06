@@ -230,7 +230,7 @@ void ShaderProgramParams::updateAutoConstParams (AutoParamDataSource *source)
         switch( mAutoConstEntries[i]->type )
         {
         case TOY3D_ACT_WORLD_MATRIX:
-
+            setAutoConstValue( mAutoConstEntries[i]->index, source->getWorldMatrix() );
             break;
 
         case TOY3D_ACT_VIEW_MATRIX:
