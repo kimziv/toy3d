@@ -2,9 +2,6 @@
 #ifndef _TOY3D_COMMON_H_
 #define _TOY3D_COMMON_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 
 
@@ -13,18 +10,27 @@ extern "C" {
 #include <string.h>
 #include <math.h>
 
-#ifdef OPENGL
-
+/*
 #ifdef MAC
 #include <OpenGL/gl.h>
-#else
-#include <GL/gl.h>
-#endif  //end of MAC
+#endif
 
+*/
+ 
+
+#ifdef VC6
+#include <GL/glew.h>
+#include <GL/glut.h>
 #else 
-#include <GLES/gl.h>
-//#include <android/log.h>
-#endif  //end of OPENGL
+#include <GL/gl.h>
+#endif
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 
 #define TOY3D_BEGIN_NAMESPACE namespace TOY3D {
 #define TOY3D_END_NAMESPACE }
