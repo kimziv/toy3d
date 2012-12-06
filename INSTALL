@@ -1,0 +1,24 @@
+
+Build and install mobile3d
+
+Build toy3d lib:
+ - modify CMakeLists.txt,uncomment ADD_SUBDIRECTORY(source) and  comment ADD_SUBDIRECTORY(example)
+ - cd build
+ - cmake ..
+ - make 
+ - sudo make install
+
+
+Build toy3d demo:
+ - modify CMakeLists.txt, uncomment ADD_SUBDIRECTORY(example) and comment ADD_SUBDIRECTORY(source) 
+ - cd build
+ - cmake ..
+ - make 
+ - sudo make install
+
+Run:
+ - mmi
+ - audi
+
+
+
