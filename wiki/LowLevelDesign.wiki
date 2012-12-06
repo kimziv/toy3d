@@ -260,6 +260,11 @@ void ShaderProgramParams::setNamedAutoConstant (AutoConstType type, char *name)
     }
 }
 
+void ShaderProgramParams::setAutoConsValue( Uint index, Real value[16]);
+{
+    //glUniformMatrix4fv(index, 1, 0, value);
+}
+
 }}}
 
 Add your content here.  Format your content with:
