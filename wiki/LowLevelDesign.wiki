@@ -211,7 +211,7 @@ class ShaderProgramParams
     ShaderProgramParams ();
     ~ShaderProgramParams ();
  
-
+    void setAutoConsValue( Uint index, Real value[16] );
     void updateAutoConstParams (AutoParamDataSource *source);
     void setNamedAutoConstant (AutoConstType type, char *name);
 
