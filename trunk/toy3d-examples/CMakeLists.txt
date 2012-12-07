@@ -9,8 +9,6 @@ ENDIF()
 
 #SET( GLES "YES" )
 
-#add_definitions(-DMAC)
-add_definitions(-DVC6)
 add_definitions(-DOPENGL)
 
 
