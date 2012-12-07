@@ -10,20 +10,10 @@
 #include <string.h>
 #include <math.h>
 
-/*
-#ifdef MAC
-#include <OpenGL/gl.h>
-#endif
 
-*/
- 
 
-#ifdef VC6
 #include <GL/glew.h>
 #include <GL/glut.h>
-#else 
-#include <GL/gl.h>
-#endif
 
 
 #ifdef __cplusplus
