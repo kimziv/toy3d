@@ -169,12 +169,12 @@ public:
     Mesh();
     ~Mesh()
 
-    void setVertices (Real* vertices, uint count);
+    void setVertices (Real* vertices, Uint count);
  
 };
 
 //count: vertex count
-void Mesh::setVertices (Real* vertices, int count)
+void Mesh::setVertices (Real* vertices, Uint count)
 {
     if (mVertices)
         free (mVertices);
