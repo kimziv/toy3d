@@ -27,6 +27,13 @@ extern "C" {
 
 typedef float Real;
 
+typedef unsigned char Uchar;
+typedef unsigned short Ushort;
+typedef unsigned int Uint;
+typedef unsigned long Ulong;
+
+typedef signed int Sint;
+
 
 
 
@@ -43,6 +50,13 @@ typedef float Real;
         free(pointer); \
         pointer = NULL; \
     }
+
+
+
+
+#define MATRIX_SIZE 16
+
+
 
 
 

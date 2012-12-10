@@ -8,6 +8,7 @@
 		include/Toy3DShaderProgram.h
 		include/Toy3DMesh.h
 		include/Toy3DRenderer.h
+		include/Toy3DMath.h
 	)
 
 	set(SOURCE_FILES
@@ -16,6 +17,7 @@
 		src/Toy3DShaderProgram.cpp
 		src/Toy3DMesh.cpp
 		src/Toy3DRenderer.cpp
+		src/Toy3DMath.c
 	)
 
 	include_directories(
