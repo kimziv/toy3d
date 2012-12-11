@@ -21,7 +21,7 @@ TOY3D_BEGIN_NAMESPACE
         Uint mode;
         if( !mesh )
         {
-            PRINT("render:NULL POINTER.\n");
+            TOY3D_PRINT("render:NULL POINTER.\n");
             return;
         }
 

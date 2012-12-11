@@ -24,6 +24,7 @@ AttrConstEntry::AttrConstEntry(AttrConstantType theType, Uchar *theName )
 ShaderProgramParams::ShaderProgramParams()
 {
     mAutoCount = 0;
+    mAttrCount = 0;
 }
 
 ShaderProgramParams::~ShaderProgramParams()
@@ -31,6 +32,11 @@ ShaderProgramParams::~ShaderProgramParams()
     while( mAutoCount )
     {
         FREEANDNULL( mAutoConstEntries[--mAutoCount] );
+    }
+
+    while( mAttrCount )
+    {
+        FREEANDNULL( mAttrConstEntries[--mAttrCount] );
     }
 }
 
@@ -41,9 +47,9 @@ void ShaderProgramParams::setAutoConstValue( Uint index, const Real value[MATRIX
 
 void ShaderProgramParams::setNamedAutoConstant ( AutoConstantType type, Uchar *name )
 {
-    if( searchNamedConst(name, 0) )
+    if( searchNamedAutoConst(name, 0) )
     {
-        PRINT("setNamedAutoConstant failed. AutoConst name exist.\n");
+        TOY3D_PRINT("setNamedAutoConstant failed. AutoConst name exist.\n");
         return;
     }
 
@@ -66,9 +72,9 @@ Uchar* ShaderProgramParams::getAutoParamName( Uint index )
 void ShaderProgramParams::updateAutoConstIndex ( Uchar *name, Uint index )
 {
     Uint position = 0;
-    if( !searchNamedConst(name, &position) )
+    if( !searchNamedAutoConst(name, &position) )
     {
-        PRINT("updateAutoConstIndex failed. AutoConst name doesn't exist.\n");
+        TOY3D_PRINT("updateAutoConstIndex failed. AutoConst name doesn't exist.\n");
         return;
     }
 
@@ -121,7 +127,7 @@ void ShaderProgramParams::updateAutoConstParams ( AutoParamDataSource *source )
     return;
 }
 
-Bool ShaderProgramParams::searchNamedConst( const Uchar *name, Uint* index )
+Bool ShaderProgramParams::searchNamedAutoConst( const Uchar *name, Uint* index )
 {
     int i = mAutoCount;
     while( i )
@@ -140,10 +146,76 @@ Bool ShaderProgramParams::searchNamedConst( const Uchar *name, Uint* index )
     return false;
 }
 
-void setNamedAttrConstant ( AttrConstantType type, Uchar *name );
-Uint getAttrEntryCount();
-Uchar* getAttrParamName( Uint index );
-Uint getAttrConstIndex( AttrConstantType type );
+//////////////////////////////////////////////////////////////////////////
+//Attribute variable
+
+Bool ShaderProgramParams::searchNamedAttrConst( const Uchar *name, Uint* index )
+{
+    int i = mAttrCount;
+    while( i )
+    {
+        i--;
+        if( !strnicmp((const char *)mAttrConstEntries[i]->name, (const char *)name, MAX_NAME_LEN) )
+        {
+            if( index )
+                *index = i;
+            return true;
+        }
+    }
+    
+    if( index )
+        *index = -1;
+    return false;
+}
+
+void ShaderProgramParams::setNamedAttrConstant ( AttrConstantType type, Uchar *name )
+{
+    if( searchNamedAttrConst(name, 0) )
+    {
+        TOY3D_PRINT("setNamedAutoConstant failed. AutoConst name exist.\n");
+        return;
+    }
+    
+    AttrConstEntry *entry = new AttrConstEntry(type, name );
+    mAttrConstEntries[mAttrCount++] = entry;
+
+    return;
+}
+
+void ShaderProgramParams::updateAttrConstIndex ( Uchar *name, Uint index )
+{
+    Uint position = 0;
+    if( !searchNamedAttrConst(name, &position) )
+    {
+        TOY3D_PRINT("updateAutoConstIndex failed. AutoConst name doesn't exist.\n");
+        return;
+    }
+    
+    mAttrConstEntries[position]->index = index;
+    
+    return;
+}
+
+Uint ShaderProgramParams::getAttrEntryCount()
+{
+    return mAttrCount;
+}
+
+Uchar* ShaderProgramParams::getAttrParamName( Uint index )
+{
+    return mAttrConstEntries[index]->name;
+}
+
+Uint ShaderProgramParams::getAttrConstIndex( AttrConstantType type )
+{
+    for (int i=0; i<mAttrCount; i++)
+    {
+        if( mAttrConstEntries[i]->type == type)
+            return mAttrConstEntries[i]->index;
+    }
+
+    return 0;
+}
 
 
 
