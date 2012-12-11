@@ -22,6 +22,7 @@ TOY3D_BEGIN_NAMESPACE
     void World::startRendering ()
     {
         Real matrix[MATRIX_4x4_SIZE];
+        RenderOperation renderOp;
 
         printf ("Start rendering...\n");
 
@@ -39,7 +40,11 @@ TOY3D_BEGIN_NAMESPACE
         //world矩阵应该与mesh矩阵运算
         for (int i = 0; i < mMeshCount; i++)
         {
-            mRenderer->render(mMeshes[i]); 
+            mMeshes[i];
+            renderOp.setVertex( mMeshes[i]->getVertices(), mMeshes[i]->getVerticesCount() );
+            renderOp.setRenderMode( mMeshes[i]->getRenderMode() );
+
+            mRenderer->render( &renderOp );
         }
 
         return;

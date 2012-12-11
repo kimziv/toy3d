@@ -49,7 +49,7 @@ void ShaderProgramParams::setNamedAutoConstant ( AutoConstantType type, Uchar *n
 {
     if( searchNamedAutoConst(name, 0) )
     {
-        TOY3D_PRINT("setNamedAutoConstant failed. AutoConst name exist.\n");
+        TOY3D_PRINT("setNamedAutoConstant failed. AutoConst name exist.\n", __FILE__, __LINE__);
         return;
     }
 
@@ -74,7 +74,7 @@ void ShaderProgramParams::updateAutoConstIndex ( Uchar *name, Uint index )
     Uint position = 0;
     if( !searchNamedAutoConst(name, &position) )
     {
-        TOY3D_PRINT("updateAutoConstIndex failed. AutoConst name doesn't exist.\n");
+        TOY3D_PRINT("updateAutoConstIndex failed. AutoConst name doesn't exist.\n", __FILE__, __LINE__);
         return;
     }
 
@@ -172,7 +172,7 @@ void ShaderProgramParams::setNamedAttrConstant ( AttrConstantType type, Uchar *n
 {
     if( searchNamedAttrConst(name, 0) )
     {
-        TOY3D_PRINT("setNamedAutoConstant failed. AutoConst name exist.\n");
+        TOY3D_PRINT("setNamedAutoConstant failed. AutoConst name exist.\n", __FILE__, __LINE__);
         return;
     }
     
@@ -187,7 +187,7 @@ void ShaderProgramParams::updateAttrConstIndex ( Uchar *name, Uint index )
     Uint position = 0;
     if( !searchNamedAttrConst(name, &position) )
     {
-        TOY3D_PRINT("updateAutoConstIndex failed. AutoConst name doesn't exist.\n");
+        TOY3D_PRINT("updateAutoConstIndex failed. AutoConst name doesn't exist.\n", __FILE__, __LINE__);
         return;
     }
     

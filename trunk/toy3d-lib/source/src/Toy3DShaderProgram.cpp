@@ -22,7 +22,7 @@ Uint ShaderProgram::loadShaderSource(Uchar *vertshader, Uchar *frashader )
         (const char *)vertshader, (const char *)frashader, GL_FALSE);
     if ( 0 == mShaderProgramID )
     {
-        TOY3D_PRINT("loadShaderSource: Failed to load shader.\n ");
+        TOY3D_PRINT("loadShaderSource: Failed to load shader.\n", __FILE__, __LINE__);
         return 0;
     }
 
@@ -36,7 +36,7 @@ Uint ShaderProgram::loadShaerBinary(Uchar *bvertshader,
         (const char *)bfrashader, vertLength, (const char *)bfrashader, fragLength, GL_FALSE);
     if ( 0 == mShaderProgramID )
     {
-        TOY3D_PRINT("loadShaerBinary: Failed to load shader.\n ");
+        TOY3D_PRINT("loadShaerBinary: Failed to load shader.\n", __FILE__, __LINE__);
         return 0;
     }
 
@@ -51,7 +51,7 @@ void ShaderProgram::bindShaderParameters(ShaderProgramParams* pShaderPara)
     if( !pShaderPara )
     {
         //TOY3D_PRINT("NULL POINTER.FILE: %s, LINE: %d.\n", __FILE__, __LINE__ );
-        TOY3D_PRINT("NULL POINTER.\n");
+        TOY3D_PRINT("NULL POINTER.\n", __FILE__, __LINE__);
         return;
     }
 
@@ -61,6 +61,14 @@ void ShaderProgram::bindShaderParameters(ShaderProgramParams* pShaderPara)
     {
         pName = mShaderParams->getAutoParamName( i );
         mShaderParams->updateAutoConstIndex( pName,
+            glGetUniformLocation(mShaderProgramID, (const char *)pName) );
+    }
+
+    count = mShaderParams->getAttrEntryCount();
+    for( i=0; i<count; i++)
+    {
+        pName = mShaderParams->getAttrParamName( i );
+        mShaderParams->updateAttrConstIndex( pName,
             glGetUniformLocation(mShaderProgramID, (const char *)pName) );
     }
 
