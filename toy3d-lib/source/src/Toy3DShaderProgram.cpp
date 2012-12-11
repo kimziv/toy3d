@@ -55,10 +55,10 @@ void ShaderProgram::bindShaderParameters(ShaderProgramParams* pShaderPara)
     }
 
     mShaderParams = pShaderPara;
-    count = mShaderParams->getEntryCount();
+    count = mShaderParams->getAutoEntryCount();
     for( i=0; i<count; i++)
     {
-        pName = mShaderParams->getParamName( i );
+        pName = mShaderParams->getAutoParamName( i );
         mShaderParams->updateAutoConstIndex( pName,
             glGetUniformLocation(mShaderProgramID, (const char *)pName) );
     }
