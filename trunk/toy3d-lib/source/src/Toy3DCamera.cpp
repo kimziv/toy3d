@@ -25,13 +25,12 @@ TOY3D_BEGIN_NAMESPACE
 
     }
 
-    void Camera::perspcective (Real left, Real right, Real bottom, Real top, Real near, Real far)
+    void Camera::perspcective (Real left, Real right, Real bottom, Real top, Real n, Real f)
     {
 
         MvGl2DemoMatrixIdentity(mProjectionMatrix);
-        frustum (mProjectionMatrix, left, right, bottom, top, near, far);
-        
-    
+        frustum (mProjectionMatrix, left, right, bottom, top, n, f);
+        return;
     }
 
     void Camera::getViewMatrix (Real m[MATRIX_MAX])

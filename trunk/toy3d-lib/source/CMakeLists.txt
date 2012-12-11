@@ -5,6 +5,8 @@
 		include/Toy3DCommon.h
 		include/Toy3DWorld.h
 		include/Toy3DCamera.h
+		include/Toy3DAutoParamDataSource.h
+		include/Toy3DShaderProgramParams.h
 		include/Toy3DShaderProgram.h
 		include/Toy3DMesh.h
 		include/Toy3DRenderer.h
@@ -12,8 +14,11 @@
 	)
 
 	set(SOURCE_FILES
+	  src/Toy3DCommon.cpp
 		src/Toy3DWorld.cpp
 		src/Toy3DCamera.cpp
+		src/Toy3DAutoParamDataSource.cpp
+		src/Toy3DShaderProgramParams.cpp
 		src/Toy3DShaderProgram.cpp
 		src/Toy3DMesh.cpp
 		src/Toy3DRenderer.cpp
