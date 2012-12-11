@@ -32,9 +32,11 @@ TOY3D_BEGIN_NAMESPACE
         ~Mesh();
 
     public:
-        void setVertices (Real* veritces, Uint count);
         void setRenderMode (RenderMode mode);
-        RenderMode getRenderMode ();
+        void setVertices (Real* veritces, Uint count);
+
+        RenderMode getRenderMode();
+        Real* getVertices();
         Uint getVerticesCount();
 
 

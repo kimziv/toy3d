@@ -1,8 +1,173 @@
 
 
 #include "Toy3DRenderer.h"
+#include "Toy3DMesh.h"
 
 TOY3D_BEGIN_NAMESPACE
+
+
+
+//////////////////////////////////////////////////////////////////////////
+//RenderOperation
+    RenderOperation::RenderOperation()
+    {
+    }
+
+    RenderOperation::~RenderOperation()
+    {
+    }
+
+    void RenderOperation::setRenderMode( RenderMode mode )
+    {
+        mRenderMode = mode;
+        return;
+    }
+
+    void RenderOperation::setVertex(Real *vertices, Uint count )
+    {
+        if( !vertices || !count )
+        {
+            TOY3D_PRINT("NULL POINTER.\n", __FILE__, __LINE__);
+            return;
+        }
+
+        mVertices = vertices;
+        mVerticesCount = count;
+        return;
+    }
+
+    void RenderOperation::setColor(Real *colors, Uint count)
+    {
+        if( !colors || !count )
+        {
+            TOY3D_PRINT("NULL POINTER.\n", __FILE__, __LINE__);
+            return;
+        }
+        
+        mColors = colors;
+        //mColorsCount = count;
+        return;
+    }
+
+    void RenderOperation::setUV(Real *uvs, Uint count)
+    {
+        if( !uvs || !count )
+        {
+            TOY3D_PRINT("NULL POINTER.\n", __FILE__, __LINE__);
+            return;
+        }
+        
+        mUVs = uvs;
+        //mUVsCount = count;
+        return;
+    }
+
+    void RenderOperation::setNormal(Real *normals, Uint count)
+    {
+        if( !normals || !count )
+        {
+            TOY3D_PRINT("NULL POINTER.\n", __FILE__, __LINE__);
+            return;
+        }
+        
+        mNormals = normals;
+        //mNormalsCount = count;
+        return;
+    }
+    
+    void RenderOperation::setVertexIndex( Uint index)
+    {
+        mVertexIndex = index;
+        return;
+    }
+
+    void RenderOperation::setColorIndex( Uint index)
+    {
+        mColorIndex = index;
+        return;
+    }
+
+    void RenderOperation::setUVIndex( Uint index)
+    {
+        mUVIndex = index;
+        return;
+    }
+
+    void RenderOperation::setNormalIndex( Uint index)
+    {
+        mNormalIndex = index;
+        return;
+    }
+
+    RenderMode RenderOperation::getRenderMode()
+    {
+        return mRenderMode;
+    }
+
+    Real* RenderOperation::getVertex()
+    {
+        return mVertices;
+    }
+
+    Real* RenderOperation::getColor()
+    {
+        return mColors;
+    }
+
+    Real* RenderOperation::getUV()
+    {
+        return mUVs;
+    }
+
+    Real* RenderOperation::getNormal()
+    {
+        return mNormals;
+    }
+
+    Uint RenderOperation::getVerticesCount()
+    {
+        return mVerticesCount;
+    }
+/*
+    Uint RenderOperation::getColorsCount()
+    {
+        return mColorsCount;
+    }
+
+    Uint RenderOperation::getUVsCount()
+    {
+        return mUVsCount;
+    }
+
+    Uint RenderOperation::getNormalsCount()
+    {
+        return mNormalsCount;
+    }
+*/
+    Uint RenderOperation::getVertexIndex()
+    {
+        return mVertexIndex;
+    }
+
+    Uint RenderOperation::getColorIndex()
+    {
+        return mColorIndex;
+    }
+
+    Uint RenderOperation::getUVIndex()
+    {
+        return mUVIndex;
+    }
+
+    Uint RenderOperation::getNormalIndex()
+    {
+        return mNormalIndex;
+    }
+
+
+
+//////////////////////////////////////////////////////////////////////////
+//Renderer
 
     Renderer::Renderer() 
     {
@@ -16,15 +181,16 @@ TOY3D_BEGIN_NAMESPACE
 
     //提供glDrawArrays、glDrawElements两种方式
     //目前只处理前一种方式
-    void Renderer::render(Mesh* mesh)
+    void Renderer::render(RenderOperation *renderOp)
     {
         Uint mode;
-        if( !mesh )
+        Uint index;
+
+        if( !renderOp )
         {
-            TOY3D_PRINT("render:NULL POINTER.\n");
+            TOY3D_PRINT("render:NULL POINTER.\n", __FILE__, __LINE__);
             return;
         }
-
 
         //glUniformMatrix4fv(index, 1, 0, mWorldMatrix);
         //glUniformMatrix4fv(index, 1, 0, mProjectionMatrix);
@@ -33,7 +199,7 @@ TOY3D_BEGIN_NAMESPACE
         //temp testing
         setForeground( 1.0f, 0.0f, 0.0f, 1.0f );
 
-        switch( mesh->getRenderMode() )
+        switch( renderOp->getRenderMode() )
         {
         case TOY3D_POINTS:
             mode = GL_POINTS;
@@ -66,8 +232,10 @@ TOY3D_BEGIN_NAMESPACE
 
         if (mode)
         {
-
-            glDrawArrays( GL_TRIANGLES, 0,  mesh->getVerticesCount() );
+            index = renderOp->getVertexIndex();
+            glVertexAttribPointer( index, 3, GL_FLOAT, 0, 0, renderOp->getVertex() );
+            glEnableVertexAttribArray( index );
+            glDrawArrays( GL_TRIANGLES, 0,  renderOp->getVerticesCount() );
         }
 
         return;

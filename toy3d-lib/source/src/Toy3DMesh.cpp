@@ -35,6 +35,11 @@ TOY3D_BEGIN_NAMESPACE
         return mRenderMode;
     }
 
+    Real* Mesh::getVertices()
+    {
+        return mVertices;
+    }
+
     Uint Mesh::getVerticesCount()
     {
         return mVerticesCount;

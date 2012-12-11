@@ -14,7 +14,6 @@
 	)
 
 	set(SOURCE_FILES
-	  src/Toy3DCommon.cpp
 		src/Toy3DWorld.cpp
 		src/Toy3DCamera.cpp
 		src/Toy3DAutoParamDataSource.cpp
