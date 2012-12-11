@@ -140,10 +140,7 @@ Bool ShaderProgramParams::searchNamedConst( const Uchar *name, Uint* index )
     return false;
 }
 
-void setAttrConstValue( Uint index, const Real value[MATRIX_4x4_SIZE] );
-void setNamedAttrConstant ( AutoConstantType type, Uchar *name );
-void updateAttrConstParams ( AutoParamDataSource *source );
-
+void setNamedAttrConstant ( AttrConstantType type, Uchar *name );
 Uint getAttrEntryCount();
 Uchar* getAttrParamName( Uint index );
 Uint getAttrConstIndex( AttrConstantType type );
