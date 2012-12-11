@@ -77,6 +77,7 @@ void ShaderProgramParams::updateAutoConstIndex ( Uchar *name, Uint index )
     return;
 }
 
+/*
 void ShaderProgramParams::updateAutoConstIndex_2 ( const Uchar *name, Uint shaderProgID )
 {
     Uint position = 0;
@@ -90,6 +91,7 @@ void ShaderProgramParams::updateAutoConstIndex_2 ( const Uchar *name, Uint shade
     
     return;
 }
+*/
 
 void ShaderProgramParams::updateAutoConstParams ( AutoParamDataSource *source )
 {
@@ -138,6 +140,13 @@ Bool ShaderProgramParams::searchNamedConst( const Uchar *name, Uint* index )
     return false;
 }
 
+void setAttrConstValue( Uint index, const Real value[MATRIX_4x4_SIZE] );
+void setNamedAttrConstant ( AutoConstantType type, Uchar *name );
+void updateAttrConstParams ( AutoParamDataSource *source );
+
+Uint getAttrEntryCount();
+Uchar* getAttrParamName( Uint index );
+Uint getAttrConstIndex( AttrConstantType type );
 
 
 
