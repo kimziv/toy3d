@@ -30,7 +30,13 @@ extern "C" {
     //数据类型定义
     typedef float  Real;
     typedef double DReal;
-    typedef boolean   Bool;
+
+    #define FALSE       0
+    #define TRUE        1
+    typedef int Bool;
+
+
+
 
     typedef unsigned char  Uchar;
     typedef unsigned short Ushort;
