@@ -59,7 +59,8 @@ TOY3D_BEGIN_NAMESPACE
 
         private:
             //查找指定名字的变量是否存在，并取得其在列表中的位置
-            Bool searchNamedConst( const Uchar *name, Uint* index );
+            Bool searchNamedAutoConst( const Uchar *name, Uint* index );
+            Bool searchNamedAttrConst( const Uchar *name, Uint* index );
 
         public:
             ShaderProgramParams();
@@ -68,16 +69,19 @@ TOY3D_BEGIN_NAMESPACE
             void setAutoConstValue( Uint index, const Real value[MATRIX_4x4_SIZE] );
             void setNamedAutoConstant ( AutoConstantType type, Uchar *name );
             void updateAutoConstParams ( AutoParamDataSource *source );
+            //由调用者设置变量索引
+            void updateAutoConstIndex ( Uchar *name, Uint index );
+
             Uint getAutoEntryCount();
             Uchar* getAutoParamName( Uint index );
 
             void setNamedAttrConstant ( AttrConstantType type, Uchar *name );
+            void updateAttrConstIndex ( Uchar *name, Uint index );
             Uint getAttrEntryCount();
+
             Uchar* getAttrParamName( Uint index );
             Uint getAttrConstIndex( AttrConstantType type );
 
-            //由调用者设置变量索引
-            void updateAutoConstIndex ( Uchar *name, Uint index );
             //通过shader program id 获取变量索引
             //void ShaderProgramParams::updateAutoConstIndex_2 ( const Uchar *name, Uint shaderProgID );
     };

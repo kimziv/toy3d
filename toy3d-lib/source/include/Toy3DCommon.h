@@ -68,7 +68,7 @@ extern "C" {
         pointer = NULL; \
     }
 
-    void PRINT( char * format, ...);
+#define TOY3D_PRINT(str) printf("%s", str)
 
 
 //#define PRINT(file, format, ...) myprintf(file, format, ##args)

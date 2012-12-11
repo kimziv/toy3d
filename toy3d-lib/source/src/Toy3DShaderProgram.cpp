@@ -22,7 +22,7 @@ Uint ShaderProgram::loadShaderSource(Uchar *vertshader, Uchar *frashader )
         (const char *)vertshader, (const char *)frashader, GL_FALSE);
     if ( 0 == mShaderProgramID )
     {
-        PRINT("loadShaderSource: Failed to load shader.\n ");
+        TOY3D_PRINT("loadShaderSource: Failed to load shader.\n ");
         return 0;
     }
 
@@ -36,7 +36,7 @@ Uint ShaderProgram::loadShaerBinary(Uchar *bvertshader,
         (const char *)bfrashader, vertLength, (const char *)bfrashader, fragLength, GL_FALSE);
     if ( 0 == mShaderProgramID )
     {
-        PRINT("loadShaerBinary: Failed to load shader.\n ");
+        TOY3D_PRINT("loadShaerBinary: Failed to load shader.\n ");
         return 0;
     }
 
@@ -50,7 +50,8 @@ void ShaderProgram::bindShaderParameters(ShaderProgramParams* pShaderPara)
 
     if( !pShaderPara )
     {
-        PRINT("NULL POINTER.FILE: %s, LINE: %d.\n", __FILE__, __LINE__ );
+        //TOY3D_PRINT("NULL POINTER.FILE: %s, LINE: %d.\n", __FILE__, __LINE__ );
+        TOY3D_PRINT("NULL POINTER.\n");
         return;
     }
 
