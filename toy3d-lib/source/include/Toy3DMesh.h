@@ -24,6 +24,7 @@ TOY3D_BEGIN_NAMESPACE
     private:
         RenderMode mRenderMode;
         Real *mVertices;
+        Uint mVerticesCount;
 
 
     public:
@@ -33,6 +34,8 @@ TOY3D_BEGIN_NAMESPACE
     public:
         void setVertices (Real* veritces, Uint count);
         void setRenderMode (RenderMode mode);
+        RenderMode getRenderMode ();
+        Uint getVerticesCount();
 
 
     };

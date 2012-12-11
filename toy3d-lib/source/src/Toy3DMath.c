@@ -1,6 +1,7 @@
 
 #include <string.h>
 #include <math.h>
+#include <stdio.h>
 #include "Toy3DMath.h"
 
 
@@ -272,7 +273,7 @@ void MvGl2DemoMatrixPrint(float a[16])  {
 
     for(i = 0; i < 4; ++i) {
         for(j = 0; j < 4; ++j) {
-            MvGl2DemoLogMessage("%f%c", a[4*i + j], j == 3 ? '\n': ' ');
+            printf("%f%c", a[4*i + j], j == 3 ? '\n': ' ');
         }
     }
 }
