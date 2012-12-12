@@ -12,12 +12,6 @@
 
 TOY3D_BEGIN_NAMESPACE
 
-    enum ShaderType
-    {
-        SHADER_SOURCE,
-        SHADER_BINARY
-    };
-
 	class World 
     {
 	private:
@@ -41,9 +35,8 @@ TOY3D_BEGIN_NAMESPACE
         ~World();
 
         Mesh* createMesh();
-        Camera* createCamera( Uchar *name );
-        ShaderProgram* createShaderProgram( ShaderType type,
-            Uchar *vert, Uint vertLength, Uchar *frag, Uint fragLength );
+        Camera* createCamera( const char *name );
+        ShaderProgram* createShaderProgram();
         Renderer* createRenderer();
 
         void setMesh();

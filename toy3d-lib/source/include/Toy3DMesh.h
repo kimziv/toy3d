@@ -3,11 +3,12 @@
 #define _TOY3D_MESH_H
 
 #include "Toy3DCommon.h"
+#include "Toy3DRenderOperation.h"
 
 
 TOY3D_BEGIN_NAMESPACE
 
-
+/*
      enum RenderMode {
         TOY3D_POINTS = 1,
         TOY3D_LINES = 2,
@@ -16,7 +17,7 @@ TOY3D_BEGIN_NAMESPACE
         TOY3D_TRIANGLE_STRIP = 5,
         TOY3D_TRIANGLE_FAN = 6
      };
-
+*/
 
     class Mesh 
     {
@@ -24,7 +25,7 @@ TOY3D_BEGIN_NAMESPACE
     private:
         RenderMode mRenderMode;
         Real *mVertices;
-        Uint mVerticesCount;
+        Uint mVertexCount;
 
 
     public:
@@ -38,6 +39,8 @@ TOY3D_BEGIN_NAMESPACE
         RenderMode getRenderMode();
         Real* getVertices();
         Uint getVerticesCount();
+
+        void getRenderOperation(RenderOperation* ro);
 
 
     };

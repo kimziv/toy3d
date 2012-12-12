@@ -26,28 +26,7 @@ extern "C" {
 #define TOY3D_BEGIN_NAMESPACE namespace TOY3D {
 #define TOY3D_END_NAMESPACE }
 
-
-    //数据类型定义
-    typedef float  Real;
-    typedef double DReal;
-
-    #define FALSE       0
-    #define TRUE        1
-    typedef int Bool;
-
-
-
-
-    typedef unsigned char  Uchar;
-    typedef unsigned short Ushort;
-    typedef unsigned int   Uint;
-    typedef unsigned long  Ulong;
-
-    typedef signed char  Schar;
-    typedef signed short Sshort;
-    typedef signed int   Sint;
-    typedef signed long  Slong;
-
+    
 
 //测试用
 #define MAX_MESH_COUNT      8
@@ -76,6 +55,60 @@ extern "C" {
 
 
 #define MATRIX_SIZE 16
+#define MAX_PATH_SIZE 16
+
+
+
+/*********************************
+*  define type  
+**********************************/
+
+    typedef float  Real;
+    typedef double DReal;
+
+    #define FALSE       0
+    #define TRUE        1
+    typedef int Bool;
+
+
+
+
+    typedef unsigned char  Uchar;
+    typedef unsigned short Ushort;
+    typedef unsigned int   Uint;
+    typedef unsigned long  Ulong;
+
+    typedef signed char  Schar;
+    typedef signed short Sshort;
+    typedef signed int   Sint;
+    typedef signed long  Slong;
+
+
+
+
+     enum RenderMode {
+        TOY3D_POINTS = 1,
+        TOY3D_LINES = 2,
+        TOY3D_LINE_STRIP = 3,
+        TOY3D_TRIANGLES = 4,
+        TOY3D_TRIANGLE_STRIP = 5,
+        TOY3D_TRIANGLE_FAN = 6
+     };
+
+     enum AutoConstantType
+     {
+         TOY3D_ACT_WORLD_MATRIX,
+         TOY3D_ACT_VIEW_MATRIX, 
+         TOY3D_ACT_PROJECTION_MATRIX
+     };
+
+     enum AttrConstantType
+     {
+         TOY3D_ATTR_VERTEX_INDEX,
+         TOY3D_ATTR_COLOR_INDEX, 
+         TOY3D_ATTR_UV_INDEX,
+         TOY3D_ATTR_NORMAL_INDEX
+     };
 
 
 

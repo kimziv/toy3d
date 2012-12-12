@@ -19,7 +19,7 @@ TOY3D_BEGIN_NAMESPACE
        if (mVertices) 
            free (mVertices);
 
-       mVerticesCount = count;
+       mVertexCount = count;
        Uint size = count * 3 * sizeof (Real);
        mVertices = (Real*)malloc(size);
        memcpy (mVertices, vertices, size);
@@ -42,7 +42,15 @@ TOY3D_BEGIN_NAMESPACE
 
     Uint Mesh::getVerticesCount()
     {
-        return mVerticesCount;
+        return mVertexCount;
+    }
+
+    void Mesh::getRenderOperation(RenderOperation* ro)
+    {
+        if (ro) {
+            ro->setVertex( mVertices, mVertexCount);
+            ro->setRenderMode( mRenderMode );
+        }
     }
 
 

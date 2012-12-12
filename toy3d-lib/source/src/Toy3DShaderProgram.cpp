@@ -2,6 +2,8 @@
 #include "Toy3DShaderProgram.h"
 #include "Toy3DShaderProgramParams.h"
 #include <sys/stat.h>
+#include <stdarg.h>
+
 
 TOY3D_BEGIN_NAMESPACE
 
@@ -16,37 +18,15 @@ ShaderProgram::~ShaderProgram()
         FREEANDNULL(mShaderParams);
 }
 
-Uint ShaderProgram::loadShaderSource(Uchar *vertshader, Uchar *frashader )
-{
-    mShaderProgramID = MvGl2DemoLoadShaderSources(
-        (const char *)vertshader, (const char *)frashader, GL_FALSE);
-    if ( 0 == mShaderProgramID )
-    {
-        TOY3D_PRINT("loadShaderSource: Failed to load shader.\n", __FILE__, __LINE__);
-        return 0;
-    }
 
-    return mShaderProgramID;
-}
 
-Uint ShaderProgram::loadShaerBinary(Uchar *bvertshader,
-                                    Uint vertLength, Uchar *bfrashader, Uint fragLength )
-{
-    mShaderProgramID = MvGl2DemoLoadShaderBinaries(
-        (const char *)bfrashader, vertLength, (const char *)bfrashader, fragLength, GL_FALSE);
-    if ( 0 == mShaderProgramID )
-    {
-        TOY3D_PRINT("loadShaerBinary: Failed to load shader.\n", __FILE__, __LINE__);
-        return 0;
-    }
 
-    return mShaderProgramID;
-}
+
 
 void ShaderProgram::bindShaderParameters(ShaderProgramParams* pShaderPara)
 {
     Uint count, i;
-    Uchar *pName;
+    char *pName;
 
     if( !pShaderPara )
     {
@@ -86,10 +66,8 @@ Uint ShaderProgram::getShaderProgramID()
     return mShaderProgramID;
 }
 
-Uint ShaderProgram::MvGl2DemoLoadShaderSources(
-                                  const char* vertFile,
-                                  const char* fragFile,
-                                  GLboolean debugging)
+
+Uint ShaderProgram::loadShaderSource(const char *vertshader, const char *fragshader )
 {
     Uint prog = 0;
     char*  vertSource;
@@ -100,8 +78,8 @@ Uint ShaderProgram::MvGl2DemoLoadShaderSources(
     Uint fragShader;
     
     // Load the shader files
-    vertSource    = MvGl2DemoLoadFile(vertFile);
-    fragSource    = MvGl2DemoLoadFile(fragFile);
+    vertSource    = loadFile(vertshader);
+    fragSource    = loadFile(fragshader);
     if (!vertSource || !fragSource) goto done;
     vertSourceLen = (GLint)strlen(vertSource);
     fragSourceLen = (GLint)strlen(fragSource);
@@ -116,12 +94,11 @@ Uint ShaderProgram::MvGl2DemoLoadShaderSources(
     // Load shader sources into GL and compile
     glShaderSource(vertShader, 1, (const char**)&vertSource, &vertSourceLen);
     glCompileShader(vertShader);
-    if (debugging)
-        MvGl2DemoShaderDebug(vertShader, GL_COMPILE_STATUS, "Vert Compile");
+    getShaderDebugInfo(vertShader, GL_COMPILE_STATUS, "Vert Compile");
+
     glShaderSource(fragShader, 1, (const char**)&fragSource, &fragSourceLen);
     glCompileShader(fragShader);
-    if (debugging)
-        MvGl2DemoShaderDebug(fragShader, GL_COMPILE_STATUS, "Frag Compile");
+    getShaderDebugInfo(fragShader, GL_COMPILE_STATUS, "Frag Compile");
     
     // Attach the shaders to the program
     glAttachShader(prog, vertShader);
@@ -133,27 +110,25 @@ Uint ShaderProgram::MvGl2DemoLoadShaderSources(
     
     // Link and validate the shader program
     glLinkProgram(prog);
-    if (debugging)
-        MvGl2DemoShaderDebug(prog, GL_LINK_STATUS, "Program Link");
+    getShaderDebugInfo(prog, GL_LINK_STATUS, "Program Link");
+
     glValidateProgram(prog);
-    if (debugging)
-        MvGl2DemoShaderDebug(prog, GL_VALIDATE_STATUS, "Program Validate");
+    getShaderDebugInfo(prog, GL_VALIDATE_STATUS, "Program Validate");
     
 done:
     
     free(fragSource);
     free(vertSource);
+
+    mShaderProgramID = prog;
+
     return prog;
 }
 
-Uint ShaderProgram::MvGl2DemoLoadShaderBinaries(
-                                   const char* vertBin, Uint vertBinSize,
-                                   const char* fragBin, Uint fragBinSize,
-                                   GLboolean debugging)
+
+Uint ShaderProgram::loadShaderBinary(const char* vertBin, Uint vertBinSize,const char* fragBin, Uint fragBinSize)
 {
-    // Binary shaders not supportable for non-ES OpenGL
-#ifdef GL_ES_VERSION_2_0
-    
+/*    
     Uint prog;
     Uint vertShader;
     Uint fragShader;
@@ -174,7 +149,9 @@ Uint ShaderProgram::MvGl2DemoLoadShaderBinaries(
     // Attach the shaders to the program
     glAttachShader(prog, vertShader);
     glAttachShader(prog, fragShader);
-    
+ 
+ 
+    //fixme:  should delete shader...
 #if 0
     // Delete the shaders
     glDeleteShader(vertShader);
@@ -183,29 +160,30 @@ Uint ShaderProgram::MvGl2DemoLoadShaderBinaries(
     
     // Link the shader program
     glLinkProgram(prog);
-    if (debugging)
-        MvGl2DemoShaderDebug(prog, GL_LINK_STATUS, "Program Link");
-    
+    getShaderDebugInfo(prog, GL_LINK_STATUS, "Program Link");
+   
+    mShaderProgramID = prog;
+
     return prog;
-#else  // GL_ES_VERSION_2_0
-    return 0;
-#endif // GL_ES_VERSION_2_0
+*/
 }
 
-void ShaderProgram::MvGl2DemoLogMessage(const char* message, ...)
+/*
+void ShaderProgram::printf(const char* message, ...)
 {
     va_list pArgList;
     char    szBuffer[512];
     
     va_start(pArgList, message);
-    _vsnprintf(szBuffer, sizeof(szBuffer) / sizeof(char), message, pArgList);
+    vsnprintf(szBuffer, sizeof(szBuffer) / sizeof(char), message, pArgList);
     va_end(pArgList);
     fprintf (stderr, szBuffer);
     
     return;
 }
+*/
 
-void ShaderProgram::MvGl2DemoShaderDebug(Uint obj, GLenum status, const char* op)
+void ShaderProgram::getShaderDebugInfo(Uint obj, GLenum status, const char* op)
 {
     int success;
     // log output.
@@ -225,8 +203,8 @@ void ShaderProgram::MvGl2DemoShaderDebug(Uint obj, GLenum status, const char* op
         }
     }
     if (str != NULL && *str != '\0') {
-        MvGl2DemoLogMessage("--- %s log ---\n", op);
-        MvGl2DemoLogMessage(str);
+        printf("--- %s log ---\n", op);
+        printf("%s.\n", str);
     }
     if (str) { free(str); }
     
@@ -239,8 +217,8 @@ void ShaderProgram::MvGl2DemoShaderDebug(Uint obj, GLenum status, const char* op
                 str = (char *)malloc(len * sizeof(char));
                 glGetShaderSource(obj, len, NULL, str);
                 if (str != NULL && *str != '\0') {
-                    MvGl2DemoLogMessage("--- %s code ---\n", op);
-                    MvGl2DemoLogMessage(str);
+                    printf("--- %s code ---\n", op);
+                    printf("%s.\n", str);
                 }
                 free(str);
             }
@@ -251,14 +229,14 @@ void ShaderProgram::MvGl2DemoShaderDebug(Uint obj, GLenum status, const char* op
     
     if (!success)
     {
-        MvGl2DemoLogMessage("--- %s failed ---\n", op);
+        printf("--- %s failed ---\n", op);
         exit(-1);
     }
 }
 
-char* ShaderProgram::MvGl2DemoLoadFile(const char *file)
+char* ShaderProgram::loadFile(const char *file)
 {
-    char path[1024];
+    char path[MAX_PATH_SIZE];
     struct stat st;
     char *data;
     FILE *f;
@@ -274,27 +252,27 @@ char* ShaderProgram::MvGl2DemoLoadFile(const char *file)
         f = fopen(path, "rb");
     }
     */
-    strncpy(path, file, 1000);
+    strncpy(path, file, MAX_PATH_SIZE);
     f = fopen(path, "rb");
     if (!f) {
-        MvGl2DemoLogMessage("Unable to open shader: %s.\n", file);
+        printf("Unable to open shader: %s.\n", file);
         return 0;
     }
 
     if(stat(path, &st)) {
-        MvGl2DemoLogMessage("Unable to stat shader: %s.\n", file);
+        printf("Unable to stat shader: %s.\n", file);
         fclose(f);
         return 0;
     }
 
     data = (char *)malloc(st.st_size + 1);
     if(!data) {
-        MvGl2DemoLogMessage("Unable to allocate memory for shader: %s\n", file);
+        printf("Unable to allocate memory for shader: %s\n", file);
         fclose(f);
         return 0;
     }
     if(fread(data, 1, st.st_size, f) != st.st_size) {
-        MvGl2DemoLogMessage("Unable to read shader: %s\n", file);
+        printf("Unable to read shader: %s\n", file);
 
         fclose(f);
         return 0;

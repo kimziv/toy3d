@@ -25,7 +25,7 @@ TOY3D_BEGIN_NAMESPACE
 
     }
 
-    void Camera::perspcective (Real left, Real right, Real bottom, Real top, Real n, Real f)
+    void Camera::perspective (Real left, Real right, Real bottom, Real top, Real n, Real f)
     {
 
         MvGl2DemoMatrixIdentity(mProjectionMatrix);

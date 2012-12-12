@@ -22,7 +22,7 @@ TOY3D_BEGIN_NAMESPACE
     void World::startRendering ()
     {
         Real matrix[MATRIX_4x4_SIZE];
-        RenderOperation renderOp;
+        RenderOperation *ro = NULL;
 
         printf ("Start rendering...\n");
 
@@ -37,15 +37,22 @@ TOY3D_BEGIN_NAMESPACE
         //update auto shader paramters 
         mShaderProgram->getShaderParameters()->updateAutoConstParams (&mAutoParamDataSource); 
 
+        ro = new RenderOperation ();
+
+        Uint index = mShaderProgram->getShaderParameters()->getAttrConstIndex (TOY3D_ATTR_VERTEX_INDEX);
+        ro->setShaderAttribution (TOY3D_ATTR_VERTEX_INDEX, index);
+
         //world矩阵应该与mesh矩阵运算
         for (int i = 0; i < mMeshCount; i++)
         {
-            mMeshes[i];
-            renderOp.setVertex( mMeshes[i]->getVertices(), mMeshes[i]->getVerticesCount() );
-            renderOp.setRenderMode( mMeshes[i]->getRenderMode() );
+            mMeshes[i]->getRenderOperation(ro);
 
-            mRenderer->render( &renderOp );
+            //fixme: set shader attribution index 
+
+            mRenderer->render(ro);
         }
+     
+        delete ro;
 
         return;
     }
@@ -60,29 +67,17 @@ TOY3D_BEGIN_NAMESPACE
         return mesh;
     } 
 
-    Camera* World::createCamera (Uchar *name) 
+    Camera* World::createCamera (const char *name) 
     { 
         //FIXME:  need multiple cameras 
         
         return &mCamera; 
     } 
 
-    ShaderProgram* World::createShaderProgram( ShaderType type,
-            Uchar *vert, Uint vertLength, Uchar *frag, Uint fragLength )
+    ShaderProgram* World::createShaderProgram()
     {
         //FIXME:  Maybe need to record which shader  is in use.
         mShaderProgram = new ShaderProgram();
-
-        //WARNING:加载失败的情况未处理
-
-        if( SHADER_SOURCE==type )
-        {
-            mShaderProgram->loadShaderSource( vert, frag);
-        }
-        else
-        {
-            mShaderProgram->loadShaerBinary( vert, vertLength, frag, fragLength );
-        }
 
         return mShaderProgram;
     }
