@@ -10,3 +10,10 @@
   * code style
   * CMake 管理代码
   * Data / Renderer 。Data部分与 OpenGL 无关
+
+=参考=
+
+  * ogre
+  * KplayGE
+  * jmonkey
+  *osg
