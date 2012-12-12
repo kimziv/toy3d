@@ -21,8 +21,19 @@ TOY3D_BEGIN_NAMESPACE
     {
     }
 
-    //提供glDrawArrays、glDrawElements两种方式
-    //目前只处理前一种方式
+
+    void Renderer::beginFrame()
+    {
+
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    }
+
+
+    void Renderer::endFrame()
+    {
+    }
+
+    
     void Renderer::render(RenderOperation *ro)
     {
         Uint mode;
@@ -38,8 +49,6 @@ TOY3D_BEGIN_NAMESPACE
         //glUniformMatrix4fv(index, 1, 0, mProjectionMatrix);
         //glUniformMatrix4fv(index, 1, 0, mViewMatrix);
 
-        //temp testing
-        setForeground( 1.0f, 0.0f, 0.0f, 1.0f );
 
         switch( ro->getRenderMode() )
         {
@@ -119,17 +128,12 @@ TOY3D_BEGIN_NAMESPACE
         return;
     }
 
-    void Renderer::setBackgroundColor( Real r, Real g, Real b, Real a)
+    void Renderer::setBackColor( Real r, Real g, Real b, Real a)
     {
         glClearColor( r, g, b, a );
         return;
     }
 
-    void Renderer::setForeground( Real r, Real g, Real b, Real a)
-    {
-        glClearColor( r, g, b, a );
-        return;
-    }
 
     void Renderer::setDepthTest(Uint flag, Uint funcMode)
     {

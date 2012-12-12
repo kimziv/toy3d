@@ -26,6 +26,9 @@ TOY3D_BEGIN_NAMESPACE
 
         printf ("Start rendering...\n");
 
+       
+
+
         //set AutoParamDataSource 
         //Fixme: where is world matrix value 
         mAutoParamDataSource.setWorldMatrix ( mWorldMatrix );
@@ -42,7 +45,10 @@ TOY3D_BEGIN_NAMESPACE
         Uint index = mShaderProgram->getShaderParameters()->getAttrConstIndex (TOY3D_ATTR_VERTEX_INDEX);
         ro->setShaderAttribution (TOY3D_ATTR_VERTEX_INDEX, index);
 
-        //world矩阵应该与mesh矩阵运算
+        mRenderer->setViewPort (0.0, 0.0, mWidth, mHeight);
+        mRenderer->beginFrame ();
+        mRenderer->setBackColor (mBackColorRed, mBackColorGreen, mBackColorBlue, mBackColorAlpha);
+
         for (int i = 0; i < mMeshCount; i++)
         {
             mMeshes[i]->getRenderOperation(ro);
@@ -51,6 +57,8 @@ TOY3D_BEGIN_NAMESPACE
 
             mRenderer->render(ro);
         }
+
+        mRenderer->endFrame ();
      
         delete ro;
 
@@ -102,6 +110,9 @@ TOY3D_BEGIN_NAMESPACE
 
     void World::setSize( Uint width, Uint height )
     {
+        mWidth = width;
+        mHeight = height;
+
         return;
     }
 
@@ -115,9 +126,14 @@ TOY3D_BEGIN_NAMESPACE
         return;
     }
 
-    void World::setWorldBkgColor( Real r, Real g, Real b, Real a)
+    void World::setBackColor( Real r, Real g, Real b, Real a)
     {
-        mRenderer->setBackgroundColor( r, g, b, a );
+
+        mBackColorRed = r;
+        mBackColorGreen = g;
+        mBackColorBlue = b;
+        mBackColorAlpha = a;
+
     }
     
 

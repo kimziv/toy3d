@@ -89,7 +89,7 @@ Uint ShaderProgram::loadShaderSource(const char *vertshader, const char *fragsha
     if( !prog )
     {
         TOY3D_PRINT("Error.FILE:%s, LINE:%d.\n", __FILE__, __LINE__ );
-        return;
+        return 0;
     }
     
     // Create the GL shader objects
@@ -258,14 +258,14 @@ char* ShaderProgram::loadFile(const char *file)
         f = fopen(path, "rb");
     }
     */
-    strncpy(path, file, MAX_PATH_SIZE);
-    f = fopen(path, "rb");
+//    strncpy(path, file, MAX_PATH_SIZE);
+    f = fopen(file, "rb");
     if (!f) {
         printf("Unable to open shader: %s.\n", file);
         return 0;
     }
 
-    if(stat(path, &st)) {
+    if(stat(file, &st)) {
         printf("Unable to stat shader: %s.\n", file);
         fclose(f);
         return 0;

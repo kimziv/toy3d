@@ -19,5 +19,5 @@ install (TARGETS rectangle
 	RUNTIME DESTINATION bin
 	)
 
-
+install (DIRECTORY res/ DESTINATION share/toy3d/rectangle)
 
