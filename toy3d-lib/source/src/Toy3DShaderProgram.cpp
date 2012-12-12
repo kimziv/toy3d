@@ -166,6 +166,7 @@ Uint ShaderProgram::loadShaderBinary(const char* vertBin, Uint vertBinSize,const
 
     return prog;
 */
+    return 0;
 }
 
 /*
