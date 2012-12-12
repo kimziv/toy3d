@@ -12,6 +12,12 @@
 #define WINDOW_W    500
 #define WINDOW_H    500
 
+#define SHADER_VERT_FILE "/usr/local/share/toy3d/rectangle/rect.glslv"
+#define SHADER_FRAG_FILE "/usr/local/share/toy3d/rectangle/rect.glslf"
+
+
+
+
 using namespace TOY3D;
 
 #define VERTEX_COUNT  6
@@ -35,17 +41,20 @@ void display()
     world->startRendering (); 
 
 	glFlush();
+    glutSwapBuffers ();
 }
 
 void init()
 {
+
+
     Real aspect;
     const Real nearz  = 1.0f;//5.0f;
     const Real farz   = 1000.0f;//60.0f;
 
     world = new World ();
     world->setSize(WINDOW_W, WINDOW_H);
-    world->setWorldBkgColor( 1.0f, 1.0f, 1.0f, 1.0f );
+    world->setBackColor (1.0, 1.0, 1.0, 1.0);
 
     Camera *camera = world->createCamera ("camera1");
     camera->lookAt (0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
@@ -55,7 +64,7 @@ void init()
         WINDOW_W/256.0f/aspect, -WINDOW_H/256.0f, WINDOW_H/256.0f, nearz, farz);
 
     ShaderProgram* shaderProgram = world->createShaderProgram();
-    shaderProgram->loadShaderSource ("f:\\vert.glslv", "f:\\frag.glslf");
+    shaderProgram->loadShaderSource (SHADER_VERT_FILE, SHADER_FRAG_FILE);
 
 
     ShaderProgramParams *params = new ShaderProgramParams ();
@@ -74,6 +83,7 @@ void init()
 
     Mesh *mesh = world->createMesh();
     mesh->setVertices (vertices, VERTEX_COUNT);
+    mesh->setRenderMode (TOY3D_TRIANGLE_STRIP);
 
 
 }
@@ -89,7 +99,7 @@ void keyboard(unsigned char key, int x, int y){
 int main(int argc, char** argv){
 
 	glutInit(&argc, argv);
-  	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+  	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
   	glutInitWindowSize(WINDOW_W, WINDOW_H);
   	glutInitWindowPosition(0,0);
   	glutCreateWindow("renctangle");
@@ -97,14 +107,17 @@ int main(int argc, char** argv){
 	glutIdleFunc(display);
   	glutKeyboardFunc(keyboard);
 
+
+
     glewInit();
     if (glewIsSupported("GL_VERSION_2_0"))
         printf("Ready for OpenGL 2.0\n");
-    else
-    {
+    else {
         printf("OpenGL 2.0 not supported\n");
         exit(1);
     }
+
+
 
   	init();
   	glutMainLoop();

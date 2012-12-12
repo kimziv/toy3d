@@ -21,14 +21,15 @@ TOY3D_BEGIN_NAMESPACE
 		Renderer ();
         ~Renderer ();
 
+        void beginFrame(); 
         void render(RenderOperation *ro);
+        void endFrame(); 
 
         void setWorldMatrix( Real matrix[MATRIX_4x4_SIZE] );
         void setProjectMatrix( Real matrix[MATRIX_4x4_SIZE] );
         void setViewMatrix( Real matrix[MATRIX_4x4_SIZE] );
 
-        void setBackgroundColor( Real r, Real g, Real b, Real a);
-        void setForeground( Real r, Real g, Real b, Real a);
+        void setBackColor( Real r, Real g, Real b, Real a);
         void setViewPort(Uint x, Uint y, Uint width, Uint height);
 
         void setDepthTest(Uint flag, Uint funcMode);

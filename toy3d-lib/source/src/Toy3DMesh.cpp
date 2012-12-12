@@ -7,6 +7,8 @@ TOY3D_BEGIN_NAMESPACE
     Mesh::Mesh() 
     {
 
+        mVertices = NULL;
+
     }
 
 

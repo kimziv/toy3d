@@ -19,6 +19,11 @@ TOY3D_BEGIN_NAMESPACE
         int     mWidth;
         int     mHeight;
 
+        Real mBackColorRed;
+        Real mBackColorGreen;
+        Real mBackColorBlue;
+        Real mBackColorAlpha;
+
         Uint   mMeshCount;
 
         Camera              mCamera;
@@ -47,7 +52,7 @@ TOY3D_BEGIN_NAMESPACE
         void setSize( Uint width, Uint height );
         void setWorldDepth( Uint flag, Uint funcMode );
         void setWorldBlend( Uint flag, Uint srcMode, Uint dstMode );
-        void setWorldBkgColor( Real r, Real g, Real b, Real a);
+        void setBackColor( Real r, Real g, Real b, Real a);
 	};
 
 
