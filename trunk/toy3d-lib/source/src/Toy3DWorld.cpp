@@ -118,6 +118,7 @@ TOY3D_BEGIN_NAMESPACE
 
     void World::setWorldDepth( Uint flag, Uint funcMode )
     {
+        mRenderer->setDepthTest(flag, funcMode);
         return;
     }
 

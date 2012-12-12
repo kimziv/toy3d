@@ -10,17 +10,20 @@ TOY3D_BEGIN_NAMESPACE
 ShaderProgram::ShaderProgram()
 {
     mShaderParams = 0;
+    mShaderProgramID = 0;
 }
 
 ShaderProgram::~ShaderProgram()
 {
     if( mShaderParams )
         FREEANDNULL(mShaderParams);
+
+    if( mShaderProgramID )
+    {
+        glDeleteShader(mShaderProgramID);
+        mShaderProgramID = 0;
+    }
 }
-
-
-
-
 
 
 void ShaderProgram::bindShaderParameters(ShaderProgramParams* pShaderPara)
@@ -242,7 +245,7 @@ void ShaderProgram::getShaderDebugInfo(Uint obj, GLenum status, const char* op)
 
 char* ShaderProgram::loadFile(const char *file)
 {
-    char path[MAX_PATH_SIZE];
+    //char path[MAX_PATH_SIZE];
     struct stat st;
     char *data;
     FILE *f;
