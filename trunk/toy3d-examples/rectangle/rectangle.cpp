@@ -5,6 +5,7 @@
 
 #include <toy3d/Toy3DCommon.h>
 #include <toy3d/Toy3DWorld.h>
+#include <toy3d/Toy3DShaderProgramParams.h>
 #include "data.h"
 
 
@@ -12,6 +13,11 @@
 #define WINDOW_H    500
 
 using namespace TOY3D;
+
+#define VERTEX_COUNT  1 
+
+Real vertices[VERTEX_COUNT * 3] = { 0.0, 0.0, 0.0
+};
 
 World *world = NULL;
 
@@ -28,7 +34,32 @@ void init()
 {
 
     world = new World ();
-    world->setMesh ();
+
+    Camera *camera = world->createCamera ("camera1");
+    camera->lookAt (0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+    camera->perspective (0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+
+    ShaderProgram* shaderProgram = world->createShaderProgram();
+    shaderProgram->loadShaderSource ("xxx.vert", "xxx.frag");
+
+
+    ShaderProgramParams *params = new ShaderProgramParams ();
+
+
+    //uniforms
+    params->setNamedAutoConstant (TOY3D_ACT_PROJECTION_MATRIX, "projMat");
+    params->setNamedAutoConstant (TOY3D_ACT_VIEW_MATRIX, "viewMat");
+    params->setNamedAutoConstant (TOY3D_ACT_WORLD_MATRIX, "worldMat");
+
+
+    //attributes
+    params->setNamedAttrConstant (TOY3D_ATTR_VERTEX_INDEX, "vertices");
+
+
+    shaderProgram->bindShaderParameters(params);
+
+    Mesh *mesh = world->createMesh();
+    mesh->setVertices (vertices, VERTEX_COUNT);
 
 
 }

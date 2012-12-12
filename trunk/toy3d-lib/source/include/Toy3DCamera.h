@@ -26,7 +26,7 @@ TOY3D_BEGIN_NAMESPACE
     public:
         void lookAt (Real eyex, Real eyey, Real eyez, Real centerx, Real centery, Real centerz, Real upx, Real upy, Real upz);
         //void perspcective (Real angle, Real aspect, Real near, Real far);
-        void perspcective (Real left, Real right, Real bottom, Real top, Real n, Real f);
+        void perspective (Real left, Real right, Real bottom, Real top, Real n, Real f);
         void getViewMatrix (Real m[MATRIX_MAX]);
         void getProjectionMatrix (Real m[MATRIX_MAX]);
 
