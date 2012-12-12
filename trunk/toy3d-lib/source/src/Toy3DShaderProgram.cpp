@@ -86,6 +86,11 @@ Uint ShaderProgram::loadShaderSource(const char *vertshader, const char *fragsha
     
     // Create the program
     prog = glCreateProgram();
+    if( !prog )
+    {
+        TOY3D_PRINT("Error.FILE:%s, LINE:%d.\n", __FILE__, __LINE__ );
+        return;
+    }
     
     // Create the GL shader objects
     vertShader = glCreateShader(GL_VERTEX_SHADER);

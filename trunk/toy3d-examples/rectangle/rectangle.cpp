@@ -1,6 +1,6 @@
 
-#include <GL/glew.h>
-#include <GL/glut.h>
+// #include <GL/glew.h>
+// #include <GL/glut.h>
 
 
 #include <toy3d/Toy3DCommon.h>
@@ -39,10 +39,13 @@ void display()
 
 void init()
 {
-    world = new World ();
     Real aspect;
     const Real nearz  = 1.0f;//5.0f;
     const Real farz   = 1000.0f;//60.0f;
+
+    world = new World ();
+    world->setSize(WINDOW_W, WINDOW_H);
+    world->setWorldBkgColor( 1.0f, 1.0f, 1.0f, 1.0f );
 
     Camera *camera = world->createCamera ("camera1");
     camera->lookAt (0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
@@ -93,6 +96,16 @@ int main(int argc, char** argv){
   	glutDisplayFunc(display);
 	glutIdleFunc(display);
   	glutKeyboardFunc(keyboard);
+
+    glewInit();
+    if (glewIsSupported("GL_VERSION_2_0"))
+        printf("Ready for OpenGL 2.0\n");
+    else
+    {
+        printf("OpenGL 2.0 not supported\n");
+        exit(1);
+    }
+
   	init();
   	glutMainLoop();
 
