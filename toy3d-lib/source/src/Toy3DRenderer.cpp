@@ -24,7 +24,6 @@ TOY3D_BEGIN_NAMESPACE
 
     void Renderer::beginFrame()
     {
-
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
@@ -45,11 +44,6 @@ TOY3D_BEGIN_NAMESPACE
             return;
         }
 
-        //glUniformMatrix4fv(index, 1, 0, mWorldMatrix);
-        //glUniformMatrix4fv(index, 1, 0, mProjectionMatrix);
-        //glUniformMatrix4fv(index, 1, 0, mViewMatrix);
-
-
         switch( ro->getRenderMode() )
         {
         case TOY3D_POINTS:
@@ -69,7 +63,7 @@ TOY3D_BEGIN_NAMESPACE
             break;
 
         case TOY3D_TRIANGLE_STRIP:
-            mode = TOY3D_TRIANGLE_STRIP;
+            mode = GL_TRIANGLE_STRIP;
             break;
 
         case TOY3D_TRIANGLE_FAN:
@@ -86,7 +80,7 @@ TOY3D_BEGIN_NAMESPACE
             index = ro->getVertexIndex();
             glVertexAttribPointer( index, 3, GL_FLOAT, 0, 0, ro->getVertex() );
             glEnableVertexAttribArray( index );
-            glDrawArrays( GL_TRIANGLES, 0,  ro->getVerticesCount() );
+            glDrawArrays( mode, 0,  ro->getVerticesCount() );
         }
 
         return;
@@ -137,6 +131,10 @@ TOY3D_BEGIN_NAMESPACE
 
     void Renderer::setDepthTest(Uint flag, Uint funcMode)
     {
+        //temp testing
+        glClearDepth(1.0f);
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_LEQUAL);
         return;
     }
 

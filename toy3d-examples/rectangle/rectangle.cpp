@@ -12,9 +12,11 @@
 #define WINDOW_W    500
 #define WINDOW_H    500
 
+
 #define SHADER_VERT_FILE "/usr/local/share/toy3d/rectangle/rect.glslv"
 #define SHADER_FRAG_FILE "/usr/local/share/toy3d/rectangle/rect.glslf"
-
+//#define SHADER_VERT_FILE "F:\\rectangle/rect.glslv"
+//#define SHADER_FRAG_FILE "F:\\rect.glslf"
 
 
 
@@ -55,13 +57,15 @@ void init()
     world = new World ();
     world->setSize(WINDOW_W, WINDOW_H);
     world->setBackColor (1.0, 1.0, 1.0, 1.0);
+    //temp test
+    world->setWorldDepth(0, 0);
 
     Camera *camera = world->createCamera ("camera1");
     camera->lookAt (0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 
     aspect = WINDOW_W / WINDOW_H;
-    camera->perspective (-WINDOW_W/256.0f/aspect,
-        WINDOW_W/256.0f/aspect, -WINDOW_H/256.0f, WINDOW_H/256.0f, nearz, farz);
+    //camera->perspective (-WINDOW_W/16, WINDOW_W/16, -WINDOW_H/16, WINDOW_H/16, nearz, farz);
+    camera->perspective (-3, 3, -3, 3, nearz, farz);
 
     ShaderProgram* shaderProgram = world->createShaderProgram();
     shaderProgram->loadShaderSource (SHADER_VERT_FILE, SHADER_FRAG_FILE);
