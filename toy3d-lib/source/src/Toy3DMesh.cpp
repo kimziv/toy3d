@@ -8,18 +8,19 @@ TOY3D_BEGIN_NAMESPACE
     {
 
         mVertices = NULL;
-
     }
 
 
     Mesh::~Mesh() 
     {
+        if( mVertices )
+            FREEANDNULL(mVertices);
     }
 
     void Mesh::setVertices (Real* vertices, Uint count)
     {
        if (mVertices) 
-           free (mVertices);
+           FREEANDNULL (mVertices);
 
        mVertexCount = count;
        Uint size = count * 3 * sizeof (Real);

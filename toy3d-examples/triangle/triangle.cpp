@@ -12,8 +12,10 @@
 #define WINDOW_H    500 
 
 
-#define SHADER_VERT_FILE "/usr/local/share/toy3d/triangle/triangle.glslv"
-#define SHADER_FRAG_FILE "/usr/local/share/toy3d/triangle/triangle.glslf"
+//#define SHADER_VERT_FILE "/usr/local/share/toy3d/triangle/triangle.glslv"
+//#define SHADER_FRAG_FILE "/usr/local/share/toy3d/triangle/triangle.glslf"
+#define SHADER_VERT_FILE "F:\\triangle.glslv"
+#define SHADER_FRAG_FILE "F:\\triangle.glslf"
 
 
 

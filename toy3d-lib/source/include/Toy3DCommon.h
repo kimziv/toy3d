@@ -47,7 +47,7 @@ extern "C" {
         pointer = NULL; \
     }
 
-#define TOY3D_PRINT(str, file, line) printf("%s, %s, %d.\n", str, file, line)
+#define TOY3D_PRINT(str, file, line) printf(str, file, line)
 
 
 //#define PRINT(file, format, ...) myprintf(file, format, ##args)
