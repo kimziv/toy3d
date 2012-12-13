@@ -54,10 +54,6 @@ extern "C" {
 //#define PRINT(file, format, args...) myprintf(file, format, __VA_ARGS__)
 
 
-#define MATRIX_SIZE 16
-#define MAX_PATH_SIZE 16
-
-
 
 /*********************************
 *  define type  

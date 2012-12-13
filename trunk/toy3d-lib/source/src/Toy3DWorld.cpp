@@ -24,6 +24,7 @@ TOY3D_BEGIN_NAMESPACE
         Real matrix[MATRIX_4x4_SIZE];
         RenderOperation *ro = NULL;
 
+        
 
         //set AutoParamDataSource 
         //Fixme: where is world matrix value 
