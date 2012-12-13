@@ -21,6 +21,7 @@ TOY3D_BEGIN_NAMESPACE
 		Renderer ();
         ~Renderer ();
 
+        void useShaderProgram(Uint id);
         void beginFrame(); 
         void render(RenderOperation *ro);
         void endFrame(); 

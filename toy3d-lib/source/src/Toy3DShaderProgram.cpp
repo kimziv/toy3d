@@ -38,11 +38,19 @@ void ShaderProgram::bindShaderParameters(ShaderProgramParams* pShaderPara)
         return;
     }
 
+    if (mShaderParams)  {
+       delete mShaderParams;
+       mShaderParams = NULL;
+    }
+ 
+
     mShaderParams = pShaderPara;
+
     count = mShaderParams->getAutoEntryCount();
     for( i=0; i<count; i++)
     {
         pName = mShaderParams->getAutoParamName( i );
+        printf ("uniform name = %s,  index = %d \n", pName, glGetUniformLocation (mShaderProgramID, (const char *)pName));
         mShaderParams->updateAutoConstIndex( pName,
             glGetUniformLocation(mShaderProgramID, (const char *)pName) );
     }
@@ -51,8 +59,9 @@ void ShaderProgram::bindShaderParameters(ShaderProgramParams* pShaderPara)
     for( i=0; i<count; i++)
     {
         pName = mShaderParams->getAttrParamName( i );
-        mShaderParams->updateAttrConstIndex( pName,
-            glGetUniformLocation(mShaderProgramID, (const char *)pName) );
+        printf ("attr name = %s,  index = %d \n", pName, glGetAttribLocation (mShaderProgramID, (const char *)pName));
+        mShaderParams->updateAttrConstIndex( pName, 
+            glGetAttribLocation (mShaderProgramID, (const char *)pName));
     }
 
     return;

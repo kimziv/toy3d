@@ -8,29 +8,23 @@
 #include <toy3d/Toy3DShaderProgramParams.h>
 
 
-#define WINDOW_W    500
-#define WINDOW_H    500
+#define WINDOW_W    500 
+#define WINDOW_H    500 
 
 
-#define SHADER_VERT_FILE "/usr/local/share/toy3d/rectangle/rect.glslv"
-#define SHADER_FRAG_FILE "/usr/local/share/toy3d/rectangle/rect.glslf"
-//#define SHADER_VERT_FILE "F:\\rectangle/rect.glslv"
-//#define SHADER_FRAG_FILE "F:\\rect.glslf"
+#define SHADER_VERT_FILE "/usr/local/share/toy3d/triangle/triangle.glslv"
+#define SHADER_FRAG_FILE "/usr/local/share/toy3d/triangle/triangle.glslf"
 
 
 
 using namespace TOY3D;
 
-#define VERTEX_COUNT  6
+#define VERTEX_COUNT 3 
 
 Real vertices[VERTEX_COUNT * 3] = {
-    -1.0f, -1.0f, 0.0f,
-    1.0f,  -1.0f, 0.0f,
-    -1.0f, 1.0f,  0.0f,
-    
-    1.0f, 1.0f, 0.0f,
-    1.0f, -1.0f, 0.0f,
-    -1.0f, 1.0f, 0.0f
+    0.0f, 0.5f, 0.0f,
+    -0.5f,  -0.5f, 0.0f,
+    0.5f, -0.5f,  0.0f,
 };
 
 World *world = NULL;
@@ -48,42 +42,21 @@ void display()
 void init()
 {
 
-
-    Real aspect;
-    const Real nearz  = 1.0f;//5.0f;
-    const Real farz   = 1000.0f;//60.0f;
-
     world = new World ();
     world->setSize(WINDOW_W, WINDOW_H);
-    world->setBackColor (1.0, 1.0, 0.0, 1.0);
+    world->setBackColor (1.0, 1.0, 1.0, 1.0);  //white back color
 
-//  fix it: Do not needed 
-//    world->setWorldDepth(0, 0);
-
-    Camera *camera = world->createCamera ("camera1");
-    camera->lookAt (0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
-
-    aspect = WINDOW_W / WINDOW_H;
-    //camera->perspective (-WINDOW_W/16, WINDOW_W/16, -WINDOW_H/16, WINDOW_H/16, nearz, farz);
-    camera->perspective (-3, 3, -3, 3, nearz, farz);
 
     ShaderProgram* shaderProgram = world->createShaderProgram();
     shaderProgram->loadShaderSource (SHADER_VERT_FILE, SHADER_FRAG_FILE);
 
 
     ShaderProgramParams *params = new ShaderProgramParams ();
-
-
-    //uniforms
-    params->setNamedAutoConstant (TOY3D_ACT_PROJECTION_MATRIX, "proj_mat");
-    params->setNamedAutoConstant (TOY3D_ACT_VIEW_MATRIX, "mview_mat");
-    //params->setNamedAutoConstant (TOY3D_ACT_WORLD_MATRIX, "worldMat");
-
-    //attributes
-    params->setNamedAttrConstant (TOY3D_ATTR_VERTEX_INDEX, "pos_attr");
-
-
+    //no shader uniforms ...
+    //shader attributes
+    params->setNamedAttrConstant (TOY3D_ATTR_VERTEX_INDEX, "vPosition");
     shaderProgram->bindShaderParameters(params);
+
 
     Mesh *mesh = world->createMesh();
     mesh->setVertices (vertices, VERTEX_COUNT);
@@ -106,7 +79,7 @@ int main(int argc, char** argv){
   	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
   	glutInitWindowSize(WINDOW_W, WINDOW_H);
   	glutInitWindowPosition(0,0);
-  	glutCreateWindow("renctangle");
+  	glutCreateWindow("triangle");
   	glutDisplayFunc(display);
 	glutIdleFunc(display);
   	glutKeyboardFunc(keyboard);
