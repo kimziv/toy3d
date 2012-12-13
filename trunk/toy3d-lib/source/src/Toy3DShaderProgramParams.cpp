@@ -175,7 +175,8 @@ void ShaderProgramParams::setNamedAttrConstant ( AttrConstantType type, char *na
         TOY3D_PRINT("setNamedAutoConstant failed. AutoConst name exist.\n", __FILE__, __LINE__);
         return;
     }
-    
+   
+ 
     AttrConstEntry *entry = new AttrConstEntry(type, name );
     mAttrConstEntries[mAttrCount++] = entry;
 

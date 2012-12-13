@@ -21,6 +21,10 @@ TOY3D_BEGIN_NAMESPACE
     {
     }
 
+    void Renderer:: useShaderProgram(Uint id)
+    {
+        glUseProgram(id);
+    }
 
     void Renderer::beginFrame()
     {
@@ -78,8 +82,19 @@ TOY3D_BEGIN_NAMESPACE
         if (mode)
         {
             index = ro->getVertexIndex();
+
+#if 0
+            printf ("index = %d. vertex count = %d.\n", index, ro->getVerticesCount());       
+            int i = 0;
+            Real *data = ro->getVertex();
+            for (i = 0; i < ro->getVerticesCount() * 3;i++)
+                printf ("%f,", data[i]);
+            printf ("\n");
+#endif
+
             glVertexAttribPointer( index, 3, GL_FLOAT, 0, 0, ro->getVertex() );
             glEnableVertexAttribArray( index );
+
             glDrawArrays( mode, 0,  ro->getVerticesCount() );
         }
 

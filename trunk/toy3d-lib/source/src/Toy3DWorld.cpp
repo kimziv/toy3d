@@ -24,10 +24,6 @@ TOY3D_BEGIN_NAMESPACE
         Real matrix[MATRIX_4x4_SIZE];
         RenderOperation *ro = NULL;
 
-        printf ("Start rendering...\n");
-
-       
-
 
         //set AutoParamDataSource 
         //Fixme: where is world matrix value 
@@ -54,7 +50,7 @@ TOY3D_BEGIN_NAMESPACE
             mMeshes[i]->getRenderOperation(ro);
 
             //fixme: set shader attribution index 
-
+            mRenderer->useShaderProgram (mShaderProgram->getShaderProgramID());
             mRenderer->render(ro);
         }
 
@@ -100,13 +96,6 @@ TOY3D_BEGIN_NAMESPACE
         printf ("Set mesh...\n");
     }
 
-    void World::setShaderProgram()
-    {
-        printf ("Set shader...\n");
-
-        if( mShaderProgram )
-            glUseProgram( mShaderProgram->getShaderProgramID() );
-    }
 
     void World::setSize( Uint width, Uint height )
     {

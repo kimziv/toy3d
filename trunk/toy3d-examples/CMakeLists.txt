@@ -19,6 +19,7 @@ find_package(OpenGL)
 
 
 ADD_SUBDIRECTORY(rectangle)
+ADD_SUBDIRECTORY(triangle)
 
 
 else ()
