@@ -45,7 +45,7 @@ TOY3D_BEGIN_NAMESPACE
         mRenderer->beginFrame ();
         mRenderer->setBackColor (mBackColorRed, mBackColorGreen, mBackColorBlue, mBackColorAlpha);
 
-        for (int i = 0; i < mMeshCount; i++)
+        for (Uint i = 0; i < mMeshCount; i++)
         {
             mMeshes[i]->getRenderOperation(ro);
 
@@ -124,6 +124,12 @@ TOY3D_BEGIN_NAMESPACE
         mBackColorBlue = b;
         mBackColorAlpha = a;
 
+    }
+
+    void World::resize( Uint width, Uint height )
+    {
+        setSize( width, height );
+        return;
     }
     
 
