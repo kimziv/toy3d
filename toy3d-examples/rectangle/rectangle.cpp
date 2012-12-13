@@ -12,12 +12,13 @@
 #define WINDOW_H    500
 
 
-//#define SHADER_VERT_FILE "/usr/local/share/toy3d/rectangle/rect.glslv"
-//#define SHADER_FRAG_FILE "/usr/local/share/toy3d/rectangle/rect.glslf"
-
-
+#ifdef VC6
 #define SHADER_VERT_FILE "C:/Program Files (x86)/TOY3D-EXAMPLES/share/toy3d/rectangle/rect.glslv"
 #define SHADER_FRAG_FILE "C:/Program Files (x86)/TOY3D-EXAMPLES/share/toy3d/rectangle/rect.glslf"
+#else
+#define SHADER_VERT_FILE "/usr/local/share/toy3d/rectangle/rect.glslv"
+#define SHADER_FRAG_FILE "/usr/local/share/toy3d/rectangle/rect.glslf"
+#endif
 
 
 using namespace TOY3D;
@@ -35,6 +36,7 @@ Real vertices[VERTEX_COUNT * 3] = {
 };
 
 World *world = NULL;
+Camera *camera = NULL;
 
 
 void display()
@@ -46,9 +48,28 @@ void display()
     glutSwapBuffers ();
 }
 
+
+void changeSize( int w, int h ) 
+{
+    Real aspect, fovy;
+    Real nearz  = 1.0f;//5.0f;
+    Real farz   = 1000.0f;//60.0f;
+
+    world->setSize(w, h);
+
+    aspect = w / h;
+    fovy = 60;
+    camera->perspective (fovy, aspect, nearz, farz);
+    camera->lookAt (0.0, 0.0, -3.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+  
+    return;
+}
+
+
+
 void init()
 {
-    Real aspect;
+    Real aspect, fovy;
     const Real nearz  = 1.0f;//5.0f;
     const Real farz   = 1000.0f;//60.0f;
 
@@ -59,13 +80,16 @@ void init()
 //  fix it: Do not needed 
 //    world->setWorldDepth(0, 0);
 
-    Camera *camera = world->createCamera ("camera1");
-    camera->lookAt (0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+    camera = world->createCamera ("camera1");
+/*
+    camera->lookAt (0.0, 0.0, -3.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 
     aspect = WINDOW_W / WINDOW_H;
-    camera->perspective (-WINDOW_W/256.0f/aspect, WINDOW_W/256.0f/aspect, -WINDOW_H/256.0f, WINDOW_H/256.0f, nearz, farz);
-    //camera->perspective (-3, 3, -3, 3, nearz, farz);
-
+    fovy = 60;
+    camera->perspective (fovy, aspect, nearz, farz);
+    //camera->perspective (-1, 1, -1, 1, nearz, farz);
+    //camera->ortho2D (-3, 3, -3, 3, nearz, farz);
+*/
     ShaderProgram* shaderProgram = world->createShaderProgram();
     shaderProgram->loadShaderSource (SHADER_VERT_FILE, SHADER_FRAG_FILE);
 
@@ -91,6 +115,7 @@ void init()
     return;
 }
 
+
 void keyboard(unsigned char key, int x, int y){
   switch(key) {
     case 'q': case 'Q': case 27:
@@ -101,11 +126,7 @@ void keyboard(unsigned char key, int x, int y){
   return;
 }
 
-void changeSize( int w, int h ) 
-{
-    world->setSize(w, h);
-    return;
-}
+
 int main(int argc, char** argv){
 
 	glutInit(&argc, argv);

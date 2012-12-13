@@ -7,6 +7,18 @@ if(NOT CMAKE_BUILD_TYPE)
 ENDIF()
 
 
+
+if (WIN32)
+
+add_definitions(-DVC6)
+    
+elseif (APPLE)
+
+elseif (UNIX)
+    
+endif(WIN32)
+
+
 #SET( GLES "YES" )
 
 add_definitions(-DOPENGL)

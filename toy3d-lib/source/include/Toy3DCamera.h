@@ -6,13 +6,12 @@
 
 TOY3D_BEGIN_NAMESPACE
 
-#define MATRIX_MAX  16
 
     class Camera 
     {
 	private:
-        Real mProjectionMatrix[MATRIX_MAX];
-        Real mViewMatrix[MATRIX_MAX];
+        Real mProjectionMatrix[MATRIX_4x4_SIZE];
+        Real mViewMatrix[MATRIX_4x4_SIZE];
 
 /*
         Matrix4 mProjectionMatrix;
@@ -25,13 +24,16 @@ TOY3D_BEGIN_NAMESPACE
 
     public:
         void lookAt (Real eyex, Real eyey, Real eyez, Real centerx, Real centery, Real centerz, Real upx, Real upy, Real upz);
-        //void perspcective (Real angle, Real aspect, Real near, Real far);
-        void perspective (Real left, Real right, Real bottom, Real top, Real n, Real f);
-        void getViewMatrix (Real m[MATRIX_MAX]);
-        void getProjectionMatrix (Real m[MATRIX_MAX]);
+        void perspective (Real left, Real right, Real bottom, Real top, Real near, Real far);
+        void perspective (Real fovy, Real aspect, Real near, Real far);
+        void ortho2D (Real left, Real right, Real bottom, Real top, Real near, Real far);
+        void getViewMatrix (Real m[MATRIX_4x4_SIZE]);
+        void getProjectionMatrix (Real m[MATRIX_4x4_SIZE]);
 
     public:
-        void frustum(Real m[16], Real l, Real r, Real b, Real t, Real n, Real f);
+        void frustum(Real m[MATRIX_4x4_SIZE], Real l, Real r, Real b, Real t, Real n, Real f);
+        void ortho(Real m[MATRIX_4x4_SIZE], Real l, Real r, Real b, Real t, Real n, Real f);
+
 
 
     };
