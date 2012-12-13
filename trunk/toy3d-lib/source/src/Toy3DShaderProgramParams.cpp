@@ -49,7 +49,7 @@ void ShaderProgramParams::setNamedAutoConstant ( AutoConstantType type, char *na
 {
     if( searchNamedAutoConst(name, 0) )
     {
-        TOY3D_PRINT("setNamedAutoConstant failed. AutoConst name exist.\n", __FILE__, __LINE__);
+        TOY3D_PRINT("setNamedAutoConstant failed. AutoConst name exist.", __FILE__, __LINE__);
         return;
     }
 
@@ -74,7 +74,7 @@ void ShaderProgramParams::updateAutoConstIndex ( char *name, Uint index )
     Uint position = 0;
     if( !searchNamedAutoConst(name, &position) )
     {
-        TOY3D_PRINT("updateAutoConstIndex failed. AutoConst name doesn't exist.\n", __FILE__, __LINE__);
+        TOY3D_PRINT("updateAutoConstIndex failed. AutoConst name doesn't exist.", __FILE__, __LINE__);
         return;
     }
 
@@ -172,7 +172,7 @@ void ShaderProgramParams::setNamedAttrConstant ( AttrConstantType type, char *na
 {
     if( searchNamedAttrConst(name, 0) )
     {
-        TOY3D_PRINT("setNamedAutoConstant failed. AutoConst name exist.\n", __FILE__, __LINE__);
+        TOY3D_PRINT("setNamedAutoConstant failed. AutoConst name exist.", __FILE__, __LINE__);
         return;
     }
    
@@ -188,7 +188,7 @@ void ShaderProgramParams::updateAttrConstIndex ( char *name, Uint index )
     Uint position = 0;
     if( !searchNamedAttrConst(name, &position) )
     {
-        TOY3D_PRINT("updateAutoConstIndex failed. AutoConst name doesn't exist.\n", __FILE__, __LINE__);
+        TOY3D_PRINT("updateAutoConstIndex failed. AutoConst name doesn't exist.", __FILE__, __LINE__);
         return;
     }
     
@@ -209,7 +209,7 @@ char* ShaderProgramParams::getAttrParamName( Uint index )
 
 Uint ShaderProgramParams::getAttrConstIndex( AttrConstantType type )
 {
-    for (int i=0; i<mAttrCount; i++)
+    for (Uint i=0; i<mAttrCount; i++)
     {
         if( mAttrConstEntries[i]->type == type)
             return mAttrConstEntries[i]->index;

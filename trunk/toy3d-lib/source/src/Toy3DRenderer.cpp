@@ -44,7 +44,7 @@ TOY3D_BEGIN_NAMESPACE
 
         if( !ro )
         {
-            TOY3D_PRINT("render:NULL POINTER.\n", __FILE__, __LINE__);
+            TOY3D_PRINT("render:NULL POINTER.", __FILE__, __LINE__);
             return;
         }
 

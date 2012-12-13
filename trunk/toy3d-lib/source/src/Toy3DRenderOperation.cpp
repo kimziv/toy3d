@@ -27,7 +27,7 @@ TOY3D_BEGIN_NAMESPACE
     {
         if( !vertices || !count )
         {
-            TOY3D_PRINT("NULL POINTER.\n", __FILE__, __LINE__);
+            TOY3D_PRINT("NULL POINTER.", __FILE__, __LINE__);
             return;
         }
 
@@ -40,7 +40,7 @@ TOY3D_BEGIN_NAMESPACE
     {
         if( !colors || !count )
         {
-            TOY3D_PRINT("NULL POINTER.\n", __FILE__, __LINE__);
+            TOY3D_PRINT("NULL POINTER.", __FILE__, __LINE__);
             return;
         }
         
@@ -53,7 +53,7 @@ TOY3D_BEGIN_NAMESPACE
     {
         if( !uvs || !count )
         {
-            TOY3D_PRINT("NULL POINTER.\n", __FILE__, __LINE__);
+            TOY3D_PRINT("NULL POINTER.", __FILE__, __LINE__);
             return;
         }
         
@@ -66,7 +66,7 @@ TOY3D_BEGIN_NAMESPACE
     {
         if( !normals || !count )
         {
-            TOY3D_PRINT("NULL POINTER.\n", __FILE__, __LINE__);
+            TOY3D_PRINT("NULL POINTER.", __FILE__, __LINE__);
             return;
         }
         

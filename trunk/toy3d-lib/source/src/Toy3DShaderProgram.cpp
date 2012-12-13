@@ -33,14 +33,14 @@ void ShaderProgram::bindShaderParameters(ShaderProgramParams* pShaderPara)
 
     if( !pShaderPara )
     {
-        //TOY3D_PRINT("NULL POINTER.FILE: %s, LINE: %d.\n", __FILE__, __LINE__ );
-        TOY3D_PRINT("NULL POINTER.\n", __FILE__, __LINE__);
+        TOY3D_PRINT("NULL POINTER.", __FILE__, __LINE__);
         return;
     }
 
     if (mShaderParams)  {
-       delete mShaderParams;
-       mShaderParams = NULL;
+       //delete mShaderParams;
+       //mShaderParams = NULL;
+        FREEANDNULL(mShaderParams);
     }
  
 
@@ -60,7 +60,8 @@ void ShaderProgram::bindShaderParameters(ShaderProgramParams* pShaderPara)
     {
         pName = mShaderParams->getAttrParamName( i );
         printf ("attr name = %s,  index = %d \n", pName, glGetAttribLocation (mShaderProgramID, (const char *)pName));
-        mShaderParams->updateAttrConstIndex( pName, 
+        mShaderParams->updateAttrConstIndex( pName,
+ 
             glGetAttribLocation (mShaderProgramID, (const char *)pName));
     }
 
@@ -100,7 +101,7 @@ Uint ShaderProgram::loadShaderSource(const char *vertshader, const char *fragsha
     prog = glCreateProgram();
     if( !prog )
     {
-        TOY3D_PRINT("Error.FILE:%s, LINE:%d.\n", __FILE__, __LINE__ );
+        TOY3D_PRINT("glCreateProgram Failed.", __FILE__, __LINE__ );
         return 0;
     }
     
