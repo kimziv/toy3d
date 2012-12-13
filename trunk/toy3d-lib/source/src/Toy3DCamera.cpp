@@ -18,7 +18,7 @@ TOY3D_BEGIN_NAMESPACE
     {
 
         MvGl2DemoMatrixIdentity(mViewMatrix);
-        MvGl2DemoMatrixTranslate(mViewMatrix, 0.0f, 0.0f, 5.0f);
+        MvGl2DemoMatrixTranslate(mViewMatrix, 0.0f, 0.0f, -3.0f);
         //MvGl2DemoMatrixRotate(mViewMatrix, 20.0f, 1.0f, 0.0f, 0.0f);
         //MvGl2DemoMatrixRotate(mViewMatrix, 30.0f, 0.0f, 1.0f, 0.0f);
         //MvGl2DemoMatrixRotate(mViewMatrix,  0.0f, 0.0f, 0.0f, 1.0f);

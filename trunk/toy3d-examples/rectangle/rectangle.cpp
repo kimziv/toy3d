@@ -12,11 +12,12 @@
 #define WINDOW_H    500
 
 
-#define SHADER_VERT_FILE "/usr/local/share/toy3d/rectangle/rect.glslv"
-#define SHADER_FRAG_FILE "/usr/local/share/toy3d/rectangle/rect.glslf"
-//#define SHADER_VERT_FILE "F:\\rectangle/rect.glslv"
-//#define SHADER_FRAG_FILE "F:\\rect.glslf"
+//#define SHADER_VERT_FILE "/usr/local/share/toy3d/rectangle/rect.glslv"
+//#define SHADER_FRAG_FILE "/usr/local/share/toy3d/rectangle/rect.glslf"
 
+
+#define SHADER_VERT_FILE "C:/Program Files (x86)/TOY3D-EXAMPLES/share/toy3d/rectangle/rect.glslv"
+#define SHADER_FRAG_FILE "C:/Program Files (x86)/TOY3D-EXAMPLES/share/toy3d/rectangle/rect.glslf"
 
 
 using namespace TOY3D;
@@ -47,8 +48,6 @@ void display()
 
 void init()
 {
-
-
     Real aspect;
     const Real nearz  = 1.0f;//5.0f;
     const Real farz   = 1000.0f;//60.0f;
@@ -64,8 +63,8 @@ void init()
     camera->lookAt (0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 
     aspect = WINDOW_W / WINDOW_H;
-    //camera->perspective (-WINDOW_W/16, WINDOW_W/16, -WINDOW_H/16, WINDOW_H/16, nearz, farz);
-    camera->perspective (-3, 3, -3, 3, nearz, farz);
+    camera->perspective (-WINDOW_W/256.0f/aspect, WINDOW_W/256.0f/aspect, -WINDOW_H/256.0f, WINDOW_H/256.0f, nearz, farz);
+    //camera->perspective (-3, 3, -3, 3, nearz, farz);
 
     ShaderProgram* shaderProgram = world->createShaderProgram();
     shaderProgram->loadShaderSource (SHADER_VERT_FILE, SHADER_FRAG_FILE);
@@ -77,10 +76,10 @@ void init()
     //uniforms
     params->setNamedAutoConstant (TOY3D_ACT_PROJECTION_MATRIX, "proj_mat");
     params->setNamedAutoConstant (TOY3D_ACT_VIEW_MATRIX, "mview_mat");
-    //params->setNamedAutoConstant (TOY3D_ACT_WORLD_MATRIX, "worldMat");
+    params->setNamedAutoConstant (TOY3D_ACT_WORLD_MATRIX, "worldMat");
 
     //attributes
-    params->setNamedAttrConstant (TOY3D_ATTR_VERTEX_INDEX, "pos_attr");
+    params->setNamedAttrConstant (TOY3D_ATTR_VERTEX_INDEX, "vPosition");
 
 
     shaderProgram->bindShaderParameters(params);
@@ -89,7 +88,7 @@ void init()
     mesh->setVertices (vertices, VERTEX_COUNT);
     mesh->setRenderMode (TOY3D_TRIANGLE_STRIP);
 
-
+    return;
 }
 
 void keyboard(unsigned char key, int x, int y){
@@ -98,8 +97,15 @@ void keyboard(unsigned char key, int x, int y){
       exit(0);
       break;
   }
+
+  return;
 }
 
+void changeSize( int w, int h ) 
+{
+    world->setSize(w, h);
+    return;
+}
 int main(int argc, char** argv){
 
 	glutInit(&argc, argv);
@@ -109,8 +115,8 @@ int main(int argc, char** argv){
   	glutCreateWindow("renctangle");
   	glutDisplayFunc(display);
 	glutIdleFunc(display);
+    glutReshapeFunc(changeSize);
   	glutKeyboardFunc(keyboard);
-
 
 
     glewInit();
