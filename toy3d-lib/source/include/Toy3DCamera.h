@@ -13,10 +13,6 @@ TOY3D_BEGIN_NAMESPACE
         Real mProjectionMatrix[MATRIX_4x4_SIZE];
         Real mViewMatrix[MATRIX_4x4_SIZE];
 
-/*
-        Matrix4 mProjectionMatrix;
-        Matrix4 mViewMatrix;
-*/
 
 	public:
         Camera();
@@ -29,6 +25,8 @@ TOY3D_BEGIN_NAMESPACE
         void ortho2D (Real left, Real right, Real bottom, Real top, Real near, Real far);
         void getViewMatrix (Real m[MATRIX_4x4_SIZE]);
         void getProjectionMatrix (Real m[MATRIX_4x4_SIZE]);
+
+
 
     public:
         void frustum(Real m[MATRIX_4x4_SIZE], Real l, Real r, Real b, Real t, Real n, Real f);

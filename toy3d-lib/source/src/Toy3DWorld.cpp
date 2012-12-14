@@ -134,4 +134,16 @@ TOY3D_BEGIN_NAMESPACE
     }
     
 
+
+    void World::rotate (Real x, Real y, Real z)
+    {
+        MvGl2DemoMatrixIdentity(mWorldMatrix);
+        MvGl2DemoMatrixRotate(mWorldMatrix, x, 1.0f, 0.0f, 0.0f);
+        MvGl2DemoMatrixRotate(mWorldMatrix, y, 0.0f, 1.0f, 0.0f);
+        MvGl2DemoMatrixRotate(mWorldMatrix, z, 0.0f, 0.0f, 1.0f);
+      
+        return;
+    }
+
+
 TOY3D_END_NAMESPACE

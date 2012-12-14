@@ -26,6 +26,8 @@ TOY3D_BEGIN_NAMESPACE
         RenderMode mRenderMode;
         Real *mVertices;
         Uint mVertexCount;
+       
+        Real mModelMatrix [MATRIX_4x4_SIZE]; 
 
 
     public:
@@ -41,6 +43,8 @@ TOY3D_BEGIN_NAMESPACE
         Uint getVerticesCount();
 
         void getRenderOperation(RenderOperation* ro);
+
+        void translate (Real x, Real y, Real z);
 
 
     };
