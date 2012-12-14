@@ -22,20 +22,21 @@ TOY3D_BEGIN_NAMESPACE
     void World::startRendering ()
     {
         Real matrix[MATRIX_4x4_SIZE];
+        Real mesh_matrix[MATRIX_4x4_SIZE];
         RenderOperation *ro = NULL;
 
         
 
         //set AutoParamDataSource 
         //Fixme: where is world matrix value 
-        mAutoParamDataSource.setWorldMatrix ( mWorldMatrix );
+//        mAutoParamDataSource.setWorldMatrix ( mWorldMatrix );
         mCamera.getViewMatrix( matrix );
         mAutoParamDataSource.setViewMatrix ( matrix );
         mCamera.getProjectionMatrix( matrix );
         mAutoParamDataSource.setProjectionMatrix( matrix ); 
 
         //update auto shader paramters 
-        mShaderProgram->getShaderParameters()->updateAutoConstParams (&mAutoParamDataSource); 
+//        mShaderProgram->getShaderParameters()->updateAutoConstParams (&mAutoParamDataSource); 
 
         ro = new RenderOperation ();
 
@@ -48,6 +49,13 @@ TOY3D_BEGIN_NAMESPACE
 
         for (Uint i = 0; i < mMeshCount; i++)
         {
+            mMeshes[i]->getModelMatrix (mesh_matrix);
+            MvGl2DemoMatrixCopy (matrix, mWorldMatrix);
+            MvGl2DemoMatrixMultiply (matrix, mesh_matrix);
+            //mMeshes[i]->getModelMatrix (matrix);
+            mAutoParamDataSource.setWorldMatrix ( matrix );
+            mShaderProgram->getShaderParameters()->updateAutoConstParams (&mAutoParamDataSource); 
+
             mMeshes[i]->getRenderOperation(ro);
 
             //fixme: set shader attribution index 
