@@ -21,6 +21,15 @@ void AutoParamDataSource::setWorldMatrix( Real matrix[MATRIX_4x4_SIZE] )
 void AutoParamDataSource::setProjectionMatrix( Real matrix[MATRIX_4x4_SIZE] )
 {
     memcpy( mProjectionMatrix, matrix, MATRIX_4x4_SIZE*sizeof(Real) );
+
+#if 0
+    int i = 0;
+    printf ("data source projection marix:\n");
+    for (i = 0; i < MATRIX_4x4_SIZE; i++)
+        printf ("%f,", mProjectionMatrix[i]);
+    printf ("\n");
+#endif
+
 }
 
 void AutoParamDataSource::setViewMatrix( Real matrix[MATRIX_4x4_SIZE] )

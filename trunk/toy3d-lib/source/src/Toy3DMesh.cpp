@@ -1,13 +1,14 @@
 
 #include "Toy3DMesh.h"
+#include "Toy3DMath.h"
 
 
 TOY3D_BEGIN_NAMESPACE
 
     Mesh::Mesh() 
     {
-
         mVertices = NULL;
+        MvGl2DemoMatrixIdentity( mModelMatrix );
     }
 
 
@@ -54,6 +55,13 @@ TOY3D_BEGIN_NAMESPACE
             ro->setVertex( mVertices, mVertexCount);
             ro->setRenderMode( mRenderMode );
         }
+    }
+
+    void Mesh::translate (Real x, Real y, Real z)
+    {
+        MvGl2DemoMatrixIdentity(mModelMatrix);
+        MvGl2DemoMatrixTranslate(mModelMatrix, x, y, z);
+        
     }
 
 

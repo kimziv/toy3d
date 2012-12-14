@@ -8,8 +8,8 @@
 #include <toy3d/Toy3DShaderProgramParams.h>
 
 
-#define WINDOW_W    500
-#define WINDOW_H    500
+#define WINDOW_W    800
+#define WINDOW_H    600
 
 
 #ifdef VC6
@@ -57,7 +57,7 @@ void changeSize( int w, int h )
 
     world->setSize(w, h);
 
-    aspect = w / h;
+    aspect = 1.0 * w / h;
     fovy = 60;
     camera->perspective (fovy, aspect, nearz, farz);
     camera->lookAt (0.0, 0.0, -3.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
@@ -99,8 +99,8 @@ void init()
 
     //uniforms
     params->setNamedAutoConstant (TOY3D_ACT_PROJECTION_MATRIX, "proj_mat");
-    params->setNamedAutoConstant (TOY3D_ACT_VIEW_MATRIX, "mview_mat");
-    params->setNamedAutoConstant (TOY3D_ACT_WORLD_MATRIX, "worldMat");
+    params->setNamedAutoConstant (TOY3D_ACT_VIEW_MATRIX, "view_mat");
+    params->setNamedAutoConstant (TOY3D_ACT_WORLD_MATRIX, "world_mat");
 
     //attributes
     params->setNamedAttrConstant (TOY3D_ATTR_VERTEX_INDEX, "vPosition");
@@ -115,12 +115,19 @@ void init()
     return;
 }
 
+Real angle_y = 0.0f;
 
 void keyboard(unsigned char key, int x, int y){
   switch(key) {
     case 'q': case 'Q': case 27:
       exit(0);
       break;
+
+    case 'p': case 'P': case 26:
+      world->rotate (0.0f, angle_y, 0.0f);
+      angle_y += 10;
+      break;
+
   }
 
   return;

@@ -53,6 +53,8 @@ TOY3D_BEGIN_NAMESPACE
         void setWorldBlend( Uint flag, Uint srcMode, Uint dstMode );
         void setBackColor( Real r, Real g, Real b, Real a);
         void resize( Uint width, Uint height );
+
+        void rotate (Real x, Real y, Real z);
 	};
 
 
