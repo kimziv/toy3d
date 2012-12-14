@@ -57,13 +57,31 @@ TOY3D_BEGIN_NAMESPACE
         }
     }
 
+
+    void Mesh::getModelMatrix (Real matrix[MATRIX_4x4_SIZE])
+    {
+        memcpy( matrix, mModelMatrix, MATRIX_4x4_SIZE*sizeof(Real) );
+        return ;
+    }
+
+
     void Mesh::translate (Real x, Real y, Real z)
     {
-        MvGl2DemoMatrixIdentity(mModelMatrix);
+        
         MvGl2DemoMatrixTranslate(mModelMatrix, x, y, z);
         
     }
 
+
+    void Mesh::rotate (Real x, Real y, Real z)
+    {
+
+
+        MvGl2DemoMatrixRotate(mModelMatrix, x, 1.0f, 0.0f, 0.0f);
+        MvGl2DemoMatrixRotate(mModelMatrix, y, 0.0f, 1.0f, 0.0f);
+        MvGl2DemoMatrixRotate(mModelMatrix, z, 0.0f, 0.0f, 1.0f);
+
+    }
 
 
 

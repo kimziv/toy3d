@@ -45,7 +45,8 @@ TOY3D_BEGIN_NAMESPACE
         void getRenderOperation(RenderOperation* ro);
 
         void translate (Real x, Real y, Real z);
-
+        void rotate (Real x, Real y, Real z);
+        void getModelMatrix (Real matrix[MATRIX_4x4_SIZE]);
 
     };
 
