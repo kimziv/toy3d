@@ -74,7 +74,7 @@ TOY3D_BEGIN_NAMESPACE
         //mNormalsCount = count;
         return;
     }
-    
+/*
     void RenderOperation::setVertexIndex( Uint index)
     {
         mVertexIndex = index;
@@ -98,7 +98,7 @@ TOY3D_BEGIN_NAMESPACE
         mNormalIndex = index;
         return;
     }
-
+*/
     RenderMode RenderOperation::getRenderMode()
     {
         return mRenderMode;
@@ -143,7 +143,7 @@ TOY3D_BEGIN_NAMESPACE
     {
         return mNormalsCount;
     }
-*/
+
     Uint RenderOperation::getVertexIndex()
     {
         return mVertexIndex;
@@ -163,17 +163,38 @@ TOY3D_BEGIN_NAMESPACE
     {
         return mNormalIndex;
     }
-
+*/
     void RenderOperation::setShaderAttribution (AttrConstantType type, Uint index)
     {
-        switch(type) {
+        switch(type)
+        {
+        case TOY3D_ATTR_VERTEX_INDEX:
+            mVertexIndex = index;
+            break;
 
-            case TOY3D_ATTR_VERTEX_INDEX:
-                mVertexIndex = index;
-                break;
+        default:
+            ;
+        }
+    }
 
-            default:
-                ;
+    Uint RenderOperation::getShaderAttribution(AttrConstantType type)
+    {
+        switch( type )
+        {
+        case TOY3D_ATTR_VERTEX_INDEX:
+            return mVertexIndex;
+
+        case TOY3D_ATTR_COLOR_INDEX:
+            return mColorIndex;
+
+        case TOY3D_ATTR_UV_INDEX:
+            return mUVIndex;
+
+        case TOY3D_ATTR_NORMAL_INDEX:
+            return mNormalIndex;
+
+        default:
+            return 0;
         }
     }
 

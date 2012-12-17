@@ -81,7 +81,8 @@ TOY3D_BEGIN_NAMESPACE
 
         if (mode)
         {
-            index = ro->getVertexIndex();
+            //index = ro->getVertexIndex();
+            index = ro->getShaderAttribution( TOY3D_ATTR_VERTEX_INDEX );
 
 #if 0
             printf ("index = %d. vertex count = %d.\n", index, ro->getVerticesCount());       
