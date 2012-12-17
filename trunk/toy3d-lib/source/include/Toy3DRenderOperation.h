@@ -36,10 +36,10 @@ TOY3D_BEGIN_NAMESPACE
         void setUVs(Real *uvs, Uint count);
         void setNormals(Real *normals, Uint count);
 
-        void setVertexIndex( Uint index);
-        void setColorIndex( Uint index);
-        void setUVIndex( Uint index);
-        void setNormalIndex( Uint index);
+        //void setVertexIndex( Uint index);
+        //void setColorIndex( Uint index);
+        //void setUVIndex( Uint index);
+        //void setNormalIndex( Uint index);
 
         void setShaderAttribution (AttrConstantType type, Uint index);
 
@@ -55,10 +55,11 @@ TOY3D_BEGIN_NAMESPACE
         //Uint getUVsCount();
         //Uint getNormalsCount();
 
-        Uint getVertexIndex();
-        Uint getColorIndex();
-        Uint getUVIndex();
-        Uint getNormalIndex();
+        Uint getShaderAttribution(AttrConstantType type);
+        //Uint getVertexIndex();
+        //Uint getColorIndex();
+        //Uint getUVIndex();
+        //Uint getNormalIndex();
     };
 
 
