@@ -2,7 +2,8 @@
 
 = OGRE =
 
-[http://hsw625728.blog.163.com/blog/static/3957072820091084913370/ OGRE纹理]
+使用 ManualObject，加载纹理，显示cube，最简单的调用方式
+[http://hsw625728.blog.163.com/blog/static/3957072820091084913370/ OGRE纹理] 
 
 
 
