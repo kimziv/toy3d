@@ -64,12 +64,12 @@ Uint ShaderProgramParams::getAutoEntryCount()
     return mAutoCount;
 }
 
-char* ShaderProgramParams::getAutoParamName( Uint index )
+const char* ShaderProgramParams::getAutoParamName( Uint index )
 {
-    return mAutoConstEntries[index]->name;
+    return (const char *)mAutoConstEntries[index]->name;
 }
 
-void ShaderProgramParams::updateAutoConstIndex ( char *name, Uint index )
+void ShaderProgramParams::updateAutoConstIndex ( const char *name, Uint index )
 {
     Uint position = 0;
     if( !searchNamedAutoConst(name, &position) )
@@ -127,7 +127,7 @@ void ShaderProgramParams::updateAutoConstParams ( AutoParamDataSource *source )
     return;
 }
 
-Bool ShaderProgramParams::searchNamedAutoConst(char *name, Uint* index )
+Bool ShaderProgramParams::searchNamedAutoConst( const char *name, Uint* index )
 {
     int i = mAutoCount;
     while( i )
@@ -149,7 +149,7 @@ Bool ShaderProgramParams::searchNamedAutoConst(char *name, Uint* index )
 //////////////////////////////////////////////////////////////////////////
 //Attribute variable
 
-Bool ShaderProgramParams::searchNamedAttrConst(char *name, Uint* index )
+Bool ShaderProgramParams::searchNamedAttrConst( const char *name, Uint* index )
 {
     int i = mAttrCount;
     while( i )
@@ -183,7 +183,7 @@ void ShaderProgramParams::setNamedAttrConstant ( AttrConstantType type, char *na
     return;
 }
 
-void ShaderProgramParams::updateAttrConstIndex ( char *name, Uint index )
+void ShaderProgramParams::updateAttrConstIndex ( const char *name, Uint index )
 {
     Uint position = 0;
     if( !searchNamedAttrConst(name, &position) )
@@ -202,9 +202,9 @@ Uint ShaderProgramParams::getAttrEntryCount()
     return mAttrCount;
 }
 
-char* ShaderProgramParams::getAttrParamName( Uint index )
+const char* ShaderProgramParams::getAttrParamName( Uint index )
 {
-    return mAttrConstEntries[index]->name;
+    return (const char*)mAttrConstEntries[index]->name;
 }
 
 Uint ShaderProgramParams::getAttrConstIndex( AttrConstantType type )

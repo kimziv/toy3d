@@ -33,9 +33,9 @@ TOY3D_BEGIN_NAMESPACE
         void setBackColor( Real r, Real g, Real b, Real a);
         void setViewPort(Uint x, Uint y, Uint width, Uint height);
 
-        void setDepthTest(Uint flag, Uint funcMode);
-        void setBlend(Uint flag, Uint srcMode, Uint dstMode);
-        void setTexture(Uchar* name);
+        //void setDepthTest(Uint flag, Uint funcMode);
+        //void setBlend(Uint flag, Uint srcMode, Uint dstMode);
+        //void setTexture(Uchar* name);
     };
 
 

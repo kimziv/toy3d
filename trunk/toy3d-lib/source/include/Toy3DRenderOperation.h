@@ -31,10 +31,10 @@ TOY3D_BEGIN_NAMESPACE
         ~RenderOperation();
 
         void setRenderMode( RenderMode mode );
-        void setVertex(Real *vertices, Uint count );
-        void setColor(Real *colors, Uint count);
-        void setUV(Real *uvs, Uint count);
-        void setNormal(Real *normals, Uint count);
+        void setVertices(Real *vertices, Uint count );
+        void setColors(Real *colors, Uint count);
+        void setUVs(Real *uvs, Uint count);
+        void setNormals(Real *normals, Uint count);
 
         void setVertexIndex( Uint index);
         void setColorIndex( Uint index);
@@ -43,11 +43,12 @@ TOY3D_BEGIN_NAMESPACE
 
         void setShaderAttribution (AttrConstantType type, Uint index);
 
+        //return const 
         RenderMode getRenderMode();
-        Real* getVertex();
-        Real* getColor();
-        Real* getUV();
-        Real* getNormal();
+        Real* getVertices();
+        Real* getColors();
+        Real* getUVs();
+        Real* getNormals();
 
         Uint getVerticesCount();
         //Uint getColorsCount();

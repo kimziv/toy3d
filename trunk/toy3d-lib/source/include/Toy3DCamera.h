@@ -20,9 +20,9 @@ TOY3D_BEGIN_NAMESPACE
 
     public:
         void lookAt (Real eyex, Real eyey, Real eyez, Real centerx, Real centery, Real centerz, Real upx, Real upy, Real upz);
-        void perspective (Real left, Real right, Real bottom, Real top, Real near, Real far);
-        void perspective (Real fovy, Real aspect, Real near, Real far);
-        void ortho2D (Real left, Real right, Real bottom, Real top, Real near, Real far);
+        void perspective (Real left, Real right, Real bottom, Real top, Real n, Real f);
+        void perspective (Real fovy, Real aspect, Real n, Real f);
+        void ortho2D (Real left, Real right, Real bottom, Real top, Real n, Real f);
         void getViewMatrix (Real m[MATRIX_4x4_SIZE]);
         void getProjectionMatrix (Real m[MATRIX_4x4_SIZE]);
 

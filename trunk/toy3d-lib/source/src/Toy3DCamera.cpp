@@ -25,31 +25,30 @@ TOY3D_BEGIN_NAMESPACE
 
     }
 
-    void Camera::perspective (Real left, Real right, Real bottom, Real top, Real near, Real far)
+    void Camera::perspective (Real left, Real right, Real bottom, Real top, Real n, Real f)
     {
 
         MvGl2DemoMatrixIdentity(mProjectionMatrix);
-        frustum (mProjectionMatrix, left, right, bottom, top, near, far);
+        frustum (mProjectionMatrix, left, right, bottom, top, n, f);
         return;
     }
 
-    void Camera::perspective (Real fovy, Real aspect, Real near, Real far)
+    void Camera::perspective (Real fovy, Real aspect, Real n, Real f)
     {
         Real xmin, xmax, ymin, ymax;
-        ymax = near * tan (fovy * M_PI / 360);
+        ymax = n * tan (fovy * M_PI / 360);
         ymin = -ymax;
         xmin = ymin * aspect;
         xmax = ymax * aspect;
 
-        perspective (xmin, xmax, ymin, ymax, near, far);
+        perspective (xmin, xmax, ymin, ymax, n, f);
     }
 
-
-    void Camera::ortho2D (Real left, Real right, Real bottom, Real top, Real near, Real far)
+    void Camera::ortho2D (Real left, Real right, Real bottom, Real top, Real n, Real f)
     {
 
         MvGl2DemoMatrixIdentity(mProjectionMatrix);
-        ortho (mProjectionMatrix, left, right, bottom, top, near, far);
+        ortho (mProjectionMatrix, left, right, bottom, top, n, f);
         return;
     }
 
