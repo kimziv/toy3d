@@ -60,3 +60,24 @@ TextureManager::~TextureManager ()
 }}}
 
 
+= 使用样例 =
+
+{{{
+
+void init ()
+
+{
+   //world,camera, shaderprogram
+   ...
+   //create texture
+
+   Texture *texture = TextureManager::getInstance()->createTextureByFile("leaf.tga");
+
+    Mesh *mesh = world->createMesh();
+    mesh->setVertices (vertices, VERTEX_COUNT);
+    mesh->setRenderMode (TOY3D_TRIANGLE_STRIP);^M
+    mesh->setTextureId (texture->getId());
+      
+}
+
+}}}
