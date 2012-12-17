@@ -99,12 +99,12 @@ TOY3D_BEGIN_NAMESPACE
     {
         return 0;
     }
-
+/*
     void World::setMesh ()
     {
         printf ("Set mesh...\n");
     }
-
+*/
 
     void World::setSize( Uint width, Uint height )
     {
@@ -113,7 +113,7 @@ TOY3D_BEGIN_NAMESPACE
 
         return;
     }
-
+/*
     void World::setWorldDepth( Uint flag, Uint funcMode )
     {
         mRenderer->setDepthTest(flag, funcMode);
@@ -124,7 +124,7 @@ TOY3D_BEGIN_NAMESPACE
     {
         return;
     }
-
+*/
     void World::setBackColor( Real r, Real g, Real b, Real a)
     {
 

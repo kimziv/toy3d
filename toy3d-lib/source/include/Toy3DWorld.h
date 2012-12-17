@@ -40,19 +40,20 @@ TOY3D_BEGIN_NAMESPACE
         ~World();
 
         Mesh* createMesh();
+        //Mesh* createMeshByFile( const char* fileName );
         Camera* createCamera( const char *name );
         ShaderProgram* createShaderProgram();
         Renderer* createRenderer();
 
-        void setMesh();
+        //void setMesh();
 
         void startRendering ();
 
         void setSize( Uint width, Uint height );
-        void setWorldDepth( Uint flag, Uint funcMode );
-        void setWorldBlend( Uint flag, Uint srcMode, Uint dstMode );
         void setBackColor( Real r, Real g, Real b, Real a);
         void resize( Uint width, Uint height );
+        void setWorldDepth( Uint flag, Uint funcMode );
+        void setWorldBlend( Uint flag, Uint srcMode, Uint dstMode );
 
         void rotate (Real x, Real y, Real z);
 	};

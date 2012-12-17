@@ -23,7 +23,7 @@ TOY3D_BEGIN_NAMESPACE
         return;
     }
 
-    void RenderOperation::setVertex(Real *vertices, Uint count )
+    void RenderOperation::setVertices(Real *vertices, Uint count )
     {
         if( !vertices || !count )
         {
@@ -36,7 +36,7 @@ TOY3D_BEGIN_NAMESPACE
         return;
     }
 
-    void RenderOperation::setColor(Real *colors, Uint count)
+    void RenderOperation::setColors(Real *colors, Uint count)
     {
         if( !colors || !count )
         {
@@ -49,7 +49,7 @@ TOY3D_BEGIN_NAMESPACE
         return;
     }
 
-    void RenderOperation::setUV(Real *uvs, Uint count)
+    void RenderOperation::setUVs(Real *uvs, Uint count)
     {
         if( !uvs || !count )
         {
@@ -62,7 +62,7 @@ TOY3D_BEGIN_NAMESPACE
         return;
     }
 
-    void RenderOperation::setNormal(Real *normals, Uint count)
+    void RenderOperation::setNormals(Real *normals, Uint count)
     {
         if( !normals || !count )
         {
@@ -104,22 +104,22 @@ TOY3D_BEGIN_NAMESPACE
         return mRenderMode;
     }
 
-    Real* RenderOperation::getVertex()
+    Real* RenderOperation::getVertices()
     {
         return mVertices;
     }
 
-    Real* RenderOperation::getColor()
+    Real* RenderOperation::getColors()
     {
         return mColors;
     }
 
-    Real* RenderOperation::getUV()
+    Real* RenderOperation::getUVs()
     {
         return mUVs;
     }
 
-    Real* RenderOperation::getNormal()
+    Real* RenderOperation::getNormals()
     {
         return mNormals;
     }

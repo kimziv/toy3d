@@ -29,7 +29,7 @@ ShaderProgram::~ShaderProgram()
 void ShaderProgram::bindShaderParameters(ShaderProgramParams* pShaderPara)
 {
     Uint count, i;
-    char *pName;
+    const char *pName;
 
     if( !pShaderPara )
     {
@@ -61,7 +61,6 @@ void ShaderProgram::bindShaderParameters(ShaderProgramParams* pShaderPara)
         pName = mShaderParams->getAttrParamName( i );
         printf ("attr name = %s,  index = %d \n", pName, glGetAttribLocation (mShaderProgramID, (const char *)pName));
         mShaderParams->updateAttrConstIndex( pName,
- 
             glGetAttribLocation (mShaderProgramID, (const char *)pName));
     }
 

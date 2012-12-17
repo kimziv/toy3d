@@ -33,7 +33,7 @@ TOY3D_BEGIN_NAMESPACE
     {
         mRenderMode = mode;
     }
-
+/*
     RenderMode Mesh::getRenderMode ()
     {
         return mRenderMode;
@@ -48,11 +48,11 @@ TOY3D_BEGIN_NAMESPACE
     {
         return mVertexCount;
     }
-
+*/
     void Mesh::getRenderOperation(RenderOperation* ro)
     {
         if (ro) {
-            ro->setVertex( mVertices, mVertexCount);
+            ro->setVertices( mVertices, mVertexCount);
             ro->setRenderMode( mRenderMode );
         }
     }

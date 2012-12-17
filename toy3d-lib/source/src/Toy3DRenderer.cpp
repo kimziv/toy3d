@@ -92,8 +92,15 @@ TOY3D_BEGIN_NAMESPACE
             printf ("\n");
 #endif
 
-            glVertexAttribPointer( index, 3, GL_FLOAT, 0, 0, ro->getVertex() );
+            //vertex
+            glVertexAttribPointer( index, 3, GL_FLOAT, 0, 0, ro->getVertices() );
             glEnableVertexAttribArray( index );
+
+            //color
+
+            //uvs
+
+            //normal
 
             glDrawArrays( mode, 0,  ro->getVerticesCount() );
         }
@@ -143,7 +150,7 @@ TOY3D_BEGIN_NAMESPACE
         return;
     }
 
-
+/*
     void Renderer::setDepthTest(Uint flag, Uint funcMode)
     {
         //temp testing
@@ -162,5 +169,7 @@ TOY3D_BEGIN_NAMESPACE
     {
         return;
     }
+*/
+
 
 TOY3D_END_NAMESPACE

@@ -69,7 +69,7 @@ void changeSize( int w, int h )
 
 void init()
 {
-    Real aspect, fovy;
+    //Real aspect, fovy;
     const Real nearz  = 1.0f;//5.0f;
     const Real farz   = 1000.0f;//60.0f;
 
