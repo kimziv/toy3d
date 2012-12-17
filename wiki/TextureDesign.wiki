@@ -1,0 +1,69 @@
+#summary Texture Related modules
+
+= TextureManager =
+
+TextureManager 设计成  Singleton
+
+类定义 TextureManager.h：
+
+{{{
+
+class TextureManager {
+
+protected:
+        static TextureManager* mInstance;
+
+public:
+        static TextureManager* getInstance();
+        
+        TextureManager();
+        ~TextureManager();
+
+};
+
+
+}}}
+
+
+类实现 TextureManager.cpp：
+
+{{{
+
+TextureManager* TextureManager::mInstance = NULL;
+
+TextureManager* TextureManager::getInstance()
+{
+
+    if (NULL == mInstance)
+        mInstance = new TextureManager();
+
+    return mInstance;
+}
+
+
+TextureManager::TextureManager ()
+{
+}
+
+
+TextureManager::~TextureManager ()
+{
+}
+
+
+}}}
+
+单件 TextureManager的使用：
+
+{{{
+    TextureManager::getInstance()->createTextureByFile("leaf.tga");
+}}}
+
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
