@@ -33,6 +33,12 @@ TOY3D_BEGIN_NAMESPACE
     {
         mRenderMode = mode;
     }
+
+    void Mesh::setTextureID( Uint id )
+    {
+        mTextureID = id;
+        return;
+    }
 /*
     RenderMode Mesh::getRenderMode ()
     {
@@ -54,6 +60,16 @@ TOY3D_BEGIN_NAMESPACE
         if (ro) {
             ro->setVertices( mVertices, mVertexCount);
             ro->setRenderMode( mRenderMode );
+
+            /*
+            if( mColors )
+            {
+                ro->setColors( mColors, mVertexCount );
+            }
+            */
+
+            if( mTextureID )
+                ro->setTextureID( mTextureID );
         }
     }
 
@@ -69,18 +85,17 @@ TOY3D_BEGIN_NAMESPACE
     {
         
         MvGl2DemoMatrixTranslate(mModelMatrix, x, y, z);
-        
+        return;
     }
 
 
     void Mesh::rotate (Real x, Real y, Real z)
     {
-
-
         MvGl2DemoMatrixRotate(mModelMatrix, x, 1.0f, 0.0f, 0.0f);
         MvGl2DemoMatrixRotate(mModelMatrix, y, 0.0f, 1.0f, 0.0f);
         MvGl2DemoMatrixRotate(mModelMatrix, z, 0.0f, 0.0f, 1.0f);
 
+        return;
     }
 
 

@@ -25,8 +25,12 @@ TOY3D_BEGIN_NAMESPACE
     private:
         RenderMode mRenderMode;
         Real *mVertices;
+        Real* mColors;
+        Real* mUVs;
+        Real* mNormals;
+
         Uint mVertexCount;
-       
+        Uint mTextureID;
         Real mModelMatrix[MATRIX_4x4_SIZE]; 
 
 
@@ -42,6 +46,8 @@ TOY3D_BEGIN_NAMESPACE
         void setVertices (Real* veritces, Uint count);
         void setColors (Real* colors, Uint count);
         void setUVs (Real* uvs, Uint count);
+        void setNormals(Real* normals, Uint count);
+        void setTextureID( Uint id );
 
         void getModelMatrix (Real matrix[MATRIX_4x4_SIZE]);
         //RenderMode getRenderMode();
