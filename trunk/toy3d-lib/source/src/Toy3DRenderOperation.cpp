@@ -43,6 +43,11 @@ TOY3D_BEGIN_NAMESPACE
             TOY3D_PRINT("NULL POINTER.", __FILE__, __LINE__);
             return;
         }
+        if( count != mVerticesCount )
+        {
+            TOY3D_PRINT("Colors array length error.", __FILE__, __LINE__);
+            return;
+        }
         
         mColors = colors;
         //mColorsCount = count;
@@ -73,6 +78,11 @@ TOY3D_BEGIN_NAMESPACE
         mNormals = normals;
         //mNormalsCount = count;
         return;
+    }
+
+    void RenderOperation::setTextureID( Uint id )
+    {
+        mTextureID = id;
     }
 /*
     void RenderOperation::setVertexIndex( Uint index)
@@ -127,6 +137,11 @@ TOY3D_BEGIN_NAMESPACE
     Uint RenderOperation::getVerticesCount()
     {
         return mVerticesCount;
+    }
+
+    Uint RenderOperation::getTextureID()
+    {
+        return mTextureID;
     }
 /*
     Uint RenderOperation::getColorsCount()

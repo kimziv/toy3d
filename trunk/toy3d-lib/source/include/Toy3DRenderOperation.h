@@ -20,9 +20,7 @@ TOY3D_BEGIN_NAMESPACE
         Uint mNormalIndex;
 
         Uint mVerticesCount;
-        //Uint mColorsCount;
-        //Uint mUVsCount;
-        //Uint mNormalsCount;
+        Uint mTextureID;
 
         RenderMode mRenderMode;
 
@@ -35,6 +33,8 @@ TOY3D_BEGIN_NAMESPACE
         void setColors(Real *colors, Uint count);
         void setUVs(Real *uvs, Uint count);
         void setNormals(Real *normals, Uint count);
+
+        void setTextureID( Uint id );
 
         //void setVertexIndex( Uint index);
         //void setColorIndex( Uint index);
@@ -51,6 +51,7 @@ TOY3D_BEGIN_NAMESPACE
         Real* getNormals();
 
         Uint getVerticesCount();
+        Uint getTextureID();
         //Uint getColorsCount();
         //Uint getUVsCount();
         //Uint getNormalsCount();
