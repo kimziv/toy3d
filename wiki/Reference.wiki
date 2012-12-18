@@ -2,12 +2,17 @@
 
 = OGRE =
 
+=最简单的 OGRE 程序=
+
 使用 ManualObject，加载纹理，显示cube，最简单的调用方式：
 
 [http://hsw625728.blog.163.com/blog/static/39570728200910823457100/ 学习OGRE： 绘制一个立方体ManualObject]
 
 [http://hsw625728.blog.163.com/blog/static/3957072820091084913370/ 学习OGRE：加上纹理] 
 
+=Pro OGRE Programming 笔记=
+
+[http://kun-111.blog.163.com/blog/static/40314793200781154032626/ Pro OGRE Programming笔记系列]
 
 
 = Details =
