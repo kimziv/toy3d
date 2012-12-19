@@ -8,7 +8,7 @@ camera, light 从 SceneManager 创建
 
 scene node 与 mesh 分离，mesh attach 到 scene node里
 
-Material: 在ogre里面Material的含义不再只是包含光照信息的那个Material的含义了。ogre把texture也加入到了Material里面(还有其他的很多的信息)，这样对于同一种Material最多只用调用一次setmaterial和settexture.[[1]]
+Material: 在ogre里面Material的含义不再只是包含光照信息的那个Material的含义了。ogre把texture也加入到了Material里面(还有其他的很多的信息)，这样对于同一种Material最多只用调用一次setmaterial和,,settexture,,1
 
 Mesh: ogre的mesh由一个或者多个submesh构成，每个submesh就对应一个Material，绘制的时候submesh是一个基本的单元。[1]
 
