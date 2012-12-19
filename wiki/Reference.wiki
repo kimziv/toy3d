@@ -8,13 +8,13 @@ camera, light 从 SceneManager 创建
 
 scene node 与 mesh 分离，mesh attach 到 scene node里
 
-Material: 在ogre里面Material的含义不再只是包含光照信息的那个Material的含义了。ogre把texture也加入到了Material里面(还有其他的很多的信息)，这样对于同一种Material最多只用调用一次setmaterial和settexture
+Material: 在ogre里面Material的含义不再只是包含光照信息的那个Material的含义了。ogre把texture也加入到了Material里面(还有其他的很多的信息)，这样对于同一种Material最多只用调用一次setmaterial和settexture.[1]
 
-Mesh: ogre的mesh由一个或者多个submesh构成，每个submesh就对应一个Material，绘制的时候submesh是一个基本的单元。
+Mesh: ogre的mesh由一个或者多个submesh构成，每个submesh就对应一个Material，绘制的时候submesh是一个基本的单元。[1]
 
-ogre使用了多流的技术，把vertex的positon，normal，texcord这些数据分开，放到多个流里面进行渲染，这方面的技术可以参考[http://dev.gameres.com/Program/Visual/3D/multistream.htm D3D中多流的用法]。
+ogre使用了多流的技术，把vertex的positon，normal，texcord这些数据分开，放到多个流里面进行渲染，这方面的技术可以参考[http://dev.gameres.com/Program/Visual/3D/multistream.htm D3D中多流的用法]。[1]
 
-OGRE 渲染过程： 
+OGRE 渲染过程[1]： 
 
 在ogre里面，场景组织成一棵树形结构，而每一个可以画到屏幕上的物体都是一个renderable，在渲染的时候，ogre遍历场景树，利用剪裁算法（最基本的就是基于视锥的剪裁算法）剔出完全不可见的renderable，把可见的renderable放如到渲染队列里面，最后把渲染队列里面的renderable按照需要进行渲染。
 
