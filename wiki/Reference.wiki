@@ -34,5 +34,5 @@ OGRE 渲染过程：
 
 = 参考 =
 
-  * [http://gpgame.net/docs/program/ogre.htm ogre的图形渲染方式] 
+  # [http://gpgame.net/docs/program/ogre.htm ogre的图形渲染方式] 
  
