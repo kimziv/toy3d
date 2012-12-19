@@ -1,5 +1,9 @@
 #summary Here is our todo lists.
 
+= 现存的问题 =
+
+texture 如何释放 glDeleteTexture
+
 
 = features =
 
