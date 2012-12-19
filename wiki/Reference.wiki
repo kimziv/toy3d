@@ -19,6 +19,7 @@ OGRE 渲染过程：
 在ogre里面，场景组织成一棵树形结构，而每一个可以画到屏幕上的物体都是一个renderable，在渲染的时候，ogre遍历场景树，利用剪裁算法（最基本的就是基于视锥的剪裁算法）剔出完全不可见的renderable，把可见的renderable放如到渲染队列里面，最后把渲染队列里面的renderable按照需要进行渲染。
 
 
+
 ==最简单的 OGRE 程序==
 
 使用 ManualObject，加载纹理，显示cube，最简单的调用方式：
@@ -31,10 +32,7 @@ OGRE 渲染过程：
 
 [http://kun-111.blog.163.com/blog/static/40314793200781154032626/ Pro OGRE Programming笔记系列]
 
+= 参考 =
 
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+  * [http://gpgame.net/docs/program/ogre.htm ogre的图形渲染方式] 
+ 
