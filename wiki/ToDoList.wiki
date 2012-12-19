@@ -1,7 +1,9 @@
 #summary Here is our todo lists.
 
+
 =features=
 
+  * light/material
   * 统一模型格式解析
   * render 引擎与光引擎
 
