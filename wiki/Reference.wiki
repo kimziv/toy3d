@@ -19,6 +19,45 @@ OGRE 渲染过程(见reference1)：
 在ogre里面，场景组织成一棵树形结构，而每一个可以画到屏幕上的物体都是一个renderable，在渲染的时候，ogre遍历场景树，利用剪裁算法（最基本的就是基于视锥的剪裁算法）剔出完全不可见的renderable，把可见的renderable放如到渲染队列里面，最后把渲染队列里面的renderable按照需要进行渲染。
 
 
+渲染队列保存了所以这一次必须要渲染的物体的信息。它的构成比较的复杂，渲染队列被分成了好多个组（group），这些group都和一个id对于，越小GroupId的group就越先渲染。而每个group又被分成了很多个PriorityGroup，每一个PriorityGroup同样对于一个id，同样是越小的id就越先渲染。而PriorityGroup就是比较基本的渲染单元了。经过两次划分以后为于同一个PriorityGroup的renderable再次分组，这是因为透明物要进行特殊的处理，需要作透明处理的renderable进入一个vector，不要作透明处理的renderable按照它的Material进行分类，有着相同的Material的renderable进行同一个vector。到了最后渲染的时候，按照id遍历每个group，对于每个group，按照id遍历PriorityGroup，对于每个PriorityGroup，首先执行不透明物体的处理，然后把透明物体按照相对摄像机的远近进行排序，依次渲染每一个renderable，然后重复下一个PriorityGroup，然后是group。(见reference1)
+
+下面是ogre的渲染伪代码。
+
+{{{
+
+for 每一个group
+{
+　　for 每一个 PriorityGroup
+　　{
+　　　　// 不透明部分
+　　　　for 对于每一种Material
+　　　　{
+　　　　　　SetMaterial() // 包括了texture等等的属性
+　　　　　　for 所有这种Material的Renderable
+　　　　　　{
+　　　　　　　　渲染这个renderable
+　　　　　　}
+　　　　}
+
+　　　　// 透明部分
+　　　　sort()
+　　　　for 每一个renderable
+　　　　{
+　　　　　　SetMaterial()
+　　　　　　渲染这个renderable
+　　　　}
+　　}
+}
+
+
+}}}
+
+
+
+为什么要把renderable的优先顺序分成两级？比如把3D物品放到同一个group里面，而2D界面放到一个group里面，这样两个group就可以不受对方的影响，各自安排自己的子优先级。
+
+
+
 
 ==最简单的 OGRE 程序==
 
