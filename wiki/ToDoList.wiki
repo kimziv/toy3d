@@ -12,8 +12,8 @@
 = 参考 =
 
   * ogre
-  * min3d
-  * le3d
-  * KplayGE
+  * min3d: android Java OpenGL ES engine
+  * le3d: android Java OpenGL engine
+  * KplayGE: C++ engine
   * jmonkey
   * osg
