@@ -17,6 +17,8 @@
 =参考=
 
   * ogre
+  * min3d
+  * le3d
   * KplayGE
   * jmonkey
   *osg
