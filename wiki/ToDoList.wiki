@@ -4,6 +4,7 @@
 =features=
 
   * light/material
+  * mesh 数据如何保存
   * 统一模型格式解析
   * render 引擎与光引擎
 
