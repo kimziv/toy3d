@@ -15,8 +15,11 @@ TOY3D_BEGIN_NAMESPACE
     {
         while( mMeshCount )
         {
-            FREEANDNULL( mMeshes[--mMeshCount] );
+            DELETEANDNULL( mMeshes[--mMeshCount] );
         }
+
+        DELETEANDNULL( mShaderProgram );
+        //DELETEANDNULL( mRenderer );//now mRenderer is an object not pointer
     }
 
     void World::startRendering ()
@@ -48,9 +51,9 @@ TOY3D_BEGIN_NAMESPACE
         ro->setShaderAttribution (TOY3D_ATTR_UV_INDEX, index);
 
 
-        mRenderer->setViewPort (0.0, 0.0, mWidth, mHeight);
-        mRenderer->beginFrame ();
-        mRenderer->setBackColor (mBackColorRed, mBackColorGreen, mBackColorBlue, mBackColorAlpha);
+        mRenderer.setViewPort (0.0, 0.0, mWidth, mHeight);
+        mRenderer.beginFrame ();
+        mRenderer.setBackColor (mBackColorRed, mBackColorGreen, mBackColorBlue, mBackColorAlpha);
 
         for (Uint i = 0; i < mMeshCount; i++)
         {
@@ -64,11 +67,11 @@ TOY3D_BEGIN_NAMESPACE
             mMeshes[i]->getRenderOperation(ro);
 
             //fixme: set shader attribution index 
-            mRenderer->useShaderProgram (mShaderProgram->getShaderProgramID());
-            mRenderer->render(ro);
+            mRenderer.useShaderProgram (mShaderProgram->getShaderProgramID());
+            mRenderer.render(ro);
         }
 
-        mRenderer->endFrame ();
+        mRenderer.endFrame ();
      
         delete ro;
 
@@ -121,7 +124,7 @@ TOY3D_BEGIN_NAMESPACE
 /*
     void World::setWorldDepth( Uint flag, Uint funcMode )
     {
-        mRenderer->setDepthTest(flag, funcMode);
+        mRenderer.setDepthTest(flag, funcMode);
         return;
     }
 

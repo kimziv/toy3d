@@ -117,20 +117,27 @@ void init()
 
 Real angle_y = 0.0f;
 
-void keyboard(unsigned char key, int x, int y){
-  switch(key) {
-    case 'q': case 'Q': case 27:
-      exit(0);
-      break;
+void keyboard(unsigned char key, int x, int y)
+{
+    switch(key)
+    {
+    case 'q':
+    case 'Q':
+    case 27:
+        printf("pointer world: %d.\n", world);
+        DELETEANDNULL(world);
+        exit(0);
+        break;
 
-    case 'p': case 'P': case 26:
-      world->rotate (0.0f, angle_y, 0.0f);
-      angle_y += 10;
-      break;
-
-  }
-
-  return;
+    case 'p':
+    case 'P':
+    case 26:
+        world->rotate (0.0f, angle_y, 0.0f);
+        angle_y += 10;
+        break;
+    }
+    
+    return;
 }
 
 

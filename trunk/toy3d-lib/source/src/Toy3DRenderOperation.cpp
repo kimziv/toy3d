@@ -11,10 +11,20 @@ TOY3D_BEGIN_NAMESPACE
 //RenderOperation
     RenderOperation::RenderOperation()
     {
+        mVertices = NULL;
+        mColors = NULL;
+        mUVs = NULL;
+        mNormals = NULL;
+        mVerticesCount = NULL;
     }
 
     RenderOperation::~RenderOperation()
     {
+        mVertices = NULL;
+        mColors = NULL;
+        mUVs = NULL;
+        mNormals = NULL;
+        mVerticesCount = NULL;
     }
 
     void RenderOperation::setRenderMode( RenderMode mode )

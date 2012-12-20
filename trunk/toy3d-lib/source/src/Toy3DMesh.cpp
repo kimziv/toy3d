@@ -17,25 +17,15 @@ TOY3D_BEGIN_NAMESPACE
 
     Mesh::~Mesh() 
     {
-        if( mVertices )
-            FREEANDNULL(mVertices);
-        if( mColors )
-            FREEANDNULL(mColors);
-        if( mUVs )
-            FREEANDNULL(mUVs);
-        if( mNormals )
-            FREEANDNULL(mNormals);
-
-        //temp
-        if( mTextureID )
-            glDeleteTextures(1, &mTextureID);
-        mTextureID = 0;
+        FREEANDNULL(mVertices);
+        FREEANDNULL(mColors);
+        FREEANDNULL(mUVs);
+        FREEANDNULL(mNormals);
     }
 
     void Mesh::setVertices (Real* vertices, Uint count)
     {
-       if(mVertices) 
-           FREEANDNULL(mVertices);
+       FREEANDNULL(mVertices);
 
        mVertexCount = count;
        Uint size = count * 3 * sizeof(Real);
@@ -47,8 +37,7 @@ TOY3D_BEGIN_NAMESPACE
 
     void Mesh::setUVs(Real* uvs, Uint count)
     {
-        if ( mUVs ) 
-            FREEANDNULL(mUVs);
+        FREEANDNULL(mUVs);
 
         Uint size = mVertexCount * 2 * sizeof(Real);
         mUVs = (Real*)malloc(size);

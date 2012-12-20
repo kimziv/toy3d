@@ -16,8 +16,8 @@ TOY3D_BEGIN_NAMESPACE
     {
 	private:
 
-        Uint     mWidth;
-        Uint     mHeight;
+        Uint mWidth;
+        Uint mHeight;
 
         Real mBackColorRed;
         Real mBackColorGreen;
@@ -30,7 +30,7 @@ TOY3D_BEGIN_NAMESPACE
         Mesh                *mMeshes[MAX_MESH_COUNT];
         ShaderProgram       *mShaderProgram;
         AutoParamDataSource mAutoParamDataSource;
-        Renderer            *mRenderer;
+        Renderer            mRenderer;
 
         Real mWorldMatrix[MATRIX_4x4_SIZE];
 

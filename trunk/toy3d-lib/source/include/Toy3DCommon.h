@@ -47,6 +47,11 @@ extern "C" {
         pointer = NULL; \
     }
 
+#define DELETEANDNULL(pointer) \
+    if (pointer != NULL) { \
+    delete (pointer); \
+    }
+
 //used for testing
 #define TOY3D_PRINT(str, file, line) printf("%s, File:%s, Line:%d.\n", str, file, line)
 //used to indicate the user

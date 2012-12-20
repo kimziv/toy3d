@@ -10,8 +10,8 @@
 #include <toy3d/Toy3DTextureManager.h>
 
 
-#define WINDOW_W    500 
-#define WINDOW_H    500 
+#define WINDOW_W    500
+#define WINDOW_H    500
 
 
 #ifdef VC6
@@ -91,6 +91,7 @@ bool init()
 {
 
     world = new World ();
+    printf("pointer world: %d.\n", world);
     world->setSize(WINDOW_W, WINDOW_H);
     world->setBackColor (1.0, 1.0, 1.0, 1.0);  //white back color
 
@@ -152,11 +153,25 @@ bool init()
 }
 
 void keyboard(unsigned char key, int x, int y){
-  switch(key) {
-    case 'q': case 'Q': case 27:
-      exit(0);
-      break;
-  }
+    switch(key)
+    {
+    case 'q':
+    case 'Q':
+    case 27:
+        printf("pointer world: %d.\n", world);
+        DELETEANDNULL(world);
+
+        unsigned int texid;
+        if( texture )
+        {
+            texid = texture->getTextureID();
+            glDeleteTextures(1, &texid );
+        }
+        DELETEANDNULL(texture);
+
+        exit(0);
+        break;
+    }
 }
 
 int main(int argc, char** argv){
@@ -169,7 +184,6 @@ int main(int argc, char** argv){
   	glutDisplayFunc(display);
 	glutIdleFunc(display);
   	glutKeyboardFunc(keyboard);
-
 
 
     glewInit();
