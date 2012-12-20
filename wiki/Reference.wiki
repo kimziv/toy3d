@@ -41,6 +41,14 @@ Entities 是以 Meshes 作为自身基础的，Mesh 对象包括了一整套用�
  * Material是管理的Technique的类
  * MaterialManager，对Material进行管理。主要实现了对纹理过滤的设置、Scheme的管理，设置相应的监听等操作。还负责读取材质脚本、初始化材质资源。
 
+
+包含关系：
+ * 1Material->n Techinque->(n Pass + extra params)->(n TextureUnit + m or 0 shaderUnit + n RenderStates（部分）)
+ * Pass里的TextureUnit又包含了这一组texture的相关信息和设置，TexcoordSet, AddressMode, FilterSetting等等， 
+ * ShaderUnit则是对应于vs，fs以及新的gs，普通点也就最多两组。
+ * shaderUnit包含了具体的shader和其shaderParams，为何要把shader和shaderParams分开呢，不说设计优雅的考虑，简单的说就是方便，很多时候params可能会需要共享，譬如shaderA里用到mvpMat，和eyePos， diffuse,specular,可能shaderB也只用到这些，但是两个shader的内部计算并不相同。
+
+
 = 多流技术 = 
 
 ogre使用了多流的技术，把vertex的positon，normal，texcord这些数据分开，放到多个流里面进行渲染，这方面的技术可以参考[http://dev.gameres.com/Program/Visual/3D/multistream.htm D3D中多流的用法]。(见reference1)
