@@ -12,6 +12,12 @@ Material: 在ogre里面Material的含义不再只是包含光照信息的那个M
 
 Mesh: ogre的mesh由一个或者多个submesh构成，每个submesh就对应一个Material，绘制的时候submesh是一个基本的单元。(见reference1)
 
+[http://www.cnblogs.com/leisure/archive/2012/06/29/2568915.html entity, mesh, submesh 的关系]
+
+Renderable 
+
+Pass是最基本的绘制单元，同时也是Renderable（可绘制对象）用来标识自己绘制状态的基本单元。
+
 ogre使用了多流的技术，把vertex的positon，normal，texcord这些数据分开，放到多个流里面进行渲染，这方面的技术可以参考[http://dev.gameres.com/Program/Visual/3D/multistream.htm D3D中多流的用法]。(见reference1)
 
 OGRE 渲染过程(见reference1)： 
