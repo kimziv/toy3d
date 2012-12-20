@@ -70,11 +70,17 @@ void init()
 }
 
 void keyboard(unsigned char key, int x, int y){
-  switch(key) {
-    case 'q': case 'Q': case 27:
-      exit(0);
-      break;
-  }
+    switch(key)
+    {
+    case 'q':
+    case 'Q':
+    case 27:
+        printf("pointer world: %d.\n", world);
+        DELETEANDNULL(world);
+
+        exit(0);
+        break;
+    }
 }
 
 int main(int argc, char** argv){

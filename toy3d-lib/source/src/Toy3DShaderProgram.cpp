@@ -15,8 +15,7 @@ ShaderProgram::ShaderProgram()
 
 ShaderProgram::~ShaderProgram()
 {
-    if( mShaderParams )
-        FREEANDNULL(mShaderParams);
+    FREEANDNULL(mShaderParams);
 
     if( mShaderProgramID )
     {
