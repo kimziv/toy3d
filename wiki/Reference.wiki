@@ -15,6 +15,24 @@ Mesh: ogre的mesh由一个或者多个submesh构成，每个submesh就对应一�
 Entities 是以 Meshes 作为自身基础的，Mesh 对象包括了一整套用来描述自身模型的数据。多个Entities 可以共用一种网格，比如，常常会在一个场景下创建同一种对象的多个拷贝。
 [http://www.cnblogs.com/leisure/archive/2012/06/29/2568915.html entity, mesh, submesh 的关系]
 
+{{{
+    Ogre::Entity* entNinja = mSceneMgr->createEntity("Ninja", "ninja.mesh");
+    entNinja->setCastShadows(true);
+    mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(entNinja);
+ 
+    Ogre::Plane plane(Ogre::Vector3::UNIT_Y, 0);
+ 
+    Ogre::MeshManager::getSingleton().createPlane("ground", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+        plane, 1500, 1500, 20, 20, true, 1, 5, 5, Ogre::Vector3::UNIT_Z);
+ 
+    Ogre::Entity* entGround = mSceneMgr->createEntity("GroundEntity", "ground");
+    mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(entGround);
+ 
+    entGround->setMaterialName("Examples/Rockwall");
+    entGround->setCastShadows(false);
+
+}}}
+
 Renderable 
 
 Pass是最基本的绘制单元，同时也是Renderable（可绘制对象）用来标识自己绘制状态的基本单元。
