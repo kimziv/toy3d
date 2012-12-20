@@ -12,6 +12,7 @@ Material: 在ogre里面Material的含义不再只是包含光照信息的那个M
 
 Mesh: ogre的mesh由一个或者多个submesh构成，每个submesh就对应一个Material，绘制的时候submesh是一个基本的单元。(见reference1)
 
+Entities 是以 Meshes 作为自身基础的，Mesh 对象包括了一整套用来描述自身模型的数据。多个Entities 可以共用一种网格，比如，常常会在一个场景下创建同一种对象的多个拷贝。
 [http://www.cnblogs.com/leisure/archive/2012/06/29/2568915.html entity, mesh, submesh 的关系]
 
 Renderable 
