@@ -90,6 +90,12 @@ for each pass
  * pass 的状态通过调 renderer 的 setXXX 接口放进去
  * RenderOperation 的数据流在 RenderOperation 里传进去
 
+{{{
+
+    renderSingleObject (Renderable *rend, Pass* pass, ...);
+
+}}}
+
 
 = 多流技术 = 
 
