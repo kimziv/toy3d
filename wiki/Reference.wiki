@@ -53,6 +53,36 @@ Entities 是以 Meshes 作为自身基础的，Mesh 对象包括了一整套用�
 
 ogre的material system还是相当易读的，也是因为这些模块相互关系几乎都是单向的，我们开始编写的时候可以先不考虑Technique，就是直接1 Material->n Pass->...当然甚至你都可以把multi pass去掉,就等同于1个pass，当然由于pass都代码实际也没多少，我们还是加上好了。
 
+
+原始渲染的伪代码就是：
+
+{{{
+
+for each pass
+{
+  setRenderStates(like alphe belnd, depth..)
+
+  for each texture unit
+    setTexSettings();
+
+  if(hasVertexShader())
+  {
+    bindVertexShader();
+    setShaderParams(vs);
+  }
+
+  if(hasFragmentShader())
+  {
+    bindFragmentShader();
+    setShaderParams(fs);
+  }
+
+  drawPrimitives();
+
+}
+
+}}}
+
 = 多流技术 = 
 
 ogre使用了多流的技术，把vertex的positon，normal，texcord这些数据分开，放到多个流里面进行渲染，这方面的技术可以参考[http://dev.gameres.com/Program/Visual/3D/multistream.htm D3D中多流的用法]。(见reference1)
