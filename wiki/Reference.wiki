@@ -39,6 +39,7 @@ material-technique-pass
  * Pass是最基本的绘制单元，同时也是Renderable（可绘制对象）用来标识自己绘制状态的基本单元。
  * Technique是对Pass的集中管理，同时引入了硬件的考量
  * Material是管理的Technique的类
+ * MaterialManager，对Material进行管理。主要实现了对纹理过滤的设置、Scheme的管理，设置相应的监听等操作。还负责读取材质脚本、初始化材质资源。
 
 ogre使用了多流的技术，把vertex的positon，normal，texcord这些数据分开，放到多个流里面进行渲染，这方面的技术可以参考[http://dev.gameres.com/Program/Visual/3D/multistream.htm D3D中多流的用法]。(见reference1)
 
