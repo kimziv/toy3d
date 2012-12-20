@@ -1,14 +1,15 @@
 #summary Reference resouce such as doc, codes, links.
 
-= OGRE =
 
-==OGREs设计思路==
+= OGREs设计思路 =
 
 camera, light 从 SceneManager 创建
 
 scene node 与 mesh 分离，mesh attach 到 scene node里
 
 Material: 在ogre里面Material的含义不再只是包含光照信息的那个Material的含义了。ogre把texture也加入到了Material里面(还有其他的很多的信息)，这样对于同一种Material最多只用调用一次setmaterial和settexture。(见reference1)
+
+= SceneNode/Entity/Mesh/Submesh =
 
 Mesh: ogre的mesh由一个或者多个submesh构成，每个submesh就对应一个Material，绘制的时候submesh是一个基本的单元。(见reference1)
 
@@ -32,16 +33,19 @@ Entities 是以 Meshes 作为自身基础的，Mesh 对象包括了一整套用�
     entGround->setCastShadows(false);
 
 }}}
+ 
 
-Renderable 
-
-material-technique-pass
+= material-technique-pass =
  * Pass是最基本的绘制单元，同时也是Renderable（可绘制对象）用来标识自己绘制状态的基本单元。
  * Technique是对Pass的集中管理，同时引入了硬件的考量
  * Material是管理的Technique的类
  * MaterialManager，对Material进行管理。主要实现了对纹理过滤的设置、Scheme的管理，设置相应的监听等操作。还负责读取材质脚本、初始化材质资源。
 
+= 多流技术 = 
+
 ogre使用了多流的技术，把vertex的positon，normal，texcord这些数据分开，放到多个流里面进行渲染，这方面的技术可以参考[http://dev.gameres.com/Program/Visual/3D/multistream.htm D3D中多流的用法]。(见reference1)
+
+= OGRE 渲染过程 =
 
 OGRE 渲染过程(见reference1)： 
 
@@ -88,7 +92,7 @@ for 每一个group
 
 
 
-==最简单的 OGRE 程序==
+=最简单的 OGRE 程序=
 
 使用 ManualObject，加载纹理，显示cube，最简单的调用方式：
 
@@ -96,7 +100,7 @@ for 每一个group
 
 [http://hsw625728.blog.163.com/blog/static/3957072820091084913370/ 学习OGRE：加上纹理] 
 
-==Pro OGRE Programming 笔记==
+=Pro OGRE Programming 笔记=
 
 [http://kun-111.blog.163.com/blog/static/40314793200781154032626/ Pro OGRE Programming笔记系列]
 
