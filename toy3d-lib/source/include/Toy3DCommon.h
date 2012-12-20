@@ -28,7 +28,7 @@ extern "C" {
 
     
 
-//≤‚ ‘”√
+//used for testing
 #define MAX_MESH_COUNT      8
 #define MAX_AUTOENTRY_COUNT 8
 #define MAX_NAME_LEN        32
@@ -47,7 +47,11 @@ extern "C" {
         pointer = NULL; \
     }
 
+//used for testing
 #define TOY3D_PRINT(str, file, line) printf("%s, File:%s, Line:%d.\n", str, file, line)
+//used to indicate the user
+#define TOY3D_TIPS(strError) printf("Error: %s\n", strError)
+
 
 
 //#define PRINT(file, format, ...) myprintf(file, format, ##args)

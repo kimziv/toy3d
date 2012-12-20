@@ -8,6 +8,9 @@ TOY3D_BEGIN_NAMESPACE
     Mesh::Mesh() 
     {
         mVertices = NULL;
+        mColors = NULL;
+        mUVs = NULL;
+        mNormals = NULL;
         MvGl2DemoMatrixIdentity( mModelMatrix );
     }
 
@@ -16,17 +19,42 @@ TOY3D_BEGIN_NAMESPACE
     {
         if( mVertices )
             FREEANDNULL(mVertices);
+        if( mColors )
+            FREEANDNULL(mColors);
+        if( mUVs )
+            FREEANDNULL(mUVs);
+        if( mNormals )
+            FREEANDNULL(mNormals);
+
+        //temp
+        if( mTextureID )
+            glDeleteTextures(1, &mTextureID);
+        mTextureID = 0;
     }
 
     void Mesh::setVertices (Real* vertices, Uint count)
     {
-       if (mVertices) 
-           FREEANDNULL (mVertices);
+       if(mVertices) 
+           FREEANDNULL(mVertices);
 
        mVertexCount = count;
-       Uint size = count * 3 * sizeof (Real);
+       Uint size = count * 3 * sizeof(Real);
        mVertices = (Real*)malloc(size);
        memcpy (mVertices, vertices, size);
+
+       return;
+    }
+
+    void Mesh::setUVs(Real* uvs, Uint count)
+    {
+        if ( mUVs ) 
+            FREEANDNULL(mUVs);
+
+        Uint size = mVertexCount * 2 * sizeof(Real);
+        mUVs = (Real*)malloc(size);
+        memcpy (mUVs, uvs, size);
+
+        return;
     }
 
     void Mesh::setRenderMode (RenderMode mode) 
@@ -68,8 +96,12 @@ TOY3D_BEGIN_NAMESPACE
             }
             */
 
-            if( mTextureID )
-                ro->setTextureID( mTextureID );
+            if( mUVs )
+            {
+                ro->setUVs( mUVs, mVertexCount );
+                if( mTextureID )
+                    ro->setTextureID( mTextureID );
+            }
         }
     }
 

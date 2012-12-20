@@ -12,6 +12,9 @@
 		include/Toy3DRenderer.h
 		include/Toy3DRenderOperation.h
 		include/Toy3DMath.h
+		include/Toy3DImage.h
+		include/Toy3DTexture.h
+		include/Toy3DTextureManager.h
 	)
 
 	set(SOURCE_FILES
@@ -24,6 +27,9 @@
 		src/Toy3DRenderer.cpp
 		src/Toy3DRenderOperation.cpp
 		src/Toy3DMath.c
+		src/Toy3DImage.cpp
+		src/Toy3DTexture.cpp
+		src/Toy3DTextureManager.cpp
 	)
 
 	include_directories(

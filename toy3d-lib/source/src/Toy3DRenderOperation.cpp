@@ -187,6 +187,18 @@ TOY3D_BEGIN_NAMESPACE
             mVertexIndex = index;
             break;
 
+        case TOY3D_ATTR_COLOR_INDEX:
+            mColorIndex = index;
+            break;
+
+        case TOY3D_ATTR_UV_INDEX:
+            mUVIndex = index;
+            break;
+
+        case TOY3D_ATTR_NORMAL_INDEX:
+            mNormalIndex = index;
+            break;
+
         default:
             ;
         }

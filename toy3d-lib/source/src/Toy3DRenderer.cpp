@@ -39,8 +39,9 @@ TOY3D_BEGIN_NAMESPACE
     
     void Renderer::render(RenderOperation *ro)
     {
-        Uint mode;
-        Uint index;
+        Uint mode = 0;
+        Uint index = 0;
+        Real *temp = 0;
 
         if( !ro )
         {
@@ -100,8 +101,19 @@ TOY3D_BEGIN_NAMESPACE
             //color
 
             //uvs
+            temp = ro->getUVs();
+            if( temp )
+            {
+                glEnable(GL_TEXTURE_2D);
+                //glActiveTexture(GL_TEXTURE0);
+                glBindTexture(GL_TEXTURE_2D, ro->getTextureID());
+                //printf("tex id = %d\n", ro->getTextureID());
+                index = ro->getShaderAttribution( TOY3D_ATTR_UV_INDEX );
+                glVertexAttribPointer( index, 2, GL_FLOAT, 0, 0, temp );
+                glEnableVertexAttribArray( index );
+            }
 
-            //normal
+            //normals
 
             glDrawArrays( mode, 0,  ro->getVerticesCount() );
         }

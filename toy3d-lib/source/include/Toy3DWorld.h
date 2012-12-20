@@ -16,8 +16,8 @@ TOY3D_BEGIN_NAMESPACE
     {
 	private:
 
-        int     mWidth;
-        int     mHeight;
+        Uint     mWidth;
+        Uint     mHeight;
 
         Real mBackColorRed;
         Real mBackColorGreen;
