@@ -83,6 +83,14 @@ for each pass
 
 }}}
 
+=pass/renderoperation/render system=
+
+ * pass 保存了渲染状态
+ * RenderOperation 保存了顶点数据
+ * pass 的状态通过调 renderer 的 setXXX 接口放进去
+ * RenderOperation 的数据流在 RenderOperation 里传进去
+
+
 = 多流技术 = 
 
 ogre使用了多流的技术，把vertex的positon，normal，texcord这些数据分开，放到多个流里面进行渲染，这方面的技术可以参考[http://dev.gameres.com/Program/Visual/3D/multistream.htm D3D中多流的用法]。(见reference1)
