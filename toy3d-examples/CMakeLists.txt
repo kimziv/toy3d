@@ -33,6 +33,7 @@ find_package(OpenGL)
 ADD_SUBDIRECTORY(triangle)
 ADD_SUBDIRECTORY(rectangle)
 ADD_SUBDIRECTORY(multi_rect)
+ADD_SUBDIRECTORY(texture)
 
 
 else ()
