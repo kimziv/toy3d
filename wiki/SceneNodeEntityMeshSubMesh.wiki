@@ -2,6 +2,8 @@
 
 = Introduction =
 
+== node entity mesh submesh 的关系==
+
 {{{
 
     Ogre::Entity* entNinja = mSceneMgr->createEntity("Ninja", "ninja.mesh");
