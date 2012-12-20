@@ -11,7 +11,7 @@ TOY3D_BEGIN_NAMESPACE
         MvGl2DemoMatrixIdentity( mWorldMatrix );
     }
 
-    World::~World() 
+    World::~World()
     {
         while( mMeshCount )
         {
@@ -24,8 +24,7 @@ TOY3D_BEGIN_NAMESPACE
         Real matrix[MATRIX_4x4_SIZE];
         Real mesh_matrix[MATRIX_4x4_SIZE];
         RenderOperation *ro = NULL;
-
-        
+        Uint index;
 
         //set AutoParamDataSource 
         //Fixme: where is world matrix value 
@@ -40,8 +39,14 @@ TOY3D_BEGIN_NAMESPACE
 
         ro = new RenderOperation ();
 
-        Uint index = mShaderProgram->getShaderParameters()->getAttrConstIndex (TOY3D_ATTR_VERTEX_INDEX);
+        index = mShaderProgram->getShaderParameters()->getAttrConstIndex (TOY3D_ATTR_VERTEX_INDEX);
         ro->setShaderAttribution (TOY3D_ATTR_VERTEX_INDEX, index);
+
+        //need to fix wether there is texture
+        //UV
+        index = mShaderProgram->getShaderParameters()->getAttrConstIndex (TOY3D_ATTR_UV_INDEX);
+        ro->setShaderAttribution (TOY3D_ATTR_UV_INDEX, index);
+
 
         mRenderer->setViewPort (0.0, 0.0, mWidth, mHeight);
         mRenderer->beginFrame ();

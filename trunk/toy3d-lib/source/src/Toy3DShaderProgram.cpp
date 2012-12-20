@@ -37,10 +37,10 @@ void ShaderProgram::bindShaderParameters(ShaderProgramParams* pShaderPara)
         return;
     }
 
-    if (mShaderParams)  {
-       //delete mShaderParams;
-       //mShaderParams = NULL;
-        FREEANDNULL(mShaderParams);
+    if (mShaderParams)
+    {
+        delete mShaderParams;
+        mShaderParams = NULL;
     }
  
 
