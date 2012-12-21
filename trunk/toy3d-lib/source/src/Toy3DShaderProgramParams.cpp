@@ -46,10 +46,9 @@ void ShaderProgramParams::setAutoConstValue( Uint index, const Real value[MATRIX
     return;
 }
 
-void ShaderProgramParams::setAutoConstValue( Uint index, const Uint value )
+void ShaderProgramParams::setAutoConstValue( Uint index, const Uint texUnit )
 {
-    //need to fix
-    glUniform1i( index, 0 );
+    glUniform1i( index, texUnit );
     return;
 }
 
@@ -129,7 +128,7 @@ void ShaderProgramParams::updateAutoConstParams ( AutoParamDataSource *source )
             break;
 
         case TOY3D_ACT_SAMPLER2D:
-            setAutoConstValue( mAutoConstEntries[i]->index, source->getSampler());
+            setAutoConstValue( mAutoConstEntries[i]->index, source->getTextureUnit());
 
         default:
             break;
@@ -153,7 +152,7 @@ Bool ShaderProgramParams::searchNamedAutoConst( const char *name, Uint* index )
     }
 
     if( index )
-        *index = -1;
+        *index = 0;
     return false;
 }
 

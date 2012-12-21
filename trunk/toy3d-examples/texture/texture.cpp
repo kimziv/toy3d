@@ -46,6 +46,7 @@ Real uvs[VERTEX_COUNT * 2] = {
 
 World *world = NULL;
 Texture *texture = NULL;
+Camera *camera = NULL;
 
 unsigned char* generateColorData(int w, int h, int *length)
 {
@@ -86,26 +87,56 @@ void display()
     glutSwapBuffers();
 }
 
+void changeSize( int w, int h ) 
+{
+    Real aspect, fovy;
+    Real nearz  = 1.0f;//5.0f;
+    Real farz   = 1000.0f;//60.0f;
+    
+    world->setSize(w, h);
+    
+    aspect = 1.0 * w / h;
+    fovy = 60;
+    camera->perspective (fovy, aspect, nearz, farz);
+    camera->lookAt (0.0, 0.0, -5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+    
+    return;
+}
+
+
 bool init()
 {
+    Real aspect, fovy;
+    const Real nearz  = 1.0f;//5.0f;
+    const Real farz   = 1000.0f;//60.0f;
+    int   width = WINDOW_W, height = WINDOW_H;
 
     world = new World ();
     printf("pointer world: %d.\n", world);
-    world->setSize(WINDOW_W, WINDOW_H);
+    world->setSize(width, height);
     world->setBackColor (1.0, 1.0, 1.0, 1.0);  //white back color
 
+    camera = world->createCamera ("camera1");
+    camera->lookAt (0.0, 0.0, -5.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+    camera->perspective (fovy, aspect, nearz, farz);
+    aspect = 1.0f * width / height;
+    fovy = 60;
+    camera->perspective (fovy, aspect, nearz, farz);
 
     ShaderProgram* shaderProgram = world->createShaderProgram();
     shaderProgram->loadShaderSource (SHADER_VERT_FILE, SHADER_FRAG_FILE);
     printf("shaderProgram id: %d\n", shaderProgram->getShaderProgramID());
 
-
     ShaderProgramParams *params = new ShaderProgramParams ();
+    params->setNamedAutoConstant (TOY3D_ACT_PROJECTION_MATRIX, "proj_mat");
+    params->setNamedAutoConstant (TOY3D_ACT_VIEW_MATRIX, "view_mat");
+    params->setNamedAutoConstant (TOY3D_ACT_WORLD_MATRIX, "world_mat");
     params->setNamedAutoConstant (TOY3D_ACT_SAMPLER2D, "sampler2d");
 
     //shader attributes
     params->setNamedAttrConstant(TOY3D_ATTR_VERTEX_INDEX, "vPosition");
     params->setNamedAttrConstant(TOY3D_ATTR_UV_INDEX, "vTexture");
+
     shaderProgram->bindShaderParameters(params);
 
     Mesh *mesh = world->createMesh();
@@ -113,14 +144,17 @@ bool init()
     mesh->setRenderMode (TOY3D_TRIANGLE_STRIP);
     mesh->setUVs( uvs, VERTEX_COUNT);
 
+    //mesh->rotate (0.0, 30.0, 0.0);
+
     int texid;
+
 #if 1
     // need to delete by yourself
     texture = TextureManager::getInstance()->createTextureByFile(TEXTURE_FILE);
     if( !texture )
     {
-    printf("create texture failed.\n");
-    return false;
+        printf("create texture failed.\n");
+        return false;
     }
 #endif
 
@@ -144,11 +178,10 @@ bool init()
     printf("texid = %d\n", texid);
     mesh->setTextureID(texid);
 
-    //unsigned int sampler2d = glGetUniformLocation( shaderProgram->getShaderProgramID(), "sampler2d");
-    //glUniform1i(sampler2d, 0); // pass in texture
-
     return true;
 }
+
+Real angle_y = 0.0f;
 
 void keyboard(unsigned char key, int x, int y){
     switch(key)
@@ -169,6 +202,13 @@ void keyboard(unsigned char key, int x, int y){
 
         exit(0);
         break;
+
+    case 'p':
+    case 'P':
+    case 26:
+        world->rotate (0.0f, angle_y, 0.0f);
+        angle_y += 10;
+        break;
     }
 }
 
@@ -178,9 +218,10 @@ int main(int argc, char** argv){
   	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
   	glutInitWindowSize(WINDOW_W, WINDOW_H);
   	glutInitWindowPosition(0,0);
-  	glutCreateWindow("triangle");
+  	glutCreateWindow("texture");
   	glutDisplayFunc(display);
 	glutIdleFunc(display);
+    glutReshapeFunc(changeSize);
   	glutKeyboardFunc(keyboard);
 
 

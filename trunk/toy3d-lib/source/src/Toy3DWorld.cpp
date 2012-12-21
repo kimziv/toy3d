@@ -40,9 +40,6 @@ TOY3D_BEGIN_NAMESPACE
         mCamera.getProjectionMatrix( matrix );
         mAutoParamDataSource.setProjectionMatrix( matrix ); 
 
-        //update auto shader paramters 
-//        mShaderProgram->getShaderParameters()->updateAutoConstParams (&mAutoParamDataSource); 
-
         ro = new RenderOperation ();
 
         index = mShaderProgram->getShaderParameters()->getAttrConstIndex (TOY3D_ATTR_VERTEX_INDEX);
@@ -67,7 +64,9 @@ TOY3D_BEGIN_NAMESPACE
             MvGl2DemoMatrixMultiply (matrix, mesh_matrix);
             //mMeshes[i]->getModelMatrix (matrix);
             mAutoParamDataSource.setWorldMatrix ( matrix );
-            mAutoParamDataSource.setSampler( ro->getTextureID() );
+            mAutoParamDataSource.setTextureUnit( ro->getTextureID() );
+
+            //update auto shader paramters
             mShaderProgram->getShaderParameters()->updateAutoConstParams (&mAutoParamDataSource); 
 
             mRenderer.useShaderProgram(mShaderProgram->getShaderProgramID());
