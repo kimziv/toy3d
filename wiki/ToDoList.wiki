@@ -2,6 +2,9 @@
 
 = 现存的问题 =
 
+glActive(unit) 如何解决
+autoConst 改名
+
 texture 如何释放 glDeleteTexture
 
 
