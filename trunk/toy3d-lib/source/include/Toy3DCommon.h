@@ -49,7 +49,7 @@ extern "C" {
 
 #define DELETEANDNULL(pointer) \
     if (pointer != NULL) { \
-    delete (pointer); \
+        delete pointer; \
     }
 
 //used for testing
@@ -90,7 +90,6 @@ extern "C" {
 
 
 
-
      enum RenderMode {
         TOY3D_POINTS = 1,
         TOY3D_LINES = 2,
@@ -104,7 +103,8 @@ extern "C" {
      {
          TOY3D_ACT_WORLD_MATRIX,
          TOY3D_ACT_VIEW_MATRIX, 
-         TOY3D_ACT_PROJECTION_MATRIX
+         TOY3D_ACT_PROJECTION_MATRIX,
+         TOY3D_ACT_SAMPLER2D
      };
 
      enum AttrConstantType

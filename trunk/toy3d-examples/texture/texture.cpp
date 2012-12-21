@@ -47,7 +47,6 @@ Real uvs[VERTEX_COUNT * 2] = {
 World *world = NULL;
 Texture *texture = NULL;
 
-
 unsigned char* generateColorData(int w, int h, int *length)
 {
     unsigned char *buf = NULL;
@@ -102,8 +101,7 @@ bool init()
 
 
     ShaderProgramParams *params = new ShaderProgramParams ();
-    //no shader uniforms ...
-    //Need to add a kind of custom variable.
+    params->setNamedAutoConstant (TOY3D_ACT_SAMPLER2D, "sampler2d");
 
     //shader attributes
     params->setNamedAttrConstant(TOY3D_ATTR_VERTEX_INDEX, "vPosition");
@@ -146,8 +144,8 @@ bool init()
     printf("texid = %d\n", texid);
     mesh->setTextureID(texid);
 
-    unsigned int sampler2d = glGetUniformLocation( shaderProgram->getShaderProgramID(), "sampler2d");
-    glUniform1i(sampler2d, 0); // pass in texture
+    //unsigned int sampler2d = glGetUniformLocation( shaderProgram->getShaderProgramID(), "sampler2d");
+    //glUniform1i(sampler2d, 0); // pass in texture
 
     return true;
 }
@@ -158,16 +156,16 @@ void keyboard(unsigned char key, int x, int y){
     case 'q':
     case 'Q':
     case 27:
-        printf("pointer world: %d.\n", world);
-        DELETEANDNULL(world);
-
         unsigned int texid;
         if( texture )
         {
             texid = texture->getTextureID();
-            glDeleteTextures(1, &texid );
+            TextureManager::getInstance()->deleteTexture(&texid, 1);
         }
         DELETEANDNULL(texture);
+
+        printf("pointer world: %d.\n", world);
+        DELETEANDNULL(world);
 
         exit(0);
         break;

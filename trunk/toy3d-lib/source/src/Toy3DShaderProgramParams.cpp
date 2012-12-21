@@ -31,18 +31,26 @@ ShaderProgramParams::~ShaderProgramParams()
 {
     while( mAutoCount )
     {
-        FREEANDNULL( mAutoConstEntries[--mAutoCount] );
+        DELETEANDNULL( mAutoConstEntries[--mAutoCount] );
     }
 
     while( mAttrCount )
     {
-        FREEANDNULL( mAttrConstEntries[--mAttrCount] );
+        DELETEANDNULL( mAttrConstEntries[--mAttrCount] );
     }
 }
 
 void ShaderProgramParams::setAutoConstValue( Uint index, const Real value[MATRIX_4x4_SIZE] )
 {
     glUniformMatrix4fv( index, 1, 0, value );
+    return;
+}
+
+void ShaderProgramParams::setAutoConstValue( Uint index, const Uint value )
+{
+    //need to fix
+    glUniform1i( index, 0 );
+    return;
 }
 
 void ShaderProgramParams::setNamedAutoConstant ( AutoConstantType type, char *name )
@@ -120,6 +128,9 @@ void ShaderProgramParams::updateAutoConstParams ( AutoParamDataSource *source )
             setAutoConstValue( mAutoConstEntries[i]->index, source->getViewMatrix() );
             break;
 
+        case TOY3D_ACT_SAMPLER2D:
+            setAutoConstValue( mAutoConstEntries[i]->index, source->getSampler());
+
         default:
             break;
         }
@@ -164,7 +175,7 @@ Bool ShaderProgramParams::searchNamedAttrConst( const char *name, Uint* index )
     }
     
     if( index )
-        *index = -1;
+        *index = 0;
     return false;
 }
 
