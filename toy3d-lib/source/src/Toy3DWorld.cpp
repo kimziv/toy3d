@@ -13,9 +13,12 @@ TOY3D_BEGIN_NAMESPACE
 
     World::~World()
     {
+        Mesh *temp;
         while( mMeshCount )
         {
-            DELETEANDNULL( mMeshes[--mMeshCount] );
+            temp = mMeshes[--mMeshCount];
+            mMeshes[mMeshCount] = 0;
+            delete temp;
         }
 
         DELETEANDNULL( mShaderProgram );
@@ -57,17 +60,17 @@ TOY3D_BEGIN_NAMESPACE
 
         for (Uint i = 0; i < mMeshCount; i++)
         {
+            mMeshes[i]->getRenderOperation(ro);
+
             mMeshes[i]->getModelMatrix (mesh_matrix);
             MvGl2DemoMatrixCopy (matrix, mWorldMatrix);
             MvGl2DemoMatrixMultiply (matrix, mesh_matrix);
             //mMeshes[i]->getModelMatrix (matrix);
             mAutoParamDataSource.setWorldMatrix ( matrix );
+            mAutoParamDataSource.setSampler( ro->getTextureID() );
             mShaderProgram->getShaderParameters()->updateAutoConstParams (&mAutoParamDataSource); 
 
-            mMeshes[i]->getRenderOperation(ro);
-
-            //fixme: set shader attribution index 
-            mRenderer.useShaderProgram (mShaderProgram->getShaderProgramID());
+            mRenderer.useShaderProgram(mShaderProgram->getShaderProgramID());
             mRenderer.render(ro);
         }
 

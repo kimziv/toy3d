@@ -16,6 +16,12 @@ TOY3D_BEGIN_NAMESPACE
         mUVs = NULL;
         mNormals = NULL;
         mVerticesCount = NULL;
+
+        mVertexIndex = 0;
+        mColorIndex = 0;
+        mUVIndex = 0;
+        mNormalIndex = 0;
+        mTextureID = 0;
     }
 
     RenderOperation::~RenderOperation()
@@ -25,6 +31,12 @@ TOY3D_BEGIN_NAMESPACE
         mUVs = NULL;
         mNormals = NULL;
         mVerticesCount = NULL;
+
+        mVertexIndex = 0;
+        mColorIndex = 0;
+        mUVIndex = 0;
+        mNormalIndex = 0;
+        mTextureID = 0;
     }
 
     void RenderOperation::setRenderMode( RenderMode mode )

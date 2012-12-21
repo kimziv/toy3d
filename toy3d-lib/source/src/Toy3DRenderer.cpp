@@ -105,7 +105,7 @@ TOY3D_BEGIN_NAMESPACE
             if( temp )
             {
                 glEnable(GL_TEXTURE_2D);
-                //glActiveTexture(GL_TEXTURE0);
+                glActiveTexture(GL_TEXTURE0);
                 glBindTexture(GL_TEXTURE_2D, ro->getTextureID());
                 //printf("tex id = %d\n", ro->getTextureID());
                 index = ro->getShaderAttribution( TOY3D_ATTR_UV_INDEX );

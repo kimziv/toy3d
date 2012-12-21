@@ -37,6 +37,12 @@ void AutoParamDataSource::setViewMatrix( Real matrix[MATRIX_4x4_SIZE] )
     memcpy( mViewMatrix, matrix, MATRIX_4x4_SIZE*sizeof(Real) );
 }
 
+void AutoParamDataSource::setSampler(Uint texid)
+{
+    mSampler = texid;
+    return;
+}
+
 const Real* AutoParamDataSource::getWorldMatrix(void) const
 {
     return mWorldMatrix;
@@ -51,6 +57,13 @@ const Real* AutoParamDataSource::getViewMatrix(void) const
 {
     return mViewMatrix;
 }
+
+const Uint AutoParamDataSource::getSampler() const
+{
+    return mSampler;
+}
+
+
 
 
 TOY3D_END_NAMESPACE

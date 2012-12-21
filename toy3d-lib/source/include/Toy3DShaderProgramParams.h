@@ -44,9 +44,9 @@ TOY3D_BEGIN_NAMESPACE
             Uint mAttrCount;
 
         private:
-            //查找指定名字的变量是否存在，并取得其在列表中的位置
-            Bool searchNamedAutoConst( const char *name, Uint* index );
-            Bool searchNamedAttrConst( const char *name, Uint* index );
+            //Search the name of the designated variables, if exist, get its position in the name list.
+            Bool searchNamedAutoConst( const char *name, Uint *index );
+            Bool searchNamedAttrConst( const char *name, Uint *index );
 
         public:
             ShaderProgramParams();
@@ -55,6 +55,7 @@ TOY3D_BEGIN_NAMESPACE
             //////////////////////////////////////////////////////////////////////////
             //Auto Constant Related Methods
             void setAutoConstValue( Uint index, const Real value[MATRIX_4x4_SIZE] );
+            void setAutoConstValue( Uint index, const Uint value );
             void setNamedAutoConstant ( AutoConstantType type, char *name );
             void updateAutoConstParams ( AutoParamDataSource *source );
             void updateAutoConstIndex ( const char *name, Uint index );

@@ -17,6 +17,7 @@ TOY3D_BEGIN_NAMESPACE
         mutable Real mWorldMatrix[MATRIX_4x4_SIZE];
         mutable Real mProjectionMatrix[MATRIX_4x4_SIZE];
         mutable Real mViewMatrix[MATRIX_4x4_SIZE];
+        mutable Uint mSampler;
         
     public:
         AutoParamDataSource();
@@ -25,10 +26,12 @@ TOY3D_BEGIN_NAMESPACE
         void setWorldMatrix( Real matrix[MATRIX_4x4_SIZE] );
         void setProjectionMatrix( Real matrix[MATRIX_4x4_SIZE] );
         void setViewMatrix( Real matrix[MATRIX_4x4_SIZE] );
+        void setSampler(Uint texid);
 
         const Real* getWorldMatrix(void) const;
         const Real* getProjectionMatrix(void) const;
         const Real* getViewMatrix(void) const;
+        const Uint getSampler() const;
     };
 
 
