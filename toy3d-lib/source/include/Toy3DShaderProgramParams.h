@@ -55,7 +55,7 @@ TOY3D_BEGIN_NAMESPACE
             //////////////////////////////////////////////////////////////////////////
             //Auto Constant Related Methods
             void setAutoConstValue( Uint index, const Real value[MATRIX_4x4_SIZE] );
-            void setAutoConstValue( Uint index, const Uint value );
+            void setAutoConstValue( Uint index, const Uint texUnit );
             void setNamedAutoConstant ( AutoConstantType type, char *name );
             void updateAutoConstParams ( AutoParamDataSource *source );
             void updateAutoConstIndex ( const char *name, Uint index );

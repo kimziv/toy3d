@@ -60,7 +60,7 @@ void changeSize( int w, int h )
     aspect = 1.0 * w / h;
     fovy = 60;
     camera->perspective (fovy, aspect, nearz, farz);
-    camera->lookAt (0.0, 0.0, -3.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+    camera->lookAt (0.0, 0.0, -30.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
   
     return;
 }
@@ -84,7 +84,7 @@ void init()
 /*
     camera->lookAt (0.0, 0.0, -3.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 
-    aspect = WINDOW_W / WINDOW_H;
+    aspect = 1.0f * WINDOW_W / WINDOW_H;
     fovy = 60;
     camera->perspective (fovy, aspect, nearz, farz);
     //camera->perspective (-1, 1, -1, 1, nearz, farz);

@@ -37,9 +37,9 @@ void AutoParamDataSource::setViewMatrix( Real matrix[MATRIX_4x4_SIZE] )
     memcpy( mViewMatrix, matrix, MATRIX_4x4_SIZE*sizeof(Real) );
 }
 
-void AutoParamDataSource::setSampler(Uint texid)
+void AutoParamDataSource::setTextureUnit(Uint texid)
 {
-    mSampler = texid;
+    mTextureUnit = texid;
     return;
 }
 
@@ -58,9 +58,9 @@ const Real* AutoParamDataSource::getViewMatrix(void) const
     return mViewMatrix;
 }
 
-const Uint AutoParamDataSource::getSampler() const
+const Uint AutoParamDataSource::getTextureUnit() const
 {
-    return mSampler;
+    return mTextureUnit;
 }
 
 
