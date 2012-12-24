@@ -31,6 +31,7 @@ TOY3D_BEGIN_NAMESPACE
 
         Uint mVertexCount;
         Uint mTextureID;
+        Uint mTextureUnit;
         Real mModelMatrix[MATRIX_4x4_SIZE]; 
 
 
@@ -47,7 +48,7 @@ TOY3D_BEGIN_NAMESPACE
         void setColors (Real* colors, Uint count);
         void setUVs (Real* uvs, Uint count);
         void setNormals(Real* normals, Uint count);
-        void setTextureID( Uint id );
+        void setTextureInfo( Uint texID, Uint texUnit);
 
         void getModelMatrix (Real matrix[MATRIX_4x4_SIZE]);
         //RenderMode getRenderMode();

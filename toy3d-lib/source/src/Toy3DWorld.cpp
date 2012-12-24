@@ -33,8 +33,6 @@ TOY3D_BEGIN_NAMESPACE
         Uint index;
 
         //set AutoParamDataSource 
-        //Fixme: where is world matrix value 
-//        mAutoParamDataSource.setWorldMatrix ( mWorldMatrix );
         mCamera.getViewMatrix( matrix );
         mAutoParamDataSource.setViewMatrix ( matrix );
         mCamera.getProjectionMatrix( matrix );
@@ -64,7 +62,7 @@ TOY3D_BEGIN_NAMESPACE
             MvGl2DemoMatrixMultiply (matrix, mesh_matrix);
             //mMeshes[i]->getModelMatrix (matrix);
             mAutoParamDataSource.setWorldMatrix ( matrix );
-            mAutoParamDataSource.setTextureUnit( ro->getTextureID() );
+            mAutoParamDataSource.setTextureUnit( ro->getTextureUnit() );
 
             //update auto shader paramters
             mShaderProgram->getShaderParameters()->updateAutoConstParams (&mAutoParamDataSource); 

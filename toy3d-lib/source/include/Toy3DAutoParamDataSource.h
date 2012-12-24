@@ -26,7 +26,7 @@ TOY3D_BEGIN_NAMESPACE
         void setWorldMatrix( Real matrix[MATRIX_4x4_SIZE] );
         void setProjectionMatrix( Real matrix[MATRIX_4x4_SIZE] );
         void setViewMatrix( Real matrix[MATRIX_4x4_SIZE] );
-        void setTextureUnit(Uint texid);
+        void setTextureUnit(Uint texUnit);
 
         const Real* getWorldMatrix(void) const;
         const Real* getProjectionMatrix(void) const;

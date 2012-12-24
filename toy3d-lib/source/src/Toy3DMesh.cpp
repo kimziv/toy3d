@@ -11,6 +11,8 @@ TOY3D_BEGIN_NAMESPACE
         mColors = NULL;
         mUVs = NULL;
         mNormals = NULL;
+        mTextureID = NULL;
+        mTextureUnit = NULL;
         MvGl2DemoMatrixIdentity( mModelMatrix );
     }
 
@@ -51,9 +53,10 @@ TOY3D_BEGIN_NAMESPACE
         mRenderMode = mode;
     }
 
-    void Mesh::setTextureID( Uint id )
+    void Mesh::setTextureInfo( Uint texID, Uint texUnit)
     {
-        mTextureID = id;
+        mTextureID = texID;
+        mTextureUnit = texUnit;
         return;
     }
 /*
@@ -89,7 +92,7 @@ TOY3D_BEGIN_NAMESPACE
             {
                 ro->setUVs( mUVs, mVertexCount );
                 if( mTextureID )
-                    ro->setTextureID( mTextureID );
+                    ro->setTextureInfo(mTextureID, mTextureUnit);
             }
         }
     }
