@@ -59,18 +59,18 @@ TOY3D_BEGIN_NAMESPACE
         if( !texture )
             return NULL;
 
-        ptr = strrchr(fileName, SEPERATER);
+        ptr = strrchr((char*)fileName, SEPERATER);
         if( !ptr )
         {
             TOY3D_TIPS("Image file name error: no effective suffix.\n");
             return NULL;
         }
 
-        if( 0==strnicmp(ptr, TGA_SUFFIX, strlen(TGA_SUFFIX)) )
+        if( 0==strncmp(ptr, TGA_SUFFIX, strlen(TGA_SUFFIX)) )
         {
             image = new TGAImage();
         }
-        else if( 0==strnicmp(ptr, BMP_SUFFIX, strlen(BMP_SUFFIX)) )
+        else if( 0==strncmp(ptr, BMP_SUFFIX, strlen(BMP_SUFFIX)) )
         {
             image = new BMPImage();
         }
