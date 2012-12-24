@@ -127,6 +127,7 @@ void ShaderProgramParams::updateAutoConstParams ( AutoParamDataSource *source )
             setAutoConstValue( mAutoConstEntries[i]->index, source->getViewMatrix() );
             break;
 
+            //transfer to the custom types
         case TOY3D_ACT_SAMPLER2D:
             setAutoConstValue( mAutoConstEntries[i]->index, source->getTextureUnit());
 

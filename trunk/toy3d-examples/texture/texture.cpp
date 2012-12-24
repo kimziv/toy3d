@@ -118,9 +118,9 @@ bool init()
 
     camera = world->createCamera ("camera1");
     camera->lookAt (0.0, 0.0, -5.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
-    camera->perspective (fovy, aspect, nearz, farz);
     aspect = 1.0f * width / height;
     fovy = 60;
+    camera->perspective (fovy, aspect, nearz, farz);
     camera->perspective (fovy, aspect, nearz, farz);
 
     ShaderProgram* shaderProgram = world->createShaderProgram();
@@ -176,7 +176,8 @@ bool init()
 
     texid = texture->getTextureID();
     printf("texid = %d\n", texid);
-    mesh->setTextureID(texid);
+    //mesh->setTextureID(texid);
+    mesh->setTextureInfo( texid, 0);
 
     return true;
 }
@@ -221,7 +222,7 @@ int main(int argc, char** argv){
   	glutCreateWindow("texture");
   	glutDisplayFunc(display);
 	glutIdleFunc(display);
-    glutReshapeFunc(changeSize);
+    //glutReshapeFunc(changeSize);
   	glutKeyboardFunc(keyboard);
 
 

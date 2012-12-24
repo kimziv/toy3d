@@ -102,9 +102,11 @@ TOY3D_BEGIN_NAMESPACE
         return;
     }
 
-    void RenderOperation::setTextureID( Uint id )
+    void RenderOperation::setTextureInfo( Uint texID, Uint texUnit)
     {
-        mTextureID = id;
+        mTextureID = texID;
+        mTextureUnit = texUnit;
+        return;
     }
 /*
     void RenderOperation::setVertexIndex( Uint index)
@@ -165,42 +167,12 @@ TOY3D_BEGIN_NAMESPACE
     {
         return mTextureID;
     }
-/*
-    Uint RenderOperation::getColorsCount()
+
+    Uint RenderOperation::getTextureUnit()
     {
-        return mColorsCount;
+        return mTextureUnit;
     }
 
-    Uint RenderOperation::getUVsCount()
-    {
-        return mUVsCount;
-    }
-
-    Uint RenderOperation::getNormalsCount()
-    {
-        return mNormalsCount;
-    }
-
-    Uint RenderOperation::getVertexIndex()
-    {
-        return mVertexIndex;
-    }
-
-    Uint RenderOperation::getColorIndex()
-    {
-        return mColorIndex;
-    }
-
-    Uint RenderOperation::getUVIndex()
-    {
-        return mUVIndex;
-    }
-
-    Uint RenderOperation::getNormalIndex()
-    {
-        return mNormalIndex;
-    }
-*/
     void RenderOperation::setShaderAttribution (AttrConstantType type, Uint index)
     {
         switch(type)

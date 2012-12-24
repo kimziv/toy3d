@@ -37,9 +37,9 @@ void AutoParamDataSource::setViewMatrix( Real matrix[MATRIX_4x4_SIZE] )
     memcpy( mViewMatrix, matrix, MATRIX_4x4_SIZE*sizeof(Real) );
 }
 
-void AutoParamDataSource::setTextureUnit(Uint texid)
+void AutoParamDataSource::setTextureUnit(Uint texUnit)
 {
-    mTextureUnit = texid;
+    mTextureUnit = texUnit;
     return;
 }
 
