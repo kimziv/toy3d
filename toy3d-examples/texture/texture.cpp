@@ -48,9 +48,10 @@ World *world = NULL;
 Texture *texture = NULL;
 Camera *camera = NULL;
 
-unsigned char* generateColorData(int w, int h, int *length)
+char* generateColorData(int w, int h, int bpp)
 {
-    unsigned char *buf = NULL;
+    char *buf = NULL;
+    int length;
     int i = 0, j = 0, ww, hh, _w = w, _h = h;
     {
         ww = 2;
@@ -58,18 +59,19 @@ unsigned char* generateColorData(int w, int h, int *length)
         hh = 2;
         while((_h /= 2) > 0)hh *= 2;
     }
-    *length = ww*hh*2;
-    buf = (unsigned char *)malloc(ww*hh*2);
+    length = ww*hh*bpp;
+    buf = (char *)malloc(length);
     if( !buf )
         return 0;
-    memset(buf, 255, ww*hh*2);
+    memset(buf, 255, length);
     
     for(i = 0; i < h; i ++)
     {
         for(j = 0; j < w; j++)
         {
-            *(buf+i*ww*2+j*2) = 255;
-            *(buf+i*ww*2+j*2 + 1) = i%256;
+            *(buf+i*ww*bpp+j*bpp) = 255;
+            *(buf+i*ww*bpp+j*bpp + 1) = i%256;
+            *(buf+i*ww*bpp+j*bpp + 2) = 0;
         }
         //memset(buf+i*ww, i%256, w);
     }
@@ -148,7 +150,7 @@ bool init()
 
     int texid;
 
-#if 1
+#if 0
     // need to delete by yourself
     texture = TextureManager::getInstance()->createTextureByFile(TEXTURE_FILE);
     if( !texture )
@@ -158,20 +160,20 @@ bool init()
     }
 #endif
 
-#if 0
-    unsigned char *buf;
-    int length;
-    buf = generateColorData(WINDOW_W, WINDOW_H, &length);
+#if 1
+    char *buf;
+    int   bpp = BPP_3;
+    buf = generateColorData(width, height, bpp);
     if( !buf )
         return false;
-    texture = TextureManager::getInstance()->createTexture(buf, length);
+    texture = TextureManager::getInstance()->createTexture(buf, width, height, bpp);
     if( !texture )
     {
         printf("create texture failed.\n");
         return false;
     }
-    if(buf)
-        FREEANDNULL(buf);
+//    if(buf)
+  //      FREEANDNULL(buf);
 #endif
 
     texid = texture->getTextureID();

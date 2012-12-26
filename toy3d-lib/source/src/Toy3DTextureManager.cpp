@@ -3,11 +3,6 @@
 
 TOY3D_BEGIN_NAMESPACE
 
-//used for decode image file
-#define SEPERATER  '.'
-#define TGA_SUFFIX ".tga"
-#define BMP_SUFFIX ".bmp"
-
 
     TextureManager* TextureManager::mInstance = NULL;
 
@@ -27,7 +22,7 @@ TOY3D_BEGIN_NAMESPACE
         return mInstance;
     }
 
-    Texture* TextureManager::createTexture(ImageInfo *pImageInfo)
+    Texture* TextureManager::createTexture(char *pImageData, Uint width, Uint height, Uint bpp)
     {
         Texture *texture = new Texture();
         if( !texture )
@@ -37,14 +32,20 @@ TOY3D_BEGIN_NAMESPACE
         if( !image )
             return NULL;
 
-        image->mBpp = pImageInfo->bpp;
-        image->mWidth = pImageInfo->width;
-        image->mHeight = pImageInfo->height;
-        image->mImageData = (char *)malloc(pImageInfo->size);
-        memcpy(image->mImageData, pImageInfo->pImageData, pImageInfo->size);
+        if( (bpp!=BPP_3) && (bpp!=BPP_4) )
+        {
+            TOY3D_TIPS("Parameter error: unsupported Bpp and that value must be 3 or 4.\n");
+            return NULL;
+        }
+
+        image->mBpp = bpp;
+        image->mWidth = width;
+        image->mHeight = height;
+        image->mImageData = pImageData;
 
         texture->genTexture(image);
         delete image;
+        pImageData = NULL;
 
         return texture;
     }

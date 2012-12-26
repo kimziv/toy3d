@@ -7,8 +7,15 @@
 
 TOY3D_BEGIN_NAMESPACE
 
+//bytes per pixel
 #define BPP_3 3
 #define BPP_4 4
+
+//suffix of image file
+#define SEPERATER  '.'
+#define TGA_SUFFIX ".tga"
+#define BMP_SUFFIX ".bmp"
+
 
     class Image
     {

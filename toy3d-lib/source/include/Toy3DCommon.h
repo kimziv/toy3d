@@ -26,6 +26,9 @@ extern "C" {
 #define TOY3D_BEGIN_NAMESPACE namespace TOY3D {
 #define TOY3D_END_NAMESPACE }
 
+
+//binary file format.
+#define BINARY_CODE_FOR_NV  0x890B
     
 
 //used for testing

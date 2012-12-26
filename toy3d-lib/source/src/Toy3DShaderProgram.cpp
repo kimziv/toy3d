@@ -140,10 +140,9 @@ done:
     return prog;
 }
 
-
-Uint ShaderProgram::loadShaderBinary(const char* vertBin, Uint vertBinSize,const char* fragBin, Uint fragBinSize)
+Uint ShaderProgram::loadShaderBinary(const char* vertBinaryFile, Uint vertBFSize,
+                                     const char* fragBinaryFile, Uint fragBFSize)
 {
-/*    
     Uint prog;
     Uint vertShader;
     Uint fragShader;
@@ -156,22 +155,16 @@ Uint ShaderProgram::loadShaderBinary(const char* vertBin, Uint vertBinSize,const
     fragShader = glCreateShader(GL_FRAGMENT_SHADER);
     
     // Load the binary data into the shader objects
-    glShaderBinary(1, &vertShader,
-        GL_NVIDIA_PLATFORM_BINARY_NV, vertBin, vertBinSize);
-    glShaderBinary(1, &fragShader,
-        GL_NVIDIA_PLATFORM_BINARY_NV, fragBin, fragBinSize);
+    glShaderBinary(1, &vertShader, BINARY_CODE_FOR_NV, vertBinaryFile, vertBFSize);
+    glShaderBinary(1, &fragShader, BINARY_CODE_FOR_NV, fragBinaryFile, fragBFSize);
     
     // Attach the shaders to the program
     glAttachShader(prog, vertShader);
     glAttachShader(prog, fragShader);
- 
- 
-    //fixme:  should delete shader...
-#if 0
+
     // Delete the shaders
     glDeleteShader(vertShader);
     glDeleteShader(fragShader);
-#endif
     
     // Link the shader program
     glLinkProgram(prog);
@@ -180,24 +173,7 @@ Uint ShaderProgram::loadShaderBinary(const char* vertBin, Uint vertBinSize,const
     mShaderProgramID = prog;
 
     return prog;
-*/
-    return 0;
 }
-
-/*
-void ShaderProgram::printf(const char* message, ...)
-{
-    va_list pArgList;
-    char    szBuffer[512];
-    
-    va_start(pArgList, message);
-    vsnprintf(szBuffer, sizeof(szBuffer) / sizeof(char), message, pArgList);
-    va_end(pArgList);
-    fprintf (stderr, szBuffer);
-    
-    return;
-}
-*/
 
 void ShaderProgram::getShaderDebugInfo(Uint obj, GLenum status, const char* op)
 {
@@ -218,36 +194,48 @@ void ShaderProgram::getShaderDebugInfo(Uint obj, GLenum status, const char* op)
             glGetProgramInfoLog(obj, len, NULL, str);
         }
     }
-    if (str != NULL && *str != '\0') {
+    if (str != NULL && *str != '\0')
+    {
         printf("--- %s log ---\n", op);
         printf("%s.\n", str);
     }
-    if (str) { free(str); }
+    if(str)
+    {
+        free(str);
+    }
     
     // check the compile / link status.
-    if (status == GL_COMPILE_STATUS) {
+    if (status == GL_COMPILE_STATUS)
+    {
         glGetShaderiv(obj, status, &success);
-        if (!success) {
+        if (!success)
+        {
             glGetShaderiv(obj, GL_SHADER_SOURCE_LENGTH, &len);
-            if (len > 0) {
+            if (len > 0)
+            {
                 str = (char *)malloc(len * sizeof(char));
                 glGetShaderSource(obj, len, NULL, str);
-                if (str != NULL && *str != '\0') {
+                if (str != NULL && *str != '\0')
+                {
                     printf("--- %s code ---\n", op);
                     printf("%s.\n", str);
                 }
                 free(str);
             }
         }
-    } else { // LINK
+    }
+    else
+    {// LINK
         glGetProgramiv(obj, status, &success);
     }
-    
+
     if (!success)
     {
         printf("--- %s failed ---\n", op);
         exit(-1);
     }
+
+    return;
 }
 
 char* ShaderProgram::loadFile(const char *file)

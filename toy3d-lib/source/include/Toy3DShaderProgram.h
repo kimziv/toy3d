@@ -23,7 +23,8 @@ TOY3D_BEGIN_NAMESPACE
         ~ShaderProgram();
 
         Uint loadShaderSource(const char *vertshader, const char *fragshader);
-        Uint loadShaderBinary(const char* vertBin, Uint vertBinSize, const char* fragBin, Uint fragBinSize);
+        Uint loadShaderBinary(const char* vertBinaryFile,
+            Uint vertBFSize, const char* fragBinaryFile, Uint fragBFSize);
         void bindShaderParameters(ShaderProgramParams* pShaderPara);
         Uint getShaderProgramID();
         ShaderProgramParams* getShaderParameters();
