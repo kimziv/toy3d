@@ -48,30 +48,28 @@ World *world = NULL;
 Texture *texture = NULL;
 Camera *camera = NULL;
 
+//Bpp muset be 3 or 4.
 char* generateColorData(int w, int h, int bpp)
 {
     char *buf = NULL;
-    int length;
-    int i = 0, j = 0, ww, hh, _w = w, _h = h;
-    {
-        ww = 2;
-        while((_w /= 2) > 0)ww *= 2;
-        hh = 2;
-        while((_h /= 2) > 0)hh *= 2;
-    }
-    length = ww*hh*bpp;
+    int length, i, j, c;
+
+    length = w*h*bpp;
     buf = (char *)malloc(length);
     if( !buf )
         return 0;
-    memset(buf, 255, length);
+    memset(buf, 0, length);
     
     for(i = 0; i < h; i ++)
     {
         for(j = 0; j < w; j++)
         {
-            *(buf+i*ww*bpp+j*bpp) = 255;
-            *(buf+i*ww*bpp+j*bpp + 1) = i%256;
-            *(buf+i*ww*bpp+j*bpp + 2) = 0;
+            c = ( ((i&0x8)==0) ^ ((j&0x8)==0) ) * 255;
+            *(buf+i*h*bpp+j*bpp) = (Uchar)c;
+            *(buf+i*h*bpp+j*bpp + 1) = (Uchar)c;
+            *(buf+i*h*bpp+j*bpp + 2) = (Uchar)c;
+            if(bpp==BPP_4)
+                *(buf+i*h*bpp+j*bpp + 3) = (Uchar)255;
         }
         //memset(buf+i*ww, i%256, w);
     }
