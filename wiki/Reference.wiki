@@ -163,4 +163,11 @@ for 每一个group
 = 参考 =
 
   # [http://gpgame.net/docs/program/ogre.htm ogre的图形渲染方式] 
+
+
+=其它引擎=
+
+==le3d==
+
+[http://v.youku.com/v_show/id_XNDkxODc2MDUy.html opengl 基础知识培训]
  
