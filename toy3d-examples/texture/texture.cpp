@@ -119,10 +119,12 @@ bool init()
     world->setBackColor (1.0, 0.0, 1.0, 1.0);
 
     camera = world->createCamera ("camera1");
+    /*
     camera->lookAt (0.0, 0.0, -5.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
     aspect = 1.0f * width / height;
     fovy = 60;
     camera->perspective (fovy, aspect, nearz, farz);
+    */
 
     ShaderProgram* shaderProgram = world->createShaderProgram();
     shaderProgram->loadShaderSource (SHADER_VERT_FILE, SHADER_FRAG_FILE);
@@ -221,7 +223,7 @@ int main(int argc, char** argv){
   	glutCreateWindow("texture");
   	glutDisplayFunc(display);
 	glutIdleFunc(display);
-    //glutReshapeFunc(changeSize);
+    glutReshapeFunc(changeSize);
   	glutKeyboardFunc(keyboard);
 
 
