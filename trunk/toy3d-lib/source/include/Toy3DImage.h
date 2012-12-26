@@ -20,11 +20,11 @@ TOY3D_BEGIN_NAMESPACE
     class Image
     {
     public:
-        //Uint mType;         // may be unused
-        Uint mWidth;        // width of image
-        Uint mHeight;       // height of image
-        Uint mBpp;          // bytes per pixel
-        char *mImageData;   // image data
+        //Uint mType;                // may be unused
+        Uint mWidth;                 // width of image
+        Uint mHeight;                // height of image
+        Uint mBpp;                   // bytes per pixel
+        unsigned char *mImageData;   // image data
 
     public:
         Image();

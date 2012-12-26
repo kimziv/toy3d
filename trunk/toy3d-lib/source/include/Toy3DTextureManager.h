@@ -29,7 +29,9 @@ TOY3D_BEGIN_NAMESPACE
          *     bpp : bytes per pixel
          * warning : the memory of pImageData be released.
          */
-        Texture* createTexture(char *pImageData, Uint width, Uint height, Uint bpp);
+        Texture* createTexture(unsigned char *pImageData, Uint width, Uint height, Uint bpp);
+
+        Texture* createTexture(ImageInfo *pImageInfo);
 
         Texture* createTextureByFile( const char* fileName );
 

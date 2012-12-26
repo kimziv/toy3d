@@ -14,7 +14,8 @@ TOY3D_BEGIN_NAMESPACE
     }
 
 
-    void Camera::lookAt (Real eyex, Real eyey, Real eyez, Real centerx, Real centery, Real centerz, Real upx, Real upy, Real upz)
+    void Camera::lookAt (Real eyex, Real eyey, Real eyez,
+        Real centerx, Real centery, Real centerz, Real upx, Real upy, Real upz)
     {
 
         MvGl2DemoMatrixIdentity(mViewMatrix);

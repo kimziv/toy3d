@@ -19,8 +19,8 @@ TOY3D_BEGIN_NAMESPACE
         Texture();
         ~Texture();
 
-        //void loadImage(Image  *image);
-        void genTexture(Image *image);
+        Bool genTexture(Image *image);
+        Bool genTexture(unsigned char *pImageData, Uint width, Uint height, Uint bpp);
         void setParameter();
         const Uint getTextureID() const;
 

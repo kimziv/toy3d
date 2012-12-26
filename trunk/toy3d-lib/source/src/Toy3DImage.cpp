@@ -120,7 +120,7 @@ TOY3D_BEGIN_NAMESPACE
         mBpp = bpp/8;
         imageSize  = (mBpp * mWidth * mHeight);
         /* Allocate memory for image data */
-        mImageData = (char *)malloc(imageSize);
+        mImageData = (unsigned char *)malloc(imageSize);
         if(mImageData == NULL)
         {
             TOY3D_TIPS("could not allocate memory for image.\n");
