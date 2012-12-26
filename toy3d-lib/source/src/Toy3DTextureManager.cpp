@@ -22,30 +22,32 @@ TOY3D_BEGIN_NAMESPACE
         return mInstance;
     }
 
-    Texture* TextureManager::createTexture(char *pImageData, Uint width, Uint height, Uint bpp)
+    Texture* TextureManager::createTexture(unsigned  char *pImageData, Uint width, Uint height, Uint bpp)
     {
+        Bool rvb;
         Texture *texture = new Texture();
         if( !texture )
             return NULL;
 
-        Image *image = new TGAImage();
-        if( !image )
+        rvb = texture->genTexture(pImageData, width, height, bpp);
+        if( rvb != TRUE )
             return NULL;
 
-        if( (bpp!=BPP_3) && (bpp!=BPP_4) )
-        {
-            TOY3D_TIPS("Parameter error: unsupported Bpp and that value must be 3 or 4.\n");
+        return texture;
+    }
+
+    Texture* TextureManager::createTexture(ImageInfo *pImageInfo)
+    {
+        Bool rvb;
+        Texture *texture = new Texture();
+        if( !texture )
             return NULL;
-        }
-
-        image->mBpp = bpp;
-        image->mWidth = width;
-        image->mHeight = height;
-        image->mImageData = pImageData;
-
-        texture->genTexture(image);
-        delete image;
-
+        
+        rvb = texture->genTexture(pImageInfo->pImageData,
+            pImageInfo->width, pImageInfo->height, pImageInfo->bpp);
+        if( rvb != TRUE )
+            return NULL;
+        
         return texture;
     }
 
@@ -87,7 +89,9 @@ TOY3D_BEGIN_NAMESPACE
         if( rvb != TRUE )
             return NULL;
 
-        texture->genTexture(image);
+        rvb = texture->genTexture(image);
+        if( rvb != TRUE )
+            return NULL;
 
         delete image;
 

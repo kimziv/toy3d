@@ -26,7 +26,9 @@ extern "C" {
 #define TOY3D_BEGIN_NAMESPACE namespace TOY3D {
 #define TOY3D_END_NAMESPACE }
 
-
+//////////////////////////////////////////////////////////////////////////
+//config
+    
 //binary file format.
 #define BINARY_CODE_FOR_NV  0x890B
     
@@ -37,6 +39,8 @@ extern "C" {
 #define MAX_NAME_LEN        32
 #define MATRIX_4x4_SIZE     16
 
+//////////////////////////////////////////////////////////////////////////
+//
 
 #ifndef M_PI
 #define M_PI 3.1415926535897932f
@@ -118,6 +122,13 @@ extern "C" {
          TOY3D_ATTR_NORMAL_INDEX
      };
 
+     typedef struct _ImageInfo
+     {
+         unsigned char *pImageData; /* color data of image */
+         Uint width;                /* width of image */
+         Uint height;               /* height of image */
+         Uint bpp;                  /* bytes per pixel */
+     }ImageInfo;
 
 
 

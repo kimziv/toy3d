@@ -49,13 +49,13 @@ Texture *texture = NULL;
 Camera *camera = NULL;
 
 //Bpp muset be 3 or 4.
-char* generateColorData(int w, int h, int bpp)
+unsigned char* generateColorData(int w, int h, int bpp)
 {
-    char *buf = NULL;
+    unsigned char *buf = NULL;
     int length, i, j, c;
 
     length = w * h * bpp;
-    buf = (char *)malloc(length);
+    buf = (unsigned char *)malloc(length);
     if( !buf )
         return 0;
     memset(buf, 0, length);
@@ -94,11 +94,11 @@ void changeSize( int w, int h )
     Real farz   = 1000.0f;//60.0f;
     
     world->setSize(w, h);
-    
+
+    camera->lookAt (0.0, 0.0, -5.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
     aspect = 1.0 * w / h;
     fovy = 60;
     camera->perspective (fovy, aspect, nearz, farz);
-    camera->lookAt (0.0, 0.0, -5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
     
     return;
 }
@@ -107,20 +107,21 @@ void changeSize( int w, int h )
 bool init()
 {
     Real aspect, fovy;
-    const Real nearz  = 1.0f;//5.0f;
-    const Real farz   = 1000.0f;//60.0f;
+    const Real nearz  = 1.0f;
+    const Real farz   = 1000.0f;
     int   width = WINDOW_W, height = WINDOW_H;
+    int   texid;
+    int   texUnit = 0;
 
     world = new World ();
     printf("pointer world: %d.\n", world);
     world->setSize(width, height);
-    world->setBackColor (1.0, 1.0, 1.0, 1.0);  //white back color
+    world->setBackColor (1.0, 0.0, 1.0, 1.0);
 
     camera = world->createCamera ("camera1");
     camera->lookAt (0.0, 0.0, -5.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
     aspect = 1.0f * width / height;
     fovy = 60;
-    camera->perspective (fovy, aspect, nearz, farz);
     camera->perspective (fovy, aspect, nearz, farz);
 
     ShaderProgram* shaderProgram = world->createShaderProgram();
@@ -146,10 +147,7 @@ bool init()
 
     //mesh->rotate (0.0, 30.0, 0.0);
 
-    int texid;
-
 #if 0
-    // need to delete by yourself
     texture = TextureManager::getInstance()->createTextureByFile(TEXTURE_FILE);
     if( !texture )
     {
@@ -159,7 +157,7 @@ bool init()
 #endif
 
 #if 1
-    char *buf;
+    unsigned char *buf;
     int  bpp = BPP_3;
     int  imageW = 64;
     int  imageH = 64;
@@ -172,14 +170,13 @@ bool init()
         printf("create texture failed.\n");
         return false;
     }
-//    if(buf)
-  //      FREEANDNULL(buf);
+    if(buf)
+        FREEANDNULL(buf);
 #endif
 
     texid = texture->getTextureID();
     printf("texid = %d\n", texid);
-    //mesh->setTextureID(texid);
-    mesh->setTextureInfo( texid, 0);
+    mesh->setTextureInfo( texid, texUnit);
 
     return true;
 }
