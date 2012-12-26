@@ -54,7 +54,7 @@ char* generateColorData(int w, int h, int bpp)
     char *buf = NULL;
     int length, i, j, c;
 
-    length = w*h*bpp;
+    length = w * h * bpp;
     buf = (char *)malloc(length);
     if( !buf )
         return 0;
@@ -160,11 +160,13 @@ bool init()
 
 #if 1
     char *buf;
-    int   bpp = BPP_3;
-    buf = generateColorData(width, height, bpp);
+    int  bpp = BPP_3;
+    int  imageW = 64;
+    int  imageH = 64;
+    buf = generateColorData(imageW, imageH, bpp);
     if( !buf )
         return false;
-    texture = TextureManager::getInstance()->createTexture(buf, width, height, bpp);
+    texture = TextureManager::getInstance()->createTexture(buf, imageW, imageH, bpp);
     if( !texture )
     {
         printf("create texture failed.\n");
