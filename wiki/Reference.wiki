@@ -170,4 +170,8 @@ for 每一个group
 ==le3d==
 
 [http://v.youku.com/v_show/id_XNDkxODc2MDUy.html opengl 基础知识培训]
+
+==min3d==
+
+android 3d engine 
  
