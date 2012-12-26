@@ -6,13 +6,15 @@
 TOY3D_BEGIN_NAMESPACE
 
 //Maybe need to modify according to the actual situation.
-static textureUnit[] = {GL_TEXTURE0, GL_TEXTURE1, GL_TEXTURE2,GL_TEXTURE3, GL_TEXTURE4,
-                        GL_TEXTURE5, GL_TEXTURE6, GL_TEXTURE7, GL_TEXTURE8, GL_TEXTURE9,
-                        GL_TEXTURE10, GL_TEXTURE11, GL_TEXTURE12, GL_TEXTURE13, GL_TEXTURE14,
-                        GL_TEXTURE15, GL_TEXTURE16, GL_TEXTURE17, GL_TEXTURE18, GL_TEXTURE19,
-                        GL_TEXTURE20, GL_TEXTURE21, GL_TEXTURE22, GL_TEXTURE23, GL_TEXTURE24,
-                        GL_TEXTURE25, GL_TEXTURE26, GL_TEXTURE27, GL_TEXTURE28, GL_TEXTURE29,
-                        GL_TEXTURE30, GL_TEXTURE31};
+#define MAX_TEXTURE_UNIT 32
+static int gTextureUnit[MAX_TEXTURE_UNIT] = {
+    GL_TEXTURE0, GL_TEXTURE1, GL_TEXTURE2,GL_TEXTURE3, GL_TEXTURE4,
+    GL_TEXTURE5, GL_TEXTURE6, GL_TEXTURE7, GL_TEXTURE8, GL_TEXTURE9,
+    GL_TEXTURE10, GL_TEXTURE11, GL_TEXTURE12, GL_TEXTURE13, GL_TEXTURE14,
+    GL_TEXTURE15, GL_TEXTURE16, GL_TEXTURE17, GL_TEXTURE18, GL_TEXTURE19,
+    GL_TEXTURE20, GL_TEXTURE21, GL_TEXTURE22, GL_TEXTURE23, GL_TEXTURE24,
+    GL_TEXTURE25, GL_TEXTURE26, GL_TEXTURE27, GL_TEXTURE28, GL_TEXTURE29,
+    GL_TEXTURE30, GL_TEXTURE31};
 
 //////////////////////////////////////////////////////////////////////////
 //Renderer
@@ -47,7 +49,8 @@ static textureUnit[] = {GL_TEXTURE0, GL_TEXTURE1, GL_TEXTURE2,GL_TEXTURE3, GL_TE
     {
         Uint mode = 0;
         Uint index = 0;
-        Real *temp = 0;
+        Real *pTempR = 0;
+        Uint texUnit;
 
         if( !ro )
         {
@@ -107,15 +110,20 @@ static textureUnit[] = {GL_TEXTURE0, GL_TEXTURE1, GL_TEXTURE2,GL_TEXTURE3, GL_TE
             //color
 
             //uvs
-            temp = ro->getUVs();
-            if( temp )
+            pTempR = ro->getUVs();
+            if( pTempR )
             {
                 glEnable(GL_TEXTURE_2D);
-                glActiveTexture(textureUnit[ro->getTextureUnit()]);
+                texUnit = ro->getTextureUnit();
+                if(texUnit>MAX_TEXTURE_UNIT)
+                {
+                    TOY3D_TIPS("Error: texture unit is beyond the supported scope.\n");
+                }
+                glActiveTexture(gTextureUnit[texUnit]);
                 glBindTexture(GL_TEXTURE_2D, ro->getTextureID());
                 //printf("tex id = %d\n", ro->getTextureID());
                 index = ro->getShaderAttribution( TOY3D_ATTR_UV_INDEX );
-                glVertexAttribPointer( index, 2, GL_FLOAT, 0, 0, temp );
+                glVertexAttribPointer( index, 2, GL_FLOAT, 0, 0, pTempR );
                 glEnableVertexAttribArray( index );
             }
 

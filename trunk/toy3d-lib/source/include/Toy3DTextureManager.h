@@ -9,15 +9,6 @@
 
 TOY3D_BEGIN_NAMESPACE
 
-    typedef struct _ImageInfo
-    {
-        Uint width;        // width of image
-        Uint height;       // height of image
-        Uint bpp;          // bytes per pixel
-        char *pImageData;   // image data
-        Uint size;          // image data len (should be equal to width*height*bpp )
-    }ImageInfo;
-
     class TextureManager
     {
     private:
@@ -30,7 +21,16 @@ TOY3D_BEGIN_NAMESPACE
         ~TextureManager();
         static TextureManager* getInstance();
 
-        Texture* createTexture(ImageInfo *pImageInfo);
+        /* function : createTexture
+         * parameter:
+         *     pImageData : color data of image
+         *     width : width of image
+         *     height : height of image
+         *     bpp : bytes per pixel
+         * warning : the memory of pImageData be released.
+         */
+        Texture* createTexture(char *pImageData, Uint width, Uint height, Uint bpp);
+
         Texture* createTextureByFile( const char* fileName );
 
         //void useTexture(Uint texid);

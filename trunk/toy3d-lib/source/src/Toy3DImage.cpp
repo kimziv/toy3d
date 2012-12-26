@@ -32,7 +32,6 @@ TOY3D_BEGIN_NAMESPACE
 
     TGAImage::~TGAImage()
     {
-        ;
     }
 
     Bool TGAImage::decode( const char* fileName )

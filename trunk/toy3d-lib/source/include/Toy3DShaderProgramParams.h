@@ -47,13 +47,14 @@ TOY3D_BEGIN_NAMESPACE
             //Search the name of the designated variables, if exist, get its position in the name list.
             Bool searchNamedAutoConst( const char *name, Uint *index );
             Bool searchNamedAttrConst( const char *name, Uint *index );
+            Bool searchCustomAttrConst( const char *name, Uint *index );
 
         public:
             ShaderProgramParams();
             ~ShaderProgramParams();
 
             //////////////////////////////////////////////////////////////////////////
-            //Auto Constant Related Methods
+            //Auto Constant Methods
             void setAutoConstValue( Uint index, const Real value[MATRIX_4x4_SIZE] );
             void setAutoConstValue( Uint index, const Uint texUnit );
             void setNamedAutoConstant ( AutoConstantType type, char *name );
@@ -64,7 +65,7 @@ TOY3D_BEGIN_NAMESPACE
             const char* getAutoParamName( Uint index );
 
             //////////////////////////////////////////////////////////////////////////
-            //Attribute Constant Related Method
+            //Attribute Constant Method
             void setNamedAttrConstant ( AttrConstantType type, char *name );
             void updateAttrConstIndex ( const char *name, Uint index );
 
@@ -73,10 +74,16 @@ TOY3D_BEGIN_NAMESPACE
             Uint getAttrConstIndex( AttrConstantType type );
 
             //void ShaderProgramParams::updateAutoConstIndex_2 ( const Uchar *name, Uint shaderProgID );
-
+#if 0
             //////////////////////////////////////////////////////////////////////////
-            //Customed Constant Related Methods
-            //Bool setNamedConstValue(const char *name, Uint type, Uint vlaue );
+            //Customed Constant Methods
+            void setNamedCustomConstant ( AttrConstantType type, char *name );
+            void updateCustomConstIndex ( const char *name, Uint index );
+            
+            Uint getCustomEntryCount();
+            const char* getCustomParamName( Uint index );
+            Uint getCustomConstIndex( AttrConstantType type );
+#endif
     };
 
 
