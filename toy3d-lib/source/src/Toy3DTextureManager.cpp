@@ -45,7 +45,6 @@ TOY3D_BEGIN_NAMESPACE
 
         texture->genTexture(image);
         delete image;
-        pImageData = NULL;
 
         return texture;
     }
