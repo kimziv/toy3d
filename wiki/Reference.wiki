@@ -48,6 +48,8 @@ class SubMesh {
     VertexData *vertexData;
     IndexData *vertexData;
 
+    char* mMaterialName;
+
 };
 
 
