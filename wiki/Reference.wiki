@@ -43,9 +43,23 @@ VertexDeclaration 记录了 buffer 里的数据布局：
 
 {{{
 
+//create mesh
+Ogre::Mesh* mMesh = Ogre::MeshManager::getSingleton().createManual(yourMeshName, "General");
+
+//create submesh
+Ogre::SubMesh* mSubMesh = mMesh->createSubMesh(yourSubMeshName);
+
+
+//create vertex declaration
+
 Ogre::VertexData* data = new Ogre::VertexData();
 
-mMesh->vertexData = data;
+#ifdef SHARED_GEOMETRY
+     mMesh->sharedVertexData = data;
+ #else
+     mSubMesh->useSharedVertices = false; // This value is 'true' by default
+     mSubMesh->vertexData = data;
+ #endif
 
 data->vertexCount = iVertexCount;
 
