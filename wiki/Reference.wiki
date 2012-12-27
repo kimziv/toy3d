@@ -34,11 +34,21 @@ Entities 是以 Meshes 作为自身基础的，Mesh 对象包括了一整套用�
 
 }}}
 
-=Mesh/SubMesh=
+=Mesh/SubMesh/Entity=
 
 一般一个 Mesh 包含多个 SubMesh，如汽车模型，会分成车身、进气格栅、轮子、....
 
 {{{
+
+class Entity {
+
+   typedef std::vector<SubEntity*> SubEntityList;
+   SubEntityList mSubEntityList;
+
+   
+}
+
+class SubEntity
 
 
 class SubMesh {
