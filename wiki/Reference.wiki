@@ -74,6 +74,45 @@ size_t offset = 0;
  offset += Ogre::VertexElement::getTypeSize(Ogre::VET_FLOAT2);
  decl->addElement(0, offset, Ogre::VET_FLOAT2, Ogre::VES_TEXTURE_COORDINATES, 1);
 
+//create vertex buffer
+
+Ogre::HardwareVertexBufferSharedPtr vbuf = Ogre::HardwareBufferManager::getSingleton().createVertexBuffer(
+     decl->getVertexSize(0),                     // This value is the size of a vertex in memory
+     iVertexNbr,                                 // The number of vertices you'll put into this buffer
+     Ogre::HardwareBuffer::HBU_STATIC_WRITE_ONLY // Properties
+ );
+
+
+array[0] = vertices[1].x
+ array[1] = vertices[1].y
+ array[2] = vertices[1].z
+ array[3] = vertices[1].normal.x
+ array[4] = vertices[1].normal.y
+ array[5] = vertices[1].normal.z
+ 
+ array[6] = vertices[2].x
+
+
+vbuf->writeData(0, vbuf->getSizeInBytes(), array, true);
+
+ Ogre::VertexBufferBinding* bind = data->vertexBufferBinding;
+ bind->setBinding(0, vbuf);
+
+//create index buffer
+
+Ogre::HardwareIndexBufferSharedPtr ibuf = Ogre::HardwareBufferManager::getSingleton().createIndexBuffer(
+     Ogre::HardwareIndexBuffer::IT_16BIT,        // You can use several different value types here
+     iIndexNbr,                                  // The number of indices you'll put in that buffer
+     Ogre::HardwareBuffer::HBU_STATIC_WRITE_ONLY // Properties
+ );
+
+//Bounding box and sphere
+mMesh->_setBounds(Ogre::AxisAlignedBox(xMin,yMin,zMin,xMax,yMax,zMax));
+ mMesh->_setBoundingSphereRadius(std::max(xMax-xMin, std::max(yMax-yMin, zMax-zMin))/2.0f);
+
+
+mMesh->load();
+
 }}}
 
 [http://www.ogre3d.org/tikiwiki/tiki-index.php?page=Manual+Resource+Loading&structure=Tutorials Manual Resource Loading]
