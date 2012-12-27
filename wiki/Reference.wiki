@@ -50,10 +50,17 @@ class Entity {
    typedef std::vector<SubEntity*> SubEntityList;
    SubEntityList mSubEntityList;
 
-   
 }
 
-class SubEntity
+class SubEntity {
+
+        MaterialPtr mpMaterial;
+
+        // Pointer to the SubMesh defining geometry.
+        SubMesh* mSubMesh;
+
+
+}
 
 
 class SubMesh {
