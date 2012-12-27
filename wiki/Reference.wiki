@@ -94,7 +94,7 @@ class Mesh {
 
 }}}
  
-=Mesh/SubMesh/VertexData/IndexData/VertexDeclaration=
+=Mesh/SubMesh/VertexData/IndexData/VertexDeclaration/Material=
 
 
 VertexData 是数据buffer，顶点、纹理、法线会存在一个buffer里
@@ -172,6 +172,29 @@ mMesh->_setBounds(Ogre::AxisAlignedBox(xMin,yMin,zMin,xMax,yMax,zMax));
 
 
 mMesh->load();
+
+//create material
+Ogre::MaterialPtr mMat = Ogre::MaterialManager::getSingleton().create(yourMaterialName, "General", true);
+
+//create technique
+Ogre::Technique* mTech = mMat->createTechnique();
+
+//create pass
+Ogre::Pass* mPass = mTech->createPass();
+
+
+
+//create texture unit
+Ogre::TextureUnitState* mTexUnitState = mPass->createTextureUnitState();
+
+//set color
+mPass = mMat->getTechnique(0)->getPass(0);
+ mPass->setDiffuse(Ogre::ColourValue(red, green, blue, alpha));
+
+
+//set texture
+Ogre::TexturePtr mTex = Ogre::TextureManager::getSingleton().load(yourTextureFileName, "General");
+mPass->createTextureUnitState()->setTextureName(mTex->getName());
 
 }}}
 
