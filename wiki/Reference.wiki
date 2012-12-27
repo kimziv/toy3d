@@ -34,6 +34,35 @@ Entities 是以 Meshes 作为自身基础的，Mesh 对象包括了一整套用�
 
 }}}
  
+=Mesh/SubMesh/VertexData/IndexData/VertexDeclaration=
+
+
+VertexData 是数据buffer，顶点、纹理、法线会存在一个buffer里
+
+VertexDeclaration 记录了 buffer 里的数据布局：
+
+{{{
+
+Ogre::VertexData* data = new Ogre::VertexData();
+
+mMesh->vertexData = data;
+
+data->vertexCount = iVertexCount;
+
+Ogre::VertexDeclaration* decl = data->vertexDeclaration;
+
+size_t offset = 0;
+ decl->addElement(0, offset, Ogre::VET_FLOAT3, Ogre::VES_POSITION);
+ offset += Ogre::VertexElement::getTypeSize(Ogre::VET_FLOAT3);
+ decl->addElement(0, offset, Ogre::VET_FLOAT3, Ogre::VES_NORMAL);
+ offset += Ogre::VertexElement::getTypeSize(Ogre::VET_FLOAT3);
+ decl->addElement(0, offset, Ogre::VET_FLOAT2, Ogre::VES_TEXTURE_COORDINATES);
+ offset += Ogre::VertexElement::getTypeSize(Ogre::VET_FLOAT2);
+ decl->addElement(0, offset, Ogre::VET_FLOAT2, Ogre::VES_TEXTURE_COORDINATES, 1);
+
+}}}
+
+[http://www.ogre3d.org/tikiwiki/tiki-index.php?page=Manual+Resource+Loading&structure=Tutorials Manual Resource Loading]
 
 = material-technique-pass =
 
