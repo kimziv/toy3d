@@ -36,7 +36,12 @@ Entities 是以 Meshes 作为自身基础的，Mesh 对象包括了一整套用�
 
 =Mesh/SubMesh/Entity=
 
+
+
 一般一个 Mesh 包含多个 SubMesh，如汽车模型，会分成车身、进气格栅、轮子、....
+
+Entity 和 SubEntity是物体渲染特性的入口，Mesh 和 SubMesh 是物体结构特性（几何数据）的入口
+
 
 {{{
 
