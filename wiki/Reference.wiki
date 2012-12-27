@@ -5,7 +5,7 @@
 
 camera, light 从 SceneManager 创建
 
-scene node 与 mesh 分离，mesh attach 到 scene node里
+scene node 与 mesh 分离，entity attach 到 scene node里
 
 Material: 在ogre里面Material的含义不再只是包含光照信息的那个Material的含义了。ogre把texture也加入到了Material里面(还有其他的很多的信息)，这样对于同一种Material最多只用调用一次setmaterial和settexture。(见reference1)
 
