@@ -50,7 +50,23 @@ class SubMesh {
 
     char* mMaterialName;
     
-    mpMaterial
+};
+
+
+class Mesh {
+
+    typedef std::vector<SubMesh*> SubMeshList;
+    SubMeshList mSubMeshList;
+
+    typedef HashMap<String, ushort> SubMeshNameMap ;
+    SubMeshNameMap mSubMeshNameMap ;
+
+    /// Local bounding box volume
+    AxisAlignedBox mAABB;
+    
+    /// Local bounding sphere radius (centered on object)
+    Real mBoundRadius;
+    
 };
 
 
