@@ -438,6 +438,50 @@ class _OgreExport GpuProgramParameters {
 
 }}}
 
+=GLES2ProgramCommon=
+
+
+{{{
+
+
+class GLSLESProgramCommon {
+
+    /// Container of uniform references that are active in the program object
+    GLUniformReferenceList mGLUniformReferences;
+
+    /// Linked vertex program
+    GLSLESGpuProgram* mVertexProgram;
+
+    /// Linked fragment program
+    GLSLESGpuProgram* mFragmentProgram;
+
+    /// Flag to indicate that uniform references have already been built
+    bool mUniformRefsBuilt;
+
+    /// GL handle for the program object
+    GLuint mGLProgramHandle;
+
+    /// Flag indicating that the program or pipeline object has been successfully linked
+    GLint mLinked;
+
+
+};
+
+void GLSLESProgramPipeline::buildGLUniformReferences(void)
+{
+}
+
+void GLSLESProgramPipeline::updateUniforms(GpuProgramParametersSharedPtr params,
+                                           uint16 mask, GpuProgramType fromProgType)
+{
+}
+
+
+
+
+}}}
+
+
 =最简单的 OGRE 程序=
 
 使用 ManualObject，加载纹理，显示cube，最简单的调用方式：
