@@ -5,8 +5,8 @@
 分2类：
  * Attrubiton
  * Uniform 
-  # auto uniform
-  # custom uniform 
+  # auto uniform:
+  # custom uniform : 需要用户set
 
 
 
