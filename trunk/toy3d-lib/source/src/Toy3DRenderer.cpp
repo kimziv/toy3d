@@ -5,7 +5,7 @@
 
 TOY3D_BEGIN_NAMESPACE
 
-//Maybe need to modify according to the actual situation.
+//Maybe need to modify according to the actual situation of the hardware.
 #define MAX_TEXTURE_UNIT 32
 static int gTextureUnit[MAX_TEXTURE_UNIT] = {
     GL_TEXTURE0, GL_TEXTURE1, GL_TEXTURE2,GL_TEXTURE3, GL_TEXTURE4,

@@ -199,7 +199,7 @@ void ShaderProgramParams::updateAttrConstIndex ( const char *name, Uint index )
     Uint position = 0;
     if( !searchNamedAttrConst(name, &position) )
     {
-        TOY3D_PRINT("updateAutoConstIndex failed. AutoConst name doesn't exist.", __FILE__, __LINE__);
+        TOY3D_PRINT("updateAttrConstIndex failed. AutoConst name doesn't exist.", __FILE__, __LINE__);
         return;
     }
     
