@@ -10,7 +10,17 @@
 
 {{{
 
+class ShaderProgramParams {
 
+    setCustUniform (const char* name, Uint value);
+
+}
+
+void ShaderProgramParams::setCustUniform (const char* name, Uint value)
+{
+    index = glGetUnifrom (name);
+    glSetUniform (index, value);
+}
 
 }}}
 
