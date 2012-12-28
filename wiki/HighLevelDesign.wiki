@@ -19,3 +19,12 @@
   * Renderer
   * ShaderProgram
   * Texture
+
+=重构=
+
+  * Entity: getRenderOperation()
+  * Mesh: getRenderOperation()
+  * Pass: texture,material, color
+  * TextureState
+  * world
+  * RenderQueue: RenderablePassMap
