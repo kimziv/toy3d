@@ -8,6 +8,8 @@
   # auto uniform
   # custom uniform 
 
+
+
 {{{
 
 class ShaderProgramParams {
@@ -21,6 +23,29 @@ void ShaderProgramParams::setCustUniform (const char* name, Uint value)
     index = glGetUnifrom (name);
     glSetUniform (index, value);
 }
+
+}}}
+
+用户
+
+{{{
+
+    ShaderProgramParams *params = new ShaderProgramParams ();
+
+
+    //uniforms
+    params->setNamedAutoConstant (TOY3D_ACT_PROJECTION_MATRIX, "proj_mat");
+    params->setNamedAutoConstant (TOY3D_ACT_VIEW_MATRIX, "view_mat");
+    params->setNamedAutoConstant (TOY3D_ACT_WORLD_MATRIX, "world_mat");
+
+    params->setCustUnifrom ("sample2d", value);
+
+    //attributes
+    params->setNamedAttrConstant (TOY3D_ATTR_VERTEX_INDEX, "vPosition");
+
+
+    shaderProgram->bindShaderParameters(params);
+
 
 }}}
 
