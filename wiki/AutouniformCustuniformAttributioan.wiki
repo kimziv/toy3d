@@ -1,0 +1,25 @@
+#summary 重构 autouniform , custom uniform, attribution 的处理
+
+= 概念 =
+
+分2类：
+ * Attrubiton
+ * Uniform 
+  # auto uniform
+  # custom uniform 
+
+{{{
+
+
+
+}}}
+
+
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
