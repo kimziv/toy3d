@@ -382,7 +382,10 @@ for 每一个group
 
 
 
-==
+=AutoConst/RealConstant/IntConstant=
+
+
+{{{
 
 
 struct RealConstantEntry
@@ -433,7 +436,7 @@ class _OgreExport GpuProgramParameters {
     
 }
 
-
+}}}
 
 =最简单的 OGRE 程序=
 
