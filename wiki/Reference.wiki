@@ -281,7 +281,7 @@ OGRE 渲染总流程
 
 SceneManager渲染流程
 
-renderScene->
+_renderScene->findVisibleObjects->_renderVisibleObjects->renderQueueGroupObjects->renderObjects->renderSingleObject
 
 
 {{{
@@ -316,6 +316,22 @@ void SceneManager::_renderScene()
     mDestRenderSystem->_endFrame();
 
 }
+
+void SceneManager::renderObjects(RenderablePassMap& objs)
+{
+    for (map) {
+        renderSingleObject(renderalbe, pass, ...);
+    }
+}
+
+
+void SceneManager::renderSingleObject(Renderable* rend, Pass* pass, ...)
+{
+    
+}
+
+
+
 
 }}}
 
