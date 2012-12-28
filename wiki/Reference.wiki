@@ -286,6 +286,8 @@ renderScene->
 
 {{{
 
+{
+
 void SceneManager::_renderScene()
 
     // Set the viewport
@@ -312,6 +314,8 @@ void SceneManager::_renderScene()
 
     // End frame
     mDestRenderSystem->_endFrame();
+
+}
 
 }}}
 
