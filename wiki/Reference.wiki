@@ -272,6 +272,18 @@ for each pass
 
 ogre使用了多流的技术，把vertex的positon，normal，texcord这些数据分开，放到多个流里面进行渲染，这方面的技术可以参考[http://dev.gameres.com/Program/Visual/3D/multistream.htm D3D中多流的用法]。(见reference1)
 
+=SceneManager渲染=
+
+OGRE 渲染总流程
+
+从OGRE的例子中我们可以发现，在初始化完成之后，OGRE通过调用startRendering进行消息循环，然后调用renderOneFrame，通过RenderSystem的_updateAllRenderTargets方法，更新所有的RenderTarget。RenderTarget通过update方法更新与之关联的Viewport并产生FPS统计信息。而Viewport则调用与之关联的Camera的_renderScene方法进行渲染，Camera此时把“球”踢给SceneManager。进入SceneManager的renderScene成员函数中后，在经过“漫长”的计算后，把需要渲染的场景送给RenderSystem去做真正的渲染（至于怎么渲染暂且放过），此时我们可以看到熟悉的_breginFrame和_endFrame。
+
+
+SceneManager渲染流程
+
+renderScene->
+
+
 = OGRE 渲染过程 =
 
 OGRE 渲染过程(见reference1)： 
