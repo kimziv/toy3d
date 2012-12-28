@@ -286,10 +286,10 @@ _renderScene->findVisibleObjects->_renderVisibleObjects->renderQueueGroupObjects
 
 {{{
 
-{
+
 
 void SceneManager::_renderScene()
-
+{
     // Set the viewport
     setViewport(vp);
 
