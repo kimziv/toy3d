@@ -232,7 +232,8 @@ void ShaderProgram::getShaderDebugInfo(Uint obj, GLenum status, const char* op)
     if (!success)
     {
         printf("--- %s failed ---\n", op);
-        exit(-1);
+        //exit(-1);
+        return;
     }
 
     return;
