@@ -284,6 +284,38 @@ SceneManager渲染流程
 renderScene->
 
 
+{{{
+
+void SceneManager::_renderScene()
+
+    // Set the viewport
+    setViewport(vp);
+
+
+    // Set camera window clipping planes (if any)
+    ....
+
+    // Clear the render queue
+    getRenderQueue()->clear();
+
+    // Parse the scene and tag visibles
+    _findVisibleObjects(camera,
+        mIlluminationStage == IRS_RENDER_TO_TEXTURE? true : false);
+
+
+    // Begin the frame
+    mDestRenderSystem->_beginFrame();
+
+
+    // Render scene content 
+    _renderVisibleObjects();
+
+    // End frame
+    mDestRenderSystem->_endFrame();
+
+}}}
+
+
 = OGRE 渲染过程 =
 
 OGRE 渲染过程(见reference1)： 
