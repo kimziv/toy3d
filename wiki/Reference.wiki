@@ -382,6 +382,58 @@ for 每一个group
 
 
 
+==
+
+
+struct RealConstantEntry
+{
+    float val[4];
+    bool isSet;
+    RealConstantEntry() : isSet(false) {}
+};
+
+struct IntConstantEntry
+{
+    int val[4];
+    bool isSet;
+    IntConstantEntry() : isSet(false) {}
+};
+
+
+class _OgreExport GpuProgramParameters {
+
+    typedef std::vector<RealConstantEntry> RealConstantList;
+    typedef std::vector<IntConstantEntry> IntConstantList;
+
+    // Auto parameter storage
+    typedef std::vector<AutoConstantEntry> AutoConstantList;
+
+    /// Packed list of floating-point constants
+    RealConstantList mRealConstants;
+
+    /// Packed list of integer constants
+    IntConstantList mIntConstants;
+
+    /// List of automatically updated parameters
+    AutoConstantList mAutoConstants;
+
+    /// Mapping from parameter names to indexes - high-level programs are expected to populate this
+    typedef std::map<String, size_t> ParamNameMap;
+    ParamNameMap mParamNameMap;
+
+
+    void setNamedConstant(const String& name, Real val);
+    void setNamedConstant(const String& name, int val);
+
+    void setConstant(index, float,);
+    void setConstant(index, double,);
+    void setConstant(index, int,);
+
+
+    
+}
+
+
 
 =最简单的 OGRE 程序=
 
