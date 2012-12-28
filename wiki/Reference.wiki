@@ -438,10 +438,27 @@ class _OgreExport GpuProgramParameters {
 
 }}}
 
-=GLES2ProgramCommon=
+=GLSLES=
+
+ogre_src_v1-8-1/RenderSystems/GLES2/src/GLSLES
+
+
 
 
 {{{
+
+
+/// Structure used to keep track of named uniforms in the linked program object
+struct GLUniformReference
+{
+    /// GL location handle
+    GLint mLocation;
+    /// Which type of program params will this value come from?
+    GpuProgramType mSourceProgType;
+    /// The constant definition it relates to
+    const GpuConstantDefinition* mConstantDef;
+};
+
 
 
 class GLSLESProgramCommon {
