@@ -296,7 +296,39 @@ void destroy ()
 
 }}}
 
+=bind Program=
 
+{{{
+
+
+void World::bindGpuProgram (prog)
+{
+
+    mGpuParamsDirty = true;
+    renderer->bindGpuProgram (prog);
+
+}
+
+
+void RenderSystem::bindGpuProgram (prog)
+{
+
+   mCurrentVertexProgram->unbindProgram();
+   mCurrentVertexProgram = prog;
+
+   mCurrentFragProgram->unbindProgram();
+   mCurrentFragProgram = prog;
+
+
+
+}
+
+
+world->bindGpuProgram(prog);
+
+
+
+}}}
 
 Add your content here.  Format your content with:
   * Text in *bold* or _italic_
