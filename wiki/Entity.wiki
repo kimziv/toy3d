@@ -31,6 +31,12 @@ public:
    void setVertices (...);
 }
 
+}}}
+
+=entity=
+
+{{{
+
 class Entity {
 
 private:
@@ -51,6 +57,12 @@ public:
    void setTexture (Texture *tex);
 
 };
+
+}}}
+
+=world=
+
+{{{
 
 class World {
 
@@ -142,6 +154,13 @@ void World::startRendering ()
 
 
 }
+
+}}}
+
+
+=renderer=
+
+{{{
 
 class Renderer
 {
