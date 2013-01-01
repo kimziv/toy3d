@@ -201,6 +201,15 @@ void init ()
     
 }
 
+void display ()
+{
+
+    world->startRendering();
+
+    swap();
+
+}
+
 void destroy ()
 {
 
