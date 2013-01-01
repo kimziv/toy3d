@@ -105,11 +105,17 @@ public:
 }
 
 
-void World::updateGpuProgramParams ()
+void World::updateGpuProgramParameters (Material *mat)
 {
 
-    if (mGpuParamsDirty)
-        pass->_updateAutoParams(mAutoParamDataSource, mGpuParamsDirty);
+    if (!mShaderParamsDirty)
+        return;
+
+    if (mShaderParamsDirty)
+        mat->updateAutoParams (mAutoParamDataSource, bool???);
+
+    renderer->bindGpuProgramParameters (mat->getProgramParameters(), bool???);
+
 
     if (pass->hasVertexProgram())
     {   
@@ -130,20 +136,6 @@ void World::updateGpuProgramParams ()
     }
 }
 
-Pass* World::_setPass (Pass *pass, ...)
-{
-
-    if (pass->hasVertexProgram())
-        renderer->bindGpuProgram (pass->getVertexProgram());
-
-
-    if (pass->hasFragmentProgram())
-        renderer->bindGpuProgram (pass->getFragmentProgram());
-
-    
-    renderer->_setSceneBlending(pass->getSourceBlendFactor(), pass->getDestBlendFactor());
-
-}
 
 
 void World::manualRender (RenderOperation* ro, Material* mat, 
@@ -153,28 +145,15 @@ void World::manualRender (RenderOperation* ro, Material* mat,
 
     renderer->beginFrame();
 
-/*
-    not need
-    renderer->_setWorldMatrix (world);
-    renderer->_setViewMatrix (view);
-    renderer->_setProjectionMatrix (proj);
-*/
 
-//    _setPass (pass);
+    renderer->bindGpuProgram (mat->getShaderProgram());
 
-    renderer->bindGpuProgram (mat->getMaterial());
 
-/*
-    maybe need
-    renderer->setWorldBlending (mat->getSourceBlendFactor(), mat->getDestBlendFactor);
-*/
+    mAutoParamDataSource.setWorldMatrix (worldMatrix);
+    mAutoParamDataSource.setViewMatrix (viewmatrix);
+    mAutoParamDataSource.setProjMatrix (projMatrix);
 
-    mAutoParamDataSource->setWorldMatrix (world);
-    Camera dummyCam ();
-    dummyCam.setCustomViewMatrix (view);
-    dummyCam.setCustomProjMatrix (proj);
-    mAutoParamDataSource->setCurrentCamera (&dummyCam);
-    updateGpuProgramParamers (pass);
+    updateGpuProgramParamers ();
 
    
     renderer->_render(ro);
@@ -188,7 +167,15 @@ void World::manualRender (RenderOperation* ro, Material* mat,
 void World::startRendering ()
 {
 
+    for (entity[i]) {
+        entity[i]->getRenderOperation (ro);
+        mat = entity[i]->getMaterial ();
+        worldMatrix = entity[i]->getWorldMatrix ();
+        mCamera.getViewMatrix (viewMatrix);
+        mCamera.getProjMatrix (projMatrix);
 
+        manualRender (ro, mat, worldMatrix, viewMatrix, projMatrix);
+    }
 
 }
 
