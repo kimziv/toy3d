@@ -149,7 +149,69 @@ class Renderer
 }}}
 
 
-= Details =
+
+
+= 用户使用 =
+
+{{{
+
+void init ()
+{
+
+    world = new World();
+    world->setSize (w, h);
+    world->setBackColor (r, g, b, a);
+
+    camera= world->cteateCamera ("name");
+
+    prg = new ShaderProgram ();
+    prg->loadShaderSource (vert_file,frag_file);
+ 
+    params = new ShaderProgramParams ();
+
+    //auto uniform
+    params->setNamedAutoConstant (TOY3D_ACT_PROJECTION_MATRIX, "prj_matrx");
+    params->setNamedAutoConstant (TOY3D_ACT_WORLD_MATRIX, "world_matrx");
+    params->setNamedAutoConstant (TOY3D_ACT_VIEW_MATRIX, "view_matrx");
+
+    //custom uniform
+    params->setNamedCustConstant (type, "sample2d", int);
+
+    //attribution
+    params->setNamedAttrConstant (TOY3D_ATTR_VERTEX_INDEX, "vPosition");
+
+    shaderProgram->bindShaderParameters (params);
+
+
+    //create pass
+    pass = new Pass ();
+    pass->setShaderProgram (shaderProgram);
+
+
+
+    //create mesh
+    mesh = new Mesh ();
+    mesh->setVertices (vertices, count);
+    mesh->setRenderMode (TOY3D_TRIANGLE_STRIP);
+    
+
+    Entity* entity = world->createEntity();
+    entity->setMesh (mesh);
+    entity->setPass (pass);
+    
+}
+
+void destroy ()
+{
+    delete camera;
+    delete world;
+    world->destroyEntities();
+
+}
+
+}}}
+
+
 
 Add your content here.  Format your content with:
   * Text in *bold* or _italic_
