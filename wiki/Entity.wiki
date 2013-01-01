@@ -56,8 +56,6 @@ public:
 
 }
 
-}}}
-
 
 void World::manulRender (RenderOperation*, Pass*, Viewport *p, 
         Matrix4& world, Matrix4& view, Matrix4& proj)
@@ -93,6 +91,7 @@ void World::startRendering ()
 
 }
 
+}}}
 
 
 = Details =
