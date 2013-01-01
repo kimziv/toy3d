@@ -82,6 +82,21 @@ void World::updateGpuProgramParams ()
     }
 }
 
+Pass* World::_setPass (Pass *pass, ...)
+{
+
+    if (pass->hasVertexProgram())
+        renderer->bindGpuProgram (pass->getVertexProgram());
+
+
+    if (pass->hasFragmentProgram())
+        renderer->bindGpuProgram (pass->getFragmentProgram());
+
+    
+    renderer->_setSceneBlending(pass->getSourceBlendFactor(), pass->getDestBlendFactor());
+
+}
+
 
 void World::manulRender (RenderOperation*, Pass*, Viewport *p, 
         Matrix4& world, Matrix4& view, Matrix4& proj)
@@ -110,11 +125,25 @@ void World::manulRender (RenderOperation*, Pass*, Viewport *p,
 }
 
 
+
+
 void World::startRendering ()
 {
 
 
 
+}
+
+class Renderer
+{
+
+    mCurrentVertexProgram;
+    mCurrentFragmentProgram;
+
+
+
+    void bindGpuVertexProgram (GpuProgram* prg);
+    void bindGpuFragmentProgram (GpuProgra *prg);
 }
 
 }}}
