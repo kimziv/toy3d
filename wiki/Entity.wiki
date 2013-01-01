@@ -57,6 +57,32 @@ public:
 }
 
 
+void World::updateGpuProgramParams ()
+{
+
+    if (mGpuParamsDirty)
+        pass->_updateAutoParams(mAutoParamDataSource, mGpuParamsDirty);
+
+    if (pass->hasVertexProgram())
+    {   
+         mDestRenderSystem->bindGpuProgramParameters(
+                GPT_VERTEX_PROGRAM,     
+                pass->getVertexProgramParameters(), 
+                mGpuParamsDirty);
+         }
+
+ 
+         if (pass->hasFragmentProgram())
+         {
+             mDestRenderSystem->bindGpuProgramParameters(
+                 GPT_FRAGMENT_PROGRA     M,
+                 pass->getFragmentProgramParameters(),   
+                 mGpuParamsDirty);
+         }    
+    }
+}
+
+
 void World::manulRender (RenderOperation*, Pass*, Viewport *p, 
         Matrix4& world, Matrix4& view, Matrix4& proj)
 {
