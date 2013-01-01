@@ -52,10 +52,18 @@ private:
 
 public:
    Entity *createEntity ();
+   void startRendering ();
 
 }
 
 }}}
+
+void World::startRendering ()
+{
+
+
+
+}
 
 
 
