@@ -58,6 +58,34 @@ public:
 
 }}}
 
+
+void World::manulRender (RenderOperation*, Pass*, Viewport *p, 
+        Matrix4& world, Matrix4& view, Matrix4& proj)
+{
+    renderer->_setViewPort();
+
+    renderer->_beginFrame();
+
+    renderer->_setWorldMatrix (world);
+    renderer->_setViewMatrix (view);
+    renderer->_setProjectionMatrix (proj);
+
+    _setPass (pass);
+
+    mAutoParamDataSource->setWorldMatrix (world);
+    Camera dummyCam ();
+    dummyCam.setCustomViewMatrix (view);
+    dummyCam.setCustomProjMatrix (proj);
+    mAutoParamDataSource->setCurrentCamera (&dummyCam);
+    updateGpuProgramParamers (pass);
+
+   
+    renderer->_render(ro);
+    
+    renderer->_endFrame();
+}
+
+
 void World::startRendering ()
 {
 
