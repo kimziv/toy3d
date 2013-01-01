@@ -203,9 +203,18 @@ void init ()
 
 void destroy ()
 {
-    delete camera;
-    delete world;
+
+    delete params;
+    delete shaderProgram;
+    
+
+    //delete camera    
+    world->destroyCameras();
+
+    //delete entity
     world->destroyEntities();
+
+    delete world;
 
 }
 
