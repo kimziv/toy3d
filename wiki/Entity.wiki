@@ -313,13 +313,20 @@ void World::bindGpuProgram (prog)
 void RenderSystem::bindGpuProgram (prog)
 {
 
+   GLES2GpuProgram* glprg = GLES2GpuProgram*(prog)
+
+   
+
    mCurrentVertexProgram->unbindProgram();
    mCurrentVertexProgram = prog;
 
    mCurrentFragProgram->unbindProgram();
    mCurrentFragProgram = prog;
 
+   
 
+  glprg->bindProgram(); 
+  RenderSystem::bindGpuProgram(prg);
 
 }
 
