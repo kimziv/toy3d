@@ -585,6 +585,13 @@ void GLSLESProgramPipeline::updateUniforms(GpuProgramParametersSharedPtr params,
 }
 
 
+
+
+/*
+ * update GpuProgramParameters 会调到 updateUniforms
+void SceneManager::updateGpuProgramParameters(const Pass* pass)
+*/
+
 void GLSLLinkProgram::updateUniforms (GpuProgramParametersShaderPtr params, mask, GpuProgramType)
 {
 
