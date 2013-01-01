@@ -1,6 +1,15 @@
 #summary 增加entity.
 
 
+= 基本思路 =
+
+* 增加 entity，entity 是基本的绘制单元
+* entity 包含 mesh 和 pass
+* mesh 保存基本的技术数据
+* pass 保存 shader,texture, material
+
+ 
+
 ＝ Entity Mesh ＝
 
 {{{
