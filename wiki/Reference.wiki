@@ -260,6 +260,93 @@ for each pass
 
 }}}
 
+manualRender
+
+{{{
+
+
+void World::updateGpuProgramParams ()
+{
+
+    if (mGpuParamsDirty)
+        pass->_updateAutoParams(mAutoParamDataSource, mGpuParamsDirty);
+
+    if (pass->hasVertexProgram())
+    {   
+         mDestRenderSystem->bindGpuProgramParameters(
+                GPT_VERTEX_PROGRAM,     
+                pass->getVertexProgramParameters(), 
+                mGpuParamsDirty);
+         }
+
+ 
+         if (pass->hasFragmentProgram())
+         {
+             mDestRenderSystem->bindGpuProgramParameters(
+                 GPT_FRAGMENT_PROGRA     M,
+                 pass->getFragmentProgramParameters(),   
+                 mGpuParamsDirty);
+         }    
+    }
+}
+
+Pass* World::_setPass (Pass *pass, ...)
+{
+
+    if (pass->hasVertexProgram())
+        renderer->bindGpuProgram (pass->getVertexProgram());
+
+
+    if (pass->hasFragmentProgram())
+        renderer->bindGpuProgram (pass->getFragmentProgram());
+
+    
+    renderer->_setSceneBlending(pass->getSourceBlendFactor(), pass->getDestBlendFactor());
+
+}
+
+
+void World::manualRender (RenderOperation* ro, Material* mat, 
+        Real worldMatrix[16], Real viewMatrix[16], Real projMatrix[16])
+{
+    renderer->setViewPort(0, 0, mWidth,mHeight);
+
+    renderer->beginFrame();
+
+/*
+    not need
+    renderer->_setWorldMatrix (world);
+    renderer->_setViewMatrix (view);
+    renderer->_setProjectionMatrix (proj);
+*/
+
+//    _setPass (pass);
+
+    renderer->bindGpuProgram (mat->getMaterial());
+
+/*
+    maybe need
+    renderer->setWorldBlending (mat->getSourceBlendFactor(), mat->getDestBlendFactor);
+*/
+
+    mAutoParamDataSource->setWorldMatrix (world);
+    Camera dummyCam ();
+    dummyCam.setCustomViewMatrix (view);
+    dummyCam.setCustomProjMatrix (proj);
+    mAutoParamDataSource->setCurrentCamera (&dummyCam);
+    updateGpuProgramParamers (pass);
+
+   
+    renderer->_render(ro);
+    
+    renderer->endFrame();
+}
+
+
+
+
+}}}
+
 
 =Resource=
 
