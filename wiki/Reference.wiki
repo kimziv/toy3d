@@ -585,6 +585,12 @@ void GLSLESProgramPipeline::updateUniforms(GpuProgramParametersSharedPtr params,
 }
 
 
+void GLSLLinkProgram::updateUniforms (GpuProgramParametersShaderPtr params, mask, GpuProgramType)
+{
+
+}
+
+
 
 
 }}}
