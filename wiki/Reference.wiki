@@ -258,6 +258,11 @@ for each pass
 
     renderSingleObject (Renderable *rend, Pass* pass, ...);
 
+    manualRender (RenderOperation* rend, Pass* pass, 
+        Matrix4& worldMatrix, Matrix4& viewMatrix, Matrix4& projMatrix,
+        bool doBeginEndFrame)
+
+
 }}}
 
 manualRender
@@ -265,7 +270,7 @@ manualRender
 {{{
 
 
-void World::updateGpuProgramParams ()
+void sceneManager::updateGpuProgramParams ()
 {
 
     if (mGpuParamsDirty)
@@ -290,7 +295,7 @@ void World::updateGpuProgramParams ()
     }
 }
 
-Pass* World::_setPass (Pass *pass, ...)
+Pass* sceneManager::_setPass (Pass *pass, ...)
 {
 
     if (pass->hasVertexProgram())
@@ -306,37 +311,36 @@ Pass* World::_setPass (Pass *pass, ...)
 }
 
 
-void World::manualRender (RenderOperation* ro, Material* mat, 
-        Real worldMatrix[16], Real viewMatrix[16], Real projMatrix[16])
+void sceneManager::manualRender (RenderOperation* rend, Pass* pass, Viewport *vp,
+        Matrix4& worldMatrix, Matrix4& viewMatrix, Matrix4& projMatrix,
+        bool doBeginEndFrame)
 {
-    renderer->setViewPort(0, 0, mWidth,mHeight);
+    renderer->_setViewPort(vp);
 
-    renderer->beginFrame();
+    if (doBeginEndFrame)
+        renderer->_beginFrame();
 
-/*
+
     not need
-    renderer->_setWorldMatrix (world);
-    renderer->_setViewMatrix (view);
-    renderer->_setProjectionMatrix (proj);
-*/
+    mDestRenderSystem->_setWorldMatrix (worldMatrix);
+    setViewMatrix (viewMatrix);
+    mDestRenderSystem->_setProjectionMatrix (projMatrix);
 
-//    _setPass (pass);
 
-    renderer->bindGpuProgram (mat->getMaterial());
-
-/*
-    maybe need
-    renderer->setWorldBlending (mat->getSourceBlendFactor(), mat->getDestBlendFactor);
-*/
-
-    mAutoParamDataSource->setWorldMatrix (world);
-    Camera dummyCam ();
-    dummyCam.setCustomViewMatrix (view);
-    dummyCam.setCustomProjMatrix (proj);
-    mAutoParamDataSource->setCurrentCamera (&dummyCam);
-    updateGpuProgramParamers (pass);
+    _setPass (pass);
 
    
+    if (pass->isProgrammable()) {
+
+        mAutoParamDataSource->setWorldMatrix (world);
+        Camera dummyCam ();
+        dummyCam.setCustomViewMatrix (view);
+        dummyCam.setCustomProjMatrix (proj);
+        mAutoParamDataSource->setCurrentCamera (&dummyCam);
+        updateGpuProgramParamers (pass);
+
+    }
+    
     renderer->_render(ro);
     
     renderer->endFrame();
