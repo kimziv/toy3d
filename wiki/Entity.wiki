@@ -5,8 +5,11 @@
 
 * 增加 entity，entity 是基本的绘制单元
 * entity 包含 mesh 和 pass
-* mesh 保存基本的技术数据
+* mesh 保存基本的几何数据
 * pass 保存 shader,texture, material
+* 绘制时将需要绘制的数据传入 renderer 
+  # 几何数据通过 renderoperation 传入：renderer->_render(op);
+  # shader uniform 调用 bind
  
 
 
@@ -55,9 +58,25 @@ public:
    void getRenderOperation (RenderOpertation *op);
 
    void setMesh (Mesh *mesh);
-   void setTexture (Texture *tex);
+   void setMaterial (Material *mat);
 
 };
+
+}}}
+
+=Material=
+
+
+{{{
+class material {
+
+private:
+    Texture *tex; 
+    ShaderProgram *prog;
+    
+
+    void setTexture (Texture *tex);
+}
 
 }}}
 
@@ -74,11 +93,11 @@ private:
 
 public:
 
-   Entity *createEntity ();
+   Entity *createEntity (Mesh *mesh);
 
    
-   void destoryCameras ();
-   void destroyEntities ();
+   void destoryAllCameras ();
+   void destroyAllEntities ();
 
 
    void startRendering ();
@@ -127,18 +146,28 @@ Pass* World::_setPass (Pass *pass, ...)
 }
 
 
-void World::manulRender (RenderOperation*, Pass*, Viewport *p, 
-        Matrix4& world, Matrix4& view, Matrix4& proj)
+void World::manualRender (RenderOperation* ro, Material* mat, 
+        Real worldMatrix[16], Real viewMatrix[16], Real projMatrix[16])
 {
-    renderer->_setViewPort();
+    renderer->setViewPort(0, 0, mWidth,mHeight);
 
-    renderer->_beginFrame();
+    renderer->beginFrame();
 
+/*
+    not need
     renderer->_setWorldMatrix (world);
     renderer->_setViewMatrix (view);
     renderer->_setProjectionMatrix (proj);
+*/
 
-    _setPass (pass);
+//    _setPass (pass);
+
+    renderer->bindGpuProgram (mat->getMaterial());
+
+/*
+    maybe need
+    renderer->setWorldBlending (mat->getSourceBlendFactor(), mat->getDestBlendFactor);
+*/
 
     mAutoParamDataSource->setWorldMatrix (world);
     Camera dummyCam ();
@@ -150,7 +179,7 @@ void World::manulRender (RenderOperation*, Pass*, Viewport *p,
    
     renderer->_render(ro);
     
-    renderer->_endFrame();
+    renderer->endFrame();
 }
 
 
@@ -182,6 +211,13 @@ class Renderer
     void bindGpuFragmentProgram (GpuProgra *prg);
 }
 
+void Renderer:startRendering ()
+{
+
+    
+
+}
+
 }}}
 
 
@@ -191,6 +227,13 @@ class Renderer
 
 {{{
 
+World *world;
+Camera *camera;
+ShaderProgram *prog;
+Material *mat;
+
+
+
 void init ()
 {
 
@@ -198,7 +241,7 @@ void init ()
     world->setSize (w, h);
     world->setBackColor (r, g, b, a);
 
-    camera= world->cteateCamera ("name");
+    camera= world->createCamera ("name");
 
     prg = new ShaderProgram ();
     prg->loadShaderSource (vert_file,frag_file);
@@ -219,11 +262,10 @@ void init ()
     shaderProgram->bindShaderParameters (params);
 
 
-    //create pass
-    pass = new Pass ();
-    pass->setShaderProgram (shaderProgram);
-
-
+    //create Material
+    mat = new Material ();
+    mat->setShaderProgram (shaderProgram);
+    //maybe mat->setTexture (tex); 
 
     //create mesh
     mesh = new Mesh ();
@@ -233,7 +275,7 @@ void init ()
 
     Entity* entity = world->createEntity();
     entity->setMesh (mesh);
-    entity->setPass (pass);
+    entity->setMaterial (mat);
     
 }
 
@@ -251,6 +293,8 @@ void destroy ()
 
     delete params;
     delete shaderProgram;
+
+    delete mat;
     
 
     //delete camera    
