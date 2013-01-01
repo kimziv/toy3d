@@ -15,6 +15,11 @@ private:
     Real* mNormals;^M
 
     Uint mVertexCount;
+
+
+public:
+   void getRenderOperation (RenderOpertation *op);
+   void setVertices (...);
 }
 
 class Entity {
@@ -22,6 +27,8 @@ class Entity {
 private:
     Real mModelMatrix[MATRIX_4x4_SIZE];
     Mesh *mesh;
+    Texture *tex;
+    ShaderProgram *mShaderProgram;
     
     
 public:
@@ -29,7 +36,24 @@ public:
    void rotate();
    void scale ();
 
+   void getRenderOperation (RenderOpertation *op);
+
+   void setMesh (Mesh *mesh);
+   void setTexture (Texture *tex);
+
 };
+
+class World {
+
+private:
+   Entity *mEntities[MAX_ENTITY_COUNT];
+    
+   Real mWorldMatrix [MATRIX_4x4_SIZE];
+
+public:
+   Entity *createEntity ();
+
+}
 
 }}}
 
