@@ -106,7 +106,7 @@ public:
 
 }
 
-
+//tobe delere
 void World::updateGpuProgramParameters (Material *mat)
 {
 
