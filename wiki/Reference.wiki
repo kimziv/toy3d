@@ -476,6 +476,11 @@ for 每一个group
 =AutoConst/RealConstant/IntConstant=
 
 
+
+
+
+ogre 1.7.8 版本：
+
 {{{
 
 
