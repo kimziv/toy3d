@@ -189,6 +189,7 @@ class Renderer
 void Renderer::bindShaderProgram (*prog)
 {
     mCurrentShaderProgram=prog;
+    prog->useProgram();
 }
 
 
@@ -261,12 +262,18 @@ void ShaderProgram::setProgramParameters (*params)
 
 }
 
+void ShaderProgram::updateAuto(auto)
+{
+}
 
+
+/*
 void ShaderProgram::bindProgramParameters (*params)
 {
     updateUniforms ...
 
 }
+*/
 
 }}}
 
