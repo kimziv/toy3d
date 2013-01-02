@@ -227,14 +227,25 @@ class ShaderProgram
 
 public:
 
+    void setProgramParameters (*params);
     void bindProgramParameters (ShaderProgramParameters *params);
 
     void loadSource();
     void loadBinary ();
 
+private:
+    ShaderProgramParameters *params;
+
  
     
 }
+
+void ShaderProgram::setProgramParameters (*params)
+{
+    mParameters = params;
+
+}
+
 
 void ShaderProgram::bindProgramParameters (*params)
 {
@@ -281,7 +292,7 @@ void init ()
     //attribution
     params->setNamedAttrConstant (TOY3D_ATTR_VERTEX_INDEX, "vPosition");
 
-    shaderProgram->bindShaderParameters (params);
+    shaderProgram->setShaderParameters (params);
 
 
     //create Material
