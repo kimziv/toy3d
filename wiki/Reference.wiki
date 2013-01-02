@@ -533,6 +533,8 @@ class _OgreExport GpuProgramParameters {
 
 ogre_src_v1-8-1/RenderSystems/GLES2/src/GLSLES
 
+[http://www.ogre3d.org/docs/manual/manual_21.html ogre glsl example]
+
 
 
 
