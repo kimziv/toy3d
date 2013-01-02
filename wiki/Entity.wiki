@@ -3,13 +3,14 @@
 
 = 基本思路 =
 
-* 增加 entity，entity 是基本的绘制单元
-* entity 包含 mesh 和 pass
-* mesh 保存基本的几何数据
-* pass 保存 shader,texture, material
-* 绘制时将需要绘制的数据传入 renderer 
+ * 增加 entity，entity 是基本的绘制单元
+ * entity 包含 mesh 和 material
+ * mesh 保存基本的几何数据
+ * material 保存 shader,texture, material
+ * 绘制时将需要绘制的数据传入 renderer 
   # 几何数据通过 renderoperation 传入：renderer->_render(op);
-  # shader uniform 调用 bind
+  # bindShaderProgram 
+  # bindShaderProgramParameters
  
 
 
