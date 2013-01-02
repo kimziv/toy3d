@@ -217,9 +217,9 @@ public:
     
 }
 
-void ShaderProgram::bindProgramParameters ()
+void ShaderProgram::bindProgramParameters (*params)
 {
-    updateUniforms(params);
+    updateUniforms ...
 
 }
 
