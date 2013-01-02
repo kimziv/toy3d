@@ -200,13 +200,21 @@ void Renderer::bindShaderProgramParameters (*param)
 
 =ShaderProgram=
 
+
+{{{
+
 class ShaderProgram
 {
+
+public:
 
     void bindProgramParameters (ShaderProgramParameters *params);
 
     void loadSource();
-    void loadBinary ()
+    void loadBinary ();
+
+ 
+    
 }
 
 void ShaderProgram::bindProgramParameters ()
@@ -215,6 +223,7 @@ void ShaderProgram::bindProgramParameters ()
 
 }
 
+}}}
 
 
 = 用户使用 =
