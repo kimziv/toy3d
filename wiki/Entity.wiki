@@ -117,23 +117,6 @@ void World::updateGpuProgramParameters (Material *mat)
     renderer->bindGpuProgramParameters (mat->getProgramParameters(), bool???);
 
 
-    if (pass->hasVertexProgram())
-    {   
-         mDestRenderSystem->bindGpuProgramParameters(
-                GPT_VERTEX_PROGRAM,     
-                pass->getVertexProgramParameters(), 
-                mGpuParamsDirty);
-         }
-
- 
-         if (pass->hasFragmentProgram())
-         {
-             mDestRenderSystem->bindGpuProgramParameters(
-                 GPT_FRAGMENT_PROGRA     M,
-                 pass->getFragmentProgramParameters(),   
-                 mGpuParamsDirty);
-         }    
-    }
 }
 
 
@@ -146,7 +129,7 @@ void World::manualRender (RenderOperation* ro, Material* mat,
     renderer->beginFrame();
 
 
-    renderer->bindGpuProgram (mat->getShaderProgram());
+    renderer->bindShaderProgram (mat->getShaderProgram());
 
 
     mAutoParamDataSource.setWorldMatrix (worldMatrix);
@@ -189,24 +172,48 @@ void World::startRendering ()
 class Renderer
 {
 
-    mCurrentVertexProgram;
-    mCurrentFragmentProgram;
+    mCurrentShaderProgram;
 
 
-
-    void bindGpuVertexProgram (GpuProgram* prg);
-    void bindGpuFragmentProgram (GpuProgra *prg);
+    void bindShaderProgram (*prog);
+    void bindShaderProgramParameters (*param);
 }
 
-void Renderer:startRendering ()
+
+
+void Renderer::bindShaderProgram (*prog)
 {
-
-    
-
+    mCurrentShaderProgram=prog;
 }
+
+
+
+void Renderer::bindShaderProgramParameters (*param)
+{
+    mCurrentShaderProgram->bindProgramParameters (params);  //update uniforms
+}
+
+
+
 
 }}}
 
+=ShaderProgram=
+
+class ShaderProgram
+{
+
+    void bindProgramParameters (ShaderProgramParameters *params);
+
+    void loadSource();
+    void loadBinary ()
+}
+
+void ShaderProgram::bindProgramParameters ()
+{
+    updateUniforms(params);
+
+}
 
 
 
