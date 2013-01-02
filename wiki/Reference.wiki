@@ -573,6 +573,9 @@ class GLSLESProgramCommon {
     GLint mLinked;
 
 
+
+
+
 };
 
 void GLSLESProgramPipeline::buildGLUniformReferences(void)
