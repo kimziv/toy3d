@@ -476,8 +476,11 @@ for 每一个group
 =AutoConst/RealConstant/IntConstant=
 
 
+[http://www.ogre3d.org/docs/manual/manual_21.html ogre glsl example]
 
 
+
+[http://www.cppblog.com/cty41/archive/2011/04/18/144448.html 沿着ogre实现 material system]
 
 ogre 1.7.8 版本：
 
@@ -537,8 +540,6 @@ class _OgreExport GpuProgramParameters {
 =GLSLES=
 
 ogre_src_v1-8-1/RenderSystems/GLES2/src/GLSLES
-
-[http://www.ogre3d.org/docs/manual/manual_21.html ogre glsl example]
 
 
 
