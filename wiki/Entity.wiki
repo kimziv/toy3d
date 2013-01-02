@@ -143,6 +143,8 @@ void World::manualRender (RenderOperation* ro, Material* mat,
     renderer->updateAutoUniform(mAutoDataSource);
     renderer->updateCustUniform ();
 
+    renderer->setTexture(mat->getTexture());
+
    
     renderer->_render(ro);
     
@@ -181,10 +183,17 @@ class Renderer
 
 
     void bindShaderProgram (*prog);
-    void bindShaderProgramParameters (*param);
+//    void bindShaderProgramParameters (*param);
+   
+
 }
 
 
+void Renderer::setTexture(tex)
+{
+    glBindTextur(...);
+
+}
 
 void Renderer::bindShaderProgram (*prog)
 {
@@ -277,6 +286,17 @@ void ShaderProgram::bindProgramParameters (*params)
 
 }}}
 
+=Texture=
+
+{{{
+Class Texture
+{
+    unit_id
+    tex_id;
+    
+}
+
+}}}
 
 = 用户使用 =
 
