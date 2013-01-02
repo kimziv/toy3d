@@ -1,6 +1,11 @@
 #summary 增加entity.
 
 
+=todo=
+
+ * attribute index 如何传入 render
+ * texture 如何处理
+
 = 基本思路 =
 
  * 增加 entity，entity 是基本的绘制单元
