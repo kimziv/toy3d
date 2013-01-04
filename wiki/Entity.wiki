@@ -75,11 +75,11 @@ class material {
 
 private:
     Texture *tex; 
-    ShaderProgram *prog;
+    ShaderProgram *mShaderProgram;
     
 
     void setTexture (Texture *tex);
-    void updateAutoParams (autoParamDataSource);
+
 }
 
 }}}
