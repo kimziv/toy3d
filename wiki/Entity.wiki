@@ -108,6 +108,7 @@ public:
 
 }
 
+/*
 //tobe delere
 void World::updateGpuProgramParameters (Material *mat)
 {
@@ -122,12 +123,13 @@ void World::updateGpuProgramParameters (Material *mat)
 
     renderer->bindGpuProgramParameters (mat->getProgramParameters(), bool???);
 
-
 }
 
+*/
 
 
-void World::manualRender (RenderOperation* ro, Material* mat, 
+
+void World::renderOneObject (RenderOperation* ro, Material* mat, 
         Real worldMatrix[16], Real viewMatrix[16], Real projMatrix[16])
 {
     renderer->setViewPort(0, 0, mWidth,mHeight);
@@ -166,7 +168,7 @@ void World::startRendering ()
         mCamera.getViewMatrix (viewMatrix);
         mCamera.getProjMatrix (projMatrix);
 
-        manualRender (ro, mat, worldMatrix, viewMatrix, projMatrix);
+        renderOneObject (ro, mat, worldMatrix, viewMatrix, projMatrix);
     }
 
 }
