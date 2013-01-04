@@ -239,8 +239,16 @@ class ShaderProgramParameters
 {
 
 public:
+
+    void setNamedAttrConstant (AttrConstantType type, char *name);
+    void setNamedAutoUniformConstant ( AutoUniformConstantType type, char *name );
+    void setNamedCustUniformConstant ( CustUniformConstantType type, char *name );
+
+
+
     updateAutoConstParams (AutoParamDataSource* source);
     updateCustUniforms ();
+  
 
 }
 
