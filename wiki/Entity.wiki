@@ -208,12 +208,7 @@ void Renderer::bindShaderProgram (*prog)
 }
 
 
-/*
-void Renderer::bindShaderProgramParameters (*param)
-{
-    mCurrentShaderProgram->bindProgramParameters (params);  //update uniforms
-}
-*/
+
 
 void Renderer::updateAutoUniform(mAutoDataSource)
 {
@@ -266,7 +261,7 @@ class ShaderProgram
 
 public:
 
-    void setProgramParameters (*params);
+    void bindShaderParameters (*params);
     void bindProgramParameters (ShaderProgramParameters *params);
 
     void loadSource();
