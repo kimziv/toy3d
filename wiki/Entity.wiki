@@ -197,7 +197,13 @@ class Renderer
 
 void Renderer::setTexture(tex)
 {
-    glBindTextur(...);
+
+    if (text) {
+
+        glEnable(GL_TEXTURE_2D);
+        glActiveTexture （unit）；
+        glBindTexture (GL_TEXTURE_2D, tex->getTextureID());
+    }
 
 }
 
