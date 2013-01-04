@@ -187,7 +187,9 @@ class Renderer
 
 
     void bindShaderProgram (*prog);
-//    void bindShaderProgramParameters (*param);
+    void updateAutoUniform(AutoDataSource *auto);
+    void updateCustUniform ();
+
    
 
 }
@@ -206,12 +208,12 @@ void Renderer::bindShaderProgram (*prog)
 }
 
 
-
+/*
 void Renderer::bindShaderProgramParameters (*param)
 {
     mCurrentShaderProgram->bindProgramParameters (params);  //update uniforms
 }
-
+*/
 
 void Renderer::updateAutoUniform(mAutoDataSource)
 {
