@@ -238,9 +238,9 @@ class ShaderProgramParameters
 {
 
 public:
-    updateAutoParams (AutoParamDataSource* source);
+    updateAutoConstParams (AutoParamDataSource* source);
+    updateCustUniforms ();
 
-    setXXXX();
 }
 
 }}}
