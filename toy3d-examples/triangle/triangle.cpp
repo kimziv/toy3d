@@ -5,6 +5,9 @@
 
 #include <toy3d/Toy3DCommon.h>
 #include <toy3d/Toy3DWorld.h>
+#include <toy3d/Toy3DEntity.h>
+#include <toy3d/Toy3DMesh.h>
+#include <toy3d/Toy3DMaterial.h>
 #include <toy3d/Toy3DShaderProgramParams.h>
 
 
@@ -32,7 +35,8 @@ Real vertices[VERTEX_COUNT * 3] = {
 };
 
 World *world = NULL;
-
+ShaderProgram* shaderProgram = NULL;
+ShaderProgramParams *params = NULL;
 
 void display()
 {
@@ -51,20 +55,25 @@ void init()
     world->setBackColor (1.0, 1.0, 1.0, 1.0);  //white back color
 
 
-    ShaderProgram* shaderProgram = world->createShaderProgram();
+    shaderProgram = new ShaderProgram();
     shaderProgram->loadShaderSource (SHADER_VERT_FILE, SHADER_FRAG_FILE);
 
 
-    ShaderProgramParams *params = new ShaderProgramParams ();
+    params = new ShaderProgramParams ();
     //no shader uniforms ...
     //shader attributes
     params->setNamedAttrConstant (TOY3D_ATTR_VERTEX, "vPosition");
+
     shaderProgram->bindShaderParameters(params);
 
+    Entity *entity = world->createEntity();
 
-    Mesh *mesh = world->createMesh();
+    Mesh *mesh = entity->createMesh();
     mesh->setVertices (vertices, VERTEX_COUNT);
     mesh->setRenderMode (TOY3D_TRIANGLE_STRIP);
+
+    Material *mat = entity->createMaterial ();
+    mat->setShaderProgram (shaderProgram);
 
 
 }
