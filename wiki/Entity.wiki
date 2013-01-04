@@ -246,8 +246,8 @@ public:
 
 
 
-    updateAutoConstParams (AutoParamDataSource* source);
-    updateCustUniforms ();
+    updateAutoUniformConst (AutoParamDataSource* source);
+    updateCustUniformConst ();
   
 
 }
