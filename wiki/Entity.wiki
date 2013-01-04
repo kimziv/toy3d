@@ -13,9 +13,6 @@
  * mesh 保存基本的几何数据
  * material 保存 shader,texture, material
  * 绘制时将需要绘制的数据传入 renderer 
-  # 几何数据通过 renderoperation 传入：renderer->_render(op);
-  # bindShaderProgram 
-  # bindShaderProgramParameters
  
 
 
