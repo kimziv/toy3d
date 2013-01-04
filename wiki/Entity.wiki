@@ -279,24 +279,32 @@ private:
     
 }
 
-void ShaderProgram::setProgramParameters (*params)
-{
-    mParameters = params;
-
-}
 
 void ShaderProgram::updateAuto(auto)
 {
 }
 
 
-/*
+
 void ShaderProgram::bindProgramParameters (*params)
 {
-    updateUniforms ...
+
+
+void ShaderProgram::bindShaderParameters (ShaderProgramParams* params)
+{
+    mParameters = params;
+
+    glGetUniformLocation();
+    glGetAttribLoacation();
+
+    write index to list 
 
 }
-*/
+
+    
+
+}
+
 
 }}}
 
