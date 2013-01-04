@@ -177,19 +177,19 @@ TOY3D_BEGIN_NAMESPACE
     {
         switch(type)
         {
-        case TOY3D_ATTR_VERTEX_INDEX:
+        case TOY3D_ATTR_VERTEX:
             mVertexIndex = index;
             break;
 
-        case TOY3D_ATTR_COLOR_INDEX:
+        case TOY3D_ATTR_COLOR:
             mColorIndex = index;
             break;
 
-        case TOY3D_ATTR_UV_INDEX:
+        case TOY3D_ATTR_UV:
             mUVIndex = index;
             break;
 
-        case TOY3D_ATTR_NORMAL_INDEX:
+        case TOY3D_ATTR_NORMAL:
             mNormalIndex = index;
             break;
 
@@ -202,16 +202,16 @@ TOY3D_BEGIN_NAMESPACE
     {
         switch( type )
         {
-        case TOY3D_ATTR_VERTEX_INDEX:
+        case TOY3D_ATTR_VERTEX:
             return mVertexIndex;
 
-        case TOY3D_ATTR_COLOR_INDEX:
+        case TOY3D_ATTR_COLOR:
             return mColorIndex;
 
-        case TOY3D_ATTR_UV_INDEX:
+        case TOY3D_ATTR_UV:
             return mUVIndex;
 
-        case TOY3D_ATTR_NORMAL_INDEX:
+        case TOY3D_ATTR_NORMAL:
             return mNormalIndex;
 
         default:

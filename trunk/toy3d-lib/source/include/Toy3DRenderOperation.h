@@ -50,10 +50,6 @@ TOY3D_BEGIN_NAMESPACE
         Uint getTextureUnit();
 
         Uint getShaderAttribution(AttrConstantType type);
-        //Uint getVertexIndex();
-        //Uint getColorIndex();
-        //Uint getUVIndex();
-        //Uint getNormalIndex();
     };
 
 

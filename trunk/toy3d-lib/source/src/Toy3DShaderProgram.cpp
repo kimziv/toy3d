@@ -15,15 +15,25 @@ ShaderProgram::ShaderProgram()
 
 ShaderProgram::~ShaderProgram()
 {
-    FREEANDNULL(mShaderParams);
-
     if( mShaderProgramID )
     {
         glDeleteShader(mShaderProgramID);
         mShaderProgramID = 0;
     }
+
+    //if(mShaderParams)
+    //    delete mShaderParams;
 }
 
+int ShaderProgram::getAttrLocFromShader(const char *pName)
+{
+    return glGetAttribLocation(mShaderProgramID, (const char *)pName);
+}
+
+int ShaderProgram::getUnifLocFromShader(const char *pName)
+{
+    return glGetUniformLocation(mShaderProgramID, (const char *)pName);
+}
 
 void ShaderProgram::bindShaderParameters(ShaderProgramParams* pShaderPara)
 {
@@ -36,33 +46,46 @@ void ShaderProgram::bindShaderParameters(ShaderProgramParams* pShaderPara)
         return;
     }
 
-    if (mShaderParams)
-    {
-        delete mShaderParams;
-    }
- 
-
     mShaderParams = pShaderPara;
 
-    count = mShaderParams->getAutoEntryCount();
+    //update auto uniform constant index
+    count = mShaderParams->getAutoConstCount();
     for( i=0; i<count; i++)
     {
-        pName = mShaderParams->getAutoParamName( i );
-        //printf ("uniform name = %s,  index = %d \n", pName, glGetUniformLocation (mShaderProgramID, (const char *)pName));
-        mShaderParams->updateAutoConstIndex( pName,
-            glGetUniformLocation(mShaderProgramID, (const char *)pName) );
+        pName = mShaderParams->getAutoConstName( i );
+        mShaderParams->updateAutoConstIndex(pName, getUnifLocFromShader(pName));
     }
 
-    count = mShaderParams->getAttrEntryCount();
+    //update attribution constant
+    count = mShaderParams->getAttrConstCount();
     for( i=0; i<count; i++)
     {
-        pName = mShaderParams->getAttrParamName( i );
-        //printf ("attr name = %s,  index = %d \n", pName, glGetAttribLocation (mShaderProgramID, (const char *)pName));
-        mShaderParams->updateAttrConstIndex( pName,
-            glGetAttribLocation (mShaderProgramID, (const char *)pName));
+        pName = mShaderParams->getAttrConstName( i );
+        mShaderParams->updateAttrConstIndex(pName, getAttrLocFromShader(pName));
+    }
+
+    //update custom uniform constant index
+    count = mShaderParams->getCustIntCount();
+    for( i=0; i<count; i++)
+    {
+        pName = mShaderParams->getCustIntConstName( i );
+        mShaderParams->updateCustIntUniformIndex(pName, getUnifLocFromShader(pName));
+    }
+
+    count = mShaderParams->getCustRealCount();
+    for( i=0; i<count; i++)
+    {
+        pName = mShaderParams->getCustRealConstName( i );
+        mShaderParams->updateCustRealUniformIndex( pName, getUnifLocFromShader(pName));
     }
 
     return;
+}
+
+/* -1->no constant exist */
+int ShaderProgram::getAttrLocation(AttrConstantType type)
+{
+    return mShaderParams->getAttrConstIndex(type);
 }
 
 ShaderProgramParams* ShaderProgram::getShaderParameters()

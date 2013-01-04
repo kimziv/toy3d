@@ -69,7 +69,7 @@ void changeSize( int w, int h )
 
 void init()
 {
-    Real aspect, fovy;
+    //Real aspect, fovy;
     const Real nearz  = 1.0f;//5.0f;
     const Real farz   = 1000.0f;//60.0f;
 
@@ -103,7 +103,7 @@ void init()
     params->setNamedAutoConstant (TOY3D_ACT_WORLD_MATRIX, "world_mat");
 
     //attributes
-    params->setNamedAttrConstant (TOY3D_ATTR_VERTEX_INDEX, "vPosition");
+    params->setNamedAttrConstant (TOY3D_ATTR_VERTEX, "vPosition");
 
 
     shaderProgram->bindShaderParameters(params);

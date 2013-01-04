@@ -4,88 +4,147 @@
 
 TOY3D_BEGIN_NAMESPACE
 
-//AutoConstEntry::AutoConstEntry(AutoConstantType theType, Uchar *theName, Uint theIndex)
-AutoConstEntry::AutoConstEntry(AutoConstantType theType, char *theName )
+//////////////////////////////////////////////////////////////////////////
+//AutoConstEntry
+AutoParamEntry::AutoParamEntry(AutoConstanType theType, char *theName )
 {
     type = theType;
     index = 0;
-
     strncpy( (char *)name, (char *)theName, MAX_NAME_LEN);
 }
 
-AttrConstEntry::AttrConstEntry(AttrConstantType theType, char *theName )
+//////////////////////////////////////////////////////////////////////////
+//AttrConstEntry
+AttrParamEntry::AttrParamEntry(AttrConstantType theType, char *theName )
 {
     type = theType;
     index = 0;
-    
     strncpy( (char *)name, (char *)theName, MAX_NAME_LEN);
 }
+
+
+//////////////////////////////////////////////////////////////////////////
+//Custom Constant Entry
+IntParamEntry::IntParamEntry(CustUniformConstanType theType, char *theName, int theVal)
+{
+    type = theType;
+    strncpy( (char *)name, (char *)theName, MAX_NAME_LEN);
+    value = theVal;
+    index = 0;
+}
+
+RealParamEntry::RealParamEntry(CustUniformConstanType theType, char *theName, Real theVal)
+{
+    type = theType;
+    strncpy( (char *)name, (char *)theName, MAX_NAME_LEN);
+    value = theVal;
+    index = 0;
+}
+
+
+//////////////////////////////////////////////////////////////////////////
+//ShaderProgramParams
 
 ShaderProgramParams::ShaderProgramParams()
 {
-    mAutoCount = 0;
+    int i;
+    mAutoUniformCount = 0;
     mAttrCount = 0;
+    mIntUniformCount  = 0;
+    mRealUniformCount = 0;
+
+    for(i=0; i<MAX_AUTOENTRY_COUNT; i++)
+        mAutoUniformEntries[i] = 0;
+
+    for(i=0; i<MAX_ATTRENTRY_COUNT; i++)
+        mAttrEntries[i] = 0;
+
+    for(i=0; i<MAX_CUSTENTRY_COUNT; i++)
+        mIntUniformEntries[i] = 0;
+
+    for(i=0; i<MAX_CUSTENTRY_COUNT; i++)
+        mRealUniformEntries[i] = 0;
 }
 
 ShaderProgramParams::~ShaderProgramParams()
 {
-    while( mAutoCount )
+    while( mAutoUniformCount )
     {
-        DELETEANDNULL( mAutoConstEntries[--mAutoCount] );
+        DELETEANDNULL( mAutoUniformEntries[--mAutoUniformCount] );
     }
 
     while( mAttrCount )
     {
-        DELETEANDNULL( mAttrConstEntries[--mAttrCount] );
+        DELETEANDNULL( mAttrEntries[--mAttrCount] );
+    }
+
+    while( mIntUniformCount )
+    {
+        DELETEANDNULL( mIntUniformEntries[--mIntUniformCount] );
+    }
+
+    while( mRealUniformCount )
+    {
+        DELETEANDNULL( mRealUniformEntries[--mRealUniformCount] );
     }
 }
 
-void ShaderProgramParams::setAutoConstValue( Uint index, const Real value[MATRIX_4x4_SIZE] )
+/* Auto Uniform Parameter Methods -------------------------------start */
+void ShaderProgramParams::setAutoUniformConstant( Uint index, const Real value[MATRIX_4x4_SIZE] )
 {
     glUniformMatrix4fv( index, 1, 0, value );
     return;
 }
 
-void ShaderProgramParams::setAutoConstValue( Uint index, const Uint texUnit )
+void ShaderProgramParams::setAutoUniformConstant( Uint index, const Uint texUnit )
 {
     glUniform1i( index, texUnit );
     return;
 }
 
-void ShaderProgramParams::setNamedAutoConstant ( AutoConstantType type, char *name )
+Bool ShaderProgramParams::searchNamedAutoConstant( const char *name, Uint* position )
 {
-    if( searchNamedAutoConst(name, 0) )
+    int i = mAutoUniformCount;
+    while( i )
+    {
+        i--;
+        if( !strncmp((const char *)mAutoUniformEntries[i]->name, name, MAX_NAME_LEN) )
+        {
+            if( position )
+                *position = i;
+            return true;
+        }
+    }
+    
+    if( position )
+        *position = 0;
+    return false;
+}
+
+void ShaderProgramParams::setNamedAutoConstant ( AutoConstanType type, char *name )
+{
+    if( searchNamedAutoConstant(name, 0) )
     {
         TOY3D_PRINT("setNamedAutoConstant failed. AutoConst name exist.", __FILE__, __LINE__);
         return;
     }
 
-    AutoConstEntry *entry = new AutoConstEntry(type, name );
-    mAutoConstEntries[mAutoCount++] = entry;
+    AutoParamEntry *entry = new AutoParamEntry(type, name );
+    mAutoUniformEntries[mAutoUniformCount++] = entry;
 
     return;
-}
-
-Uint ShaderProgramParams::getAutoEntryCount()
-{
-    return mAutoCount;
-}
-
-const char* ShaderProgramParams::getAutoParamName( Uint index )
-{
-    return (const char *)mAutoConstEntries[index]->name;
 }
 
 void ShaderProgramParams::updateAutoConstIndex ( const char *name, Uint index )
 {
     Uint position = 0;
-    if( !searchNamedAutoConst(name, &position) )
+    if( !searchNamedAutoConstant(name, &position) )
     {
         TOY3D_PRINT("updateAutoConstIndex failed. AutoConst name doesn't exist.", __FILE__, __LINE__);
         return;
     }
 
-    mAutoConstEntries[position]->index = index;
+    mAutoUniformEntries[position]->index = index;
     
     return;
 }
@@ -106,30 +165,30 @@ void ShaderProgramParams::updateAutoConstIndex_2 ( const Uchar *name, Uint shade
 }
 */
 
-void ShaderProgramParams::updateAutoConstParams ( AutoParamDataSource *source )
+void ShaderProgramParams::updateAutoUniformConst ( AutoParamDataSource *source )
 {
     Uint i;
-    AutoConstEntry *tempACE;
-    for ( i=0; i<mAutoCount; i++ )
+    AutoParamEntry *tempACE;
+    for ( i=0; i<mAutoUniformCount; i++ )
     {
-        tempACE = mAutoConstEntries[i];
-        switch( mAutoConstEntries[i]->type )
+        tempACE = mAutoUniformEntries[i];
+        switch( mAutoUniformEntries[i]->type )
         {
         case TOY3D_ACT_WORLD_MATRIX:
-            setAutoConstValue( mAutoConstEntries[i]->index, source->getWorldMatrix() );
+            setAutoUniformConstant( mAutoUniformEntries[i]->index, source->getWorldMatrix() );
             break;
 
         case TOY3D_ACT_PROJECTION_MATRIX:
-            setAutoConstValue( mAutoConstEntries[i]->index, source->getProjectionMatrix() );
+            setAutoUniformConstant( mAutoUniformEntries[i]->index, source->getProjectionMatrix() );
             break;
 
         case TOY3D_ACT_VIEW_MATRIX:
-            setAutoConstValue( mAutoConstEntries[i]->index, source->getViewMatrix() );
+            setAutoUniformConstant( mAutoUniformEntries[i]->index, source->getViewMatrix() );
             break;
 
-            //transfer to the custom types
         case TOY3D_ACT_SAMPLER2D:
-            setAutoConstValue( mAutoConstEntries[i]->index, source->getTextureUnit());
+            setAutoUniformConstant( mAutoUniformEntries[i]->index, source->getTextureUnit());
+            break;
 
         default:
             break;
@@ -138,58 +197,47 @@ void ShaderProgramParams::updateAutoConstParams ( AutoParamDataSource *source )
     return;
 }
 
-Bool ShaderProgramParams::searchNamedAutoConst( const char *name, Uint* index )
+Uint ShaderProgramParams::getAutoConstCount()
 {
-    int i = mAutoCount;
-    while( i )
-    {
-        i--;
-        if( !strncmp((const char *)mAutoConstEntries[i]->name, (const char *)name, MAX_NAME_LEN) )
-        {
-            if( index )
-                *index = i;
-            return true;
-        }
-    }
-
-    if( index )
-        *index = 0;
-    return false;
+    return mAutoUniformCount;
 }
 
-//////////////////////////////////////////////////////////////////////////
-//Attribute variable
+const char* ShaderProgramParams::getAutoConstName( Uint position )
+{
+    return (const char *)mAutoUniformEntries[position]->name;
+}
+/* Auto Uniform Parameter Methods -------------------------------end   */
 
-Bool ShaderProgramParams::searchNamedAttrConst( const char *name, Uint* index )
+/* Attribution Parameter Methods -------------------------------start */
+Bool ShaderProgramParams::searchNamedAttrConstant( const char *name, Uint* position )
 {
     int i = mAttrCount;
     while( i )
     {
         i--;
-        if( !strncmp((const char *)mAttrConstEntries[i]->name, (const char *)name, MAX_NAME_LEN) )
+        if( !strncmp((const char *)mAttrEntries[i]->name, name, MAX_NAME_LEN) )
         {
-            if( index )
-                *index = i;
+            if( position )
+                *position = i;
             return true;
         }
     }
     
-    if( index )
-        *index = 0;
+    if( position )
+        *position = 0;
     return false;
 }
 
 void ShaderProgramParams::setNamedAttrConstant ( AttrConstantType type, char *name )
 {
-    if( searchNamedAttrConst(name, 0) )
+    if( searchNamedAttrConstant(name, 0) )
     {
-        TOY3D_PRINT("setNamedAutoConstant failed. AutoConst name exist.", __FILE__, __LINE__);
+        TOY3D_PRINT("setNamedAttrConstant failed. Auto Constant name exist.", __FILE__, __LINE__);
         return;
     }
-   
- 
-    AttrConstEntry *entry = new AttrConstEntry(type, name );
-    mAttrConstEntries[mAttrCount++] = entry;
+
+    AttrParamEntry *entry = new AttrParamEntry(type, name );
+    mAttrEntries[mAttrCount++] = entry;
 
     return;
 }
@@ -197,112 +245,266 @@ void ShaderProgramParams::setNamedAttrConstant ( AttrConstantType type, char *na
 void ShaderProgramParams::updateAttrConstIndex ( const char *name, Uint index )
 {
     Uint position = 0;
-    if( !searchNamedAttrConst(name, &position) )
+    if( !searchNamedAttrConstant(name, &position) )
     {
-        TOY3D_PRINT("updateAttrConstIndex failed. AutoConst name doesn't exist.", __FILE__, __LINE__);
+        TOY3D_PRINT("updateAttrConstIndex failed. Attribution Constant name doesn't exist.", __FILE__, __LINE__);
         return;
     }
     
-    mAttrConstEntries[position]->index = index;
+    mAttrEntries[position]->index = index;
     
     return;
 }
 
-Uint ShaderProgramParams::getAttrEntryCount()
+Uint ShaderProgramParams::getAttrConstCount()
 {
     return mAttrCount;
 }
 
-const char* ShaderProgramParams::getAttrParamName( Uint index )
+const char* ShaderProgramParams::getAttrConstName( Uint position )
 {
-    return (const char*)mAttrConstEntries[index]->name;
+    return (const char*)mAttrEntries[position]->name;
 }
 
-Uint ShaderProgramParams::getAttrConstIndex( AttrConstantType type )
+//-1->no constant exist
+int ShaderProgramParams::getAttrConstIndex( AttrConstantType type )
 {
     for (Uint i=0; i<mAttrCount; i++)
     {
-        if( mAttrConstEntries[i]->type == type)
-            return mAttrConstEntries[i]->index;
+        if( mAttrEntries[i]->type == type)
+            return mAttrEntries[i]->index;
     }
 
-    return 0;
+    return -1;
 }
+/* Attribution Parameter Methods -------------------------------end   */
 
-#if 0
-//////////////////////////////////////////////////////////////////////////
-//Attribute variable
+/* Custom Uniform Parameter Methods -------------------------------start */
 
-Bool ShaderProgramParams::searchNamedCustomConst( const char *name, Uint* index )
+/* flag : true->search int entries, false->search real entries. */
+Bool ShaderProgramParams::searchNamedCustConstant(Bool flag, const char *name, Uint *position )
 {
-    int i = mAttrCount;
-    while( i )
+    int i;
+
+    if( TRUE == flag )
     {
-        i--;
-        if( !strncmp((const char *)mAttrConstEntries[i]->name, (const char *)name, MAX_NAME_LEN) )
+        i = mIntUniformCount;
+        while( i )
         {
-            if( index )
-                *index = i;
-            return true;
+            i--;
+            if( !strncmp((const char *)mIntUniformEntries[i]->name, name, MAX_NAME_LEN) )
+            {
+                if( position )
+                    *position = i;
+                return true;
+            }
         }
     }
-    
-    if( index )
-        *index = 0;
+    else
+    {
+        i = mRealUniformCount;
+        while( i )
+        {
+            i--;
+            if( !strncmp((const char *)mRealUniformEntries[i]->name, name, MAX_NAME_LEN) )
+            {
+                if( position )
+                    *position = i;
+                return true;
+            }
+        }
+    }
+
+    if( position )
+        *position = 0;
+
     return false;
 }
 
-void ShaderProgramParams::setNamedCustomConstant ( AttrConstantType type, char *name )
+void ShaderProgramParams::setNamedCustUniformConstant(CustUniformConstanType type, char *name , int value)
 {
-    if( searchNamedCustomConst(name, 0) )
+    if( searchNamedCustConstant( TRUE, name, 0) )
     {
-        TOY3D_PRINT("setNamedAutoConstant failed. AutoConst name exist.", __FILE__, __LINE__);
+        TOY3D_PRINT("setNamedAutoConstant failed. Custom constant name exist.", __FILE__, __LINE__);
         return;
     }
-    
-    
-    AttrConstEntry *entry = new AttrConstEntry(type, name );
-    mAttrConstEntries[mAttrCount++] = entry;
-    
+
+    IntParamEntry *entry = new IntParamEntry(type, name, value);
+    mIntUniformEntries[mIntUniformCount++] = entry;
+
     return;
 }
 
+void ShaderProgramParams::setNamedCustUniformConstant( CustUniformConstanType type, char *name , Real value)
+{
+    if( searchNamedCustConstant( FALSE, name, 0) )
+    {
+        TOY3D_PRINT("setNamedAutoConstant failed. Custom constant name exist.", __FILE__, __LINE__);
+        return;
+    }
+
+    RealParamEntry *entry = new RealParamEntry(type, name, value);
+    mRealUniformEntries[mRealUniformCount++] = entry;
+
+    return;
+}
+
+/*
+void ShaderProgramParams::updateCustUniformIndex ( const char *name, Uint index )
+{
+    Uint position = 0;
+    if( searchNamedCustConstant(TRUE, name, &position) )
+    {
+        mIntUniformEntries[position]->index = index;
+        return;
+    }
+    else if( searchNamedCustConstant(FALSE, name, &position) )
+    {
+        mRealUniformEntries[position]->index = index;
+        return;
+    }
+
+    TOY3D_PRINT("updateCustUniformIndex failed. Custom Constant name doesn't exist.", __FILE__, __LINE__);
+    return;
+}
+*/
+
+void ShaderProgramParams::updateCustIntUniformIndex ( const char *name, Uint index )
+{
+    Uint position = 0;
+
+    if( searchNamedCustConstant(TRUE, name, &position) )
+    {
+        mIntUniformEntries[position]->index = index;
+        return;
+    }
+    
+    TOY3D_PRINT("updateCustUniformIndex failed. Custom Constant name doesn't exist.", __FILE__, __LINE__);
+    return;
+}
+
+void ShaderProgramParams::updateCustRealUniformIndex ( const char *name, Uint index )
+{
+    Uint position = 0;
+    
+    if( searchNamedCustConstant(FALSE, name, &position) )
+    {
+        mRealUniformEntries[position]->index = index;
+        return;
+    }
+    
+    TOY3D_PRINT("updateCustUniformIndex failed. Custom Constant name doesn't exist.", __FILE__, __LINE__);
+    return;
+}
+
+void ShaderProgramParams::updateCustUniformConst()
+{
+    Uint i;
+
+    for ( i=0; i<mIntUniformCount; i++ )
+    {
+        switch( mIntUniformEntries[i]->type )
+        {
+        case TOY3D_CUST_INT1:
+        case TOY3D_CUST_SAMPLER1D:
+        case TOY3D_CUST_SAMPLER2D:
+        case TOY3D_CUST_SAMPLER3D:
+            glUniform1i(mIntUniformEntries[i]->index, mIntUniformEntries[i]->value);
+            break;
+
+        case TOY3D_CUST_INT2:
+        case TOY3D_CUST_INT3:
+        case TOY3D_CUST_INT4:
+        case TOY3D_CUST_MATRIX_2:
+        case TOY3D_CUST_MATRIX_3:
+        case TOY3D_CUST_MATRIX_4:
+        case TOY3D_CUST_VEC_2:
+        case TOY3D_CUST_VEC_3:
+        case TOY3D_CUST_VEC_4:
+        case TOY3D_CUST_UNKNOWN:
+            TOY3D_TIPS("Warning: It could do nothing now.\n");
+            break;
+
+        default:
+            break;
+        }
+    }
+
+    for ( i=0; i<mRealUniformCount; i++ )
+    {
+        switch( mRealUniformEntries[i]->type )
+        {
+        case TOY3D_CUST_REAL1:
+            glUniform1f(mRealUniformEntries[i]->index, mRealUniformEntries[i]->value);
+            break;
+
+        case TOY3D_CUST_REAL2:
+        case TOY3D_CUST_REAL3:
+        case TOY3D_CUST_REAL4:
+        case TOY3D_CUST_MATRIX_2:
+        case TOY3D_CUST_MATRIX_3:
+        case TOY3D_CUST_MATRIX_4:
+        case TOY3D_CUST_VEC_2:
+        case TOY3D_CUST_VEC_3:
+        case TOY3D_CUST_VEC_4:
+        case TOY3D_CUST_UNKNOWN:
+            TOY3D_TIPS("Warning: It could do nothing now.\n");
+            break;
+
+        default:
+            break;
+        }
+    }
+
+    return;
+}
+
+Uint ShaderProgramParams::getCustIntCount()
+{
+    return mIntUniformCount;
+}
+
+Uint ShaderProgramParams::getCustRealCount()
+{
+    return mRealUniformCount;
+}
+
+const char* ShaderProgramParams::getCustIntConstName( Uint position )
+{
+    return (const char *)mIntUniformEntries[position]->name;
+}
+
+const char* ShaderProgramParams::getCustRealConstName( Uint position )
+{
+    return (const char *)mRealUniformEntries[position]->name;
+}
+
+/*
 void ShaderProgramParams::updateCustomConstIndex ( const char *name, Uint index )
 {
     Uint position = 0;
-    if( !searchNamedAttrConst(name, &position) )
+    if( !searchNamedAttrParam(name, &position) )
     {
         TOY3D_PRINT("updateAutoConstIndex failed. AutoConst name doesn't exist.", __FILE__, __LINE__);
         return;
     }
     
-    mAttrConstEntries[position]->index = index;
+    mAttrEntries[position]->index = index;
     
     return;
 }
 
-Uint ShaderProgramParams::getAttrEntryCount()
+void ShaderProgramParams::setCustUniform(const char* name, Uint value, Uint pid)
 {
-    return mAttrCount;
-}
+    Uint index;
 
-const char* ShaderProgramParams::getAttrParamName( Uint index )
-{
-    return (const char*)mAttrConstEntries[index]->name;
+    index = glGetUniformLocation(pid, name);
+    glUniform1i(index, value);
+    return;
 }
+*/
+/* Custom Uniform Parameter Methods -------------------------------end   */
 
-Uint ShaderProgramParams::getAttrConstIndex( AttrConstantType type )
-{
-    for (Uint i=0; i<mAttrCount; i++)
-    {
-        if( mAttrConstEntries[i]->type == type)
-            return mAttrConstEntries[i]->index;
-    }
-    
-    return 0;
-}
-
-#endif
 
 
 TOY3D_END_NAMESPACE

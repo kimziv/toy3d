@@ -35,9 +35,21 @@ extern "C" {
 
 //used for testing
 #define MAX_MESH_COUNT      8
+/* Warning:
+ * Parameter list length must be less than the values.
+ * And now, no fault tolerance in the code.
+ */
 #define MAX_AUTOENTRY_COUNT 8
+#define MAX_ATTRENTRY_COUNT 8
+#define MAX_CUSTENTRY_COUNT 8
+
+//max length of parameter name
 #define MAX_NAME_LEN        32
+
 #define MATRIX_4x4_SIZE     16
+
+//size of custom uniform base unit
+#define CUSTOM_UNIT_SIZE 4
 
 
 
@@ -85,9 +97,6 @@ extern "C" {
     #define TRUE        1
     typedef int Bool;
 
-
-
-
     typedef unsigned char  Uchar;
     typedef unsigned short Ushort;
     typedef unsigned int   Uint;
@@ -98,40 +107,65 @@ extern "C" {
     typedef signed int   Sint;
     typedef signed long  Slong;
 
-
-
-     enum RenderMode {
+    
+    enum RenderMode
+    {
         TOY3D_POINTS = 1,
         TOY3D_LINES = 2,
         TOY3D_LINE_STRIP = 3,
         TOY3D_TRIANGLES = 4,
         TOY3D_TRIANGLE_STRIP = 5,
         TOY3D_TRIANGLE_FAN = 6
-     };
+    };
+    
+    enum AutoConstanType
+    {
+        TOY3D_ACT_WORLD_MATRIX,
+        TOY3D_ACT_VIEW_MATRIX, 
+        TOY3D_ACT_PROJECTION_MATRIX,
+        TOY3D_ACT_SAMPLER2D
+    };
+    
+    enum AttrConstantType
+    {
+        TOY3D_ATTR_VERTEX,
+        TOY3D_ATTR_COLOR, 
+        TOY3D_ATTR_UV,
+        TOY3D_ATTR_NORMAL
+    };
 
-     enum AutoConstantType
-     {
-         TOY3D_ACT_WORLD_MATRIX,
-         TOY3D_ACT_VIEW_MATRIX, 
-         TOY3D_ACT_PROJECTION_MATRIX,
-         TOY3D_ACT_SAMPLER2D
-     };
-
-     enum AttrConstantType
-     {
-         TOY3D_ATTR_VERTEX_INDEX,
-         TOY3D_ATTR_COLOR_INDEX, 
-         TOY3D_ATTR_UV_INDEX,
-         TOY3D_ATTR_NORMAL_INDEX
-     };
-
-     typedef struct _ImageInfo
-     {
-         unsigned char *pImageData; /* color data of image */
-         Uint width;                /* width of image */
-         Uint height;               /* height of image */
-         Uint bpp;                  /* bytes per pixel */
-     }ImageInfo;
+    
+    enum CustUniformConstanType
+    {
+        TOY3D_CUST_INT1,
+        TOY3D_CUST_INT2,
+        TOY3D_CUST_INT3,
+        TOY3D_CUST_INT4,
+        TOY3D_CUST_REAL1,
+        TOY3D_CUST_REAL2,
+        TOY3D_CUST_REAL3,
+        TOY3D_CUST_REAL4,
+        TOY3D_CUST_SAMPLER1D,
+        TOY3D_CUST_SAMPLER2D,
+        TOY3D_CUST_SAMPLER3D,
+        TOY3D_CUST_SAMPLERCUBE,
+        TOY3D_CUST_MATRIX_2,
+        TOY3D_CUST_MATRIX_3,
+        TOY3D_CUST_MATRIX_4,
+        TOY3D_CUST_VEC_2,
+        TOY3D_CUST_VEC_3,
+        TOY3D_CUST_VEC_4,
+		TOY3D_CUST_UNKNOWN = 99
+    };
+    
+    
+    typedef struct _ImageInfo
+    {
+        unsigned char *pImageData; /* color data of image */
+        Uint width;                /* width of image */
+        Uint height;               /* height of image */
+        Uint bpp;                  /* bytes per pixel */
+    }ImageInfo;
 
 
 

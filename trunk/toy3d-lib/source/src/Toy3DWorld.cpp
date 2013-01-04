@@ -40,13 +40,13 @@ TOY3D_BEGIN_NAMESPACE
 
         ro = new RenderOperation ();
 
-        index = mShaderProgram->getShaderParameters()->getAttrConstIndex (TOY3D_ATTR_VERTEX_INDEX);
-        ro->setShaderAttribution (TOY3D_ATTR_VERTEX_INDEX, index);
+        index = mShaderProgram->getAttrLocation(TOY3D_ATTR_VERTEX);
+        ro->setShaderAttribution (TOY3D_ATTR_VERTEX, index);
 
         //need to fix wether there is texture
         //UV
-        index = mShaderProgram->getShaderParameters()->getAttrConstIndex (TOY3D_ATTR_UV_INDEX);
-        ro->setShaderAttribution (TOY3D_ATTR_UV_INDEX, index);
+        index = mShaderProgram->getAttrLocation(TOY3D_ATTR_UV);
+        ro->setShaderAttribution (TOY3D_ATTR_UV, index);
 
 
         mRenderer.setViewPort (0.0, 0.0, mWidth, mHeight);
@@ -65,7 +65,9 @@ TOY3D_BEGIN_NAMESPACE
             mAutoParamDataSource.setTextureUnit( ro->getTextureUnit() );
 
             //update auto shader paramters
-            mShaderProgram->getShaderParameters()->updateAutoConstParams (&mAutoParamDataSource); 
+            mShaderProgram->getShaderParameters()->updateAutoUniformConst (&mAutoParamDataSource); 
+            //update custom shader paramters
+            mShaderProgram->getShaderParameters()->updateCustUniformConst(); 
 
             mRenderer.useShaderProgram(mShaderProgram->getShaderProgramID());
             mRenderer.render(ro);
