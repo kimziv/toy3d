@@ -21,6 +21,9 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
 
     Renderer::Renderer() 
     {
+ 
+        mCurrentShaderProgram = NULL;
+
         //MvGl2DemoMatrixIdentity( mProjectionMatrix );
         //MvGl2DemoMatrixIdentity( mViewMatrix );
     }
@@ -29,10 +32,19 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
     {
     }
 
+    void Renderer:: bindShaderProgram(ShaderProgram *prog)
+    {
+        mCurrentShaderProgram = prog;
+
+        Uint id = mCurrentShaderProgram->getShaderProgramID();
+        glUseProgram(id);
+    }
+/*
     void Renderer:: useShaderProgram(Uint id)
     {
         glUseProgram(id);
     }
+*/
 
     void Renderer::beginFrame()
     {
@@ -48,7 +60,7 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
     void Renderer::render(RenderOperation *ro)
     {
         Uint mode = 0;
-        Uint index = 0;
+        int index = 0;
         Real *pTempR = 0;
         Uint texUnit;
 
@@ -91,8 +103,8 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
 
         if (mode)
         {
-            //index = ro->getVertexIndex();
-            index = ro->getShaderAttribution( TOY3D_ATTR_VERTEX );
+            //index = ro->getShaderAttribution( TOY3D_ATTR_VERTEX_INDEX );
+            index = mCurrentShaderProgram->getAttrLocation( TOY3D_ATTR_VERTEX );
 
 #if 0
             printf ("index = %d. vertex count = %d.\n", index, ro->getVerticesCount());       
@@ -108,7 +120,7 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
             glEnableVertexAttribArray( index );
 
             //color
-
+/*
             //uvs
             pTempR = ro->getUVs();
             if( pTempR )
@@ -126,7 +138,7 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
                 glVertexAttribPointer( index, 2, GL_FLOAT, 0, 0, pTempR );
                 glEnableVertexAttribArray( index );
             }
-
+*/
             //normals
 
             glDrawArrays( mode, 0,  ro->getVerticesCount() );
@@ -197,6 +209,23 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
         return;
     }
 */
+
+
+    void Renderer::updateAutoUniform(AutoParamDataSource* autoUniformData)
+    {
+
+        if (mCurrentShaderProgram)
+            mCurrentShaderProgram->getShaderParameters()->updateAutoUniformConst (autoUniformData);
+
+    }
+
+    void Renderer::updateCustUniform()
+    {
+
+        if (mCurrentShaderProgram)
+            mCurrentShaderProgram->getShaderParameters()->updateCustUniformConst ();
+
+    }
 
 
 TOY3D_END_NAMESPACE

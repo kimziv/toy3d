@@ -122,6 +122,10 @@ TOY3D_BEGIN_NAMESPACE
             const char* getCustIntConstName( Uint position );
             const char* getCustRealConstName( Uint position );
             /* Custom Parameter Methods -------------------------------end   */
+
+
+           void updateCustUniform();
+
     };
 
 

@@ -11,9 +11,6 @@ TOY3D_BEGIN_NAMESPACE
         mColors = NULL;
         mUVs = NULL;
         mNormals = NULL;
-        mTextureID = NULL;
-        mTextureUnit = NULL;
-        MvGl2DemoMatrixIdentity( mModelMatrix );
     }
 
 
@@ -53,28 +50,7 @@ TOY3D_BEGIN_NAMESPACE
         mRenderMode = mode;
     }
 
-    void Mesh::setTextureInfo( Uint texID, Uint texUnit)
-    {
-        mTextureID = texID;
-        mTextureUnit = texUnit;
-        return;
-    }
-/*
-    RenderMode Mesh::getRenderMode ()
-    {
-        return mRenderMode;
-    }
 
-    Real* Mesh::getVertices()
-    {
-        return mVertices;
-    }
-
-    Uint Mesh::getVerticesCount()
-    {
-        return mVertexCount;
-    }
-*/
     void Mesh::getRenderOperation(RenderOperation* ro)
     {
         if (ro) {
@@ -89,37 +65,8 @@ TOY3D_BEGIN_NAMESPACE
             */
 
             if( mUVs )
-            {
                 ro->setUVs( mUVs, mVertexCount );
-                if( mTextureID )
-                    ro->setTextureInfo(mTextureID, mTextureUnit);
-            }
         }
-    }
-
-
-    void Mesh::getModelMatrix (Real matrix[MATRIX_4x4_SIZE])
-    {
-        memcpy( matrix, mModelMatrix, MATRIX_4x4_SIZE*sizeof(Real) );
-        return ;
-    }
-
-
-    void Mesh::translate (Real x, Real y, Real z)
-    {
-        
-        MvGl2DemoMatrixTranslate(mModelMatrix, x, y, z);
-        return;
-    }
-
-
-    void Mesh::rotate (Real x, Real y, Real z)
-    {
-        MvGl2DemoMatrixRotate(mModelMatrix, x, 1.0f, 0.0f, 0.0f);
-        MvGl2DemoMatrixRotate(mModelMatrix, y, 0.0f, 1.0f, 0.0f);
-        MvGl2DemoMatrixRotate(mModelMatrix, z, 0.0f, 0.0f, 1.0f);
-
-        return;
     }
 
 

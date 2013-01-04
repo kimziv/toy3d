@@ -34,7 +34,7 @@ extern "C" {
     
 
 //used for testing
-#define MAX_MESH_COUNT      8
+#define MAX_ENTITY_COUNT      8
 /* Warning:
  * Parameter list length must be less than the values.
  * And now, no fault tolerance in the code.

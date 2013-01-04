@@ -4,9 +4,8 @@
 
 #include "Toy3DCommon.h"
 #include "Toy3DCamera.h"
-#include "Toy3DMesh.h"
+#include "Toy3DEntity.h"
 #include "Toy3DRenderer.h"
-#include "Toy3DShaderProgram.h"
 #include "Toy3DAutoParamDataSource.h"
 
 
@@ -24,11 +23,11 @@ TOY3D_BEGIN_NAMESPACE
         Real mBackColorBlue;
         Real mBackColorAlpha;
 
-        Uint   mMeshCount;
+        Entity *mEntities[MAX_ENTITY_COUNT];
+        Uint mEntityCount;
 
         Camera              mCamera;
-        Mesh                *mMeshes[MAX_MESH_COUNT];
-        ShaderProgram       *mShaderProgram;
+//        ShaderProgram       *mShaderProgram;
         AutoParamDataSource mAutoParamDataSource;
         Renderer            mRenderer;
 
@@ -39,14 +38,16 @@ TOY3D_BEGIN_NAMESPACE
 		World();
         ~World();
 
-        Mesh* createMesh();
+        Entity* createEntity();
+        void destroyAllEntities();
         //Mesh* createMeshByFile( const char* fileName );
         Camera* createCamera( const char *name );
-        ShaderProgram* createShaderProgram();
         Renderer* createRenderer();
 
-        //void setMesh();
 
+        void renderOneObject (RenderOperation *ro, Material *mat, 
+            Real worldMatrix[16], Real viewMatrix[16], Real projMatrix[16]);      
+  
         void startRendering ();
 
         void setSize( Uint width, Uint height );
