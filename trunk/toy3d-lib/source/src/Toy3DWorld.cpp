@@ -7,24 +7,80 @@ TOY3D_BEGIN_NAMESPACE
 
     World::World()
     {
-        mMeshCount = 0;
+        mEntityCount = 0;
         MvGl2DemoMatrixIdentity( mWorldMatrix );
     }
 
     World::~World()
     {
-        Mesh *temp;
-        while( mMeshCount )
-        {
-            temp = mMeshes[--mMeshCount];
-            mMeshes[mMeshCount] = 0;
-            delete temp;
-        }
-
-        DELETEANDNULL( mShaderProgram );
-        //DELETEANDNULL( mRenderer );//now mRenderer is an object not pointer
     }
 
+
+
+    void World::renderOneObject (RenderOperation *ro, Material *mat, 
+            Real worldMatrix[16], Real viewMatrix[16], Real projMatrix[16])      
+    {
+
+        mRenderer.setViewPort (0,0, mWidth, mHeight);
+
+        mRenderer.beginFrame();
+
+        mRenderer.bindShaderProgram(mat->getShaderProgram());
+       
+        mAutoParamDataSource.setWorldMatrix (worldMatrix); 
+        mAutoParamDataSource.setViewMatrix (viewMatrix); 
+        mAutoParamDataSource.setProjectionMatrix (projMatrix); 
+
+        mRenderer.updateAutoUniform (&mAutoParamDataSource);
+        mRenderer.updateCustUniform ();
+
+        mRenderer.render (ro);
+
+        mRenderer.endFrame();
+         
+
+    } 
+
+
+
+    void World::startRendering ()
+    {
+
+        RenderOperation *ro = NULL;
+        int i = 0;
+        Material *mat = NULL;
+
+        Real entityMatrix[MATRIX_4x4_SIZE];
+ 
+        Real worldMatrix[MATRIX_4x4_SIZE]; 
+        Real viewMatrix[MATRIX_4x4_SIZE]; 
+        Real projMatrix[MATRIX_4x4_SIZE]; 
+
+
+
+        for (i = 0; i < mEntityCount; i++) {
+
+            ro = new RenderOperation ();
+
+            mEntities[i]->getRenderOperation (ro);
+
+            mat = mEntities[i]->getMaterial();
+
+            mEntities[i]->getModelMatrix (entityMatrix);
+            MvGl2DemoMatrixCopy (worldMatrix, mWorldMatrix);
+            MvGl2DemoMatrixMultiply (worldMatrix, entityMatrix);
+
+            mCamera.getViewMatrix(viewMatrix);
+            mCamera.getProjectionMatrix(projMatrix);
+
+            renderOneObject (ro, mat, worldMatrix, viewMatrix, projMatrix);
+
+            delete ro;
+            
+        }
+
+    }
+/*
     void World::startRendering ()
     {
         Real matrix[MATRIX_4x4_SIZE];
@@ -79,16 +135,26 @@ TOY3D_BEGIN_NAMESPACE
 
         return;
     }
+*/
 
-
-    Mesh* World::createMesh () 
+    Entity* World::createEntity () 
     { 
         //FIXME:  Maybe need search current mesh array to see if it already exist. 
-        Mesh *mesh = new Mesh();
-        mMeshes[mMeshCount++] = mesh;
+        Entity *entity = new Entity();
+        mEntities[mEntityCount++] = entity;
 
-        return mesh;
+        return entity;
     } 
+
+    void World::destroyAllEntities ()
+    {
+        int i = 0;
+        Entity* entity = NULL;
+        for (i = 0; i < mEntityCount; i++) {
+            entity = mEntities[i];
+            delete (entity);
+        }
+    }
 
     Camera* World::createCamera (const char *name) 
     { 
@@ -97,6 +163,8 @@ TOY3D_BEGIN_NAMESPACE
         return &mCamera; 
     } 
 
+
+/*
     ShaderProgram* World::createShaderProgram()
     {
         //FIXME:  Maybe need to record which shader  is in use.
@@ -104,7 +172,7 @@ TOY3D_BEGIN_NAMESPACE
 
         return mShaderProgram;
     }
-
+*/
     Renderer* World::createRenderer()
     {
         return 0;

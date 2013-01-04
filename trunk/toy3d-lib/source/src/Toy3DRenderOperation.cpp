@@ -15,8 +15,8 @@ TOY3D_BEGIN_NAMESPACE
         mColors = NULL;
         mUVs = NULL;
         mNormals = NULL;
-        mVerticesCount = NULL;
 
+        mVerticesCount = 0;
         mVertexIndex = 0;
         mColorIndex = 0;
         mUVIndex = 0;
@@ -30,8 +30,8 @@ TOY3D_BEGIN_NAMESPACE
         mColors = NULL;
         mUVs = NULL;
         mNormals = NULL;
-        mVerticesCount = NULL;
 
+        mVerticesCount = 0;
         mVertexIndex = 0;
         mColorIndex = 0;
         mUVIndex = 0;

@@ -4,6 +4,8 @@
 
 #include "Toy3DCommon.h"
 #include "Toy3DRenderOperation.h"
+#include "Toy3DShaderProgram.h"
+#include "Toy3DAutoParamDataSource.h"
 
 TOY3D_BEGIN_NAMESPACE
 
@@ -16,12 +18,14 @@ TOY3D_BEGIN_NAMESPACE
         Real mViewMatrix[MATRIX_4x4_SIZE];
         Real mWorldMatrix[MATRIX_4x4_SIZE];
 
+        ShaderProgram* mCurrentShaderProgram;
 
     public:
 		Renderer ();
         ~Renderer ();
 
-        void useShaderProgram(Uint id);
+//        void useShaderProgram(Uint id);
+        void bindShaderProgram(ShaderProgram *prog);
         void beginFrame(); 
         void render(RenderOperation *ro);
         void endFrame(); 
@@ -36,6 +40,10 @@ TOY3D_BEGIN_NAMESPACE
         //void setDepthTest(Uint flag, Uint funcMode);
         //void setBlend(Uint flag, Uint srcMode, Uint dstMode);
         //void setTexture(Uchar* name);
+
+        void updateAutoUniform (AutoParamDataSource *autoDataSource);
+        void updateCustUniform ();
+
     };
 
 

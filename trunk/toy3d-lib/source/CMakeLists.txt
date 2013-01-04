@@ -9,6 +9,8 @@
 		include/Toy3DShaderProgramParams.h
 		include/Toy3DShaderProgram.h
 		include/Toy3DMesh.h
+		include/Toy3DEntity.h
+		include/Toy3DMaterial.h
 		include/Toy3DRenderer.h
 		include/Toy3DRenderOperation.h
 		include/Toy3DMath.h
@@ -24,6 +26,8 @@
 		src/Toy3DShaderProgramParams.cpp
 		src/Toy3DShaderProgram.cpp
 		src/Toy3DMesh.cpp
+		src/Toy3DEntity.cpp
+		src/Toy3DMaterial.cpp
 		src/Toy3DRenderer.cpp
 		src/Toy3DRenderOperation.cpp
 		src/Toy3DMath.c
