@@ -58,7 +58,7 @@ void init()
     ShaderProgramParams *params = new ShaderProgramParams ();
     //no shader uniforms ...
     //shader attributes
-    params->setNamedAttrConstant (TOY3D_ATTR_VERTEX_INDEX, "vPosition");
+    params->setNamedAttrConstant (TOY3D_ATTR_VERTEX, "vPosition");
     shaderProgram->bindShaderParameters(params);
 
 

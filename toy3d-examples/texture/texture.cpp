@@ -47,6 +47,7 @@ Real uvs[VERTEX_COUNT * 2] = {
 World *world = NULL;
 Texture *texture = NULL;
 Camera *camera = NULL;
+ShaderProgramParams *params = NULL;
 
 //Bpp muset be 3 or 4.
 unsigned char* generateColorData(int w, int h, int bpp)
@@ -106,12 +107,13 @@ void changeSize( int w, int h )
 
 bool init()
 {
-    Real aspect, fovy;
+    //Real aspect, fovy;
     const Real nearz  = 1.0f;
     const Real farz   = 1000.0f;
     int   width = WINDOW_W, height = WINDOW_H;
     int   texid;
     int   texUnit = 0;
+    Real  limit;
 
     world = new World ();
     printf("pointer world: %d.\n", world);
@@ -126,22 +128,30 @@ bool init()
     camera->perspective (fovy, aspect, nearz, farz);
     */
 
+    //shader
     ShaderProgram* shaderProgram = world->createShaderProgram();
     shaderProgram->loadShaderSource (SHADER_VERT_FILE, SHADER_FRAG_FILE);
     printf("shaderProgram id: %d\n", shaderProgram->getShaderProgramID());
 
-    ShaderProgramParams *params = new ShaderProgramParams ();
+    params = new ShaderProgramParams ();
+    //shader auto constant
     params->setNamedAutoConstant (TOY3D_ACT_PROJECTION_MATRIX, "proj_mat");
     params->setNamedAutoConstant (TOY3D_ACT_VIEW_MATRIX, "view_mat");
     params->setNamedAutoConstant (TOY3D_ACT_WORLD_MATRIX, "world_mat");
     params->setNamedAutoConstant (TOY3D_ACT_SAMPLER2D, "sampler2d");
 
     //shader attributes
-    params->setNamedAttrConstant(TOY3D_ATTR_VERTEX_INDEX, "vPosition");
-    params->setNamedAttrConstant(TOY3D_ATTR_UV_INDEX, "vTexture");
+    params->setNamedAttrConstant(TOY3D_ATTR_VERTEX, "vPosition");
+    params->setNamedAttrConstant(TOY3D_ATTR_UV, "vTexture");
+
+    //shader custom constant
+    limit = 1.0f;
+    printf("limit = %f.\n", limit);
+    params->setNamedCustUniformConstant(TOY3D_CUST_REAL1, "limit", limit);
 
     shaderProgram->bindShaderParameters(params);
 
+    //Mesh
     Mesh *mesh = world->createMesh();
     mesh->setVertices (vertices, VERTEX_COUNT);
     mesh->setRenderMode (TOY3D_TRIANGLE_STRIP);
@@ -149,16 +159,14 @@ bool init()
 
     //mesh->rotate (0.0, 30.0, 0.0);
 
-#if 0
     texture = TextureManager::getInstance()->createTextureByFile(TEXTURE_FILE);
     if( !texture )
     {
         printf("create texture failed.\n");
         return false;
     }
-#endif
 
-#if 1
+    /*
     unsigned char *buf;
     int  bpp = BPP_3;
     int  imageW = 64;
@@ -174,12 +182,12 @@ bool init()
     }
     if(buf)
         FREEANDNULL(buf);
-#endif
+    */
 
     texid = texture->getTextureID();
     printf("texid = %d\n", texid);
     mesh->setTextureInfo( texid, texUnit);
-
+    
     return true;
 }
 
@@ -202,8 +210,10 @@ void keyboard(unsigned char key, int x, int y){
         printf("pointer world: %d.\n", world);
         DELETEANDNULL(world);
 
+        //Warning:need to delete params
+        //DELETEANDNULL(params);
+
         exit(0);
-        break;
 
     case 'p':
     case 'P':
@@ -242,8 +252,6 @@ int main(int argc, char** argv){
 
   	glutMainLoop();
 
-    //delete world;
-    //delete texture;
 
   	return 0;
 }

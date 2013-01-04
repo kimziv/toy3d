@@ -16,7 +16,7 @@ TOY3D_BEGIN_NAMESPACE
     {
     protected:
         Uint mShaderProgramID;
-        ShaderProgramParams* mShaderParams;
+        ShaderProgramParams *mShaderParams;
 
     public:
         ShaderProgram();
@@ -25,29 +25,23 @@ TOY3D_BEGIN_NAMESPACE
         Uint loadShaderSource(const char *vertshader, const char *fragshader);
         Uint loadShaderBinary(const char* vertBinaryFile,
             Uint vertBFSize, const char* fragBinaryFile, Uint fragBFSize);
+
         void bindShaderParameters(ShaderProgramParams* pShaderPara);
-        Uint getShaderProgramID();
+
         ShaderProgramParams* getShaderParameters();
+        Uint getShaderProgramID();
+
+        //get location from parameters
+        int getAttrLocation(AttrConstantType type);
 
     private:
         void getShaderDebugInfo(Uint obj, GLenum status, const char* op);
         char* loadFile(const char *file);
 
-/*
-        void shaderLogMessage(const char* message, ...);
+        //get location from shader program
+        int getAttrLocFromShader(const char *pName);
+        int getUnifLocFromShader(const char *pName);
 
-        //‘›”√
-        void MvGl2DemoShaderDebug(Uint obj, GLenum status, const char* op);
-        Uint ShaderProgram::MvGl2DemoLoadShaderSources(
-            const char* vertFile,
-            const char* fragFile,
-            boolean debugging);
-        Uint MvGl2DemoLoadShaderBinaries(
-            const char* vertBin, Uint vertBinSize,
-            const char* fragBin, Uint fragBinSize,
-                                   GLboolean debugging);
-        char* MvGl2DemoLoadFile(const char *file);
-*/
     };
 
 

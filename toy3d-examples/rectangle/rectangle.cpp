@@ -103,7 +103,7 @@ void init()
     params->setNamedAutoConstant (TOY3D_ACT_WORLD_MATRIX, "world_mat");
 
     //attributes
-    params->setNamedAttrConstant (TOY3D_ATTR_VERTEX_INDEX, "vPosition");
+    params->setNamedAttrConstant (TOY3D_ATTR_VERTEX, "vPosition");
 
 
     shaderProgram->bindShaderParameters(params);

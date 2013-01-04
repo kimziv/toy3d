@@ -13,18 +13,19 @@
 TOY3D_BEGIN_NAMESPACE
 
 
-    class AutoConstEntry
+    class AutoParamEntry
     {
     public:
-        AutoConstantType type;
+        AutoConstanType type;
         char name[MAX_NAME_LEN];
         Uint  index;
         
         //AutoConstEntry(AutoConstantType theType, Uchar *theName, Uint theIndex);
-        AutoConstEntry(AutoConstantType theType, char *theName );
+        AutoParamEntry(AutoConstanType theType, char *theName );
     };
 
-    class AttrConstEntry
+
+    class AttrParamEntry
     {
     public:
         AttrConstantType type;
@@ -32,58 +33,95 @@ TOY3D_BEGIN_NAMESPACE
         Uint  index;
         
         //AutoConstEntry(AutoConstantType theType, Uchar *theName, Uint theIndex);
-        AttrConstEntry(AttrConstantType theType, char *theName );
+        AttrParamEntry(AttrConstantType theType, char *theName );
+    };
+
+    class IntParamEntry
+    {
+    public:
+        CustUniformConstanType type;
+        char name[MAX_NAME_LEN];
+        //int  value[CUSTOM_UNIT_SIZE];
+        int  value;
+        Uint index;
+        
+        IntParamEntry(CustUniformConstanType theType, char *theName, int theVal);
+    };
+
+    class RealParamEntry
+    {
+    public:
+        CustUniformConstanType type;
+        char name[MAX_NAME_LEN];
+        //Real value[CUSTOM_UNIT_SIZE];
+        Real value;
+        Uint index;
+        
+        RealParamEntry(CustUniformConstanType theType, char *theName, Real theVal);
     };
 
     class ShaderProgramParams
     {
         protected:
-            AutoConstEntry* mAutoConstEntries[MAX_AUTOENTRY_COUNT];
-            AttrConstEntry* mAttrConstEntries[MAX_AUTOENTRY_COUNT];
-            Uint mAutoCount;
+            /* auto uniform constant list */
+            AutoParamEntry *mAutoUniformEntries[MAX_AUTOENTRY_COUNT];
+            /* attribution constant list */
+            AttrParamEntry *mAttrEntries[MAX_ATTRENTRY_COUNT];
+            /* custom uniform constant list */
+            IntParamEntry   *mIntUniformEntries[MAX_CUSTENTRY_COUNT];
+            RealParamEntry  *mRealUniformEntries[MAX_CUSTENTRY_COUNT];
+
+            Uint mAutoUniformCount;
             Uint mAttrCount;
+            Uint mIntUniformCount;
+            Uint mRealUniformCount;
 
         private:
-            //Search the name of the designated variables, if exist, get its position in the name list.
-            Bool searchNamedAutoConst( const char *name, Uint *index );
-            Bool searchNamedAttrConst( const char *name, Uint *index );
-            Bool searchCustomAttrConst( const char *name, Uint *index );
+            /* 
+             *  Search the name of the designated variables.
+             *  If exist, get its position in the name list.
+             */
+            Bool searchNamedAutoConstant( const char *name, Uint *position );
+            Bool searchNamedAttrConstant( const char *name, Uint *position );
+            Bool searchNamedCustConstant( Bool flag, const char *name, Uint *position );
 
         public:
             ShaderProgramParams();
             ~ShaderProgramParams();
 
-            //////////////////////////////////////////////////////////////////////////
-            //Auto Constant Methods
-            void setAutoConstValue( Uint index, const Real value[MATRIX_4x4_SIZE] );
-            void setAutoConstValue( Uint index, const Uint texUnit );
-            void setNamedAutoConstant ( AutoConstantType type, char *name );
-            void updateAutoConstParams ( AutoParamDataSource *source );
-            void updateAutoConstIndex ( const char *name, Uint index );
+            /* Auto Uniform Parameter Methods -------------------------------start */
+            void setAutoUniformConstant( Uint index, const Real value[MATRIX_4x4_SIZE] );
+            void setAutoUniformConstant( Uint index, const Uint texUnit );
+            void setNamedAutoConstant( AutoConstanType type, char *name );
+            void updateAutoUniformConst( AutoParamDataSource *source );
+            void updateAutoConstIndex( const char *name, Uint index );
 
-            Uint getAutoEntryCount();
-            const char* getAutoParamName( Uint index );
+            Uint getAutoConstCount();
+            const char* getAutoConstName( Uint position );
+            /* Auto Uniform Parameter Methods -------------------------------end   */
 
-            //////////////////////////////////////////////////////////////////////////
-            //Attribute Constant Method
-            void setNamedAttrConstant ( AttrConstantType type, char *name );
-            void updateAttrConstIndex ( const char *name, Uint index );
+            /* Attribution Parameter Methods -------------------------------start */
+            void setNamedAttrConstant( AttrConstantType type, char *name );
+            void updateAttrConstIndex( const char *name, Uint index );
 
-            Uint getAttrEntryCount();
-            const char* getAttrParamName( Uint index );
-            Uint getAttrConstIndex( AttrConstantType type );
+            Uint getAttrConstCount();
+            const char* getAttrConstName( Uint position );
+            int getAttrConstIndex( AttrConstantType type );
+            /* Attribution Parameter Methods -------------------------------end   */
 
-            //void ShaderProgramParams::updateAutoConstIndex_2 ( const Uchar *name, Uint shaderProgID );
-#if 0
-            //////////////////////////////////////////////////////////////////////////
-            //Customed Constant Methods
-            void setNamedCustomConstant ( AttrConstantType type, char *name );
-            void updateCustomConstIndex ( const char *name, Uint index );
-            
-            Uint getCustomEntryCount();
-            const char* getCustomParamName( Uint index );
-            Uint getCustomConstIndex( AttrConstantType type );
-#endif
+            /* Custom Parameter Methods -------------------------------start */
+            void setNamedCustUniformConstant( CustUniformConstanType type, char *name , int value);
+            void setNamedCustUniformConstant( CustUniformConstanType type, char *name , Real value);
+            //void updateCustUniformIndex ( const char *name, Uint index );
+            void updateCustIntUniformIndex ( const char *name, Uint index );
+            void updateCustRealUniformIndex ( const char *name, Uint index );
+            void updateCustUniformConst();
+
+            Uint getCustIntCount();
+            Uint getCustRealCount();
+            const char* getCustIntConstName( Uint position );
+            const char* getCustRealConstName( Uint position );
+            /* Custom Parameter Methods -------------------------------end   */
     };
 
 

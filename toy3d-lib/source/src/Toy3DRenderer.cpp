@@ -92,7 +92,7 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
         if (mode)
         {
             //index = ro->getVertexIndex();
-            index = ro->getShaderAttribution( TOY3D_ATTR_VERTEX_INDEX );
+            index = ro->getShaderAttribution( TOY3D_ATTR_VERTEX );
 
 #if 0
             printf ("index = %d. vertex count = %d.\n", index, ro->getVerticesCount());       
@@ -122,7 +122,7 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
                 glActiveTexture(gTextureUnit[texUnit]);
                 glBindTexture(GL_TEXTURE_2D, ro->getTextureID());
                 //printf("tex id = %d\n", ro->getTextureID());
-                index = ro->getShaderAttribution( TOY3D_ATTR_UV_INDEX );
+                index = ro->getShaderAttribution( TOY3D_ATTR_UV );
                 glVertexAttribPointer( index, 2, GL_FLOAT, 0, 0, pTempR );
                 glEnableVertexAttribArray( index );
             }
