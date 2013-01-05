@@ -50,7 +50,7 @@ void World::renderOneObject (RenderOperation* ro, Material* mat,
 void Renderer::setTexture(Texture* tex)
 {
 
-    if (text) {
+    if (tex) {
 
         glEnable(GL_TEXTURE_2D);
         unit = mCurrentProgram->getCustLoacation("SAMPLE2D");
