@@ -20,11 +20,6 @@ TOY3D_BEGIN_NAMESPACE
     void World::renderOneObject (RenderOperation *ro, Material *mat, 
             Real worldMatrix[16], Real viewMatrix[16], Real projMatrix[16])      
     {
-
-        mRenderer.setViewPort (0,0, mWidth, mHeight);
-
-        mRenderer.beginFrame();
-
         mRenderer.bindShaderProgram(mat->getShaderProgram());
        
         mAutoParamDataSource.setWorldMatrix (worldMatrix); 
@@ -36,8 +31,6 @@ TOY3D_BEGIN_NAMESPACE
         mRenderer.updateCustUniform ();
 
         mRenderer.render (ro);
-
-        mRenderer.endFrame();
 
         return;
     } 
@@ -63,6 +56,9 @@ TOY3D_BEGIN_NAMESPACE
             return;
         }
 
+        mRenderer.setViewPort (0,0, mWidth, mHeight);
+        mRenderer.beginFrame();
+
         for (i = 0; i < mEntityCount; i++) {
 
             ro = new RenderOperation ();
@@ -81,8 +77,9 @@ TOY3D_BEGIN_NAMESPACE
             renderOneObject (ro, mat, worldMatrix, viewMatrix, projMatrix);
 
             delete ro;
-            
         }
+
+        mRenderer.endFrame();
 
     }
 /*

@@ -68,24 +68,36 @@ ShaderProgramParams::ShaderProgramParams()
 
 ShaderProgramParams::~ShaderProgramParams()
 {
+    AutoParamEntry *temp1;
     while( mAutoUniformCount )
     {
-        DELETEANDNULL( mAutoUniformEntries[--mAutoUniformCount] );
+        temp1 = mAutoUniformEntries[--mAutoUniformCount];
+        DELETEANDNULL( temp1 );
+        mAutoUniformEntries[mAutoUniformCount] = 0;
     }
 
+    AttrParamEntry *temp2;
     while( mAttrCount )
     {
-        DELETEANDNULL( mAttrEntries[--mAttrCount] );
+        temp2 = mAttrEntries[--mAttrCount];
+        DELETEANDNULL( temp2 );
+        mAttrEntries[mAttrCount] = 0;
     }
 
+    IntParamEntry *temp3;
     while( mIntUniformCount )
     {
-        DELETEANDNULL( mIntUniformEntries[--mIntUniformCount] );
+        temp3 = mIntUniformEntries[--mIntUniformCount];
+        DELETEANDNULL( temp3 );
+        mIntUniformEntries[mIntUniformCount] = 0;
     }
 
+    RealParamEntry *temp4;
     while( mRealUniformCount )
     {
-        DELETEANDNULL( mRealUniformEntries[--mRealUniformCount] );
+        temp4 = mRealUniformEntries[--mRealUniformCount];
+        DELETEANDNULL( temp4 );
+        mRealUniformEntries[mRealUniformCount] = 0;
     }
 }
 

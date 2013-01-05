@@ -17,7 +17,7 @@ TOY3D_BEGIN_NAMESPACE
     {
     }
 
-
+    /*
     Mesh* Entity::createMesh ()
     {
         if (mMesh)
@@ -33,7 +33,13 @@ TOY3D_BEGIN_NAMESPACE
         if (mMesh)
             delete mMesh;
     }
+    */
 
+    void Entity::setMesh(Mesh *mesh)
+    {
+        mMesh = mesh;
+        return;
+    }
 
     Material* Entity::createMaterial ()
     {
@@ -68,6 +74,7 @@ TOY3D_BEGIN_NAMESPACE
         if (mMesh)
             mMesh->getRenderOperation(ro);
 
+        return;
     }
 
 

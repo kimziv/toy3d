@@ -13,17 +13,27 @@
 
 
 #ifdef VC6
-#define SHADER_VERT_FILE "C:/Program Files (x86)/TOY3D-EXAMPLES/share/toy3d/rectangle/rect.glslv"
-#define SHADER_FRAG_FILE "C:/Program Files (x86)/TOY3D-EXAMPLES/share/toy3d/rectangle/rect.glslf"
+#define SHADER_VERT_FILE "C:/Program Files (x86)/TOY3D-EXAMPLES/share/toy3d/multi_rect/rect.glslv"
+#define SHADER_FRAG_FILE "C:/Program Files (x86)/TOY3D-EXAMPLES/share/toy3d/multi_rect/rect.glslf"
 #else
-#define SHADER_VERT_FILE "/usr/local/share/toy3d/rectangle/rect.glslv"
-#define SHADER_FRAG_FILE "/usr/local/share/toy3d/rectangle/rect.glslf"
+#define SHADER_VERT_FILE "/usr/local/share/toy3d/multi_rect/rect.glslv"
+#define SHADER_FRAG_FILE "/usr/local/share/toy3d/multi_rect/rect.glslf"
 #endif
 
 
 using namespace TOY3D;
 
 #define VERTEX_COUNT  6
+
+
+//global
+World *world = NULL;
+Camera *camera = NULL;
+ShaderProgram* shaderProgram;
+ShaderProgramParams *params = NULL;
+Mesh *mesh_left, *mesh_right;
+
+
 
 Real vertices[VERTEX_COUNT * 3] = {
     -1.0f, -1.0f, 0.0f,
@@ -34,10 +44,6 @@ Real vertices[VERTEX_COUNT * 3] = {
     1.0f, -1.0f, 0.0f,
     -1.0f, 1.0f, 0.0f
 };
-
-World *world = NULL;
-Camera *camera = NULL;
-
 
 void display()
 {
@@ -67,7 +73,7 @@ void changeSize( int w, int h )
 
 
 
-void init()
+Bool init()
 {
     int   texUnit = 0;
     //Real aspect, fovy;
@@ -80,10 +86,10 @@ void init()
 
     camera = world->createCamera ("camera1");
 
-    ShaderProgram* shaderProgram = new ShaderProgram();
+    shaderProgram = new ShaderProgram();
     shaderProgram->loadShaderSource (SHADER_VERT_FILE, SHADER_FRAG_FILE);
 
-    ShaderProgramParams *params = new ShaderProgramParams ();
+    params = new ShaderProgramParams ();
     //uniforms
     params->setNamedAutoConstant (TOY3D_ACT_PROJECTION_MATRIX, "proj_mat");
     params->setNamedAutoConstant (TOY3D_ACT_VIEW_MATRIX, "view_mat");
@@ -98,16 +104,31 @@ void init()
 
     //Entity
     Entity *entity1 = world->createEntity();
-    Mesh *mesh_left = entity1->createMesh();
+    //Mesh *mesh_left = entity1->createMesh();
+    mesh_left = new Mesh();
+    if( !mesh_left )
+    {
+        TOY3D_TIPS("Failed to create mesh.\n");
+        return FALSE;
+    }
     mesh_left->setVertices (vertices, VERTEX_COUNT);
     mesh_left->setRenderMode (TOY3D_TRIANGLE_STRIP);
+    entity1->setMesh(mesh_left);
     entity1->translate (-3.0, 0.0, 0.0);
     entity1->rotate (0.0, 30.0, 0.0);
 
+
     Entity *entity2 = world->createEntity();
-    Mesh *mesh_right = entity2->createMesh();
+    //mesh_right = entity2->createMesh();
+    mesh_right = new Mesh();
+    if( !mesh_right )
+    {
+        TOY3D_TIPS("Failed to create mesh.\n");
+        return FALSE;
+    }
     mesh_right->setVertices (vertices, VERTEX_COUNT);
-    mesh_right->setRenderMode (TOY3D_TRIANGLE_STRIP);
+    mesh_right->setRenderMode(TOY3D_TRIANGLE_STRIP);
+    entity2->setMesh(mesh_right);
     entity2->translate (3.0, 0.0, 0.0);
     entity2->rotate (0.0, -30.0, 0.0);
 
@@ -117,7 +138,7 @@ void init()
     mat = entity2->createMaterial();
     mat->setShaderProgram (shaderProgram);
 
-    return;
+    return TRUE;
 }
 
 Real angle_y = 0.0f;
@@ -131,6 +152,12 @@ void keyboard(unsigned char key, int x, int y)
     case 27:
         printf("pointer world: %d.\n", world);
         DELETEANDNULL(world);
+        DELETEANDNULL(mesh_left);
+        DELETEANDNULL(mesh_right);
+        DELETEANDNULL(shaderProgram);
+        DELETEANDNULL(params);
+        camera = NULL;
+
         exit(0);
         
     case 'p':
@@ -145,7 +172,9 @@ void keyboard(unsigned char key, int x, int y)
 }
 
 
-int main(int argc, char** argv){
+int main(int argc, char** argv)
+{
+    Bool rvb;
 
 	glutInit(&argc, argv);
   	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
@@ -168,7 +197,9 @@ int main(int argc, char** argv){
 
 
 
-  	init();
+  	rvb = init();
+    if( FALSE==rvb )
+        return 0;
   	glutMainLoop();
 
   	return 0;

@@ -29,6 +29,16 @@ using namespace TOY3D;
 
 #define VERTEX_COUNT 6
 
+
+//global
+World *world = NULL;
+Mesh  *mesh;
+Camera *camera = NULL;
+ShaderProgram* shaderProgram;
+ShaderProgramParams *params = NULL;
+//Texture *texture = NULL;
+
+
 Real vertices[VERTEX_COUNT * 3] = {
     -1.0f, -1.0f, 0.0f,
     1.0f,  -1.0f, 0.0f,
@@ -43,12 +53,6 @@ Real uvs[VERTEX_COUNT * 2] = {
     0.0f,0.0f, 1.0f,0.0f, 0.0f,1.0f,
     1.0f,1.0f, 1.0f,0.0f, 0.0f,1.0f
 };
-
-World *world = NULL;
-Texture *texture = NULL;
-Camera *camera = NULL;
-ShaderProgram* shaderProgram;
-ShaderProgramParams *params = NULL;
 
 //Bpp muset be 3 or 4.
 unsigned char* generateColorData(int w, int h, int bpp)
@@ -110,6 +114,7 @@ bool init()
 {
     int   width = WINDOW_W, height = WINDOW_H;
     //int   texid;
+    Bool  rvb;
     int   texUnit = 0;
     Real  limit;
     Material *mat;
@@ -150,22 +155,21 @@ bool init()
     shaderProgram->bindShaderParameters(params);
 
     //Entity
-    Mesh *mesh = entity->createMesh();
+    mesh = new Mesh();
     mesh->setRenderMode (TOY3D_TRIANGLE_STRIP);
     mesh->setVertices (vertices, VERTEX_COUNT);
     mesh->setUVs( uvs, VERTEX_COUNT);
-
-    //mesh->rotate (0.0, 30.0, 0.0);
+    entity->setMesh(mesh);
 
     //texture
-    texture = mat->loadTexture(TEXTURE_FILE);
-    if( !texture )
+    rvb = mat->loadTexture(TEXTURE_FILE);
+    if(FALSE == rvb)
     {
         printf("create texture failed.\n");
         return false;
     }
     mat->setShaderProgram (shaderProgram);
-    mat->setTexture(texture);
+    //mat->setTexture(texture);
 
     /*
     //another way to create texture
@@ -197,6 +201,7 @@ void keyboard(unsigned char key, int x, int y){
     case 'q':
     case 'Q':
     case 27:
+        /*
         unsigned int texid;
         if( texture )
         {
@@ -204,12 +209,13 @@ void keyboard(unsigned char key, int x, int y){
             TextureManager::getInstance()->deleteTexture(&texid, 1);
         }
         DELETEANDNULL(texture);
+        */
 
-        printf("pointer world: %d.\n", world);
         DELETEANDNULL(world);
-
-        //Warning:need to delete params
-        //DELETEANDNULL(params);
+        DELETEANDNULL(mesh);
+        DELETEANDNULL(shaderProgram);
+        DELETEANDNULL(params);
+        camera = NULL;
 
         exit(0);
 
