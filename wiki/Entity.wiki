@@ -89,12 +89,21 @@ void Renderer::render(RenderOperation* ro)
 
 
 void init()
-
+{
     Material *mat = entity->createMaterial();
     mat->setShaderProgram (shaderProgram);
     mat->loadTexture (name);
+}
 
+void destroy ()
+{
     
+   Material *mat = entity->getMaterial();
+   mat->unloadTexture();
+   
+   world->destroyAllEntities();
+
+} 
     
 
 }
