@@ -18,10 +18,86 @@
 
 =Texture部分=
 
+遗留工作：
+ - 在 world 里 destroy entity
+ - 在 entity 里 destroy material
+  
+
 做一个假设，每个 entity 只有一个 texture
 
 {{{
 
+void World::renderOneObject (RenderOperation* ro, Material* mat, 
+        Real worldMatrix[16], Real viewMatrix[16], Real projMatrix[16])
+{
+    renderer->setViewPort(...);
+
+    renderer->beginFrame();
+
+    renderer->bindShaderProgram (...);
+
+    renderer->updateAutoUniform(...);
+    renderer->updateCustUniform ();
+
+    renderer->setTexture(mat->getTexture());
+
+    renderer->render(ro);
+    
+    renderer->endFrame();
+}
+
+
+void Renderer::setTexture(Texture* tex)
+{
+
+    if (text) {
+
+        glEnable(GL_TEXTURE_2D);
+        unit = mCurrentProgram->getCustLoacation("SAMPLE2D");
+        glActiveTexture （unit）；
+        glBindTexture (GL_TEXTURE_2D, tex->getTextureID());
+    }
+
+}
+
+
+void Renderer::render(RenderOperation* ro)
+{
+
+    ...
+    pTempR = ro->getUVs();
+    if( pTempR )
+    {
+        index = ro->getShaderAttribution( TOY3D_ATTR_UV );^M
+        glVertexAttribPointer( index, 2, GL_FLOAT, 0, 0, pTempR );^M
+        glEnableVertexAttribArray( index );^M
+    }
+
+    ...
+
+    glDrawArrays( mode, 0,  ro->getVerticesCount() );^M
+}
+
+
+
+}}}
+
+
+用户使用部分：
+
+{{{
+
+
+void init()
+
+    Material *mat = entity->createMaterial();
+    mat->setShaderProgram (shaderProgram);
+    mat->loadTexture (name);
+
+    
+    
+
+}
 
 
 
