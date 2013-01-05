@@ -190,7 +190,7 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
             texUnit = mCurrentShaderProgram->getShaderParameters()->getSampler2DValue();
             if(TOY3D_ERROR==texUnit)
             {
-                TOY3D_TIPS("Warning: You didn't set texture unit, use texture unit 0.\n");
+                TOY3D_TIPS("You didn't set texture unit, use texture unit 0.\n");
                 texUnit = 0;
             }
             else if(texUnit>MAX_TEXTURE_UNIT)

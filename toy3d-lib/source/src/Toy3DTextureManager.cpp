@@ -22,7 +22,7 @@ TOY3D_BEGIN_NAMESPACE
         return mInstance;
     }
 
-    Texture* TextureManager::createTexture(unsigned  char *pImageData, Uint width, Uint height, Uint bpp)
+    Texture* TextureManager::createTexture(unsigned char *pImageData, Uint width, Uint height, Uint bpp)
     {
         Bool rvb;
         Texture *texture = new Texture();
