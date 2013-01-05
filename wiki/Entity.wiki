@@ -16,6 +16,19 @@
  
 
 
+=Texture部分=
+
+做一个假设，每个 entity 只有一个 texture
+
+{{{
+
+
+
+
+
+}}}
+
+
 
 =Mesh=
 
