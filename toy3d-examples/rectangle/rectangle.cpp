@@ -72,6 +72,7 @@ void init()
     //Real aspect, fovy;
     const Real nearz  = 1.0f;//5.0f;
     const Real farz   = 1000.0f;//60.0f;
+    int   texUnit = 0;
 
     world = new World ();
     world->setSize(WINDOW_W, WINDOW_H);
@@ -81,36 +82,31 @@ void init()
 //    world->setWorldDepth(0, 0);
 
     camera = world->createCamera ("camera1");
-/*
-    camera->lookAt (0.0, 0.0, -3.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 
-    aspect = 1.0f * WINDOW_W / WINDOW_H;
-    fovy = 60;
-    camera->perspective (fovy, aspect, nearz, farz);
-    //camera->perspective (-1, 1, -1, 1, nearz, farz);
-    //camera->ortho2D (-3, 3, -3, 3, nearz, farz);
-*/
-    ShaderProgram* shaderProgram = world->createShaderProgram();
+    ShaderProgram* shaderProgram = new ShaderProgram();
     shaderProgram->loadShaderSource (SHADER_VERT_FILE, SHADER_FRAG_FILE);
 
-
     ShaderProgramParams *params = new ShaderProgramParams ();
-
-
     //uniforms
     params->setNamedAutoConstant (TOY3D_ACT_PROJECTION_MATRIX, "proj_mat");
     params->setNamedAutoConstant (TOY3D_ACT_VIEW_MATRIX, "view_mat");
     params->setNamedAutoConstant (TOY3D_ACT_WORLD_MATRIX, "world_mat");
-
     //attributes
     params->setNamedAttrConstant (TOY3D_ATTR_VERTEX, "vPosition");
-
+    //shader custom constant
+    params->setNamedCustUniformConstant(TOY3D_CUST_SAMPLER2D, "sampler2d", texUnit);
 
     shaderProgram->bindShaderParameters(params);
 
-    Mesh *mesh = world->createMesh();
-    mesh->setVertices (vertices, VERTEX_COUNT);
+    //Entity
+    Entity *entity = world->createEntity();
+    Mesh *mesh = entity->createMesh();
     mesh->setRenderMode (TOY3D_TRIANGLE_STRIP);
+    mesh->setVertices (vertices, VERTEX_COUNT);
+
+    Material *mat = entity->createMaterial ();
+    mat->setShaderProgram (shaderProgram);
+    //mat->setTexture(texture);
 
     return;
 }
