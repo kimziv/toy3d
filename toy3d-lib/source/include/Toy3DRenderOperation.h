@@ -20,8 +20,8 @@ TOY3D_BEGIN_NAMESPACE
         Uint mNormalIndex;
 
         Uint mVerticesCount;
-        Uint mTextureID;
-        Uint mTextureUnit;
+        //Uint mTextureID;
+        //Uint mTextureUnit;
 
         RenderMode mRenderMode;
 
@@ -35,8 +35,8 @@ TOY3D_BEGIN_NAMESPACE
         void setUVs(Real *uvs, Uint count);
         void setNormals(Real *normals, Uint count);
 
-        void setTextureInfo( Uint texID, Uint texUnit);
-        void setShaderAttribution (AttrConstantType type, Uint index);
+        //void setTextureInfo( Uint texID, Uint texUnit);
+        //void setShaderAttrLocation (AttrConstantType type, Uint index);
 
         //return const 
         RenderMode getRenderMode();
@@ -46,10 +46,10 @@ TOY3D_BEGIN_NAMESPACE
         Real* getNormals();
 
         Uint getVerticesCount();
-        Uint getTextureID();
-        Uint getTextureUnit();
+        //Uint getTextureID();
+        //Uint getTextureUnit();
 
-        Uint getShaderAttribution(AttrConstantType type);
+        //Uint getShaderAttrLocation(AttrConstantType type);
     };
 
 

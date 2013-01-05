@@ -37,11 +37,13 @@ void AutoParamDataSource::setViewMatrix( Real matrix[MATRIX_4x4_SIZE] )
     memcpy( mViewMatrix, matrix, MATRIX_4x4_SIZE*sizeof(Real) );
 }
 
+/*
 void AutoParamDataSource::setTextureUnit(Uint texUnit)
 {
     mTextureUnit = texUnit;
     return;
 }
+*/
 
 const Real* AutoParamDataSource::getWorldMatrix(void) const
 {
@@ -57,12 +59,12 @@ const Real* AutoParamDataSource::getViewMatrix(void) const
 {
     return mViewMatrix;
 }
-
+/*
 const Uint AutoParamDataSource::getTextureUnit() const
 {
     return mTextureUnit;
 }
-
+*/
 
 
 

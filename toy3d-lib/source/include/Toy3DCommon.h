@@ -51,6 +51,8 @@ extern "C" {
 //size of custom uniform base unit
 #define CUSTOM_UNIT_SIZE 4
 
+//error code
+#define TOY3D_ERROR -1
 
 
 
@@ -72,6 +74,7 @@ extern "C" {
 #define DELETEANDNULL(pointer) \
     if (pointer != NULL) { \
         delete pointer; \
+        pointer = NULL; \
     }
 
 //used for testing
@@ -125,7 +128,7 @@ extern "C" {
         TOY3D_ACT_PROJECTION_MATRIX,
         TOY3D_ACT_SAMPLER2D
     };
-    
+
     enum AttrConstantType
     {
         TOY3D_ATTR_VERTEX,

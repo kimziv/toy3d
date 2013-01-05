@@ -121,6 +121,7 @@ TOY3D_BEGIN_NAMESPACE
             Uint getCustRealCount();
             const char* getCustIntConstName( Uint position );
             const char* getCustRealConstName( Uint position );
+            int getSampler2DValue();
             /* Custom Parameter Methods -------------------------------end   */
 
 
