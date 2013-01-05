@@ -47,6 +47,7 @@ Real uvs[VERTEX_COUNT * 2] = {
 World *world = NULL;
 Texture *texture = NULL;
 Camera *camera = NULL;
+ShaderProgram* shaderProgram;
 ShaderProgramParams *params = NULL;
 
 //Bpp muset be 3 or 4.
@@ -107,11 +108,8 @@ void changeSize( int w, int h )
 
 bool init()
 {
-    //Real aspect, fovy;
-    const Real nearz  = 1.0f;
-    const Real farz   = 1000.0f;
     int   width = WINDOW_W, height = WINDOW_H;
-    int   texid;
+    //int   texid;
     int   texUnit = 0;
     Real  limit;
 
@@ -121,15 +119,9 @@ bool init()
     world->setBackColor (1.0, 0.0, 1.0, 1.0);
 
     camera = world->createCamera ("camera1");
-    /*
-    camera->lookAt (0.0, 0.0, -5.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
-    aspect = 1.0f * width / height;
-    fovy = 60;
-    camera->perspective (fovy, aspect, nearz, farz);
-    */
 
     //shader
-    ShaderProgram* shaderProgram = world->createShaderProgram();
+    shaderProgram = new ShaderProgram();
     shaderProgram->loadShaderSource (SHADER_VERT_FILE, SHADER_FRAG_FILE);
     printf("shaderProgram id: %d\n", shaderProgram->getShaderProgramID());
 
@@ -138,7 +130,7 @@ bool init()
     params->setNamedAutoConstant (TOY3D_ACT_PROJECTION_MATRIX, "proj_mat");
     params->setNamedAutoConstant (TOY3D_ACT_VIEW_MATRIX, "view_mat");
     params->setNamedAutoConstant (TOY3D_ACT_WORLD_MATRIX, "world_mat");
-    params->setNamedAutoConstant (TOY3D_ACT_SAMPLER2D, "sampler2d");
+    //params->setNamedAutoConstant (TOY3D_ACT_SAMPLER2D, "sampler2d");
 
     //shader attributes
     params->setNamedAttrConstant(TOY3D_ATTR_VERTEX, "vPosition");
@@ -148,17 +140,21 @@ bool init()
     limit = 1.0f;
     printf("limit = %f.\n", limit);
     params->setNamedCustUniformConstant(TOY3D_CUST_REAL1, "limit", limit);
+    params->setNamedCustUniformConstant(TOY3D_CUST_SAMPLER2D, "sampler2d", texUnit);
 
     shaderProgram->bindShaderParameters(params);
 
+    //Entity
+    Entity *entity = world->createEntity();
     //Mesh
-    Mesh *mesh = world->createMesh();
-    mesh->setVertices (vertices, VERTEX_COUNT);
+    Mesh *mesh = entity->createMesh();
     mesh->setRenderMode (TOY3D_TRIANGLE_STRIP);
+    mesh->setVertices (vertices, VERTEX_COUNT);
     mesh->setUVs( uvs, VERTEX_COUNT);
 
     //mesh->rotate (0.0, 30.0, 0.0);
 
+    //texture
     texture = TextureManager::getInstance()->createTextureByFile(TEXTURE_FILE);
     if( !texture )
     {
@@ -166,7 +162,12 @@ bool init()
         return false;
     }
 
+    Material *mat = entity->createMaterial ();
+    mat->setShaderProgram (shaderProgram);
+    mat->setTexture(texture);
+
     /*
+    //another way to create texture
     unsigned char *buf;
     int  bpp = BPP_3;
     int  imageW = 64;
@@ -184,10 +185,10 @@ bool init()
         FREEANDNULL(buf);
     */
 
-    texid = texture->getTextureID();
-    printf("texid = %d\n", texid);
-    mesh->setTextureInfo( texid, texUnit);
-    
+    //texid = texture->getTextureID();
+    //printf("texid = %d\n", texid);
+    //mesh->setTextureInfo( texid, texUnit);
+
     return true;
 }
 
