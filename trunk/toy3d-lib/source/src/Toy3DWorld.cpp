@@ -30,16 +30,16 @@ TOY3D_BEGIN_NAMESPACE
         mAutoParamDataSource.setWorldMatrix (worldMatrix); 
         mAutoParamDataSource.setViewMatrix (viewMatrix); 
         mAutoParamDataSource.setProjectionMatrix (projMatrix); 
+        mRenderer.setTexture(mat->getTexture());
 
         mRenderer.updateAutoUniform (&mAutoParamDataSource);
         mRenderer.updateCustUniform ();
 
-        mRenderer.setTexture(mat->getTexture());
         mRenderer.render (ro);
 
         mRenderer.endFrame();
-         
 
+        return;
     } 
 
 
@@ -57,7 +57,11 @@ TOY3D_BEGIN_NAMESPACE
         Real viewMatrix[MATRIX_4x4_SIZE]; 
         Real projMatrix[MATRIX_4x4_SIZE]; 
 
-
+        if( mEntityCount == 0)
+        {
+            TOY3D_TIPS("At least create one Entity please.\n");
+            return;
+        }
 
         for (i = 0; i < mEntityCount; i++) {
 

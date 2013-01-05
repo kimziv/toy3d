@@ -1,5 +1,6 @@
 
 #include "Toy3DMaterial.h"
+#include "Toy3DTextureManager.h"
 
 
 TOY3D_BEGIN_NAMESPACE
@@ -16,23 +17,30 @@ TOY3D_BEGIN_NAMESPACE
         //FREEANDNULL(mShaderProgram);
         //FREEANDNULL(mTexture);
 
-        DELETEANDNULL(mShaderProgram);
-        DELETEANDNULL(mTexture);
+        //DELETEANDNULL(mShaderProgram);
+        //DELETEANDNULL(mTexture);
     }
 
-    /*
-     * The pointer must bu created by new.
-     * And you don't need to delete it after this call.
-     */
+    Texture* Material::loadTexture(const char *pFileNmae)
+    {
+        return TextureManager::getInstance()->createTextureByFile(pFileNmae);
+    }
+
+    Texture* Material::createTexture(ImageInfo *pImageInfo)
+    {
+        return TextureManager::getInstance()->createTexture(pImageInfo);
+    }
+
+    Texture* Material::createTexture(unsigned char *pImageData, Uint width, Uint height, Uint bpp)
+    {
+        return TextureManager::getInstance()->createTexture(pImageData, width, height, bpp);
+    }
+
     void Material::setShaderProgram (ShaderProgram *prog)
     {
        mShaderProgram = prog; 
     }
 
-    /*
-     * The pointer must bu created by new.
-     * And you don't need to delete it after this call.
-     */
     void Material::setTexture (Texture *tex)
     {
         mTexture = tex;
@@ -47,7 +55,6 @@ TOY3D_BEGIN_NAMESPACE
     {
         return (const Texture*)mTexture;
     }
-
 
 
 TOY3D_END_NAMESPACE

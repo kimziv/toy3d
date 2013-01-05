@@ -13,7 +13,6 @@ TOY3D_BEGIN_NAMESPACE
         mNormals = NULL;
     }
 
-
     Mesh::~Mesh() 
     {
         FREEANDNULL(mVertices);
