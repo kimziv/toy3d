@@ -19,6 +19,18 @@
  
 
 
+=MeshManager, ShaderProgramManager, TextureManager=
+
+ * Mesh 可以由多个 Entity 共享
+ * ShaderProgram 可以由多个 Entity 共享
+ * Texture 可以由多个 Entity 共享
+ * 所有的 Mesh 都经过 MeshManager 创建与释放，并实际保存在里边
+ * 所有的 ShaderProgram 都经过 ShaderProgramManager 创建与释放，并实际保存在里边
+ * 所有的 Texture 都经过 TextureManager 创建与释放，并实际保存在里边
+ 
+
+
+
 =Texture部分=
 
 
