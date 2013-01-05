@@ -1,10 +1,13 @@
 #summary 增加entity，重构引擎
 
 
-=todo=
+=遗留问题=
 
- * attribute index 如何传入 render
- * texture 如何处理
+ * setNamedAutoConstant 改名成 setNamedAutoUniformConstant
+ * mat->createTexture(filename);
+ * 在 world 里 destroy entity
+ * 在 entity 里 destroy material
+
 
 = 基本思路 =
 
@@ -18,11 +21,8 @@
 
 =Texture部分=
 
-遗留工作：
- * 在 world 里 destroy entity
- * 在 entity 里 destroy material
-  
 
+ 
 做一个假设，每个 entity 只有一个 texture
 
 {{{
