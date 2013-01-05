@@ -53,18 +53,26 @@ TOY3D_BEGIN_NAMESPACE
     void Mesh::getRenderOperation(RenderOperation* ro)
     {
         if (ro) {
-            ro->setVertices( mVertices, mVertexCount);
             ro->setRenderMode( mRenderMode );
+            if(mVertices)
+            {
+                ro->setVertices( mVertices, mVertexCount);
+            }
 
-            /*
             if( mColors )
             {
                 ro->setColors( mColors, mVertexCount );
             }
-            */
 
             if( mUVs )
+            {
                 ro->setUVs( mUVs, mVertexCount );
+            }
+
+            if(mNormals)
+            {
+                ro->setNormals(mNormals, mVertexCount);
+            }
         }
     }
 

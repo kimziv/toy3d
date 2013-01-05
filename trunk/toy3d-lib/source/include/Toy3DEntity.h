@@ -31,8 +31,9 @@ TOY3D_BEGIN_NAMESPACE
         void rotate (Real x, Real y, Real z);
         void translate (Real x, Real y, Real z);
 
-        Mesh* createMesh ();
-        void destroyMesh ();
+        //Mesh* createMesh ();
+        //void destroyMesh ();
+        void setMesh(Mesh *mesh);
 
         Material* createMaterial ();
         void destroyMaterial ();

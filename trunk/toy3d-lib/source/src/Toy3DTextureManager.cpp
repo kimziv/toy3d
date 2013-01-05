@@ -98,9 +98,9 @@ TOY3D_BEGIN_NAMESPACE
         return texture;
     }
 
-    void TextureManager::deleteTexture(Uint *texids, Uint count)
+    void TextureManager::deleteTexture(Uint *pTexids, Uint count)
     {
-        glDeleteTextures(count, texids);
+        glDeleteTextures(count, pTexids);
         return;
     }
 

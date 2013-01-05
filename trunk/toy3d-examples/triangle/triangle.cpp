@@ -26,7 +26,15 @@
 
 using namespace TOY3D;
 
-#define VERTEX_COUNT 3 
+#define VERTEX_COUNT 3
+
+
+//global
+World *world = NULL;
+Mesh *mesh;
+ShaderProgram* shaderProgram = NULL;
+ShaderProgramParams *params = NULL;
+
 
 Real vertices[VERTEX_COUNT * 3] = {
     0.0f, 0.5f, 0.0f,
@@ -34,9 +42,6 @@ Real vertices[VERTEX_COUNT * 3] = {
     0.5f, -0.5f,  0.0f,
 };
 
-World *world = NULL;
-ShaderProgram* shaderProgram = NULL;
-ShaderProgramParams *params = NULL;
 
 void display()
 {
@@ -54,10 +59,8 @@ void init()
     world->setSize(WINDOW_W, WINDOW_H);
     world->setBackColor (1.0, 1.0, 1.0, 1.0);  //white back color
 
-
     shaderProgram = new ShaderProgram();
     shaderProgram->loadShaderSource (SHADER_VERT_FILE, SHADER_FRAG_FILE);
-
 
     params = new ShaderProgramParams ();
     //no shader uniforms ...
@@ -66,9 +69,11 @@ void init()
 
     shaderProgram->bindShaderParameters(params);
 
-    Entity *entity = world->createEntity();
 
-    Mesh *mesh = entity->createMesh();
+    Entity *entity = world->createEntity();
+    //mesh = entity->createMesh();
+    mesh = new Mesh();
+    entity->setMesh(mesh);
     mesh->setVertices (vertices, VERTEX_COUNT);
     mesh->setRenderMode (TOY3D_TRIANGLE_STRIP);
 
@@ -84,11 +89,13 @@ void keyboard(unsigned char key, int x, int y){
     case 'q':
     case 'Q':
     case 27:
-        printf("pointer world: %d.\n", world);
+        //printf("pointer world: %d.\n", world);
         DELETEANDNULL(world);
+        DELETEANDNULL(mesh);
+        DELETEANDNULL(shaderProgram);
+        DELETEANDNULL(params);
 
         exit(0);
-        break;
     }
 }
 

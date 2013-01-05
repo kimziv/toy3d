@@ -25,6 +25,15 @@ using namespace TOY3D;
 
 #define VERTEX_COUNT  6
 
+
+//global
+World *world = NULL;
+Camera *camera = NULL;
+Mesh *mesh;
+ShaderProgram* shaderProgram = NULL;
+ShaderProgramParams *params = NULL;
+
+
 Real vertices[VERTEX_COUNT * 3] = {
     -1.0f, -1.0f, 0.0f,
     1.0f,  -1.0f, 0.0f,
@@ -34,10 +43,6 @@ Real vertices[VERTEX_COUNT * 3] = {
     1.0f, -1.0f, 0.0f,
     -1.0f, 1.0f, 0.0f
 };
-
-World *world = NULL;
-Camera *camera = NULL;
-
 
 void display()
 {
@@ -65,8 +70,6 @@ void changeSize( int w, int h )
     return;
 }
 
-
-
 void init()
 {
     //Real aspect, fovy;
@@ -83,10 +86,10 @@ void init()
 
     camera = world->createCamera ("camera1");
 
-    ShaderProgram* shaderProgram = new ShaderProgram();
+    shaderProgram = new ShaderProgram();
     shaderProgram->loadShaderSource (SHADER_VERT_FILE, SHADER_FRAG_FILE);
 
-    ShaderProgramParams *params = new ShaderProgramParams ();
+    params = new ShaderProgramParams ();
     //uniforms
     params->setNamedAutoConstant (TOY3D_ACT_PROJECTION_MATRIX, "proj_mat");
     params->setNamedAutoConstant (TOY3D_ACT_VIEW_MATRIX, "view_mat");
@@ -100,9 +103,12 @@ void init()
 
     //Entity
     Entity *entity = world->createEntity();
-    Mesh *mesh = entity->createMesh();
+
+    mesh = new Mesh();
+    //Mesh *mesh = entity->createMesh();
     mesh->setRenderMode (TOY3D_TRIANGLE_STRIP);
     mesh->setVertices (vertices, VERTEX_COUNT);
+    entity->setMesh(mesh);
 
     Material *mat = entity->createMaterial ();
     mat->setShaderProgram (shaderProgram);
@@ -121,9 +127,13 @@ void keyboard(unsigned char key, int x, int y)
     case 'Q':
     case 27:
         printf("pointer world: %d.\n", world);
+
         DELETEANDNULL(world);
+        DELETEANDNULL(mesh);
+        DELETEANDNULL(shaderProgram);
+        DELETEANDNULL(params);
+        camera = NULL;
         exit(0);
-        break;
 
     case 'p':
     case 'P':
