@@ -4,7 +4,7 @@
 =遗留问题=
 
  * setNamedAutoConstant 改名成 setNamedAutoUniformConstant
- * mat->createTexture(filename);
+ * mat->loadTexture(filename);
  * 在 world 里 destroy entity
  * 在 entity 里 destroy material
 
