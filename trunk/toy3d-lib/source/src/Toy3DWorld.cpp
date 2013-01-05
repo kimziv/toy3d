@@ -34,6 +34,7 @@ TOY3D_BEGIN_NAMESPACE
         mRenderer.updateAutoUniform (&mAutoParamDataSource);
         mRenderer.updateCustUniform ();
 
+        mRenderer.setTexture(mat->getTexture());
         mRenderer.render (ro);
 
         mRenderer.endFrame();
@@ -47,7 +48,7 @@ TOY3D_BEGIN_NAMESPACE
     {
 
         RenderOperation *ro = NULL;
-        int i = 0;
+        Uint i = 0;
         Material *mat = NULL;
 
         Real entityMatrix[MATRIX_4x4_SIZE];
@@ -148,7 +149,7 @@ TOY3D_BEGIN_NAMESPACE
 
     void World::destroyAllEntities ()
     {
-        int i = 0;
+        Uint i = 0;
         Entity* entity = NULL;
         for (i = 0; i < mEntityCount; i++) {
             entity = mEntities[i];

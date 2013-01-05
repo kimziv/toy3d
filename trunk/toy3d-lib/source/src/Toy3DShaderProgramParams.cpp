@@ -186,9 +186,9 @@ void ShaderProgramParams::updateAutoUniformConst ( AutoParamDataSource *source )
             setAutoUniformConstant( mAutoUniformEntries[i]->index, source->getViewMatrix() );
             break;
 
-        case TOY3D_ACT_SAMPLER2D:
-            setAutoUniformConstant( mAutoUniformEntries[i]->index, source->getTextureUnit());
-            break;
+        //case TOY3D_ACT_SAMPLER2D:
+        //    setAutoUniformConstant( mAutoUniformEntries[i]->index, source->getTextureUnit());
+        //    break;
 
         default:
             break;
@@ -275,7 +275,7 @@ int ShaderProgramParams::getAttrConstIndex( AttrConstantType type )
             return mAttrEntries[i]->index;
     }
 
-    return -1;
+    return TOY3D_ERROR;
 }
 /* Attribution Parameter Methods -------------------------------end   */
 
@@ -479,30 +479,17 @@ const char* ShaderProgramParams::getCustRealConstName( Uint position )
     return (const char *)mRealUniformEntries[position]->name;
 }
 
-/*
-void ShaderProgramParams::updateCustomConstIndex ( const char *name, Uint index )
+//-1->no constant exist
+int ShaderProgramParams::getSampler2DValue()
 {
-    Uint position = 0;
-    if( !searchNamedAttrParam(name, &position) )
+    for (Uint i=0; i<mIntUniformCount; i++)
     {
-        TOY3D_PRINT("updateAutoConstIndex failed. AutoConst name doesn't exist.", __FILE__, __LINE__);
-        return;
+        if( mIntUniformEntries[i]->type == TOY3D_CUST_SAMPLER2D)
+            return mIntUniformEntries[i]->value;
     }
-    
-    mAttrEntries[position]->index = index;
-    
-    return;
-}
 
-void ShaderProgramParams::setCustUniform(const char* name, Uint value, Uint pid)
-{
-    Uint index;
-
-    index = glGetUniformLocation(pid, name);
-    glUniform1i(index, value);
-    return;
+    return TOY3D_ERROR;
 }
-*/
 /* Custom Uniform Parameter Methods -------------------------------end   */
 
 

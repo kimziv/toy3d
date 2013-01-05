@@ -21,7 +21,7 @@ TOY3D_BEGIN_NAMESPACE
         mColorIndex = 0;
         mUVIndex = 0;
         mNormalIndex = 0;
-        mTextureID = 0;
+        //mTextureID = 0;
     }
 
     RenderOperation::~RenderOperation()
@@ -36,7 +36,7 @@ TOY3D_BEGIN_NAMESPACE
         mColorIndex = 0;
         mUVIndex = 0;
         mNormalIndex = 0;
-        mTextureID = 0;
+        //mTextureID = 0;
     }
 
     void RenderOperation::setRenderMode( RenderMode mode )
@@ -53,8 +53,16 @@ TOY3D_BEGIN_NAMESPACE
             return;
         }
 
+        if(mVerticesCount==0)
+            mVerticesCount = count;
+        else if(mVerticesCount!=count)
+        {
+            TOY3D_TIPS("Error: vertices count doesn't agree with existing data.");
+            return;
+        }
+
         mVertices = vertices;
-        mVerticesCount = count;
+
         return;
     }
 
@@ -65,14 +73,17 @@ TOY3D_BEGIN_NAMESPACE
             TOY3D_PRINT("NULL POINTER.", __FILE__, __LINE__);
             return;
         }
-        if( count != mVerticesCount )
+
+        if(mVerticesCount==0)
+            mVerticesCount = count;
+        else if(mVerticesCount!=count)
         {
-            TOY3D_PRINT("Colors array length error.", __FILE__, __LINE__);
+            TOY3D_TIPS("Error: colors' count doesn't agree with existing data.");
             return;
         }
         
         mColors = colors;
-        //mColorsCount = count;
+
         return;
     }
 
@@ -83,9 +94,17 @@ TOY3D_BEGIN_NAMESPACE
             TOY3D_PRINT("NULL POINTER.", __FILE__, __LINE__);
             return;
         }
-        
+
+        if(mVerticesCount==0)
+            mVerticesCount = count;
+        else if(mVerticesCount!=count)
+        {
+            TOY3D_TIPS("Error: uvs' count doesn't agree with existing data.");
+            return;
+        }
+
         mUVs = uvs;
-        //mUVsCount = count;
+
         return;
     }
 
@@ -96,9 +115,24 @@ TOY3D_BEGIN_NAMESPACE
             TOY3D_PRINT("NULL POINTER.", __FILE__, __LINE__);
             return;
         }
-        
+
+        if(mVerticesCount==0)
+            mVerticesCount = count;
+        else if(mVerticesCount!=count)
+        {
+            TOY3D_TIPS("Error: normals' count doesn't agree with existing data.");
+            return;
+        }
+
         mNormals = normals;
-        //mNormalsCount = count;
+
+        return;
+    }
+
+/*
+    void RenderOperation::setTextureID(Uint texID)
+    {
+        mTextureID = texID;
         return;
     }
 
@@ -108,7 +142,7 @@ TOY3D_BEGIN_NAMESPACE
         mTextureUnit = texUnit;
         return;
     }
-/*
+
     void RenderOperation::setVertexIndex( Uint index)
     {
         mVertexIndex = index;
@@ -163,6 +197,7 @@ TOY3D_BEGIN_NAMESPACE
         return mVerticesCount;
     }
 
+    /*
     Uint RenderOperation::getTextureID()
     {
         return mTextureID;
@@ -173,7 +208,7 @@ TOY3D_BEGIN_NAMESPACE
         return mTextureUnit;
     }
 
-    void RenderOperation::setShaderAttribution (AttrConstantType type, Uint index)
+    void RenderOperation::setShaderAttrLocation (AttrConstantType type, Uint index)
     {
         switch(type)
         {
@@ -198,7 +233,7 @@ TOY3D_BEGIN_NAMESPACE
         }
     }
 
-    Uint RenderOperation::getShaderAttribution(AttrConstantType type)
+    Uint RenderOperation::getShaderAttrLocation(AttrConstantType type)
     {
         switch( type )
         {
@@ -218,5 +253,6 @@ TOY3D_BEGIN_NAMESPACE
             return 0;
         }
     }
+    */
 
 TOY3D_END_NAMESPACE

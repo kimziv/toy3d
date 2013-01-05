@@ -25,10 +25,10 @@ TOY3D_BEGIN_NAMESPACE
     public:
 
         void setTexture( Texture* tex);
-
         void setShaderProgram (ShaderProgram *prog);
-        ShaderProgram* getShaderProgram ();
 
+        const Texture* getTexture();
+        ShaderProgram* getShaderProgram ();
     };
 
 

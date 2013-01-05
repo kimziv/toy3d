@@ -56,13 +56,12 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
     {
     }
 
-    
     void Renderer::render(RenderOperation *ro)
     {
         Uint mode = 0;
-        int index = 0;
+        int  index = 0;
         Real *pTempR = 0;
-        Uint texUnit;
+        //Uint texUnit;
 
         if( !ro )
         {
@@ -70,79 +69,56 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
             return;
         }
 
-        switch( ro->getRenderMode() )
+        mode = setRenderMode(ro->getRenderMode());
+        if (!mode)
         {
-        case TOY3D_POINTS:
-            mode = GL_POINTS;
-            break;
-
-        case TOY3D_LINES:
-            mode = GL_LINES;
-            break;
-
-        case TOY3D_LINE_STRIP:
-            mode = TOY3D_LINE_STRIP;
-            break;
-
-        case TOY3D_TRIANGLES:
-            mode = GL_TRIANGLES;
-            break;
-
-        case TOY3D_TRIANGLE_STRIP:
-            mode = GL_TRIANGLE_STRIP;
-            break;
-
-        case TOY3D_TRIANGLE_FAN:
-            mode = GL_TRIANGLE_FAN;
-            break;
-
-        default:
-            mode = 0;
-            break;
+            TOY3D_TIPS("Error: no RenderMode data.\n");
+            return;
         }
 
-        if (mode)
+        //vertex
+        //index = ro->getShaderAttribution( TOY3D_ATTR_VERTEX_INDEX );
+        pTempR = ro->getVertices();
+        if(pTempR)
         {
-            //index = ro->getShaderAttribution( TOY3D_ATTR_VERTEX_INDEX );
-            index = mCurrentShaderProgram->getAttrLocation( TOY3D_ATTR_VERTEX );
-
-#if 0
-            printf ("index = %d. vertex count = %d.\n", index, ro->getVerticesCount());       
-            int i = 0;
-            Real *data = ro->getVertex();
-            for (i = 0; i < ro->getVerticesCount() * 3;i++)
-                printf ("%f,", data[i]);
-            printf ("\n");
-#endif
-
-            //vertex
-            glVertexAttribPointer( index, 3, GL_FLOAT, 0, 0, ro->getVertices() );
+            index = mCurrentShaderProgram->getAttrLocation(TOY3D_ATTR_VERTEX);
+            glVertexAttribPointer(index, 3, GL_FLOAT, 0, 0, pTempR);
+            glEnableVertexAttribArray(index);
+        }
+        else
+        {
+            TOY3D_TIPS("Error: no vertices data.\n");
+            return;
+        }
+        
+        //color
+        pTempR = ro->getColors();
+        if( pTempR )
+        {
+            index = mCurrentShaderProgram->getAttrLocation(TOY3D_ATTR_UV);
+            glVertexAttribPointer(index, 4, GL_FLOAT, 0, 0, pTempR);
+            glEnableVertexAttribArray(index);
+        }
+        
+        //uv
+        pTempR = ro->getUVs();
+        if( pTempR )
+        {
+            index = mCurrentShaderProgram->getAttrLocation(TOY3D_ATTR_UV);
+            glVertexAttribPointer( index, 2, GL_FLOAT, 0, 0, pTempR );
             glEnableVertexAttribArray( index );
-
-            //color
-/*
-            //uvs
-            pTempR = ro->getUVs();
-            if( pTempR )
-            {
-                glEnable(GL_TEXTURE_2D);
-                texUnit = ro->getTextureUnit();
-                if(texUnit>MAX_TEXTURE_UNIT)
-                {
-                    TOY3D_TIPS("Error: texture unit is beyond the supported scope.\n");
-                }
-                glActiveTexture(gTextureUnit[texUnit]);
-                glBindTexture(GL_TEXTURE_2D, ro->getTextureID());
-                //printf("tex id = %d\n", ro->getTextureID());
-                index = ro->getShaderAttribution( TOY3D_ATTR_UV );
-                glVertexAttribPointer( index, 2, GL_FLOAT, 0, 0, pTempR );
-                glEnableVertexAttribArray( index );
-            }
-*/
-            //normals
-
-            glDrawArrays( mode, 0,  ro->getVerticesCount() );
         }
+        
+        //normals
+        pTempR = ro->getNormals();
+        if( pTempR )
+        {
+            index = mCurrentShaderProgram->getAttrLocation(TOY3D_ATTR_UV);
+            glVertexAttribPointer( index, 3, GL_FLOAT, 0, 0, pTempR );
+            glEnableVertexAttribArray( index );
+        }
+        
+        glDrawArrays( mode, 0,  ro->getVerticesCount() );
 
         return;
     }
@@ -203,13 +179,70 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
     {
         return;
     }
-
-    void Renderer::setTexture(Uchar* name)
-    {
-        return;
-    }
 */
 
+    void Renderer::setTexture(const Texture *tex)
+    {
+        int texUnit;
+        if(tex)
+        {
+            glEnable(GL_TEXTURE_2D);
+            texUnit = mCurrentShaderProgram->getShaderParameters()->getSampler2DValue();
+            if(TOY3D_ERROR==texUnit)
+            {
+                TOY3D_TIPS("Warning: You didn't set texture unit, use texture unit 0.\n");
+                texUnit = 0;
+            }
+            else if(texUnit>MAX_TEXTURE_UNIT)
+            {
+                TOY3D_TIPS("Warning: texture unit is beyond the supported scope, use texture unit 0.\n");
+                texUnit = 0;
+            }
+
+            glActiveTexture(gTextureUnit[texUnit]);
+            glBindTexture (GL_TEXTURE_2D, tex->getTextureID());
+        } 
+
+        return;
+    }
+
+    Uint Renderer::setRenderMode(RenderMode mode)
+    {
+        Uint glMode;
+
+        switch( mode )
+        {
+        case TOY3D_POINTS:
+            glMode = GL_POINTS;
+            break;
+            
+        case TOY3D_LINES:
+            glMode = GL_LINES;
+            break;
+            
+        case TOY3D_LINE_STRIP:
+            glMode = TOY3D_LINE_STRIP;
+            break;
+            
+        case TOY3D_TRIANGLES:
+            glMode = GL_TRIANGLES;
+            break;
+            
+        case TOY3D_TRIANGLE_STRIP:
+            glMode = GL_TRIANGLE_STRIP;
+            break;
+            
+        case TOY3D_TRIANGLE_FAN:
+            glMode = GL_TRIANGLE_FAN;
+            break;
+            
+        default:
+            glMode = 0;
+            break;
+        }
+
+        return glMode;
+    }
 
     void Renderer::updateAutoUniform(AutoParamDataSource* autoUniformData)
     {
@@ -217,6 +250,7 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
         if (mCurrentShaderProgram)
             mCurrentShaderProgram->getShaderParameters()->updateAutoUniformConst (autoUniformData);
 
+        return;
     }
 
     void Renderer::updateCustUniform()
@@ -225,6 +259,7 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
         if (mCurrentShaderProgram)
             mCurrentShaderProgram->getShaderParameters()->updateCustUniformConst ();
 
+        return;
     }
 
 

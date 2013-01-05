@@ -6,6 +6,7 @@
 #include "Toy3DRenderOperation.h"
 #include "Toy3DShaderProgram.h"
 #include "Toy3DAutoParamDataSource.h"
+#include "Toy3DTexture.h"
 
 TOY3D_BEGIN_NAMESPACE
 
@@ -39,11 +40,14 @@ TOY3D_BEGIN_NAMESPACE
 
         //void setDepthTest(Uint flag, Uint funcMode);
         //void setBlend(Uint flag, Uint srcMode, Uint dstMode);
-        //void setTexture(Uchar* name);
+        
+        void setTexture(const Texture* tex);
 
         void updateAutoUniform (AutoParamDataSource *autoDataSource);
         void updateCustUniform ();
 
+    private:
+        Uint setRenderMode(RenderMode mode);
     };
 
 
