@@ -19,8 +19,8 @@
 =Texture部分=
 
 遗留工作：
- - 在 world 里 destroy entity
- - 在 entity 里 destroy material
+ * 在 world 里 destroy entity
+ * 在 entity 里 destroy material
   
 
 做一个假设，每个 entity 只有一个 texture
