@@ -112,6 +112,8 @@ bool init()
     //int   texid;
     int   texUnit = 0;
     Real  limit;
+    Material *mat;
+    Entity *entity;
 
     world = new World ();
     printf("pointer world: %d.\n", world);
@@ -119,13 +121,16 @@ bool init()
     world->setBackColor (1.0, 0.0, 1.0, 1.0);
 
     camera = world->createCamera ("camera1");
+    entity = world->createEntity();
+    mat = entity->createMaterial ();
+
+    shaderProgram = new ShaderProgram();
+    params = new ShaderProgramParams ();
 
     //shader
-    shaderProgram = new ShaderProgram();
     shaderProgram->loadShaderSource (SHADER_VERT_FILE, SHADER_FRAG_FILE);
     printf("shaderProgram id: %d\n", shaderProgram->getShaderProgramID());
 
-    params = new ShaderProgramParams ();
     //shader auto constant
     params->setNamedAutoConstant (TOY3D_ACT_PROJECTION_MATRIX, "proj_mat");
     params->setNamedAutoConstant (TOY3D_ACT_VIEW_MATRIX, "view_mat");
@@ -145,8 +150,6 @@ bool init()
     shaderProgram->bindShaderParameters(params);
 
     //Entity
-    Entity *entity = world->createEntity();
-    //Mesh
     Mesh *mesh = entity->createMesh();
     mesh->setRenderMode (TOY3D_TRIANGLE_STRIP);
     mesh->setVertices (vertices, VERTEX_COUNT);
@@ -155,14 +158,12 @@ bool init()
     //mesh->rotate (0.0, 30.0, 0.0);
 
     //texture
-    texture = TextureManager::getInstance()->createTextureByFile(TEXTURE_FILE);
+    texture = mat->loadTexture(TEXTURE_FILE);
     if( !texture )
     {
         printf("create texture failed.\n");
         return false;
     }
-
-    Material *mat = entity->createMaterial ();
     mat->setShaderProgram (shaderProgram);
     mat->setTexture(texture);
 
@@ -175,7 +176,7 @@ bool init()
     buf = generateColorData(imageW, imageH, bpp);
     if( !buf )
         return false;
-    texture = TextureManager::getInstance()->createTexture(buf, imageW, imageH, bpp);
+    texture = mat->createTexture(buf, imageW, imageH, bpp);
     if( !texture )
     {
         printf("create texture failed.\n");
@@ -184,10 +185,6 @@ bool init()
     if(buf)
         FREEANDNULL(buf);
     */
-
-    //texid = texture->getTextureID();
-    //printf("texid = %d\n", texid);
-    //mesh->setTextureInfo( texid, texUnit);
 
     return true;
 }

@@ -3,6 +3,7 @@ uniform mat4 proj_mat;   // Projection matrix.
 uniform mat4 view_mat;  // View matrix
 uniform mat4 world_mat;  // Model matrix
 attribute vec3 vPosition;
+uniform sampler2D sampler2d;
 
 
 void main()

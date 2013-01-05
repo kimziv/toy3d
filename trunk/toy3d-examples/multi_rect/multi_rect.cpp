@@ -69,6 +69,7 @@ void changeSize( int w, int h )
 
 void init()
 {
+    int   texUnit = 0;
     //Real aspect, fovy;
     const Real nearz  = 1.0f;//5.0f;
     const Real farz   = 1000.0f;//60.0f;
@@ -77,26 +78,12 @@ void init()
     world->setSize(WINDOW_W, WINDOW_H);
     world->setBackColor (1.0, 1.0, 0.0, 1.0);
 
-//  fix it: Do not needed 
-//    world->setWorldDepth(0, 0);
-
     camera = world->createCamera ("camera1");
-/*
-    camera->lookAt (0.0, 0.0, -3.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 
-    aspect = WINDOW_W / WINDOW_H;
-    fovy = 60;
-    camera->perspective (fovy, aspect, nearz, farz);
-    //camera->perspective (-1, 1, -1, 1, nearz, farz);
-    //camera->ortho2D (-3, 3, -3, 3, nearz, farz);
-*/
-    ShaderProgram* shaderProgram = world->createShaderProgram();
+    ShaderProgram* shaderProgram = new ShaderProgram();
     shaderProgram->loadShaderSource (SHADER_VERT_FILE, SHADER_FRAG_FILE);
 
-
     ShaderProgramParams *params = new ShaderProgramParams ();
-
-
     //uniforms
     params->setNamedAutoConstant (TOY3D_ACT_PROJECTION_MATRIX, "proj_mat");
     params->setNamedAutoConstant (TOY3D_ACT_VIEW_MATRIX, "view_mat");
@@ -104,23 +91,31 @@ void init()
 
     //attributes
     params->setNamedAttrConstant (TOY3D_ATTR_VERTEX, "vPosition");
-
+    //shader custom constant
+    params->setNamedCustUniformConstant(TOY3D_CUST_SAMPLER2D, "sampler2d", texUnit);
 
     shaderProgram->bindShaderParameters(params);
 
-    Mesh *mesh_left = world->createMesh();
+    //Entity
+    Entity *entity1 = world->createEntity();
+    Mesh *mesh_left = entity1->createMesh();
     mesh_left->setVertices (vertices, VERTEX_COUNT);
     mesh_left->setRenderMode (TOY3D_TRIANGLE_STRIP);
-    mesh_left->translate (-3.0, 0.0, 0.0);
-    mesh_left->rotate (0.0, 30.0, 0.0);
+    entity1->translate (-3.0, 0.0, 0.0);
+    entity1->rotate (0.0, 30.0, 0.0);
 
-    Mesh *mesh_right = world->createMesh();
+    Entity *entity2 = world->createEntity();
+    Mesh *mesh_right = entity2->createMesh();
     mesh_right->setVertices (vertices, VERTEX_COUNT);
     mesh_right->setRenderMode (TOY3D_TRIANGLE_STRIP);
-    mesh_right->translate (3.0, 0.0, 0.0);
-    mesh_right->rotate (0.0, -30.0, 0.0);
+    entity2->translate (3.0, 0.0, 0.0);
+    entity2->rotate (0.0, -30.0, 0.0);
 
+    Material *mat = entity1->createMaterial();
+    mat->setShaderProgram (shaderProgram);
 
+    mat = entity2->createMaterial();
+    mat->setShaderProgram (shaderProgram);
 
     return;
 }
@@ -137,7 +132,6 @@ void keyboard(unsigned char key, int x, int y)
         printf("pointer world: %d.\n", world);
         DELETEANDNULL(world);
         exit(0);
-        break;
         
     case 'p':
     case 'P':

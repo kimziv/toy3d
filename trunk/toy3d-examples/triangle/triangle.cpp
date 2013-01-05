@@ -75,7 +75,7 @@ void init()
     Material *mat = entity->createMaterial ();
     mat->setShaderProgram (shaderProgram);
 
-
+    return;
 }
 
 void keyboard(unsigned char key, int x, int y){
