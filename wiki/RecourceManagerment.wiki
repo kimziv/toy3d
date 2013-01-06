@@ -3,15 +3,12 @@
 
 =基本思想=
 
+总体来说：
  * 资源包括： mesh, shaderprogram, texture
- * 资源存在资源池中
+ * 资源存在对应 Manager 的列表中
  * 每种资源对应一种 manager
 
-
-
-
-=MeshManager, ShaderProgramManager, TextureManager=
-
+具体来说：
  * Mesh 可以由多个 Entity 共享
  * ShaderProgram 可以由多个 Entity 共享
  * Texture 可以由多个 Entity 共享
@@ -20,26 +17,52 @@
  * 所有的 Texture 都经过 TextureManager 创建与释放，并实际保存在里边
 
 
+=遗留问题=
+ * 设计一个通用list，取代指针数组
+ * Resource父类、ResouceManager 父类
 
 
+=MeshManager=
+
+{{{
+
+class MeshManager {
+
+private:
+
+   Mesh* mMeshes[MAX_MESH_COUNT];
+   Uint mMeshCount;
+
+public:
+
+    Mesh* createMesh ();
+
+    void destroyAllMeshes ();
+
+};
+
+
+
+
+}}}
 
 
 =ShaderProgramManager=
 
 {{{
 
-class TextureManager {
+class ShaderProgramManager {
 
 private:
 
-   Texture* mTextures[MAX_TEXTURE_COUNT];
-   Uint mTextureCount;
+   ShaderProgram* mShaderPrograms[MAX_SHADER_PROGRAM_COUNT];
+   Uint mShaderProgramCount;
 
 public:
 
-    Texture* createTexture (const char* filename);
+    ShaderProgram* createShaderProgam ();
 
-    void destroyAllTextures ();
+    void destroyAllShaderProgram ();
 
 };
 
@@ -70,9 +93,6 @@ public:
 }}}
  
 
-=Toy3DList=
-
-可动态增加的 list,通用数据类型
 
  
 
