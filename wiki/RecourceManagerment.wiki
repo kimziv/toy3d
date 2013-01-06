@@ -18,6 +18,7 @@
 
 
 =遗留问题=
+ * 各个 manager 开发给用户还是包到 root 里
  * 设计一个通用list，取代指针数组
  * Resource父类、ResouceManager 父类
 
