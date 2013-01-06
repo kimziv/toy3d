@@ -23,6 +23,9 @@
  * ResourceManager 还定义了 resouce pool map，有必要吗？
 
 =遗留问题=
+ * 当释放 manager 的某一个资源时，数组中间会空出来
+ * 无法索引、查找资源
+ * 每个 manager 调用 destroy 很繁琐
  * 各个 manager 开发给用户还是包到 root 里
  * 设计一个通用list，取代指针数组
  * Resource父类、ResouceManager 父类
