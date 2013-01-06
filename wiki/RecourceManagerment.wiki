@@ -38,6 +38,7 @@ public:
 
     Mesh* createMesh ();
 
+    void destroyMesh(Mesh *mesh);
     void destroyAllMeshes ();
 
 };
@@ -63,6 +64,7 @@ public:
 
     ShaderProgram* createShaderProgam ();
 
+    void destroyShaderProgram (ShaderProgram *prog);
     void destroyAllShaderProgram ();
 
 };
@@ -87,6 +89,7 @@ public:
 
     Texture* createTexture (const char* filename);
 
+    void destroyTexture (Texture *tex);
     void destroyAllTextures ();
 
 };
