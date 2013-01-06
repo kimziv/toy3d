@@ -16,7 +16,63 @@
  * 所有的 Mesh 都经过 MeshManager 创建与释放，并实际保存在里边
  * 所有的 ShaderProgram 都经过 ShaderProgramManager 创建与释放，并实际保存在里边
  * 所有的 Texture 都经过 TextureManager 创建与释放，并实际保存在里边
+
+
+
+
+
+
+=ShaderProgramManager=
+
+{{{
+
+class TextureManager {
+
+private:
+
+   Texture* mTextures[MAX_TEXTURE_COUNT];
+   Uint mTextureCount;
+
+public:
+
+    Texture* createTexture (const char* filename);
+
+    void destroyAllTextures ();
+
+};
+
+
+
+}}}
+
+
+=TextureManager=
+
+{{{
+
+class TextureManager {
+
+private:
+
+   Texture* mTextures[MAX_TEXTURE_COUNT];
+   Uint mTextureCount;
+
+public:
+
+    Texture* createTexture (const char* filename);
+
+    void destroyAllTextures ();
+
+};
+
+}}}
  
+
+=Toy3DList=
+
+可动态增加的 list,通用数据类型
+
+
 
 
 = Introduction =
