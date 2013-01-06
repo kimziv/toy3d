@@ -65,7 +65,7 @@ class ShaderProgramManager {
 
 private:
 
-   ShaderProgram *mShaderProgramParams[MAX_SHADER_PROGRAM_PARAMS_COUNT];
+   ShaderProgramParams *mShaderProgramParams[MAX_SHADER_PROGRAM_PARAMS_COUNT];
    int mShaderProgramParamsCount;
 
    ShaderProgram* mShaderPrograms[MAX_SHADER_PROGRAM_COUNT];
