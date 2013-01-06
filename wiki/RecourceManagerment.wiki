@@ -109,6 +109,34 @@ public:
 }}}
  
 
+
+=MaterialManager=
+
+
+
+{{{
+
+class MaterialManager {
+
+private:
+
+   Material* mMaterials[MAX_MATERIAL_COUNT];
+   Uint mMaterialCount;
+
+public:
+
+    Material* createMaterial ();
+
+    void destroyMaterial (Material *mat);
+    void destroyAllMaterials ();
+
+};
+
+}}}
+ 
+
+
+
 =用户使用=
 
 {{{
@@ -139,28 +167,24 @@ void init ()
     prog->bindShaderProgramParam(param);
   
 
+    Texture *tex = TextureManager::getInstance()->createTextureByFile(filename);
+    
+
+    Material *mat = MaterialManager::getInstance()->createMaterial();
+    mat->setShaderProgram (prog);
+    mat->setTexture (tex);
+  
+
     Mesh *mesh = MeshManager::getInstance()->creatMesh();
     mesh->setRenderMode (...);
     mesh->setVertices (...);
     mesh->setUVs (...);
 
-
-    Texture *tex = TextureManager::getInstance()->createTextureByFile(filename);
-    
-    
-
+  
     Entity *entity = world->createEntity ();
-
-    
-
-    
-    ShaderProgram *prog = ShaderProgramManager::getInstance()->createShaderProgram();
-
-    
-
-
+    entity->setMesh(mesh);
+    entity->setMaterial (mat);
    
-
 }
 
 void display ()
@@ -174,6 +198,14 @@ void display ()
 
 void cleanup ()
 {
+
+    ShaderProgramManager::getInstance()->destroyAllShaderProgramParams();
+    ShaderProgramManager::getInstance()->destroyAllShaderPrograms();
+    TextureManager::getInstance()->destroyAllTextures();
+    MaterialManager::getInstance()->destroyAllMaterials();
+    MeshManager::getInstance()->destroyAllMeshes(); 
+   
+    world->destroyAllEntities();
 }
 
 
