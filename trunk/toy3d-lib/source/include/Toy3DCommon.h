@@ -31,9 +31,7 @@ extern "C" {
     
 //binary file format.
 #define BINARY_CODE_FOR_NV  0x890B
-    
 
-//used for testing
 #define MAX_ENTITY_COUNT      8
 /* Warning:
  * Parameter list length must be less than the values.
@@ -42,6 +40,13 @@ extern "C" {
 #define MAX_AUTOENTRY_COUNT 8
 #define MAX_ATTRENTRY_COUNT 8
 #define MAX_CUSTENTRY_COUNT 8
+
+#define MAX_MESH_COUNT      8
+#define MAX_TEXTURE_COUNT   8
+#define MAX_MATERIAL_COUNT  8
+#define MAX_SHADER_PROGRAM_COUNT 8
+#define MAX_SHADER_PROGRAM_PARAMS_COUNT 8
+
 
 //max length of parameter name
 #define MAX_NAME_LEN        32

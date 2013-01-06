@@ -17,16 +17,19 @@ TOY3D_BEGIN_NAMESPACE
         //FREEANDNULL(mShaderProgram);
         //FREEANDNULL(mTexture);
 
-        //DELETEANDNULL(mShaderProgram);
-        //DELETEANDNULL(mTexture);
+        /*
         if(mTexture)
         {
             Uint texid = mTexture->getTextureID();
             TextureManager::getInstance()->deleteTexture(&texid, 1);
             delete mTexture;
         }
+        */
+        mShaderProgram = NULL;
+        mTexture = NULL;
     }
 
+    /*
     Bool Material::loadTexture(const char *pFileNmae)
     {
         if(mTexture)
@@ -71,18 +74,17 @@ TOY3D_BEGIN_NAMESPACE
             return TRUE;
         return FALSE;
     }
+    */
 
     void Material::setShaderProgram (ShaderProgram *prog)
     {
        mShaderProgram = prog; 
     }
 
-    /*
     void Material::setTexture (Texture *tex)
     {
         mTexture = tex;
     }
-    */
 
     ShaderProgram* Material::getShaderProgram ()
     {
