@@ -7,6 +7,12 @@
  * 资源存在资源池中
  * 每种资源对应一种 manager
 
+=几个问题=
+
+ * list 用 STL 的 list 还是自己写
+ * STL, BOOST 用吗？
+ * 
+
 
 =MeshManager, ShaderProgramManager, TextureManager=
 
@@ -72,12 +78,13 @@ public:
 
 可动态增加的 list,通用数据类型
 
+ 
 
 
 
-= Introduction =
+= Reference =
 
-Add your content here.
+  1. [http://www.opengpu.org/forum.php?mod=viewthread&tid=2737 你的引擎用不用stl boost？ 为什么？]
 
 
 = Details =
