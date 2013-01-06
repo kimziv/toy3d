@@ -17,7 +17,6 @@ TOY3D_BEGIN_NAMESPACE
     private:
         Mesh* mMesh;
         Material* mMaterial;
-        Texture* mTexture;
         ShaderProgram* mShaderProgram;
 
         Real mModelMatrix[MATRIX_4x4_SIZE]; 
@@ -34,16 +33,12 @@ TOY3D_BEGIN_NAMESPACE
         //Mesh* createMesh ();
         //void destroyMesh ();
         void setMesh(Mesh *mesh);
-
-        Material* createMaterial ();
-        void destroyMaterial ();
-
-        void setTexture( Texture* tex);
+        void setMaterial (Material *mat);
+        Material *getMaterial ();
 
         void getRenderOperation(RenderOperation* ro);
         void getModelMatrix (Real matrix[MATRIX_4x4_SIZE]);
 
-        Material *getMaterial ();
 
     };
 

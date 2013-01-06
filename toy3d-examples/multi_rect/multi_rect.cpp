@@ -1,11 +1,14 @@
 
-// #include <GL/glew.h>
-// #include <GL/glut.h>
-
-
 #include <toy3d/Toy3DCommon.h>
 #include <toy3d/Toy3DWorld.h>
+#include <toy3d/Toy3DEntity.h>
+#include <toy3d/Toy3DMesh.h>
+#include <toy3d/Toy3DMaterial.h>
 #include <toy3d/Toy3DShaderProgramParams.h>
+#include <toy3d/Toy3DShaderProgramManager.h>
+#include <toy3d/Toy3DMeshManager.h>
+#include <toy3d/Toy3DMaterialManager.h>
+
 
 
 #define WINDOW_W    800
@@ -29,9 +32,6 @@ using namespace TOY3D;
 //global
 World *world = NULL;
 Camera *camera = NULL;
-ShaderProgram* shaderProgram;
-ShaderProgramParams *params = NULL;
-Mesh *mesh_left, *mesh_right;
 
 
 
@@ -86,10 +86,10 @@ Bool init()
 
     camera = world->createCamera ("camera1");
 
-    shaderProgram = new ShaderProgram();
+    ShaderProgram *shaderProgram = ShaderProgramManager::getInstance()->createShaderProgram();
     shaderProgram->loadShaderSource (SHADER_VERT_FILE, SHADER_FRAG_FILE);
 
-    params = new ShaderProgramParams ();
+    ShaderProgramParams *params = ShaderProgramManager::getInstance()->createShaderProgramParams();
     //uniforms
     params->setNamedAutoConstant (TOY3D_ACT_PROJECTION_MATRIX, "proj_mat");
     params->setNamedAutoConstant (TOY3D_ACT_VIEW_MATRIX, "view_mat");
@@ -102,44 +102,50 @@ Bool init()
 
     shaderProgram->bindShaderParameters(params);
 
-    //Entity
-    Entity *entity1 = world->createEntity();
-    //Mesh *mesh_left = entity1->createMesh();
-    mesh_left = new Mesh();
-    if( !mesh_left )
-    {
-        TOY3D_TIPS("Failed to create mesh.\n");
-        return FALSE;
-    }
-    mesh_left->setVertices (vertices, VERTEX_COUNT);
-    mesh_left->setRenderMode (TOY3D_TRIANGLE_STRIP);
-    entity1->setMesh(mesh_left);
-    entity1->translate (-3.0, 0.0, 0.0);
-    entity1->rotate (0.0, 30.0, 0.0);
 
+    Mesh* mesh = MeshManager::getInstance()->createMesh();
+    mesh->setRenderMode (TOY3D_TRIANGLE_STRIP);
+    mesh->setVertices (vertices, VERTEX_COUNT);
 
-    Entity *entity2 = world->createEntity();
-    //mesh_right = entity2->createMesh();
-    mesh_right = new Mesh();
-    if( !mesh_right )
-    {
-        TOY3D_TIPS("Failed to create mesh.\n");
-        return FALSE;
-    }
-    mesh_right->setVertices (vertices, VERTEX_COUNT);
-    mesh_right->setRenderMode(TOY3D_TRIANGLE_STRIP);
-    entity2->setMesh(mesh_right);
-    entity2->translate (3.0, 0.0, 0.0);
-    entity2->rotate (0.0, -30.0, 0.0);
-
-    Material *mat = entity1->createMaterial();
+    Material *mat = MaterialManager::getInstance()->createMaterial();
     mat->setShaderProgram (shaderProgram);
 
-    mat = entity2->createMaterial();
-    mat->setShaderProgram (shaderProgram);
+
+    Entity *entity_left = world->createEntity();
+    entity_left->setMesh (mesh);
+    entity_left->setMaterial (mat);
+    entity_left->translate (-3.0, 0.0, 0.0);
+    entity_left->rotate (0.0, 30.0, 0.0);
+
+
+    Entity *entity_right = world->createEntity();
+    entity_right->setMesh (mesh);
+    entity_right->setMaterial (mat);
+    entity_right->translate (3.0, 0.0, 0.0);
+    entity_right->rotate (0.0, 30.0, 0.0);
+
 
     return TRUE;
 }
+
+
+void cleanup()
+{
+    ShaderProgramManager::getInstance()->destroyAllShaderProgramParams();
+    ShaderProgramManager::getInstance()->destroyAllShaderPrograms();
+
+    MeshManager::getInstance()->destroyAllMeshes();
+
+    MaterialManager::getInstance()->destroyAllMaterials();
+
+    world->destroyAllEntities();
+
+// Fixme when World is updated
+//    world->destroyAllCameras();
+
+}
+
+
 
 Real angle_y = 0.0f;
 
@@ -150,14 +156,7 @@ void keyboard(unsigned char key, int x, int y)
     case 'q':
     case 'Q':
     case 27:
-        printf("pointer world: %d.\n", world);
-        DELETEANDNULL(world);
-        DELETEANDNULL(mesh_left);
-        DELETEANDNULL(mesh_right);
-        DELETEANDNULL(shaderProgram);
-        DELETEANDNULL(params);
-        camera = NULL;
-
+        cleanup();
         exit(0);
         
     case 'p':
@@ -200,7 +199,10 @@ int main(int argc, char** argv)
   	rvb = init();
     if( FALSE==rvb )
         return 0;
+
   	glutMainLoop();
+
+    cleanup();
 
   	return 0;
 }

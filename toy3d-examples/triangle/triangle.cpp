@@ -1,14 +1,13 @@
 
-// #include <GL/glew.h>
-// #include <GL/glut.h>
-
-
 #include <toy3d/Toy3DCommon.h>
 #include <toy3d/Toy3DWorld.h>
 #include <toy3d/Toy3DEntity.h>
 #include <toy3d/Toy3DMesh.h>
 #include <toy3d/Toy3DMaterial.h>
 #include <toy3d/Toy3DShaderProgramParams.h>
+#include <toy3d/Toy3DShaderProgramManager.h>
+#include <toy3d/Toy3DMeshManager.h>
+#include <toy3d/Toy3DMaterialManager.h>
 
 
 #define WINDOW_W    500 
@@ -31,9 +30,7 @@ using namespace TOY3D;
 
 //global
 World *world = NULL;
-Mesh *mesh;
-ShaderProgram* shaderProgram = NULL;
-ShaderProgramParams *params = NULL;
+
 
 
 Real vertices[VERTEX_COUNT * 3] = {
@@ -59,29 +56,45 @@ void init()
     world->setSize(WINDOW_W, WINDOW_H);
     world->setBackColor (1.0, 1.0, 1.0, 1.0);  //white back color
 
-    shaderProgram = new ShaderProgram();
+    ShaderProgram *shaderProgram = ShaderProgramManager::getInstance()->createShaderProgram();
     shaderProgram->loadShaderSource (SHADER_VERT_FILE, SHADER_FRAG_FILE);
 
-    params = new ShaderProgramParams ();
+    ShaderProgramParams *params = ShaderProgramManager::getInstance()->createShaderProgramParams();
+
     //no shader uniforms ...
+
     //shader attributes
     params->setNamedAttrConstant (TOY3D_ATTR_VERTEX, "vPosition");
 
     shaderProgram->bindShaderParameters(params);
 
-
-    Entity *entity = world->createEntity();
-    //mesh = entity->createMesh();
-    mesh = new Mesh();
-    entity->setMesh(mesh);
+    Mesh* mesh = MeshManager::getInstance()->createMesh();
     mesh->setVertices (vertices, VERTEX_COUNT);
     mesh->setRenderMode (TOY3D_TRIANGLE_STRIP);
+    
 
-    Material *mat = entity->createMaterial ();
+    Material *mat = MaterialManager::getInstance()->createMaterial();
     mat->setShaderProgram (shaderProgram);
+
+
+    Entity *entity = world->createEntity();
+    entity->setMesh (mesh);
+    entity->setMaterial (mat);
 
     return;
 }
+
+void cleanup()
+{
+
+    ShaderProgramManager::getInstance()->destroyAllShaderProgramParams();
+    ShaderProgramManager::getInstance()->destroyAllShaderPrograms();
+    MeshManager::getInstance()->destroyAllMeshes();
+    MaterialManager::getInstance()->destroyAllMaterials();
+
+    world->destroyAllEntities();
+}
+
 
 void keyboard(unsigned char key, int x, int y){
     switch(key)
@@ -89,12 +102,7 @@ void keyboard(unsigned char key, int x, int y){
     case 'q':
     case 'Q':
     case 27:
-        //printf("pointer world: %d.\n", world);
-        DELETEANDNULL(world);
-        DELETEANDNULL(mesh);
-        DELETEANDNULL(shaderProgram);
-        DELETEANDNULL(params);
-
+        cleanup();
         exit(0);
     }
 }
@@ -124,6 +132,7 @@ int main(int argc, char** argv){
 
   	init();
   	glutMainLoop();
+    cleanup();
 
   	return 0;
 }

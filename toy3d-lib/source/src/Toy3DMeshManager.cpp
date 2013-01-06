@@ -37,7 +37,7 @@ TOY3D_BEGIN_NAMESPACE
         return pMesh;
     }
 
-    void MeshManager::destroyAllMeshs()
+    void MeshManager::destroyAllMeshes()
     {
         Mesh *temp;
 
