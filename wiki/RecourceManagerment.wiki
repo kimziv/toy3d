@@ -29,6 +29,7 @@
  * 各个 manager 开发给用户还是包到 root 里
  * 设计一个通用list，取代指针数组
  * Resource父类、ResouceManager 父类
+ * world 里的 camera 是个对象，需要支持对个，并存指针
 
 
 =MeshManager=
