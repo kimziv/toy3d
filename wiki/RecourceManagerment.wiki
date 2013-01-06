@@ -10,7 +10,7 @@
 =几个问题=
 
  * list 用 STL 的 list 还是自己写
- * 用 STL, BOOST 吗？[1]
+ * 用 STL, BOOST 吗？(见参考1)
  * 
 
 
