@@ -109,7 +109,75 @@ public:
 }}}
  
 
+=用户使用=
 
+{{{
+
+World *world = NULL;
+
+void init ()
+{
+
+    world = new World ();
+    world->setSize(w,h);
+    world->setBackColor (r, g, b, a);
+
+    Camera *camera = world->createCamera ();
+    camera->lookAt (...);
+    camera->perspective (...);
+
+
+    ShaderProgramParam *param = 
+        ShaderProgramManager::getInstance()->createShaderProgramParam();
+    param->setAutoUniform (...);
+    param->setCustUniform (...);
+    param->setAttr(...);
+
+    
+    ShaderProgram *prog = 
+        ShaderProgramManager::getInstance()->createShaderProgram();
+    prog->bindShaderProgramParam(param);
+  
+
+    Mesh *mesh = MeshManager::getInstance()->creatMesh();
+    mesh->setRenderMode (...);
+    mesh->setVertices (...);
+    mesh->setUVs (...);
+
+
+    Texture *tex = TextureManager::getInstance()->createTextureByFile(filename);
+    
+    
+
+    Entity *entity = world->createEntity ();
+
+    
+
+    
+    ShaderProgram *prog = ShaderProgramManager::getInstance()->createShaderProgram();
+
+    
+
+
+   
+
+}
+
+void display ()
+{
+
+    world->startRendering ();
+    
+    flush & swapBuffer 
+
+}
+
+void cleanup ()
+{
+}
+
+
+}}}
  
 
 
