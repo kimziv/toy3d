@@ -75,8 +75,8 @@ public:
 
     ShaderProgram* createShaderProgam ();
 
-    ShaderProgramParams* createShaderProgramParam ();
-    void destroyShadrProgramParam (ShaderProgramParam* parma);
+    ShaderProgramParams* createShaderProgramParams();
+    void destroyShadrProgramParams(ShaderProgramParams* parma);
     void destroyAllShaderProgramParams ();
 
     void destroyShaderProgram (ShaderProgram *prog);
