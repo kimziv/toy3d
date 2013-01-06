@@ -1,11 +1,14 @@
 
-// #include <GL/glew.h>
-// #include <GL/glut.h>
-
-
 #include <toy3d/Toy3DCommon.h>
 #include <toy3d/Toy3DWorld.h>
+#include <toy3d/Toy3DEntity.h>
+#include <toy3d/Toy3DMesh.h>
+#include <toy3d/Toy3DMaterial.h>
 #include <toy3d/Toy3DShaderProgramParams.h>
+#include <toy3d/Toy3DShaderProgramManager.h>
+#include <toy3d/Toy3DMeshManager.h>
+#include <toy3d/Toy3DMaterialManager.h>
+
 
 
 #define WINDOW_W    800
@@ -29,9 +32,6 @@ using namespace TOY3D;
 //global
 World *world = NULL;
 Camera *camera = NULL;
-Mesh *mesh;
-ShaderProgram* shaderProgram = NULL;
-ShaderProgramParams *params = NULL;
 
 
 Real vertices[VERTEX_COUNT * 3] = {
@@ -86,10 +86,11 @@ void init()
 
     camera = world->createCamera ("camera1");
 
-    shaderProgram = new ShaderProgram();
+    ShaderProgram *shaderProgram = ShaderProgramManager::getInstance()->createShaderProgram();
     shaderProgram->loadShaderSource (SHADER_VERT_FILE, SHADER_FRAG_FILE);
 
-    params = new ShaderProgramParams ();
+    ShaderProgramParams *params = ShaderProgramManager::getInstance()->createShaderProgramParams();
+
     //uniforms
     params->setNamedAutoConstant (TOY3D_ACT_PROJECTION_MATRIX, "proj_mat");
     params->setNamedAutoConstant (TOY3D_ACT_VIEW_MATRIX, "view_mat");
@@ -101,21 +102,38 @@ void init()
 
     shaderProgram->bindShaderParameters(params);
 
-    //Entity
-    Entity *entity = world->createEntity();
 
-    mesh = new Mesh();
-    //Mesh *mesh = entity->createMesh();
+    Mesh* mesh = MeshManager::getInstance()->createMesh();
     mesh->setRenderMode (TOY3D_TRIANGLE_STRIP);
     mesh->setVertices (vertices, VERTEX_COUNT);
-    entity->setMesh(mesh);
 
-    Material *mat = entity->createMaterial ();
+    Material *mat = MaterialManager::getInstance()->createMaterial();
     mat->setShaderProgram (shaderProgram);
-    //mat->setTexture(texture);
+
+    //Entity
+    Entity *entity = world->createEntity();
+    entity->setMesh(mesh);
+    entity->setMaterial(mat);
 
     return;
 }
+
+void cleanup()
+{
+
+    ShaderProgramManager::getInstance()->destroyAllShaderProgramParams();
+    ShaderProgramManager::getInstance()->destroyAllShaderPrograms();
+
+    MeshManager::getInstance()->destroyAllMeshes();
+
+    MaterialManager::getInstance()->destroyAllMaterials();
+
+    world->destroyAllEntities();
+
+//  fixme: when world is updated.
+//    world->destroyAllCameras();
+}
+
 
 Real angle_y = 0.0f;
 
@@ -126,13 +144,7 @@ void keyboard(unsigned char key, int x, int y)
     case 'q':
     case 'Q':
     case 27:
-        printf("pointer world: %d.\n", world);
-
-        DELETEANDNULL(world);
-        DELETEANDNULL(mesh);
-        DELETEANDNULL(shaderProgram);
-        DELETEANDNULL(params);
-        camera = NULL;
+        cleanup ();
         exit(0);
 
     case 'p':
@@ -172,6 +184,7 @@ int main(int argc, char** argv){
 
   	init();
   	glutMainLoop();
+    cleanup();
 
   	return 0;
 }

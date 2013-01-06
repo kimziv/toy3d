@@ -1,13 +1,18 @@
 
-// #include <GL/glew.h>
-// #include <GL/glut.h>
-
 
 #include <toy3d/Toy3DCommon.h>
 #include <toy3d/Toy3DWorld.h>
-#include <toy3d/Toy3DShaderProgramParams.h>
 #include <toy3d/Toy3DTexture.h>
 #include <toy3d/Toy3DTextureManager.h>
+#include <toy3d/Toy3DEntity.h>
+#include <toy3d/Toy3DMesh.h>
+#include <toy3d/Toy3DMaterial.h>
+#include <toy3d/Toy3DShaderProgramParams.h>
+#include <toy3d/Toy3DShaderProgramManager.h>
+#include <toy3d/Toy3DMeshManager.h>
+#include <toy3d/Toy3DMaterialManager.h>
+
+
 
 
 #define WINDOW_W    500
@@ -32,11 +37,7 @@ using namespace TOY3D;
 
 //global
 World *world = NULL;
-Mesh  *mesh;
 Camera *camera = NULL;
-ShaderProgram* shaderProgram;
-ShaderProgramParams *params = NULL;
-//Texture *texture = NULL;
 
 
 Real vertices[VERTEX_COUNT * 3] = {
@@ -77,7 +78,6 @@ unsigned char* generateColorData(int w, int h, int bpp)
             if(bpp==BPP_4)
                 *(buf+i*h*bpp+j*bpp + 3) = (Uchar)255;
         }
-        //memset(buf+i*ww, i%256, w);
     }
 
     return buf;
@@ -117,7 +117,6 @@ bool init()
     Bool  rvb;
     int   texUnit = 0;
     Real  limit;
-    Material *mat;
     Entity *entity;
 
     world = new World ();
@@ -126,21 +125,22 @@ bool init()
     world->setBackColor (1.0, 0.0, 1.0, 1.0);
 
     camera = world->createCamera ("camera1");
-    entity = world->createEntity();
-    mat = entity->createMaterial ();
 
-    shaderProgram = new ShaderProgram();
-    params = new ShaderProgramParams ();
+
+
 
     //shader
+    ShaderProgram *shaderProgram = ShaderProgramManager::getInstance()->createShaderProgram();
     shaderProgram->loadShaderSource (SHADER_VERT_FILE, SHADER_FRAG_FILE);
     printf("shaderProgram id: %d\n", shaderProgram->getShaderProgramID());
+
+
+    ShaderProgramParams *params = ShaderProgramManager::getInstance()->createShaderProgramParams();
 
     //shader auto constant
     params->setNamedAutoConstant (TOY3D_ACT_PROJECTION_MATRIX, "proj_mat");
     params->setNamedAutoConstant (TOY3D_ACT_VIEW_MATRIX, "view_mat");
     params->setNamedAutoConstant (TOY3D_ACT_WORLD_MATRIX, "world_mat");
-    //params->setNamedAutoConstant (TOY3D_ACT_SAMPLER2D, "sampler2d");
 
     //shader attributes
     params->setNamedAttrConstant(TOY3D_ATTR_VERTEX, "vPosition");
@@ -154,43 +154,43 @@ bool init()
 
     shaderProgram->bindShaderParameters(params);
 
-    //Entity
-    mesh = new Mesh();
+    Texture *tex = TextureManager::getInstance()->createTextureByFile(TEXTURE_FILE);
+
+    Material *mat = MaterialManager::getInstance()->createMaterial();
+    mat->setShaderProgram (shaderProgram);
+    mat->setTexture(tex);
+
+    Mesh* mesh = MeshManager::getInstance()->createMesh();
     mesh->setRenderMode (TOY3D_TRIANGLE_STRIP);
     mesh->setVertices (vertices, VERTEX_COUNT);
     mesh->setUVs( uvs, VERTEX_COUNT);
+
+
+    entity = world->createEntity();
     entity->setMesh(mesh);
-
-    //texture
-    rvb = mat->loadTexture(TEXTURE_FILE);
-    if(FALSE == rvb)
-    {
-        printf("create texture failed.\n");
-        return false;
-    }
-    mat->setShaderProgram (shaderProgram);
-    //mat->setTexture(texture);
-
-    /*
-    //another way to create texture
-    unsigned char *buf;
-    int  bpp = BPP_3;
-    int  imageW = 64;
-    int  imageH = 64;
-    buf = generateColorData(imageW, imageH, bpp);
-    if( !buf )
-        return false;
-    texture = mat->createTexture(buf, imageW, imageH, bpp);
-    if( !texture )
-    {
-        printf("create texture failed.\n");
-        return false;
-    }
-    if(buf)
-        FREEANDNULL(buf);
-    */
+    entity->setMaterial (mat);
 
     return true;
+}
+
+
+void cleanup ()
+{
+
+    ShaderProgramManager::getInstance()->destroyAllShaderProgramParams();
+    ShaderProgramManager::getInstance()->destroyAllShaderPrograms();
+
+    TextureManager::getInstance()->destroyAllTextures();
+
+    MeshManager::getInstance()->destroyAllMeshes();
+    MaterialManager::getInstance()->destroyAllMaterials();
+
+    world->destroyAllEntities();
+
+    //Fixme:
+//    world->destroyAllCameras();
+
+
 }
 
 Real angle_y = 0.0f;
@@ -201,22 +201,7 @@ void keyboard(unsigned char key, int x, int y){
     case 'q':
     case 'Q':
     case 27:
-        /*
-        unsigned int texid;
-        if( texture )
-        {
-            texid = texture->getTextureID();
-            TextureManager::getInstance()->deleteTexture(&texid, 1);
-        }
-        DELETEANDNULL(texture);
-        */
-
-        DELETEANDNULL(world);
-        DELETEANDNULL(mesh);
-        DELETEANDNULL(shaderProgram);
-        DELETEANDNULL(params);
-        camera = NULL;
-
+        cleanup ();
         exit(0);
 
     case 'p':
@@ -256,6 +241,7 @@ int main(int argc, char** argv){
 
   	glutMainLoop();
 
+    cleanup();
 
   	return 0;
 }

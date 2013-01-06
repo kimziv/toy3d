@@ -17,23 +17,6 @@ TOY3D_BEGIN_NAMESPACE
     {
     }
 
-    /*
-    Mesh* Entity::createMesh ()
-    {
-        if (mMesh)
-            delete mMesh;
-
-        mMesh = new Mesh();
-
-        return mMesh;
-    }
-
-    void Entity::destroyMesh ()
-    {
-        if (mMesh)
-            delete mMesh;
-    }
-    */
 
     void Entity::setMesh(Mesh *mesh)
     {
@@ -41,30 +24,14 @@ TOY3D_BEGIN_NAMESPACE
         return;
     }
 
-    Material* Entity::createMaterial ()
+    void Entity::setMaterial (Material *mat)
     {
-        if (mMaterial)
-            delete mMaterial;
 
-        mMaterial = new Material ();
+        mMaterial = mat;
 
-        return mMaterial;
+        return;
         
     }
-
-    void Entity::destroyMaterial ()
-    {
-        if (mMaterial)
-            delete mMaterial;
-    }
-
-
-
-    void Entity::setTexture( Texture* tex)
-    {
-        mTexture = tex;
-    }
-
 
 
 

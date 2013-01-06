@@ -25,7 +25,7 @@ TOY3D_BEGIN_NAMESPACE
         Mesh* createMesh();
 
         //void destroyMesh(Mesh *mesh);
-        void destroyAllMeshs();
+        void destroyAllMeshes();
     };
 
 
