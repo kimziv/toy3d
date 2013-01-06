@@ -8,9 +8,12 @@
 		include/Toy3DAutoParamDataSource.h
 		include/Toy3DShaderProgramParams.h
 		include/Toy3DShaderProgram.h
+		include/Toy3DShaderProgramManager.h
 		include/Toy3DMesh.h
+		include/Toy3DMeshManager.h
 		include/Toy3DEntity.h
 		include/Toy3DMaterial.h
+		include/Toy3DMaterialManager.h
 		include/Toy3DRenderer.h
 		include/Toy3DRenderOperation.h
 		include/Toy3DMath.h
@@ -25,9 +28,12 @@
 		src/Toy3DAutoParamDataSource.cpp
 		src/Toy3DShaderProgramParams.cpp
 		src/Toy3DShaderProgram.cpp
+		src/Toy3DShaderProgramManager.cpp
 		src/Toy3DMesh.cpp
+		src/Toy3DMeshManager.cpp
 		src/Toy3DEntity.cpp
 		src/Toy3DMaterial.cpp
+		src/Toy3DMaterialManager.cpp
 		src/Toy3DRenderer.cpp
 		src/Toy3DRenderOperation.cpp
 		src/Toy3DMath.c

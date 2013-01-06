@@ -8,6 +8,11 @@ TOY3D_BEGIN_NAMESPACE
 
     TextureManager::TextureManager()
     {
+        mTextureCount = 0;
+        for(int i=0; i<MAX_TEXTURE_COUNT; i++)
+        {
+            mTextures[i] = 0;
+        }
     }
 
     TextureManager::~TextureManager()
@@ -16,7 +21,7 @@ TOY3D_BEGIN_NAMESPACE
 
     TextureManager* TextureManager::getInstance() 
     {
-        if (NULL == mInstance)
+        if(NULL==mInstance)
             mInstance = new TextureManager();
 
         return mInstance;
@@ -25,15 +30,17 @@ TOY3D_BEGIN_NAMESPACE
     Texture* TextureManager::createTexture(unsigned char *pImageData, Uint width, Uint height, Uint bpp)
     {
         Bool rvb;
-        Texture *texture = new Texture();
-        if( !texture )
+        Texture *pTexture = new Texture();
+        if( !pTexture )
             return NULL;
 
-        rvb = texture->genTexture(pImageData, width, height, bpp);
+        rvb = pTexture->genTexture(pImageData, width, height, bpp);
         if( rvb != TRUE )
             return NULL;
 
-        return texture;
+        mTextures[mTextureCount++] = pTexture;
+
+        return pTexture;
     }
 
     Texture* TextureManager::createTexture(ImageInfo *pImageInfo)
@@ -47,6 +54,8 @@ TOY3D_BEGIN_NAMESPACE
             pImageInfo->width, pImageInfo->height, pImageInfo->bpp);
         if( rvb != TRUE )
             return NULL;
+
+        mTextures[mTextureCount++] = texture;
         
         return texture;
     }
@@ -94,25 +103,40 @@ TOY3D_BEGIN_NAMESPACE
             return NULL;
 
         delete image;
+        mTextures[mTextureCount++] = texture;
 
         return texture;
     }
 
-    void TextureManager::deleteTexture(Uint *pTexids, Uint count)
+    void TextureManager::deleteTextureFromGpu(Uint *pTexids, Uint count)
     {
         glDeleteTextures(count, pTexids);
         return;
     }
 
     /*
-    void TextureManager::useTexture(Uint texid)
+    void TextureManager::destroyTexture(Texture *tex)
     {
-        glActiveTexture(GL_TEXTURE);
-        glBindTexture(GL_TEXTURE_2D, texid);
         return;
     }
     */
 
+    void TextureManager::destroyAllTextures()
+    {
+        Texture *temp;
+        Uint texid;
+
+        while(mTextureCount--)
+        {
+            temp = mTextures[mTextureCount];
+            texid = temp->getTextureID();
+            deleteTextureFromGpu(&texid, 1);
+            delete temp;
+            mTextures[mTextureCount] = 0;
+        }
+
+        return;
+    }
 
 
 TOY3D_END_NAMESPACE

@@ -13,15 +13,19 @@ TOY3D_BEGIN_NAMESPACE
     {
     private:
         TextureManager();
-
-    protected:
         static TextureManager* mInstance;
+
+        Texture *mTextures[MAX_TEXTURE_COUNT];
+        Uint    mTextureCount;
+
+        void deleteTextureFromGpu(Uint *texids, Uint count);
 
     public:
         ~TextureManager();
         static TextureManager* getInstance();
 
-        /* function : createTexture
+        /*
+         * function : createTexture
          * parameter:
          *     pImageData : color data of image
          *     width : width of image
@@ -32,11 +36,10 @@ TOY3D_BEGIN_NAMESPACE
         Texture* createTexture(unsigned char *pImageData, Uint width, Uint height, Uint bpp);
 
         Texture* createTexture(ImageInfo *pImageInfo);
-
         Texture* createTextureByFile( const char* fileName );
 
-        //void useTexture(Uint texid);
-        void deleteTexture(Uint *texids, Uint count);
+        //void destroyTexture(Texture *tex);
+        void destroyAllTextures();
     };
 
 

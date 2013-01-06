@@ -14,7 +14,7 @@ TOY3D_BEGIN_NAMESPACE
     {
 
     private:
-        Texture* mTexture;
+        Texture *mTexture;
         ShaderProgram* mShaderProgram;
 
 
@@ -27,7 +27,7 @@ TOY3D_BEGIN_NAMESPACE
         Bool loadTexture(const char *pFileNmae);
         Bool createTexture(ImageInfo *pImageInfo);
         Bool createTexture(unsigned  char *pImageData, Uint width, Uint height, Uint bpp);
-        //void setTexture(Texture* tex);
+        void setTexture(Texture* tex);
         void setShaderProgram (ShaderProgram *prog);
 
         const Texture* getTexture();
