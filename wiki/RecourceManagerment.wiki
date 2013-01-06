@@ -7,9 +7,7 @@
  * 资源存在资源池中
  * 每种资源对应一种 manager
 
-=几个问题=
 
- * list 用 STL 的 list 还是自己写。用 STL, BOOST 吗？(见参考1)
 
 
 =MeshManager, ShaderProgramManager, TextureManager=
