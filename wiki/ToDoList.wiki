@@ -2,18 +2,14 @@
 
 = 现存的问题 =
 
-glActive(unit) 如何解决
-autoConst 改名
-
-texture 如何释放 glDeleteTexture
-
+ * destroy resource 分散在各个 manager，用户需要逐个 manager 的调 create/destroy 函数
+ * 基础数据结构设计
 
 = features =
-
-  * light/material
-  * mesh 数据如何保存
-  * 统一模型格式解析
-  * render 引擎与光引擎
+ * animation
+ * light/material
+ * 统一模型格式解析
+ * 光引擎
 
 
 = 参考 =
