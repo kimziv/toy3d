@@ -11,6 +11,7 @@
 =资源管理部分=
  * destroy resource 分散在各个 manager，用户需要逐个 manager 的调 create/destroy 函数
  * 当释放 manager 的某一个资源时，数组中间会空出来
+ * ogre 设计了 ResourceGroupManager，将各个 manager 聚拢起来，参考 OGRE/Samples
  * 无法索引、查找资源
  * 每个 manager 调用 destroy 很繁琐
  * 各个 manager 开放给用户还是包到某个类里
