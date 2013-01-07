@@ -1,9 +1,23 @@
 #summary Here is our todo lists.
 
-= 现存的问题 =
 
+=通用部分=
+
+ * 基础数据结构设计，如list，map 之类的
+ * world 里的 camera 是个对象，需要支持对个，并存指针
+ * world 里的 entity 数组
+
+
+=资源管理部分=
  * destroy resource 分散在各个 manager，用户需要逐个 manager 的调 create/destroy 函数
- * 基础数据结构设计
+ * 当释放 manager 的某一个资源时，数组中间会空出来
+ * 无法索引、查找资源
+ * 每个 manager 调用 destroy 很繁琐
+ * 各个 manager 开放给用户还是包到某个类里
+ * 设计一个通用list，取代指针数组
+ * Resource父类、ResouceManager 父类
+
+
 
 = features =
  * animation
