@@ -48,7 +48,8 @@ public:
     Uint getAllocLength();
 
     //override operator []、=
-
+    const Toy3DPtrArray& operator[]();
+    const Toy3DPtrArray& operator=();
 private:
     void maybeExpand(Uint length);
 };
