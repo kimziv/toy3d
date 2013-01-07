@@ -3,11 +3,12 @@
 
 =指针数组=
 
-基本原则：
+==基本原则==
  * 指针
  * 数组长度可动态增加
  * 支持各种数据类型，如C++模板
 
+==类==
 
 {{{
 Toy3DPtrArray {
@@ -17,13 +18,19 @@ Toy3DPtrArray {
 }}}
 
 
-=用户使用=
+==用户使用==
 
 
-= Introduction =
 
-Add your content here.
+=linkedlist=
 
+后续。。。
+
+
+
+= Reference =
+
+ * [http://developer.gnome.org/glib/2.34/ glib Manual]
 
 = Details =
 
