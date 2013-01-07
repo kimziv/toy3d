@@ -29,10 +29,3 @@ Toy3DPtrArray {
 = Reference =
 
  * [http://developer.gnome.org/glib/2.34/ glib Manual]
-
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
