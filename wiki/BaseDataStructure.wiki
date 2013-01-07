@@ -8,6 +8,7 @@ struct TOY3D_PTR_ARRAY
 {
     TOY3D_PTR *pData;
     Uint len;
+    Uint allocLen;
 };
 enum TOY3D_PTR_ARRAY_SORT_MODE
 {
