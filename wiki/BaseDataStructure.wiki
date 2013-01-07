@@ -22,12 +22,6 @@ Toy3DPtrArray {
 
 
 
-=linkedlist=
-
-后续。。。
-
-
-
 = Reference =
 
  * [http://developer.gnome.org/glib/2.34/ glib Manual]
