@@ -1,0 +1,33 @@
+#summary 基础数据结构的设计
+
+
+=指针数组=
+
+基本原则：
+ * 指针
+ * 数组长度可动态增加
+ * 支持各种数据类型，如C++模板
+
+
+{{{
+Toy3DPtrArray {
+
+};
+
+}}}
+
+
+=用户使用=
+
+
+= Introduction =
+
+Add your content here.
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
