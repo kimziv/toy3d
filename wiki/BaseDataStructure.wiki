@@ -1,18 +1,7 @@
 #summary 基础数据结构的设计
 
 
-==指针数组==
-typedef void* TOY3D_PTR;
-
-struct TOY3D_PTR_ARRAY
-{
-    TOY3D_PTR *pData;
-    Uint len;
-    Uint allocLen;
-};
-enum TOY3D_PTR_ARRAY_SORT_MODE
-{
-};
+=指针数组=
 
 
 ==基本原则==
@@ -21,16 +10,23 @@ enum TOY3D_PTR_ARRAY_SORT_MODE
  * 支持各种数据类型，类似C++模板。
 
 
-==动态增长策略==
+==动态变化策略==
+数组增长：
+当已分配长度不够时，重新分配内存，按照如下原则：
+2^n
 
 
 ==类==
 
 {{{
+typedef void* TOY3D_PTR;
+
 class Toy3DPtrArray {
+
 protected:
-    TOY3D_PTR_ARRAY *mPtrArray;
-    //Bool mIslock;
+    TOY3D_PTR *pData;
+    Uint len; //数组中元素个数
+    Uint allocLen;//最大允许元素个数
 
 public:
     //create
@@ -43,15 +39,13 @@ public:
     void destroyPtrArray();
 
     //process
-    Bool insertElement(TOY3D_PTR *pData);
-    Bool appendElement(TOY3D_PTR *pData);
-    Bool preAppendElement(TOY3D_PTR *pData);
-    void sort(TOY3D_PTR_ARRAY_SORT_MODE mode);
+    Bool insert(TOY3D_PTR *pData, Uint index);
+    Bool append(TOY3D_PTR *pData);
     void setSize(Uint length);
-    void expand(Uint length);
-    //void lock();
-    //void unlock();
+    void maybeExpand(Uint length);
     TOY3D_PTR* getElement(Uint index);
+
+    //override operator []、=
 };
 
 }}}
