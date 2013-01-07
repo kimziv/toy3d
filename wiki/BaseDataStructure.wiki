@@ -2,6 +2,16 @@
 
 
 =指针数组=
+typedef void* TOY3D_PTR;
+struct TOY3D_PTR_ARRAY
+{
+    TOY3D_PTR *pData;
+    Uint len;
+};
+enum TOY3D_PTR_ARRAY_SORT_MODE
+{
+};
+
 
 ==基本原则==
  * 指针
@@ -14,8 +24,21 @@
 ==类==
 
 {{{
-Toy3DPtrArray {
-
+class Toy3DPtrArray {
+TOY3D_PTR_ARRAY *mPtrArray;
+//create
+TOY3D_PTR_ARRAY* createPtrArray();
+TOY3D_PTR_ARRAY* createPtrArray(Uint size);
+//delete
+Bool removeElement(TOY3D_PTR pData);
+TOY3D_PTR* removeElementByIndex(Uint index);
+void destroyPtrArray();
+//process
+Bool addElement(TOY3D_PTR pData);
+void sort(TOY3D_PTR_ARRAY_SORT_MODE mode);
+void setSize(Uint length);
+void expand(Uint length);
+TOY3D_PTR* getElement(Uint index);
 };
 
 }}}
