@@ -29,6 +29,7 @@ enum TOY3D_PTR_ARRAY_SORT_MODE
 class Toy3DPtrArray {
 protected:
     TOY3D_PTR_ARRAY *mPtrArray;
+    //Bool mIslock;
 
 public:
     //create
@@ -36,15 +37,19 @@ public:
     TOY3D_PTR_ARRAY* createPtrArray(Uint size);
 
     //delete
-    Bool removeElement(TOY3D_PTR pData);
+    Bool removeElement(TOY3D_PTR *pData);
     TOY3D_PTR* removeElementByIndex(Uint index);
     void destroyPtrArray();
 
     //process
-    Bool addElement(TOY3D_PTR pData);
+    Bool insertElement(TOY3D_PTR *pData);
+    Bool appendElement(TOY3D_PTR *pData);
+    Bool preAppendElement(TOY3D_PTR *pData);
     void sort(TOY3D_PTR_ARRAY_SORT_MODE mode);
     void setSize(Uint length);
     void expand(Uint length);
+    //void lock();
+    //void unlock();
     TOY3D_PTR* getElement(Uint index);
 };
 
