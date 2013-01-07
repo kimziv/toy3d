@@ -30,8 +30,8 @@ protected:
 
 public:
     //create
-    TOY3D_PTR_ARRAY* createPtrArray();
-    TOY3D_PTR_ARRAY* createPtrArray(Uint size);
+    void createPtrArray();
+    void createPtrArray(Uint size);
 
     //delete
     Bool remove(TOY3D_PTR pData);
@@ -69,10 +69,14 @@ private:
 
     mPtrArray.createPtrArray();
     ptr = malloc(sizeof(Mesh));
-    mPtrArray.append(ptr);
-    /*
-    mPtrArray[0] = ptr;
-    */
+    rvb = mPtrArray.append(ptr);
+    if(!rvb)
+    {
+        printf("append ptr element error.\n");
+        return;
+    }
+    //the same as
+    //mPtrArray[0] = ptr;
 
     ptr = malloc(sizeof(Mesh));
     mPtrArray.insert(ptr, 0);
