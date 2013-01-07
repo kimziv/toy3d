@@ -19,40 +19,47 @@
 ==类==
 
 {{{
-typedef void* TOY3D_PTR;
+typedef void* TPointer;
 
 class Toy3DPtrArray {
 
 protected:
-    TOY3D_PTR *pData;
+    TPointer *pData;
     Uint len; //数组中元素个数
     Uint allocLen;//最大允许元素个数
 
 public:
+    Toy3DPtrArrar();
+
     //create
     void createPtrArray();
     void createPtrArray(Uint size);
 
     //delete
-    Bool remove(TOY3D_PTR pData);
+    Bool remove(TPointer pData);
     TOY3D_PTR* removeByIndex(Uint index);
     void destroyPtrArray();
 
     //process
-    Bool insert(TOY3D_PTR pData, Uint index);
-    Bool append(TOY3D_PTR pData);
+    Bool insert(TPointer pData, Uint index);
+    Bool append(TPointer pData);
     void setSize(Uint length);
 
     TOY3D_PTR getElement(Uint index);
     Uint getLength();
     Uint getAllocLength();
 
-    //override operator []、=
+    //override operator [],=
     const Toy3DPtrArray& operator[]();
     const Toy3DPtrArray& operator=();
 private:
     void maybeExpand(Uint length);
 };
+//遗留问题：
+//1.插入元素时，
+//mPtrArray[1] = ...;
+//insert(...);
+////如果索引跨过数组实际索引，中间的空值怎样处理？
 
 }}}
 
@@ -63,29 +70,29 @@ private:
 
     //Sample code for Toy3DPtrArray
     //take Mesh as example;
-    TOY3D_PTR ptr;
-    Bool rvb;
+    Bool rv;
     Uint size = 16;
-    Toy3DPtrArray mPtrArray = new Toy3DPtrArray();
-
+    Mesh *mesh = new Mesh();
+    Toy3DPtrArray mPtrArray;
     mPtrArray.createPtrArray();
-    ptr = malloc(sizeof(Mesh));
-    rvb = mPtrArray.append(ptr);
-    if(!rvb)
+    rv = mPtrArray.append((TPointer)mesh );
+    if(!rv)
     {
         printf("append ptr element error.\n");
         return;
     }
-    //the same as
-    //mPtrArray[0] = ptr;
 
-    ptr = malloc(sizeof(Mesh));
-    mPtrArray.insert(ptr, 0);
+    mesh = new Mesh();
+    mPtrArray[1] = mesh;
+
+    mesh = new Mesh();
+    mPtrArray.insert(mesh, 2);
 
     mPtrArray.setSize(size);
     ...
 
     Mesh *mesh = (Mesh *)getElement(0);
+    //Mesh *mesh = mPtrArray[0];
     mPtrArray.destroyPtrArray();
 
 }}}
