@@ -67,8 +67,8 @@ class TPtrArray {
         Uint getAllocLength(); 
         
         //override operator[], and operator= 
-        const TPtrArray& operator[]();
-        const TPtrArray& operator=();
+        const TPtrArray& operator[](Uint index);
+        const TPtrArray& operator=(TPointer *mPtr);
 
     private: 
         void maybeExpand(Uint length);
