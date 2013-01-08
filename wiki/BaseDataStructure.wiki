@@ -38,39 +38,39 @@
 {{{
 typedef void* TPointer;
 
-class Toy3DPtrArray {
+class TPtrArray {
+    protected: 
+        TPointer *mPtr;  /* the pointer array data */
+        Uint mLength;    /* the actual number of elements in the array */
+        Uint mAllocLen;  /* the capacity, that is the number of elements, of the array */
 
-protected:
-    TPointer *pData;
-    Uint len; //数组中元素个数
-    Uint allocLen;//最大允许元素个数
+    public:
+        TPtrArray();
 
-public:
-    Toy3DPtrArrar();
+        //create 
+        void create(); 
+        void create(Uint size); 
+        
+        //delete 
+        Bool remove(TPointer ptr); 
+        TPointer* removeByIndex(Uint index); 
+        void destroy(); 
+        
+        //process 
+        Bool insert(TPointer ptr, Uint index); 
+        Bool append(TPointer ptr); 
+        void setSize(Uint length); 
+        
+        TPointer getElement(Uint index); 
+        Uint getLength(); 
+        Uint getAllocLength(); 
+        
+        //override operator[], and operator= 
+        const TPtrArray& operator[]();
+        const TPtrArray& operator=();
 
-    //create
-    void create();
-    void create(Uint size);
-
-    //delete
-    Bool remove(TPointer pData);
-    TOY3D_PTR* removeByIndex(Uint index);
-    void destroy();
-
-    //process
-    Bool insert(TPointer pData, Uint index);
-    Bool append(TPointer pData);
-    void setSize(Uint length);
-
-    TOY3D_PTR getElement(Uint index);
-    Uint getLength();
-    Uint getAllocLength();
-
-    //override operator [],=
-    const Toy3DPtrArray& operator[]();
-    const Toy3DPtrArray& operator=();
-private:
-    void maybeExpand(Uint length);
+    private: 
+        void maybeExpand(Uint length);
 };
 
 }}}
@@ -89,7 +89,7 @@ private:
         MeshManager();
         static MeshManager* mInstance;
 
-        Toy3DPtrArray mPtrArray;
+        TPtrArray mPtrArray;
 
     public:
         ~MeshManager();
