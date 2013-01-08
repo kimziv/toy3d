@@ -45,7 +45,7 @@
         mesh = (Mesh *)mPtrArray.getElement(i);
         delete mesh;
     }
-    setSize(5);
+    setSize(0);
 
     //使用下标时
     Mesh *mesh;
