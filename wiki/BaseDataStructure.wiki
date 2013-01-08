@@ -19,8 +19,18 @@
 
 ==几个需要考虑的问题==
 
- * insert 插入时是否需要做越界检查
- * 删除时如何释放指针里的数据，glib 里要自己设置 set_clear_fun 函数
+ * 插入元素时，索引越界的情况怎样处理？此处的越界是指不按照顺序处理数组元素，索引出现跳跃。即如下情况：
+   mPtrArray[0] = ...;
+   insert(..., 3);
+
+   解决：中间的值设置为空值NULL，就上述例子来说，执行完第二句，将出现如下结果：
+   mPtrArray[1] 值为 NULL;
+   mPtrArray[2] 值为 NULL;
+   mPtrArray.length 值为 4.
+
+ * 删除时如何释放指针里的数据，glib 里要自己设置 set_clear_fun 函数。
+   即：任何类型都是当作void *来删除的，如果某类型中含有指针，该指针对应的内存怎样释放？
+   解决：按照目前的设计方案，涉及资源分配释放的都是对应的Manager类，这些类里都提供了destroy函数，在该函数中先释放掉该类本身的指针，再调用mPtrArray.destroy()即可。详见“用户使用”部分。
 
 
 ==类==
@@ -39,13 +49,13 @@ public:
     Toy3DPtrArrar();
 
     //create
-    void createPtrArray();
-    void createPtrArray(Uint size);
+    void create();
+    void create(Uint size);
 
     //delete
     Bool remove(TPointer pData);
     TOY3D_PTR* removeByIndex(Uint index);
-    void destroyPtrArray();
+    void destroy();
 
     //process
     Bool insert(TPointer pData, Uint index);
@@ -62,11 +72,6 @@ public:
 private:
     void maybeExpand(Uint length);
 };
-//遗留问题：
-//1.插入元素时，
-//mPtrArray[1] = ...;
-//insert(...);
-//如果索引跨过数组实际索引，中间的空值怎样处理？
 
 }}}
 
@@ -76,31 +81,72 @@ private:
 {{{
 
     //Sample code for Toy3DPtrArray
-    //take Mesh as example;
-    Bool rv;
-    Uint size = 16;
-    Mesh *mesh = new Mesh();
-    Toy3DPtrArray mPtrArray;
-    mPtrArray.createPtrArray();
-    rv = mPtrArray.append((TPointer)mesh );
-    if(!rv)
+    //take MeshManager as example
+
+    class MeshManager
     {
-        printf("append ptr element error.\n");
-        return;
+    private:
+        MeshManager();
+        static MeshManager* mInstance;
+
+        Toy3DPtrArray mPtrArray;
+
+    public:
+        ~MeshManager();
+        static MeshManager* getInstance();
+
+        Mesh* createMesh();
+
+        //void destroyMesh(Mesh *mesh);
+        void destroyAllMeshes();
+    };
+
+    MeshManager::MeshManager()
+    {
+        mPtrArray.create();
     }
 
-    mesh = new Mesh();
-    mPtrArray[1] = mesh;
+    MeshManager::~MeshManager()
+    {
+    }
 
-    mesh = new Mesh();
-    mPtrArray.insert(mesh, 2);
+    MeshManager* MeshManager::getInstance() 
+    {
+        if(NULL==mInstance)
+            mInstance = new MeshManager();
 
-    mPtrArray.setSize(size);
-    ...
+        return mInstance;
+    }
 
-    Mesh *mesh = (Mesh *)getElement(0);
-    //Mesh *mesh = mPtrArray[0];
-    mPtrArray.destroyPtrArray();
+    Mesh* MeshManager::createMesh()
+    {
+        Mesh *pMesh = new Mesh();
+        if( !pMesh )
+            return NULL;
+
+        mPtrArray.append((TPointer)pMesh );
+        //or
+        //mPtrArray[mPtrArray.getLength()] = pMesh;
+        //or
+        //mPtrArray.insert((TPointer)pMesh, mPtrArray.getLength());
+
+        return pMesh;
+    }
+
+    void MeshManager::destroyAllMeshes()
+    {
+        Mesh *temp;
+
+        while(length--)
+        {
+            temp = (Mesh *)mPtrArray->removeByIndex(length);
+            delete temp;
+        }
+
+        mPtrArray->destroy();
+
+        return;
+    }
 
 }}}
 
