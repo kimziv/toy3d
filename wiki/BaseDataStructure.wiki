@@ -35,6 +35,29 @@
 
    解决：按照目前的设计方案，涉及资源分配释放的都是对应的Manager类，这些类里都提供了destroy函数，在该函数中先释放掉该类本身的指针，再调用mPtrArray.destroy()即可。详见“用户使用”部分。
 
+    当用户调用setSize或者使用下标来给数组元素赋值时，如果发生缩减数组的情况，数组元素对应的内存里的指针，由用户自己释放。说明如下：
+{{{
+    //假设当前length=8，以Mesh类型为例。
+    Uint length = mPtrArray.getLength();
+    Mesh *mesh;
+    for(Uint i=0;i<length;i++)
+    {
+        mesh = (Mesh *)mPtrArray.getElement(i);
+        delete mesh;
+    }
+    setSize(5);
+
+    //使用下标时
+    Mesh *mesh;
+     if(mPtrArray[0])
+    {
+        mesh = (Mesh *)mPtrArray[0];
+        delete mesh;
+    }
+    mesh = new Mesh();
+    mPtrArray[0] = (TPointer)mesh;
+}}}
+
 
 ==类==
 
