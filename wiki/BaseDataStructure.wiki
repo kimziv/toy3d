@@ -46,6 +46,7 @@ class TPtrArray {
 
     public:
         TPtrArray();
+        ~TPtrArray();
 
         //create 
         void create(); 
