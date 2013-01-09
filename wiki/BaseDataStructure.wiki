@@ -116,7 +116,7 @@ class TPtrArray {
         inline Bool expand(Uint length);
 
         /*
-         * function: move backward(one step or more), for all the elements after the index(including);
+         * function: move backward(one step or more), for all the elements after the index(including),
          *     in order to get mPtr[index].
          */
         inline Bool moveBackward(Uint index);
@@ -137,72 +137,39 @@ class TPtrArray {
 {{{
 
     //Sample code for Toy3DPtrArray
-    //take MeshManager as example
+    //You can also take MeshManager as example.
 
-    class MeshManager
+    TPtrArray *pPtrArray;
+    Mesh *pMesh;
+
+    mPtrArray = new TPtrArray();
+    mPtrArray.create();
+    pMesh = new Mesh();
+    if( !pMesh )
     {
-    private:
-        MeshManager();
-        static MeshManager* mInstance;
-
-        TPtrArray mPtrArray;
-
-    public:
-        ~MeshManager();
-        static MeshManager* getInstance();
-
-        Mesh* createMesh();
-
-        //void destroyMesh(Mesh *mesh);
-        void destroyAllMeshes();
-    };
-
-    MeshManager::MeshManager()
-    {
-        mPtrArray.create();
-    }
-
-    MeshManager::~MeshManager()
-    {
-    }
-
-    MeshManager* MeshManager::getInstance() 
-    {
-        if(NULL==mInstance)
-            mInstance = new MeshManager();
-
-        return mInstance;
-    }
-
-    Mesh* MeshManager::createMesh()
-    {
-        Mesh *pMesh = new Mesh();
-        if( !pMesh )
-            return NULL;
-
-        mPtrArray.append((TPointer)pMesh );
-        //or
-        //mPtrArray[mPtrArray.getLength()] = pMesh;
-        //or
-        //mPtrArray.insert((TPointer)pMesh, mPtrArray.getLength());
-
-        return pMesh;
-    }
-
-    void MeshManager::destroyAllMeshes()
-    {
-        Mesh *temp;
-
-        while(length--)
-        {
-            temp = (Mesh *)mPtrArray->removeByIndex(length);
-            delete temp;
-        }
-
-        mPtrArray->destroy();
-
+        printf("ceate mesh failed.\n");
         return;
     }
+
+    //There are three ways to add elemet to mPtrArray.
+    //1st
+    mPtrArray[0] = pMesh;
+
+    //2st
+    mPtrArray.append((TPointer)pMesh );
+
+    //3rd
+    mPtrArray.insert((TPointer)pMesh, mPtrArray.getLength());
+
+    //free and delete
+    Uint length = mPtrArray->getLength();
+    while(length--)
+    {
+        pMesh = (Mesh *)mPtrArray->getElement(length);
+        delete temp;
+    }
+    mPtrArray->destroy();
+    delete mPtrArray;
 
 }}}
 
