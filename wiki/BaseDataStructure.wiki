@@ -86,10 +86,17 @@ class TPtrArray {
         Bool remove(TPointer ptr); 
         TPointer* removeByIndex(Uint index); /* index begin with 0 */
         void destroy(); 
-        
+   
         //process 
         Bool insert(TPointer ptr, Uint index); /* index begin with 0 */
         Bool append(TPointer ptr);
+
+        /*
+         * Warning:
+         *   If the element, at the index of the ptr array, is not null,
+         *   you should free the memory related before calling this function.
+         */
+        void setElement(TPointer ptr, Uint index);
 
         /*
          * Warning:
@@ -140,7 +147,7 @@ class TPtrArray {
     //You can also take MeshManager as example.
 
     TPtrArray *pPtrArray;
-    Mesh *pMesh;
+    Mesh *pMesh, *pTemp;
 
     mPtrArray = new TPtrArray();
     mPtrArray.create();
@@ -151,7 +158,7 @@ class TPtrArray {
         return;
     }
 
-    //There are three ways to add elemet to mPtrArray.
+    //There are 4 ways to add elemet to mPtrArray.
     //1st
     mPtrArray[0] = pMesh;
 
@@ -161,12 +168,23 @@ class TPtrArray {
     //3rd
     mPtrArray.insert((TPointer)pMesh, mPtrArray.getLength());
 
-    //free and delete
+    //4th
+    mPtrArray.setElement((TPointer)pMesh, mPtrArray.getLength());
+
+    //If you want to modify an existing element. You can...
+    pTemp = (Mesh *)mPtrArray.getElement(0);
+    if(pTemp )
+    {
+        delete pTemp;
+        mPtrArray.setElement((TPointer)pMesh, 0);
+    }
+    
+    //free memory and delete pointer array
     Uint length = mPtrArray->getLength();
     while(length--)
     {
-        pMesh = (Mesh *)mPtrArray->getElement(length);
-        delete temp;
+        pTemp = (Mesh *)mPtrArray->getElement(length);
+        delete pTemp;
     }
     mPtrArray->destroy();
     delete mPtrArray;
