@@ -14,28 +14,32 @@
 ==动态变化策略==
 数组增长：
 当已分配长度不够时，重新分配内存，按照如下原则(假设需求长度为n，实际分配长度为x)：
-2^x >= n，其中x取可取的最小整数。
+x=2^m >= n，其中m取可取的最小整数。
 
 
 ==几个需要考虑的问题==
 
- * 插入元素时，索引越界的情况怎样处理？此处的越界是指不按照顺序处理数组元素，索引出现跳跃。即如下情况：
+ * 插入元素时，索引越界的情况怎样处理？
+
+此处的越界是指不按照顺序处理数组元素，索引值大于实际元素数目。即如下情况：
 {{{
-   mPtrArray[0] = ...;
-   insert(..., 3);
+    Mesh *temp = new Mesh();
+    mPtrArray[0] = ...;//此时 length = 1;
+    insert((TPointer)temp, 3);
 }}}
 解决：中间的值设置为空值NULL，就上述例子来说，执行完第二句，将出现如下结果：
 {{{
    mPtrArray[1] 值为 NULL;
    mPtrArray[2] 值为 NULL;
+   mPtrArray[3] 值为 temp;
    mPtrArray.length 值为 4.
 }}}
- * 删除时如何释放指针里的数据，glib 里要自己设置 set_clear_fun 函数。
-   即：任何类型都是当作“void指针”来删除的，如果某类型中含有指针，该指针对应的内存怎样释放？
+ * 删除时如何释放指针里的数据？glib 里要自己设置 set_clear_fun 函数。
+   即：任何类型都是当作“void指针”来存储的，如果该指针已经动态分配了数据，对应的内存怎样释放？
 
-   解决：按照目前的设计方案，涉及资源分配释放的都是对应的Manager类，这些类里都提供了destroy函数，在该函数中先释放掉该类本身的指针，再调用mPtrArray.destroy()即可。详见“用户使用”部分。
+   解决：按照目前的设计方案，处理资源分配释放的是资源对应的Manager类，这些类里都提供了destroy函数，可以在该函数中完成资源占用的内存的释放，再调用mPtrArray.destroy()即可。详见“用户使用”部分。
 
-    当用户调用setSize或者使用下标来给数组元素赋值时，如果发生缩减数组的情况，数组元素对应的内存里的指针，由用户自己释放。说明如下：
+    与此类似的一种情况，当用户调用setSize或者使用下标来给数组元素赋值时，如果发生缩减数组的情况，数组元素对应的内存里的指针，由用户自己释放。说明如下：
 {{{
     //假设当前length=8，以Mesh类型为例。
     Uint length = mPtrArray.getLength();
@@ -80,12 +84,19 @@ class TPtrArray {
         
         //delete 
         Bool remove(TPointer ptr); 
-        TPointer* removeByIndex(Uint index); 
+        TPointer* removeByIndex(Uint index); /* index begin with 0 */
         void destroy(); 
         
         //process 
-        Bool insert(TPointer ptr, Uint index); 
-        Bool append(TPointer ptr); 
+        Bool insert(TPointer ptr, Uint index); /* index begin with 0 */
+        Bool append(TPointer ptr);
+
+        /*
+         * Warning:
+         *   When you reduce the length of the array by this function,
+         *   and if the memory, which the reduced section pointed to, contains any pointer,
+         *   you should free the memory, which these inner pointers pointed to, if any. 
+         */
         void setSize(Uint length); 
         
         TPointer getElement(Uint index); 
@@ -93,11 +104,29 @@ class TPtrArray {
         Uint getAllocLength(); 
         
         //override operator[], and operator= 
-        const TPtrArray& operator[](Uint index);
-        const TPtrArray& operator=(TPointer *mPtr);
+        const TPointer& operator[](Uint index);
 
-    private: 
-        void maybeExpand(Uint length);
+        /* Function : override operator= 
+         * warning: if there is any vlaue in the left object of '=', you should free it first.
+         */
+        const TPtrArray& operator=(const TPtrArray & ptrArray);
+
+    private:
+        inline Uint nearestPowOf2(Uint num);
+        inline Bool expand(Uint length);
+
+        /*
+         * function: move backward(one step or more), for all the elements after the index(including);
+         *     in order to get mPtr[index].
+         */
+        inline Bool moveBackward(Uint index);
+
+        /*
+         * function:
+         *   move forward one step, for all the elements after the index(including)
+         *   and get the TPointer, which is removed.
+         */
+        inline const TPointer moveForward(Uint index);
 };
 
 }}}
