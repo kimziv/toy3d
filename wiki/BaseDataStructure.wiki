@@ -21,19 +21,40 @@ x=2^m >= n，其中m取可取的最小整数。
 
  * 插入元素时，索引越界的情况怎样处理？
 
-此处的越界是指不按照顺序处理数组元素，索引值大于实际元素数目。即如下情况：
+此处的越界是指定的索引值超出实际最大索引至少2。即如下情况：
 {{{
     Mesh *temp = new Mesh();
-    mPtrArray[0] = ...;//此时 length = 1;
+    mPtrArray[0] = temp;//此时 length = 1;
+    //接下来执行如下操作，都将发生越界;
+    mPtrArray[3] = temp;
     insert((TPointer)temp, 3);
 }}}
-解决：中间的值设置为空值NULL，就上述例子来说，执行完第二句，将出现如下结果：
+放弃的解决方案：中间的值设置为空值NULL。（就上述例子来说，执行完第三句，将出现如下结果：）
 {{{
-   mPtrArray[1] 值为 NULL;
-   mPtrArray[2] 值为 NULL;
-   mPtrArray[3] 值为 temp;
-   mPtrArray.length 值为 4.
+    mPtrArray[1] 值为 NULL;
+    mPtrArray[2] 值为 NULL;
+    mPtrArray[3] 值为 temp;
+    mPtrArray.length 值为 4.
 }}}
+最终方案：只允许append和insert函数在需要的时候扩展数组长度，并且每次操作完成后最大索引值只允许增加1（在insert时，如果指定的索引远超出最大索引，则返回错误）；而数组下标，类似setElement函数，只能处理已经存在的元素。例如
+{{{
+    Mesh *temp1, *temp2, *temp3, *temp4;
+    temp1 = new Mesh();
+    mPtrArray[0] = temp;      //此时 mPtrArray[0]值为NULL，此语句编译不过
+    temp2 = new Mesh();
+    insert((TPointer)temp, 2);//failed
+
+    temp3 = new Mesh();
+    insert((TPointer)temp, 0);//ok
+    temp4 = new Mesh();
+    mPtrArray.append(temp);   //ok
+
+    delete temp1;
+    delete temp2;
+    delete temp3;
+    delete temp4;
+}}}
+
  * 删除时如何释放指针里的数据？glib 里要自己设置 set_clear_fun 函数。
    即：任何类型都是当作“void指针”来存储的，如果该指针已经动态分配了数据，对应的内存怎样释放？
 
