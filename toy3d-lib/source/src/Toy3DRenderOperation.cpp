@@ -45,87 +45,28 @@ TOY3D_BEGIN_NAMESPACE
         return;
     }
 
-    void RenderOperation::setVertices(Real *vertices, Uint count )
+    void RenderOperation::setVertices(Real *pVertices, Uint count)
     {
-        if( !vertices || !count )
-        {
-            TOY3D_PRINT("NULL POINTER.", __FILE__, __LINE__);
-            return;
-        }
-
-        if(mVerticesCount==0)
-            mVerticesCount = count;
-        else if(mVerticesCount!=count)
-        {
-            TOY3D_TIPS("Error: vertices count doesn't agree with existing data.");
-            return;
-        }
-
-        mVertices = vertices;
-
+        mVertices = pVertices;
+        mVerticesCount = count;
         return;
     }
 
-    void RenderOperation::setColors(Real *colors, Uint count)
+    void RenderOperation::setColors(Real *pColors)
     {
-        if( !colors || !count )
-        {
-            TOY3D_PRINT("NULL POINTER.", __FILE__, __LINE__);
-            return;
-        }
-
-        if(mVerticesCount==0)
-            mVerticesCount = count;
-        else if(mVerticesCount!=count)
-        {
-            TOY3D_TIPS("Error: colors' count doesn't agree with existing data.");
-            return;
-        }
-        
-        mColors = colors;
-
+        mColors = pColors;
         return;
     }
 
-    void RenderOperation::setUVs(Real *uvs, Uint count)
+    void RenderOperation::setUVs(Real *pUVs)
     {
-        if( !uvs || !count )
-        {
-            TOY3D_PRINT("NULL POINTER.", __FILE__, __LINE__);
-            return;
-        }
-
-        if(mVerticesCount==0)
-            mVerticesCount = count;
-        else if(mVerticesCount!=count)
-        {
-            TOY3D_TIPS("Error: uvs' count doesn't agree with existing data.");
-            return;
-        }
-
-        mUVs = uvs;
-
+        mUVs = pUVs;
         return;
     }
 
-    void RenderOperation::setNormals(Real *normals, Uint count)
+    void RenderOperation::setNormals(Real *pNormals)
     {
-        if( !normals || !count )
-        {
-            TOY3D_PRINT("NULL POINTER.", __FILE__, __LINE__);
-            return;
-        }
-
-        if(mVerticesCount==0)
-            mVerticesCount = count;
-        else if(mVerticesCount!=count)
-        {
-            TOY3D_TIPS("Error: normals' count doesn't agree with existing data.");
-            return;
-        }
-
-        mNormals = normals;
-
+        mNormals = pNormals;
         return;
     }
 

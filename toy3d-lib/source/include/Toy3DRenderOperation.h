@@ -30,10 +30,18 @@ TOY3D_BEGIN_NAMESPACE
         ~RenderOperation();
 
         void setRenderMode( RenderMode mode );
-        void setVertices(Real *vertices, Uint count );
-        void setColors(Real *colors, Uint count);
-        void setUVs(Real *uvs, Uint count);
-        void setNormals(Real *normals, Uint count);
+        void setVertices(Real *pVertices, Uint count );
+        //void setColors(Real *colors, Uint count);
+        //void setUVs(Real *uvs, Uint count);
+        //void setNormals(Real *normals, Uint count);
+
+        /*
+         * The data security is ensured by Mesh itself.
+         * That means we think that all data got from Mesh is safe, 
+         */
+        void setColors(Real *pColors);
+        void setUVs(Real *pUVs);
+        void setNormals(Real *pNormals);
 
         //void setTextureInfo( Uint texID, Uint texUnit);
         //void setShaderAttrLocation (AttrConstantType type, Uint index);

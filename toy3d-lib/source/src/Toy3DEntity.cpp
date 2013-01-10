@@ -9,6 +9,7 @@ TOY3D_BEGIN_NAMESPACE
     {
         mMesh = NULL;
         mMaterial = NULL;
+        mIsVisible = TRUE;
         MvGl2DemoMatrixIdentity( mModelMatrix );
     }
 

@@ -8,11 +8,8 @@ TOY3D_BEGIN_NAMESPACE
 
     TextureManager::TextureManager()
     {
-        mTextureCount = 0;
-        for(int i=0; i<MAX_TEXTURE_COUNT; i++)
-        {
-            mTextures[i] = 0;
-        }
+        mPtrArray = new TPtrArray();
+        mPtrArray->create();
     }
 
     TextureManager::~TextureManager()
@@ -29,46 +26,61 @@ TOY3D_BEGIN_NAMESPACE
 
     Texture* TextureManager::createTexture(unsigned char *pImageData, Uint width, Uint height, Uint bpp)
     {
-        Bool rvb;
+        Bool rv;
         Texture *pTexture = new Texture();
         if( !pTexture )
             return NULL;
 
-        rvb = pTexture->genTexture(pImageData, width, height, bpp);
-        if( rvb != TRUE )
+        rv = pTexture->genTexture(pImageData, width, height, bpp);
+        if( rv != TRUE )
+        {
+            delete pTexture;
             return NULL;
+        }
 
-        mTextures[mTextureCount++] = pTexture;
+        rv = mPtrArray->append((TPointer)pTexture );
+        if(FALSE==rv)
+        {
+            delete pTexture;
+            TOY3D_TIPS("Error: Failed to store the pointer.\n");
+            return NULL;
+        }
 
         return pTexture;
     }
 
     Texture* TextureManager::createTexture(ImageInfo *pImageInfo)
     {
-        Bool rvb;
-        Texture *texture = new Texture();
-        if( !texture )
-            return NULL;
-        
-        rvb = texture->genTexture(pImageInfo->pImageData,
-            pImageInfo->width, pImageInfo->height, pImageInfo->bpp);
-        if( rvb != TRUE )
+        Bool rv;
+        Texture *pTexture = new Texture();
+        if( !pTexture )
             return NULL;
 
-        mTextures[mTextureCount++] = texture;
-        
-        return texture;
+        rv = pTexture->genTexture(pImageInfo->pImageData,
+            pImageInfo->width, pImageInfo->height, pImageInfo->bpp);
+        if( rv != TRUE )
+        {
+            delete pTexture;
+            return NULL;
+        }
+
+        rv = mPtrArray->append((TPointer)pTexture );
+        if(FALSE==rv)
+        {
+            delete pTexture;
+            TOY3D_TIPS("Error: Failed to store the pointer.\n");
+            return NULL;
+        }
+
+        return pTexture;
     }
 
     Texture* TextureManager::createTextureByFile( const char* fileName )
     {
-        Bool rvb;
+        Bool rv;
         char *ptr;
-        Image *image;
-
-        Texture *texture = new Texture();
-        if( !texture )
-            return NULL;
+        Image *pImage;
+        Texture *pTexture;
 
         ptr = strrchr((char*)fileName, SEPERATER);
         if( !ptr )
@@ -79,11 +91,11 @@ TOY3D_BEGIN_NAMESPACE
 
         if( 0==strncmp(ptr, TGA_SUFFIX, strlen(TGA_SUFFIX)) )
         {
-            image = new TGAImage();
+            pImage = new TGAImage();
         }
         else if( 0==strncmp(ptr, BMP_SUFFIX, strlen(BMP_SUFFIX)) )
         {
-            image = new BMPImage();
+            pImage = new BMPImage();
         }
         else
         {
@@ -91,21 +103,42 @@ TOY3D_BEGIN_NAMESPACE
             return NULL;
         }
 
-        if( 0 == image )
+        if( 0 == pImage )
             return NULL;
 
-        rvb = image->decode(fileName);
-        if( rvb != TRUE )
+        rv = pImage->decode(fileName);
+        if( rv != TRUE )
+        {
+            delete pImage;
             return NULL;
+        }
 
-        rvb = texture->genTexture(image);
-        if( rvb != TRUE )
+        pTexture = new Texture();
+        if( !pTexture )
+        {
+            delete pImage;
             return NULL;
+        }
 
-        delete image;
-        mTextures[mTextureCount++] = texture;
+        rv = pTexture->genTexture(pImage);
+        if( rv != TRUE )
+        {
+            delete pImage;
+            delete pTexture;
+            return NULL;
+        }
 
-        return texture;
+        delete pImage;
+
+        rv = mPtrArray->append((TPointer)pTexture );
+        if(FALSE==rv)
+        {
+            delete pTexture;
+            TOY3D_TIPS("Error: Failed to store the pointer.\n");
+            return NULL;
+        }
+
+        return pTexture;
     }
 
     void TextureManager::deleteTextureFromGpu(Uint *pTexids, Uint count)
@@ -125,15 +158,19 @@ TOY3D_BEGIN_NAMESPACE
     {
         Texture *temp;
         Uint texid;
-
-        while(mTextureCount--)
+        Uint length = mPtrArray->getLength();
+        
+        while(length--)
         {
-            temp = mTextures[mTextureCount];
+            temp = (Texture *)mPtrArray->getElement(length);
             texid = temp->getTextureID();
             deleteTextureFromGpu(&texid, 1);
             delete temp;
-            mTextures[mTextureCount] = 0;
+            //mPtrArray->setElement(NULL, length);
         }
+        
+        mPtrArray->destroy();
+        delete mPtrArray;
 
         return;
     }

@@ -47,6 +47,7 @@ RealParamEntry::RealParamEntry(CustUniformConstanType theType, char *theName, Re
 
 ShaderProgramParams::ShaderProgramParams()
 {
+    /*
     int i;
     mAutoUniformCount = 0;
     mAttrCount = 0;
@@ -64,41 +65,66 @@ ShaderProgramParams::ShaderProgramParams()
 
     for(i=0; i<MAX_CUSTENTRY_COUNT; i++)
         mRealUniformEntries[i] = 0;
+    */
+
+    mPtrAryAutoUnif = new TPtrArray();
+    mPtrAryAttr     = new TPtrArray();
+    mPtrAryIntUnif  = new TPtrArray();
+    mPtrAryRealUnif = new TPtrArray();
+
+    mPtrAryAutoUnif->create();
+    mPtrAryAttr->create();
+    mPtrAryIntUnif->create();
+    mPtrAryRealUnif->create();
 }
 
 ShaderProgramParams::~ShaderProgramParams()
 {
-    AutoParamEntry *temp1;
-    while( mAutoUniformCount )
-    {
-        temp1 = mAutoUniformEntries[--mAutoUniformCount];
-        DELETEANDNULL( temp1 );
-        mAutoUniformEntries[mAutoUniformCount] = 0;
-    }
+    Uint length;
 
-    AttrParamEntry *temp2;
-    while( mAttrCount )
+    AutoParamEntry *pTemp1;
+    length = mPtrAryAutoUnif->getLength();
+    while(length--)
     {
-        temp2 = mAttrEntries[--mAttrCount];
-        DELETEANDNULL( temp2 );
-        mAttrEntries[mAttrCount] = 0;
+        pTemp1 = (AutoParamEntry *)mPtrAryAutoUnif->getElement(length);
+        DELETEANDNULL(pTemp1);
+        //mPtrArray->setElement(NULL, length);
     }
+    mPtrAryAutoUnif->destroy();
+    delete mPtrAryAutoUnif;
 
-    IntParamEntry *temp3;
-    while( mIntUniformCount )
+    AttrParamEntry *pTemp2;
+    length = mPtrAryAttr->getLength();
+    while(length--)
     {
-        temp3 = mIntUniformEntries[--mIntUniformCount];
-        DELETEANDNULL( temp3 );
-        mIntUniformEntries[mIntUniformCount] = 0;
+        pTemp2 = (AttrParamEntry *)mPtrAryAttr->getElement(length);
+        DELETEANDNULL(pTemp2);
+        //mPtrArray->setElement(NULL, length);
     }
+    mPtrAryAttr->destroy();
+    delete mPtrAryAttr;
 
-    RealParamEntry *temp4;
-    while( mRealUniformCount )
+    IntParamEntry *pTemp3;
+    length = mPtrAryIntUnif->getLength();
+    while(length--)
     {
-        temp4 = mRealUniformEntries[--mRealUniformCount];
-        DELETEANDNULL( temp4 );
-        mRealUniformEntries[mRealUniformCount] = 0;
+        pTemp3 = (IntParamEntry *)mPtrAryIntUnif->getElement(length);
+        DELETEANDNULL(pTemp3);
+        //mPtrArray->setElement(NULL, length);
     }
+    mPtrAryIntUnif->destroy();
+    delete mPtrAryIntUnif;
+
+    RealParamEntry *pTemp4;
+    length = mPtrAryRealUnif->getLength();
+    while(length--)
+    {
+        pTemp4 = (RealParamEntry *)mPtrAryRealUnif->getElement(length);
+        DELETEANDNULL(pTemp4);
+        //mPtrArray->setElement(NULL, length);
+    }
+    mPtrAryRealUnif->destroy();
+    delete mPtrAryRealUnif;
 }
 
 /* Auto Uniform Parameter Methods -------------------------------start */
@@ -116,48 +142,72 @@ void ShaderProgramParams::setAutoUniformConstant( Uint index, const Uint texUnit
 
 Bool ShaderProgramParams::searchNamedAutoConstant( const char *name, Uint* position )
 {
-    int i = mAutoUniformCount;
+    int i = mPtrAryAutoUnif->getLength();
+    AutoParamEntry *pTemp;
     while( i )
     {
         i--;
-        if( !strncmp((const char *)mAutoUniformEntries[i]->name, name, MAX_NAME_LEN) )
+        pTemp = (AutoParamEntry *)mPtrAryAutoUnif->getElement(i);
+        if( pTemp )
         {
-            if( position )
-                *position = i;
-            return true;
+            if( !strncmp((const char *)pTemp->name, name, MAX_NAME_LEN) )
+            {
+                if( position )
+                    *position = i;
+                return TRUE;
+            }
         }
     }
     
     if( position )
         *position = 0;
-    return false;
+    return FALSE;
 }
 
 void ShaderProgramParams::setNamedAutoConstant ( AutoConstanType type, char *name )
 {
-    if( searchNamedAutoConstant(name, 0) )
+    Bool rv;
+    rv = searchNamedAutoConstant(name, 0);
+    if( TRUE==rv )
     {
         TOY3D_PRINT("setNamedAutoConstant failed. AutoConst name exist.", __FILE__, __LINE__);
         return;
     }
 
     AutoParamEntry *entry = new AutoParamEntry(type, name );
-    mAutoUniformEntries[mAutoUniformCount++] = entry;
+    rv = mPtrAryAutoUnif->append( (TPointer)entry );
+    if(TRUE!=rv)
+    {
+        TOY3D_TIPS("Error: Failed to store the pointer.\n");
+        return;
+    }
 
     return;
 }
 
 void ShaderProgramParams::updateAutoConstIndex ( const char *name, Uint index )
 {
+    Bool rv;
     Uint position = 0;
-    if( !searchNamedAutoConstant(name, &position) )
+    AutoParamEntry *pTemp;
+
+    rv = searchNamedAutoConstant(name, &position);
+    if( TRUE!=rv )
     {
         TOY3D_PRINT("updateAutoConstIndex failed. AutoConst name doesn't exist.", __FILE__, __LINE__);
         return;
     }
 
-    mAutoUniformEntries[position]->index = index;
-    
+    pTemp = (AutoParamEntry *)mPtrAryAutoUnif->getElement(position);
+    /*
+     * Though it can't be NULL, when you get TRUE from searchNamedAutoConstant,
+     * it is suggested to finish the assignment as follows.
+     */
+    if( pTemp )
+    {
+        pTemp->index = index;
+    }
+
     return;
 }
 
@@ -180,30 +230,35 @@ void ShaderProgramParams::updateAutoConstIndex_2 ( const Uchar *name, Uint shade
 void ShaderProgramParams::updateAutoUniformConst ( AutoParamDataSource *source )
 {
     Uint i;
-    AutoParamEntry *tempACE;
-    for ( i=0; i<mAutoUniformCount; i++ )
+    AutoParamEntry *pTemp;
+    Uint length = mPtrAryAutoUnif->getLength();
+
+    for ( i=0; i<length; i++ )
     {
-        tempACE = mAutoUniformEntries[i];
-        switch( mAutoUniformEntries[i]->type )
+        pTemp = (AutoParamEntry *)mPtrAryAutoUnif->getElement(i);
+        if( pTemp )
         {
-        case TOY3D_ACT_WORLD_MATRIX:
-            setAutoUniformConstant( mAutoUniformEntries[i]->index, source->getWorldMatrix() );
-            break;
+            switch( pTemp->type )
+            {
+            case TOY3D_ACT_WORLD_MATRIX:
+                setAutoUniformConstant( pTemp->index, source->getWorldMatrix() );
+                break;
 
-        case TOY3D_ACT_PROJECTION_MATRIX:
-            setAutoUniformConstant( mAutoUniformEntries[i]->index, source->getProjectionMatrix() );
-            break;
+            case TOY3D_ACT_PROJECTION_MATRIX:
+                setAutoUniformConstant( pTemp->index, source->getProjectionMatrix() );
+                break;
 
-        case TOY3D_ACT_VIEW_MATRIX:
-            setAutoUniformConstant( mAutoUniformEntries[i]->index, source->getViewMatrix() );
-            break;
+            case TOY3D_ACT_VIEW_MATRIX:
+                setAutoUniformConstant( pTemp->index, source->getViewMatrix() );
+                break;
 
-        //case TOY3D_ACT_SAMPLER2D:
-        //    setAutoUniformConstant( mAutoUniformEntries[i]->index, source->getTextureUnit());
-        //    break;
-
-        default:
-            break;
+                //case TOY3D_ACT_SAMPLER2D:
+                //    setAutoUniformConstant( mAutoUniformEntries[i]->index, source->getTextureUnit());
+                //    break;
+                
+            default:
+                break;
+            }
         }
     }
     return;
@@ -211,27 +266,35 @@ void ShaderProgramParams::updateAutoUniformConst ( AutoParamDataSource *source )
 
 Uint ShaderProgramParams::getAutoConstCount()
 {
-    return mAutoUniformCount;
+    return mPtrAryAutoUnif->getLength();
 }
 
 const char* ShaderProgramParams::getAutoConstName( Uint position )
 {
-    return (const char *)mAutoUniformEntries[position]->name;
+    AutoParamEntry *pTemp = (AutoParamEntry *)(*mPtrAryAutoUnif)[position];
+    return (const char *)pTemp->name;
 }
 /* Auto Uniform Parameter Methods -------------------------------end   */
 
 /* Attribution Parameter Methods -------------------------------start */
 Bool ShaderProgramParams::searchNamedAttrConstant( const char *name, Uint* position )
 {
-    int i = mAttrCount;
+    int i = mPtrAryAttr->getLength();
+    AttrParamEntry *pTemp;
+
     while( i )
     {
         i--;
-        if( !strncmp((const char *)mAttrEntries[i]->name, name, MAX_NAME_LEN) )
+
+        pTemp = (AttrParamEntry *)mPtrAryAttr->getElement(i);
+        if( pTemp )
         {
-            if( position )
-                *position = i;
-            return true;
+            if( !strncmp((const char *)pTemp->name, name, MAX_NAME_LEN) )
+            {
+                if( position )
+                    *position = i;
+                return TRUE;
+            }
         }
     }
     
@@ -242,49 +305,71 @@ Bool ShaderProgramParams::searchNamedAttrConstant( const char *name, Uint* posit
 
 void ShaderProgramParams::setNamedAttrConstant ( AttrConstantType type, char *name )
 {
-    if( searchNamedAttrConstant(name, 0) )
+    Bool rv;
+
+    rv = searchNamedAttrConstant(name, 0);
+    if( TRUE==rv )
     {
         TOY3D_PRINT("setNamedAttrConstant failed. Auto Constant name exist.", __FILE__, __LINE__);
         return;
     }
 
     AttrParamEntry *entry = new AttrParamEntry(type, name );
-    mAttrEntries[mAttrCount++] = entry;
+    rv = mPtrAryAttr->append( (TPointer)entry );
+    if(TRUE!=rv)
+    {
+        TOY3D_TIPS("Error: Failed to store the pointer.\n");
+        return;
+    }
 
     return;
 }
 
 void ShaderProgramParams::updateAttrConstIndex ( const char *name, Uint index )
 {
+    Bool rv;
     Uint position = 0;
-    if( !searchNamedAttrConstant(name, &position) )
+    AttrParamEntry *pTemp;
+
+    rv = searchNamedAttrConstant(name, &position);
+    if( TRUE!=rv )
     {
         TOY3D_PRINT("updateAttrConstIndex failed. Attribution Constant name doesn't exist.", __FILE__, __LINE__);
         return;
     }
-    
-    mAttrEntries[position]->index = index;
+
+    pTemp = (AttrParamEntry *)mPtrAryAttr->getElement(position);
+    if( pTemp )
+    {
+        pTemp->index = index;
+    }
     
     return;
 }
 
 Uint ShaderProgramParams::getAttrConstCount()
 {
-    return mAttrCount;
+    return mPtrAryAttr->getLength();
 }
 
 const char* ShaderProgramParams::getAttrConstName( Uint position )
 {
-    return (const char*)mAttrEntries[position]->name;
+    AttrParamEntry *pTemp = (AttrParamEntry *)(*mPtrAryAttr)[position];
+    return (const char *)pTemp->name;
 }
 
 //-1->no constant exist
 int ShaderProgramParams::getAttrConstIndex( AttrConstantType type )
 {
-    for (Uint i=0; i<mAttrCount; i++)
+    Uint i;
+    Uint length = mPtrAryAttr->getLength();
+    AttrParamEntry *pTemp;
+
+    for(i=0; i<length; i++)
     {
-        if( mAttrEntries[i]->type == type)
-            return mAttrEntries[i]->index;
+        pTemp = (AttrParamEntry *)(*mPtrAryAttr)[i];
+        if( pTemp->type == type)
+            return pTemp->index;
     }
 
     return TOY3D_ERROR;
@@ -300,29 +385,37 @@ Bool ShaderProgramParams::searchNamedCustConstant(Bool flag, const char *name, U
 
     if( TRUE == flag )
     {
-        i = mIntUniformCount;
-        while( i )
+        IntParamEntry *pTemp;
+        i = mPtrAryIntUnif->getLength();
+        while( i-- )
         {
-            i--;
-            if( !strncmp((const char *)mIntUniformEntries[i]->name, name, MAX_NAME_LEN) )
+            pTemp = (IntParamEntry *)mPtrAryIntUnif->getElement(i);
+            if( pTemp )
             {
-                if( position )
-                    *position = i;
-                return true;
+                if( !strncmp((const char *)pTemp->name, name, MAX_NAME_LEN) )
+                {
+                    if( position )
+                        *position = i;
+                    return TRUE;
+                }
             }
         }
     }
     else
     {
-        i = mRealUniformCount;
-        while( i )
+        RealParamEntry *pTemp;
+        i = mPtrAryRealUnif->getLength();
+        while( i-- )
         {
-            i--;
-            if( !strncmp((const char *)mRealUniformEntries[i]->name, name, MAX_NAME_LEN) )
+            pTemp = (RealParamEntry *)mPtrAryRealUnif->getElement(i);
+            if( pTemp )
             {
-                if( position )
-                    *position = i;
-                return true;
+                if( !strncmp((const char *)pTemp->name, name, MAX_NAME_LEN) )
+                {
+                    if( position )
+                        *position = i;
+                    return TRUE;
+                }
             }
         }
     }
@@ -330,33 +423,49 @@ Bool ShaderProgramParams::searchNamedCustConstant(Bool flag, const char *name, U
     if( position )
         *position = 0;
 
-    return false;
+    return FALSE;
 }
 
 void ShaderProgramParams::setNamedCustUniformConstant(CustUniformConstanType type, char *name , int value)
 {
-    if( searchNamedCustConstant( TRUE, name, 0) )
+    Bool rv;
+
+    rv = searchNamedCustConstant( TRUE, name, 0);
+    if( TRUE==rv )
     {
         TOY3D_PRINT("setNamedAutoConstant failed. Custom constant name exist.", __FILE__, __LINE__);
         return;
     }
 
     IntParamEntry *entry = new IntParamEntry(type, name, value);
-    mIntUniformEntries[mIntUniformCount++] = entry;
+    rv = mPtrAryIntUnif->append( (TPointer)entry );
+    if(TRUE!=rv)
+    {
+        TOY3D_TIPS("Error: Failed to store the pointer.\n");
+        return;
+    }
 
     return;
 }
 
 void ShaderProgramParams::setNamedCustUniformConstant( CustUniformConstanType type, char *name , Real value)
 {
-    if( searchNamedCustConstant( FALSE, name, 0) )
+    Bool rv;
+    
+    rv = searchNamedCustConstant( FALSE, name, 0);
+    if( TRUE==rv )
     {
         TOY3D_PRINT("setNamedAutoConstant failed. Custom constant name exist.", __FILE__, __LINE__);
         return;
     }
-
+    
     RealParamEntry *entry = new RealParamEntry(type, name, value);
-    mRealUniformEntries[mRealUniformCount++] = entry;
+    rv = mPtrAryRealUnif->append( (TPointer)entry );
+    if(TRUE!=rv)
+    {
+        TOY3D_TIPS("Error: Failed to store the pointer.\n");
+        return;
+    }
 
     return;
 }
@@ -383,45 +492,67 @@ void ShaderProgramParams::updateCustUniformIndex ( const char *name, Uint index 
 
 void ShaderProgramParams::updateCustIntUniformIndex ( const char *name, Uint index )
 {
+    Bool rv;
     Uint position = 0;
+    IntParamEntry *pTemp;
 
-    if( searchNamedCustConstant(TRUE, name, &position) )
+    rv = searchNamedCustConstant(TRUE, name, &position);
+    if( TRUE!=rv )
     {
-        mIntUniformEntries[position]->index = index;
+        //printf("name = %s.\n", name );
+        TOY3D_PRINT("updateCustIntUniformIndex failed. Custom Constant name doesn't exist.", __FILE__, __LINE__);
         return;
     }
-    
-    TOY3D_PRINT("updateCustUniformIndex failed. Custom Constant name doesn't exist.", __FILE__, __LINE__);
+
+    pTemp = (IntParamEntry *)mPtrAryIntUnif->getElement(position);
+    if( pTemp )
+    {
+        pTemp->index = index;
+    }
+
     return;
 }
 
 void ShaderProgramParams::updateCustRealUniformIndex ( const char *name, Uint index )
 {
+    Bool rv;
     Uint position = 0;
+    RealParamEntry *pTemp;
     
-    if( searchNamedCustConstant(FALSE, name, &position) )
+    rv = searchNamedCustConstant(FALSE, name, &position);
+    if( TRUE!=rv )
     {
-        mRealUniformEntries[position]->index = index;
+        //printf("name = %s.\n", name );
+        TOY3D_PRINT("updateCustRealUniformIndex failed. Custom Constant name doesn't exist.", __FILE__, __LINE__);
         return;
     }
-    
-    TOY3D_PRINT("updateCustUniformIndex failed. Custom Constant name doesn't exist.", __FILE__, __LINE__);
+
+    pTemp = (RealParamEntry *)mPtrAryRealUnif->getElement(position);
+    if( pTemp )
+    {
+        pTemp->index = index;
+    }
+
     return;
 }
 
 void ShaderProgramParams::updateCustUniformConst()
 {
-    Uint i;
+    Uint i, length;
+    IntParamEntry  *pTempi;
+    RealParamEntry *pTempr;
 
-    for ( i=0; i<mIntUniformCount; i++ )
+    length = mPtrAryIntUnif->getLength();
+    for ( i=0; i<length; i++ )
     {
-        switch( mIntUniformEntries[i]->type )
+        pTempi = (IntParamEntry  *)mPtrAryIntUnif->getElement(i);
+        switch( pTempi->type )
         {
         case TOY3D_CUST_INT1:
         case TOY3D_CUST_SAMPLER1D:
         case TOY3D_CUST_SAMPLER2D:
         case TOY3D_CUST_SAMPLER3D:
-            glUniform1i(mIntUniformEntries[i]->index, mIntUniformEntries[i]->value);
+            glUniform1i(pTempi->index, pTempi->value);
             break;
 
         case TOY3D_CUST_INT2:
@@ -434,7 +565,7 @@ void ShaderProgramParams::updateCustUniformConst()
         case TOY3D_CUST_VEC_3:
         case TOY3D_CUST_VEC_4:
         case TOY3D_CUST_UNKNOWN:
-            TOY3D_TIPS("Warning: It could do nothing now.\n");
+            TOY3D_TIPS("Warning: It does nothing now.\n");
             break;
 
         default:
@@ -442,12 +573,14 @@ void ShaderProgramParams::updateCustUniformConst()
         }
     }
 
-    for ( i=0; i<mRealUniformCount; i++ )
+    length = mPtrAryRealUnif->getLength();
+    for ( i=0; i<length; i++ )
     {
-        switch( mRealUniformEntries[i]->type )
+        pTempr = (RealParamEntry*)mPtrAryRealUnif->getElement(i);
+        switch( pTempr->type )
         {
         case TOY3D_CUST_REAL1:
-            glUniform1f(mRealUniformEntries[i]->index, mRealUniformEntries[i]->value);
+            glUniform1f(pTempr->index, pTempr->value);
             break;
 
         case TOY3D_CUST_REAL2:
@@ -460,7 +593,7 @@ void ShaderProgramParams::updateCustUniformConst()
         case TOY3D_CUST_VEC_3:
         case TOY3D_CUST_VEC_4:
         case TOY3D_CUST_UNKNOWN:
-            TOY3D_TIPS("Warning: It could do nothing now.\n");
+            TOY3D_TIPS("Warning: It does nothing now.\n");
             break;
 
         default:
@@ -473,31 +606,38 @@ void ShaderProgramParams::updateCustUniformConst()
 
 Uint ShaderProgramParams::getCustIntCount()
 {
-    return mIntUniformCount;
+    return mPtrAryIntUnif->getLength();
 }
 
 Uint ShaderProgramParams::getCustRealCount()
 {
-    return mRealUniformCount;
+    return mPtrAryRealUnif->getLength();
 }
 
 const char* ShaderProgramParams::getCustIntConstName( Uint position )
 {
-    return (const char *)mIntUniformEntries[position]->name;
+    IntParamEntry *pTemp = (IntParamEntry *)(*mPtrAryIntUnif)[position];
+    return (const char *)pTemp->name;
 }
 
 const char* ShaderProgramParams::getCustRealConstName( Uint position )
 {
-    return (const char *)mRealUniformEntries[position]->name;
+    RealParamEntry *pTemp = (RealParamEntry *)(*mPtrAryRealUnif)[position];
+    return (const char *)pTemp->name;
 }
 
 //-1->no constant exist
 int ShaderProgramParams::getSampler2DValue()
 {
-    for (Uint i=0; i<mIntUniformCount; i++)
+    Uint i, length;
+    IntParamEntry *pTemp;
+
+    length = mPtrAryIntUnif->getLength();
+    for (i=0; i<length; i++)
     {
-        if( mIntUniformEntries[i]->type == TOY3D_CUST_SAMPLER2D)
-            return mIntUniformEntries[i]->value;
+        pTemp = (IntParamEntry *)(*mPtrAryIntUnif)[i];
+        if(pTemp->type == TOY3D_CUST_SAMPLER2D)
+            return pTemp->value;
     }
 
     return TOY3D_ERROR;

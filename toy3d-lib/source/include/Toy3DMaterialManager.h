@@ -4,7 +4,7 @@
 
 #include "Toy3DCommon.h"
 #include "Toy3DMaterial.h"
-
+#include "Toy3DPtrArray.h"
 
 
 TOY3D_BEGIN_NAMESPACE
@@ -15,15 +15,13 @@ TOY3D_BEGIN_NAMESPACE
         MaterialManager();
         static MaterialManager* mInstance;
 
-        Material *mMaterials[MAX_MATERIAL_COUNT];
-        Uint mMaterialCount;
+        TPtrArray *mPtrArray;
 
     public:
         ~MaterialManager();
         static MaterialManager* getInstance();
 
         Material* createMaterial();
-
         Material* createMaterial(ImageInfo *pImageInfo);
         Material* createMaterialByFile( const char* fileName );
 

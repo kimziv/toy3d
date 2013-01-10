@@ -11,6 +11,7 @@ TOY3D_BEGIN_NAMESPACE
         mColors = NULL;
         mUVs = NULL;
         mNormals = NULL;
+        mVertexCount = 0;
     }
 
     Mesh::~Mesh() 
@@ -19,27 +20,113 @@ TOY3D_BEGIN_NAMESPACE
         FREEANDNULL(mColors);
         FREEANDNULL(mUVs);
         FREEANDNULL(mNormals);
+
+        mVertexCount = 0;
     }
 
-    void Mesh::setVertices (Real* vertices, Uint count)
+    void Mesh::setVertices (Real* pVertices, Uint count)
     {
-       FREEANDNULL(mVertices);
+        Uint size;
 
-       mVertexCount = count;
-       Uint size = count * 3 * sizeof(Real);
-       mVertices = (Real*)malloc(size);
-       memcpy (mVertices, vertices, size);
+        if( !pVertices )
+        {
+            TOY3D_PRINT("NULL POINTER.", __FILE__, __LINE__);
+            return;
+        }
+
+        FREEANDNULL(mVertices);
+        mVertexCount = count;
+
+        size = count * 3 * sizeof(Real);
+        mVertices = (Real*)malloc(size);
+        memcpy (mVertices, pVertices, size);
 
        return;
     }
 
-    void Mesh::setUVs(Real* uvs, Uint count)
+    void Mesh::setColors (Real* pColors, Uint count)
     {
-        FREEANDNULL(mUVs);
+        Uint size;
 
-        Uint size = mVertexCount * 2 * sizeof(Real);
+        if( !pColors )
+        {
+            TOY3D_PRINT("NULL POINTER.", __FILE__, __LINE__);
+            return;
+        }
+
+        FREEANDNULL(mColors);
+
+        if(mVertexCount==0)
+        {
+            mVertexCount = count;
+        }
+        else if(mVertexCount!=count)
+        {
+            TOY3D_TIPS("Error: colors' count doesn't agree with existing data.");
+            return;
+        }
+
+        size = mVertexCount * 4 * sizeof(Real);
         mUVs = (Real*)malloc(size);
-        memcpy (mUVs, uvs, size);
+        memcpy (mColors, pColors, size);
+        
+        return;
+    }
+
+    void Mesh::setUVs(Real* pUVs, Uint count)
+    {
+        Uint size;
+
+        if( !pUVs )
+        {
+            TOY3D_PRINT("NULL POINTER.", __FILE__, __LINE__);
+            return;
+        }
+
+        FREEANDNULL(mUVs);
+        
+        if(mVertexCount==0)
+        {
+            mVertexCount = count;
+        }
+        else if(mVertexCount!=count)
+        {
+            TOY3D_TIPS("Error: uvs' count doesn't agree with existing data.");
+            return;
+        }
+        
+        size = mVertexCount * 2 * sizeof(Real);
+        mUVs = (Real*)malloc(size);
+        memcpy (mUVs, pUVs, size);
+        
+        return;
+    }
+
+    void Mesh::setNormals(Real* pNormals, Uint count)
+    {
+        Uint size;
+
+        if( !pNormals )
+        {
+            TOY3D_PRINT("NULL POINTER.", __FILE__, __LINE__);
+            return;
+        }
+
+        FREEANDNULL(mNormals);
+
+        if(mVertexCount==0)
+        {
+            mVertexCount = count;
+        }
+        else if(mVertexCount!=count)
+        {
+            TOY3D_TIPS("Error: normals' count doesn't agree with existing data.");
+            return;
+        }
+
+        size = mVertexCount * 3 * sizeof(Real);
+        mUVs = (Real*)malloc(size);
+        memcpy(mNormals, pNormals, size);
 
         return;
     }
@@ -48,7 +135,6 @@ TOY3D_BEGIN_NAMESPACE
     {
         mRenderMode = mode;
     }
-
 
     void Mesh::getRenderOperation(RenderOperation* ro)
     {
@@ -61,17 +147,17 @@ TOY3D_BEGIN_NAMESPACE
 
             if( mColors )
             {
-                ro->setColors( mColors, mVertexCount );
+                ro->setColors( mColors );
             }
 
             if( mUVs )
             {
-                ro->setUVs( mUVs, mVertexCount );
+                ro->setUVs( mUVs );
             }
 
             if(mNormals)
             {
-                ro->setNormals(mNormals, mVertexCount);
+                ro->setNormals(mNormals);
             }
         }
     }

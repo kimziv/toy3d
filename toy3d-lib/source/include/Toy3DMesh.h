@@ -29,10 +29,10 @@ TOY3D_BEGIN_NAMESPACE
     public:
 
         void setRenderMode (RenderMode mode);
-        void setVertices (Real* veritces, Uint count);
-        void setColors (Real* colors, Uint count);
-        void setUVs (Real* uvs, Uint count);
-        void setNormals(Real* normals, Uint count);
+        void setVertices (Real* pVeritces, Uint count);
+        void setColors (Real* pColors, Uint count);
+        void setUVs (Real* pUVs, Uint count);
+        void setNormals(Real* pNormals, Uint count);
 
         void getRenderOperation(RenderOperation* ro);
 

@@ -7,18 +7,11 @@ TOY3D_BEGIN_NAMESPACE
 
     ShaderProgramManager::ShaderProgramManager()
     {
-        int i;
-        mShaderProgramParamsCount = 0;
-        for(i=0; i<MAX_SHADER_PROGRAM_PARAMS_COUNT; i++)
-        {
-            mShaderProgramParams[i] = 0;
-        }
+        mShaderPtrArray = new TPtrArray();
+        mShaderPtrArray->create();
 
-        mShaderProgramCount = 0;
-        for(i=0; i<MAX_SHADER_PROGRAM_COUNT; i++)
-        {
-            mShaderPrograms[i] = 0;
-        }
+        mShaderParamsPtrArray = new TPtrArray();
+        mShaderParamsPtrArray->create();
     }
 
     ShaderProgramManager::~ShaderProgramManager()
@@ -35,23 +28,37 @@ TOY3D_BEGIN_NAMESPACE
 
     ShaderProgramParams* ShaderProgramManager::createShaderProgramParams()
     {
+        Bool rv;
         ShaderProgramParams *pShaderProgramParams = new ShaderProgramParams();
         if( !pShaderProgramParams )
             return NULL;
 
-        mShaderProgramParams[mShaderProgramParamsCount++] = pShaderProgramParams;
-        
+        rv = mShaderParamsPtrArray->append( (TPointer)pShaderProgramParams );
+        if(FALSE==rv)
+        {
+            DELETEANDNULL(pShaderProgramParams)
+            TOY3D_TIPS("Error: Failed to store the pointer.\n");
+            return NULL;
+        }
+
         return pShaderProgramParams;
     }
 
     ShaderProgram* ShaderProgramManager::createShaderProgram()
     {
+        Bool rv;
         ShaderProgram *pShaderProgram = new ShaderProgram();
         if( !pShaderProgram )
             return NULL;
 
-        mShaderPrograms[mShaderProgramCount++] = pShaderProgram;
-        
+        rv = mShaderPtrArray->append( (TPointer)pShaderProgram );
+        if(FALSE==rv)
+        {
+            DELETEANDNULL(pShaderProgram);
+            TOY3D_TIPS("Error: Failed to store the pointer.\n");
+            return NULL;
+        }
+
         return pShaderProgram;
     }
 
@@ -61,28 +68,36 @@ TOY3D_BEGIN_NAMESPACE
     void ShaderProgramManager::destroyAllShaderProgramParams()
     {
         ShaderProgramParams *temp;
-        
-        while(mShaderProgramParamsCount--)
+        Uint length = mShaderParamsPtrArray->getLength();
+
+        while(length--)
         {
-            temp = mShaderProgramParams[mShaderProgramParamsCount];
-            delete temp;
-            mShaderProgramParams[mShaderProgramParamsCount] = 0;
+            temp = (ShaderProgramParams *)mShaderParamsPtrArray->getElement(length);
+            DELETEANDNULL(temp);
+            //mPtrArray->setElement(NULL, length);
         }
         
+        mShaderParamsPtrArray->destroy();
+        DELETEANDNULL(mShaderParamsPtrArray);
+
         return;
     }
 
     void ShaderProgramManager::destroyAllShaderPrograms()
     {
         ShaderProgram *temp;
-
-        while(mShaderProgramCount--)
+        Uint length = mShaderPtrArray->getLength();
+        
+        while(length--)
         {
-            temp = mShaderPrograms[mShaderProgramCount];
-            delete temp;
-            mShaderPrograms[mShaderProgramCount] = 0;
+            temp = (ShaderProgram *)mShaderPtrArray->getElement(length);
+            DELETEANDNULL(temp);
+            //mPtrArray->setElement(NULL, length);
         }
         
+        mShaderPtrArray->destroy();
+        DELETEANDNULL(mShaderPtrArray);
+
         return;
     }
 

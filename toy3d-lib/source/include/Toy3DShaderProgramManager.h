@@ -5,7 +5,7 @@
 #include "Toy3DCommon.h"
 #include "Toy3DShaderProgram.h"
 #include "Toy3DShaderProgramParams.h"
-
+#include "Toy3DPtrArray.h"
 
 
 TOY3D_BEGIN_NAMESPACE
@@ -16,11 +16,8 @@ TOY3D_BEGIN_NAMESPACE
         ShaderProgramManager();
         static ShaderProgramManager* mInstance;
 
-        ShaderProgramParams *mShaderProgramParams[MAX_SHADER_PROGRAM_PARAMS_COUNT];
-        ShaderProgram *mShaderPrograms[MAX_SHADER_PROGRAM_COUNT];
-
-        Uint mShaderProgramParamsCount;
-        Uint mShaderProgramCount;
+        TPtrArray *mShaderPtrArray;
+        TPtrArray *mShaderParamsPtrArray;
 
     public:
         ~ShaderProgramManager();
