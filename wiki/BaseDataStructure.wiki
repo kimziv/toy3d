@@ -133,7 +133,8 @@ class TPtrArray {
         Uint getAllocLength(); 
         
         //override operator[], and operator= 
-        const TPointer& operator[](Uint index);
+        TPointer operator[](Uint index);
+        const TPointer operator[](Uint index) const;
 
         /* Function : override operator= 
          * warning: if there is any vlaue in the left object of '=', you should free it first.
