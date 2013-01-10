@@ -36,7 +36,7 @@ x=2^m >= n，其中m取可取的最小整数。
     mPtrArray[3] 值为 temp;
     mPtrArray.length 值为 4.
 }}}
-最终方案：只允许append和insert函数在需要的时候扩展数组长度，并且每次操作完成后数组元素个数只允许增加1（在insert时，如果指定的索引远超出最大索引，则返回错误）；而数组下标，类似setElement函数，只能处理已经存在的元素。例如
+最终方案：只允许append和insert函数在需要的时候扩展数组长度，并且每次操作完成后数组元素个数只允许增加1（在insert时，如果指定的索引超出数组最大索引2或以上，则返回错误）；而数组下标，类似setElement函数，只能处理已经存在的元素。例如
 {{{
     Mesh *temp1, *temp2, *temp3, *temp4;
     temp1 = new Mesh();
