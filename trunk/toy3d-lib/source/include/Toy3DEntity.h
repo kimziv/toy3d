@@ -18,6 +18,7 @@ TOY3D_BEGIN_NAMESPACE
         Mesh* mMesh;
         Material* mMaterial;
         ShaderProgram* mShaderProgram;
+        Bool mIsVisible;
 
         Real mModelMatrix[MATRIX_4x4_SIZE]; 
 

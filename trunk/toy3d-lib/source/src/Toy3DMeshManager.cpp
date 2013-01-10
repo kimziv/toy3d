@@ -7,11 +7,8 @@ TOY3D_BEGIN_NAMESPACE
 
     MeshManager::MeshManager()
     {
-        mMeshCount = 0;
-        for(int i=0; i<MAX_MESH_COUNT; i++)
-        {
-            mMeshs[i] = 0;
-        }
+        mPtrArray = new TPtrArray();
+        mPtrArray->create();
     }
 
     MeshManager::~MeshManager()
@@ -28,25 +25,40 @@ TOY3D_BEGIN_NAMESPACE
 
     Mesh* MeshManager::createMesh()
     {
+        Bool rv;
         Mesh *pMesh = new Mesh();
         if( !pMesh )
             return NULL;
 
-        mMeshs[mMeshCount++] = pMesh;
-        
+        rv = mPtrArray->append((TPointer)pMesh );
+        if(FALSE==rv)
+        {
+            DELETEANDNULL(pMesh);
+            TOY3D_TIPS("Error: Failed to store the pointer.\n");
+            return NULL;
+        }
+        //or
+        //mPtrArray[mPtrArray->getLength()] = pMesh;
+        //or
+        //mPtrArray->insert((TPointer)pMesh, mPtrArray->getLength());
+
         return pMesh;
     }
 
     void MeshManager::destroyAllMeshes()
     {
         Mesh *temp;
-
-        while(mMeshCount--)
+        Uint length = mPtrArray->getLength();
+        
+        while(length--)
         {
-            temp = mMeshs[mMeshCount];
-            delete temp;
-            mMeshs[mMeshCount] = 0;
+            temp = (Mesh *)mPtrArray->getElement(length);
+            DELETEANDNULL(temp);
+            //mPtrArray->setElement(NULL, length);
         }
+
+        mPtrArray->destroy();
+        DELETEANDNULL(mPtrArray);
 
         return;
     }

@@ -7,11 +7,8 @@ TOY3D_BEGIN_NAMESPACE
 
     MaterialManager::MaterialManager()
     {
-        mMaterialCount = 0;
-        for(int i=0; i<MAX_MATERIAL_COUNT; i++)
-        {
-            mMaterials[i] = 0;
-        }
+        mPtrArray = new TPtrArray();
+        mPtrArray->create();
     }
 
     MaterialManager::~MaterialManager()
@@ -28,11 +25,18 @@ TOY3D_BEGIN_NAMESPACE
 
     Material* MaterialManager::createMaterial()
     {
+        Bool rv;
         Material *pMaterial = new Material();
         if( !pMaterial )
             return NULL;
 
-        mMaterials[mMaterialCount++] = pMaterial;
+        rv = mPtrArray->append((TPointer)pMaterial);
+        if(FALSE==rv)
+        {
+            DELETEANDNULL(pMaterial);
+            TOY3D_TIPS("Error: Failed to store the pointer.\n");
+            return NULL;
+        }
 
         return pMaterial;
     }
@@ -40,13 +44,17 @@ TOY3D_BEGIN_NAMESPACE
     void MaterialManager::destroyAllMaterials()
     {
         Material *temp;
+        Uint length = mPtrArray->getLength();
 
-        while(mMaterialCount--)
+        while(length--)
         {
-            temp = mMaterials[mMaterialCount];
-            delete temp;
-            mMaterials[mMaterialCount] = 0;
+            temp = (Material *)mPtrArray->getElement(length);
+            DELETEANDNULL(temp);
+            //mPtrArray->setElement(NULL, length);
         }
+        
+        mPtrArray->destroy();
+        DELETEANDNULL(mPtrArray);
 
         return;
     }

@@ -7,12 +7,14 @@ varying vec2 v_texCoord;
 
 void main()
 {
-    if(limit>1.0)
+    vec4 color = texture2D(sampler2d, v_texCoord);
+	float alph = color.a;
+    if(alph<limit)
     {
         discard;
     }
     else
     {
-        gl_FragColor = texture2D(sampler2d, v_texCoord);
+        gl_FragColor = color;
     }
 }

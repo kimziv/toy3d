@@ -20,6 +20,7 @@
 		include/Toy3DImage.h
 		include/Toy3DTexture.h
 		include/Toy3DTextureManager.h
+		include/Toy3DPtrArray.h
 	)
 
 	set(SOURCE_FILES
@@ -40,6 +41,7 @@
 		src/Toy3DImage.cpp
 		src/Toy3DTexture.cpp
 		src/Toy3DTextureManager.cpp
+		src/Toy3DPtrArray.cpp
 	)
 
 	include_directories(

@@ -9,6 +9,8 @@
 
 #include "Toy3DCommon.h"
 #include "Toy3DAutoParamDataSource.h"
+#include "Toy3DPtrArray.h"
+
 
 TOY3D_BEGIN_NAMESPACE
 
@@ -64,17 +66,24 @@ TOY3D_BEGIN_NAMESPACE
     {
         protected:
             /* auto uniform constant list */
-            AutoParamEntry *mAutoUniformEntries[MAX_AUTOENTRY_COUNT];
+            //AutoParamEntry *mAutoUniformEntries[MAX_AUTOENTRY_COUNT];
             /* attribution constant list */
-            AttrParamEntry *mAttrEntries[MAX_ATTRENTRY_COUNT];
+            //AttrParamEntry *mAttrEntries[MAX_ATTRENTRY_COUNT];
             /* custom uniform constant list */
-            IntParamEntry   *mIntUniformEntries[MAX_CUSTENTRY_COUNT];
-            RealParamEntry  *mRealUniformEntries[MAX_CUSTENTRY_COUNT];
+            //IntParamEntry   *mIntUniformEntries[MAX_CUSTENTRY_COUNT];
+            //RealParamEntry  *mRealUniformEntries[MAX_CUSTENTRY_COUNT];
 
+            /*
             Uint mAutoUniformCount;
             Uint mAttrCount;
             Uint mIntUniformCount;
             Uint mRealUniformCount;
+            */
+
+            TPtrArray *mPtrAryAutoUnif;
+            TPtrArray *mPtrAryAttr;
+            TPtrArray *mPtrAryIntUnif;
+            TPtrArray *mPtrAryRealUnif;
 
         private:
             /* 

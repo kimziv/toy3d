@@ -4,6 +4,7 @@
 
 #include "Toy3DCommon.h"
 #include "Toy3DMesh.h"
+#include "Toy3DPtrArray.h"
 
 
 
@@ -15,17 +16,18 @@ TOY3D_BEGIN_NAMESPACE
         MeshManager();
         static MeshManager* mInstance;
 
-        Mesh *mMeshs[MAX_MESH_COUNT];
-        Uint mMeshCount;
+        //Mesh *mMeshs[MAX_MESH_COUNT];
+        //Uint mMeshCount;
+        TPtrArray *mPtrArray;
 
     public:
         ~MeshManager();
         static MeshManager* getInstance();
 
         Mesh* createMesh();
-
         //void destroyMesh(Mesh *mesh);
         void destroyAllMeshes();
+        Mesh* getMesh(const char *pName);
     };
 
 

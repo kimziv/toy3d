@@ -4,7 +4,7 @@
 
 #include "Toy3DCommon.h"
 #include "Toy3DTexture.h"
-
+#include "Toy3DPtrArray.h"
 
 
 TOY3D_BEGIN_NAMESPACE
@@ -15,8 +15,7 @@ TOY3D_BEGIN_NAMESPACE
         TextureManager();
         static TextureManager* mInstance;
 
-        Texture *mTextures[MAX_TEXTURE_COUNT];
-        Uint    mTextureCount;
+        TPtrArray *mPtrArray;
 
         void deleteTextureFromGpu(Uint *texids, Uint count);
 

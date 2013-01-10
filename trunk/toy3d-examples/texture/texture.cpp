@@ -114,7 +114,6 @@ bool init()
 {
     int   width = WINDOW_W, height = WINDOW_H;
     //int   texid;
-    Bool  rvb;
     int   texUnit = 0;
     Real  limit;
     Entity *entity;
@@ -125,8 +124,6 @@ bool init()
     world->setBackColor (1.0, 0.0, 1.0, 1.0);
 
     camera = world->createCamera ("camera1");
-
-
 
 
     //shader
@@ -147,7 +144,7 @@ bool init()
     params->setNamedAttrConstant(TOY3D_ATTR_UV, "vTexture");
 
     //shader custom constant
-    limit = 1.0f;
+    limit = 0.3f;
     printf("limit = %f.\n", limit);
     params->setNamedCustUniformConstant(TOY3D_CUST_REAL1, "limit", limit);
     params->setNamedCustUniformConstant(TOY3D_CUST_SAMPLER2D, "sampler2d", texUnit);
@@ -210,6 +207,17 @@ void keyboard(unsigned char key, int x, int y){
         world->rotate (0.0f, angle_y, 0.0f);
         angle_y += 10;
         break;
+
+        /*
+    case 'm':
+    case 'M':
+        limit = 0.3;
+        break;
+    case 'n':
+    case 'N':
+        limit = 0.0;
+        break;
+        */
     }
 }
 

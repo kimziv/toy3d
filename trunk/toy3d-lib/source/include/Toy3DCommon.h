@@ -32,20 +32,21 @@ extern "C" {
 //binary file format.
 #define BINARY_CODE_FOR_NV  0x890B
 
-#define MAX_ENTITY_COUNT      8
+#define DEFAULT_PTR_ARRAY_SIZE 8
+#define MAX_ENTITY_COUNT       8
 /* Warning:
  * Parameter list length must be less than the values.
  * And now, no fault tolerance in the code.
  */
-#define MAX_AUTOENTRY_COUNT 8
-#define MAX_ATTRENTRY_COUNT 8
-#define MAX_CUSTENTRY_COUNT 8
+//#define MAX_AUTOENTRY_COUNT 8
+//#define MAX_ATTRENTRY_COUNT 8
+//#define MAX_CUSTENTRY_COUNT 8
 
-#define MAX_MESH_COUNT      8
-#define MAX_TEXTURE_COUNT   8
-#define MAX_MATERIAL_COUNT  8
-#define MAX_SHADER_PROGRAM_COUNT 8
-#define MAX_SHADER_PROGRAM_PARAMS_COUNT 8
+//#define MAX_MESH_COUNT      8
+//#define MAX_TEXTURE_COUNT   8
+//#define MAX_MATERIAL_COUNT  8
+//#define MAX_SHADER_PROGRAM_COUNT 8
+//#define MAX_SHADER_PROGRAM_PARAMS_COUNT 8
 
 
 //max length of parameter name
@@ -54,7 +55,7 @@ extern "C" {
 #define MATRIX_4x4_SIZE     16
 
 //size of custom uniform base unit
-#define CUSTOM_UNIT_SIZE 4
+//#define CUSTOM_UNIT_SIZE 4
 
 //error code
 #define TOY3D_ERROR -1
@@ -82,11 +83,14 @@ extern "C" {
         pointer = NULL; \
     }
 
+
+#define MAX(a, b)  (((a) > (b)) ? (a) : (b))
+#define MIN(a, b)  (((a) < (b)) ? (a) : (b))
+
 //used for testing
 #define TOY3D_PRINT(str, file, line) printf("%s, File:%s, Line:%d.\n", str, file, line)
 //used to indicate the user
 #define TOY3D_TIPS(strError) printf("Error: %s\n", strError)
-
 
 
 //#define PRINT(file, format, ...) myprintf(file, format, ##args)
