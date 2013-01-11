@@ -201,7 +201,14 @@ class TPtrArray {
         delete pTemp;
         mPtrArray.setElement((TPointer)pMesh, 0);
     }
-    
+
+    //If you want to remove an element from pointer array. You can...
+    pTemp = mPtrArray.removeByIndex(0);
+    if(pTemp)
+    {
+        delete pTemp;
+    }
+
     //free memory and delete pointer array
     Uint length = mPtrArray->getLength();
     while(length--)
