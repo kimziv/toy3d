@@ -50,7 +50,7 @@ TOY3D_BEGIN_NAMESPACE
             }
         }
 
-        TOY3D_TIPS("Error: the pointer doesn't exist in the pointer array.\n");
+        //TOY3D_TIPS("Error: the pointer doesn't exist in the pointer array.\n");
         return FALSE;
     }
 
@@ -260,10 +260,12 @@ TOY3D_BEGIN_NAMESPACE
     inline const TPointer TPtrArray::moveForward(Uint index)
     {
         Uint i, length;
+        TPointer temp;
 
         if(index>=mLength)
             return NULL;
 
+        temp = mPtr[0];
         length = mLength - 1;
 
         for( i=index; i<length; i++)
@@ -272,7 +274,7 @@ TOY3D_BEGIN_NAMESPACE
         mPtr[length] = 0;
         mLength--;
 
-        return (const TPointer)mPtr[index];
+        return (const TPointer)temp;
     }
 
 
