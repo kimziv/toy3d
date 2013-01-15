@@ -59,6 +59,19 @@ TOY3D_BEGIN_NAMESPACE
         return moveForward(index);
     }
 
+    void TPtrArray::clearAll()
+    {
+        Uint i;
+        for(i=0; i<mLength; i++)
+        {
+            mPtr[i] = 0;
+        }
+
+        mLength = 0;
+
+        return;
+    }
+
     void TPtrArray::destroy()
     {
         FREEANDNULL(mPtr);

@@ -20,13 +20,22 @@ TOY3D_BEGIN_NAMESPACE
         TPtrArray();
         ~TPtrArray();
 
-        //create 
         Bool create(); 
         Bool create(Uint size); 
-        
-        //delete 
-        Bool remove(TPointer ptr); 
+
+        Bool remove(TPointer ptr);
+
+        /*
+         * Remove the element at the index from pointer array,
+         * and the length of pointer array will be substracted 1, after calling.
+         */
         const TPointer removeByIndex(Uint index); /* index begin with 0 */
+
+        /*
+         * Clear all the pointers in the array, and you should free their memory first.
+         */
+        void clearAll();
+
         void destroy(); 
         
         //process 
