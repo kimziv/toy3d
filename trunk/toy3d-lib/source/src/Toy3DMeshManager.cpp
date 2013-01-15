@@ -13,6 +13,8 @@ TOY3D_BEGIN_NAMESPACE
 
     MeshManager::~MeshManager()
     {
+        mPtrArray->destroy();
+        DELETEANDNULL(mPtrArray);
     }
 
     MeshManager* MeshManager::getInstance() 
@@ -37,12 +39,15 @@ TOY3D_BEGIN_NAMESPACE
             TOY3D_TIPS("Error: Failed to store the pointer.\n");
             return NULL;
         }
-        //or
-        //mPtrArray[mPtrArray->getLength()] = pMesh;
-        //or
-        //mPtrArray->insert((TPointer)pMesh, mPtrArray->getLength());
 
         return pMesh;
+    }
+
+    void MeshManager::destroyMesh(Mesh *pMesh)
+    {
+        mPtrArray->remove((TPointer)pMesh);
+        DELETEANDNULL(pMesh);
+        return;
     }
 
     void MeshManager::destroyAllMeshes()
@@ -57,8 +62,7 @@ TOY3D_BEGIN_NAMESPACE
             //mPtrArray->setElement(NULL, length);
         }
 
-        mPtrArray->destroy();
-        DELETEANDNULL(mPtrArray);
+        mPtrArray->clearAll();
 
         return;
     }

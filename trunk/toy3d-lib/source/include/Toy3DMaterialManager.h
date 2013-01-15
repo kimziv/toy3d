@@ -25,7 +25,7 @@ TOY3D_BEGIN_NAMESPACE
         Material* createMaterial(ImageInfo *pImageInfo);
         Material* createMaterialByFile( const char* fileName );
 
-        //void destroyMaterial(Material *mat);
+        void destroyMaterial(Material *pMat);
         void destroyAllMaterials();
     };
 

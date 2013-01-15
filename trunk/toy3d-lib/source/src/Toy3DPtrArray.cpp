@@ -208,9 +208,7 @@ TOY3D_BEGIN_NAMESPACE
         {
             Uint old_alloc = mAllocLen;
             mAllocLen = nearestPowOf2(want_alloc);
-            mAllocLen = MAX(mAllocLen, DEFAULT_PTR_ARRAY_SIZE);
-
-            mPtr = (TPointer *)realloc(mPtr, mAllocLen);
+            mPtr = (TPointer *)realloc(mPtr, mAllocLen*sizeof(TPointer));
             if( !mPtr )
             {
                 TOY3D_TIPS("Failed to realloc memory for TPtrArray.\n");

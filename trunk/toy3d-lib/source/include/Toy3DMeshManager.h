@@ -25,7 +25,7 @@ TOY3D_BEGIN_NAMESPACE
         static MeshManager* getInstance();
 
         Mesh* createMesh();
-        //void destroyMesh(Mesh *mesh);
+        void destroyMesh(Mesh *pMesh);
         void destroyAllMeshes();
         Mesh* getMesh(const char *pName);
     };

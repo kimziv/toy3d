@@ -149,7 +149,7 @@ TOY3D_BEGIN_NAMESPACE
         return;
     }
 
-    void TextureManager::destoryTexture(Texture *tex)
+    void TextureManager::destroyTexture(Texture *tex)
     {
         Uint texid;
         mPtrArray->remove((TPointer)tex);

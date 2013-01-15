@@ -16,6 +16,11 @@ TOY3D_BEGIN_NAMESPACE
 
     ShaderProgramManager::~ShaderProgramManager()
     {
+        mShaderPtrArray->destroy();
+        DELETEANDNULL(mShaderPtrArray);
+
+        mShaderParamsPtrArray->destroy();
+        DELETEANDNULL(mShaderParamsPtrArray);
     }
 
     ShaderProgramManager* ShaderProgramManager::getInstance() 
@@ -62,8 +67,19 @@ TOY3D_BEGIN_NAMESPACE
         return pShaderProgram;
     }
 
-    //void destroyShadrProgramParam(ShaderProgramParams *params);
-    //void destroyShaderProgram(ShaderProgram *prog);
+    void ShaderProgramManager::destroyOneParam(ShaderProgramParams *pShaderParam)
+    {
+        mShaderParamsPtrArray->remove((TPointer)pShaderParam);
+        DELETEANDNULL(pShaderParam);
+        return;
+    }
+
+    void ShaderProgramManager::destroyOneProg(ShaderProgram *pShaderProgram)
+    {
+        mShaderPtrArray->remove((TPointer)pShaderProgram);
+        DELETEANDNULL(pShaderProgram);
+        return;
+    }
 
     void ShaderProgramManager::destroyAllShaderProgramParams()
     {
@@ -76,9 +92,7 @@ TOY3D_BEGIN_NAMESPACE
             DELETEANDNULL(temp);
             //mPtrArray->setElement(NULL, length);
         }
-        
-        mShaderParamsPtrArray->destroy();
-        DELETEANDNULL(mShaderParamsPtrArray);
+        mShaderParamsPtrArray->clearAll();
 
         return;
     }
@@ -94,9 +108,8 @@ TOY3D_BEGIN_NAMESPACE
             DELETEANDNULL(temp);
             //mPtrArray->setElement(NULL, length);
         }
-        
-        mShaderPtrArray->destroy();
-        DELETEANDNULL(mShaderPtrArray);
+
+        mShaderPtrArray->clearAll();
 
         return;
     }
