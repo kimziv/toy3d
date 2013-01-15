@@ -26,8 +26,8 @@ TOY3D_BEGIN_NAMESPACE
         ShaderProgramParams* createShaderProgramParams();
         ShaderProgram* createShaderProgram();
 
-        //void destroyShadrProgramParam(ShaderProgramParams *params);
-        //void destroyShaderProgram(ShaderProgram *prog);
+        void destroyOneParam(ShaderProgramParams *pShaderParam);
+        void destroyOneProg(ShaderProgram *pShaderProgram);
         void destroyAllShaderProgramParams();
         void destroyAllShaderPrograms();
     };

@@ -13,6 +13,8 @@ TOY3D_BEGIN_NAMESPACE
 
     MaterialManager::~MaterialManager()
     {
+        mPtrArray->destroy();
+        DELETEANDNULL(mPtrArray);
     }
 
     MaterialManager* MaterialManager::getInstance() 
@@ -41,6 +43,13 @@ TOY3D_BEGIN_NAMESPACE
         return pMaterial;
     }
 
+    void MaterialManager::destroyMaterial(Material *pMat)
+    {
+        mPtrArray->remove((TPointer)pMat);
+        DELETEANDNULL(pMat);
+        return;
+    }
+
     void MaterialManager::destroyAllMaterials()
     {
         Material *temp;
@@ -52,9 +61,7 @@ TOY3D_BEGIN_NAMESPACE
             DELETEANDNULL(temp);
             //mPtrArray->setElement(NULL, length);
         }
-        
-        mPtrArray->destroy();
-        DELETEANDNULL(mPtrArray);
+        mPtrArray->clearAll();
 
         return;
     }

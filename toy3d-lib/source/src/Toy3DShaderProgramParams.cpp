@@ -164,7 +164,7 @@ Bool ShaderProgramParams::searchNamedAutoConstant( const char *name, Uint* posit
     return FALSE;
 }
 
-void ShaderProgramParams::setNamedAutoConstant ( AutoConstanType type, char *name )
+void ShaderProgramParams::setNamedAutoConstant( AutoConstanType type, char *name )
 {
     Bool rv;
     rv = searchNamedAutoConstant(name, 0);
