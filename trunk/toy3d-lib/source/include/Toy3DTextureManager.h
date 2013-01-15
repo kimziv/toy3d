@@ -38,6 +38,7 @@ TOY3D_BEGIN_NAMESPACE
         Texture* createTextureByFile( const char* fileName );
 
         //void destroyTexture(Texture *tex);
+        void destoryTexture(Texture *tex);
         void destroyAllTextures();
     };
 

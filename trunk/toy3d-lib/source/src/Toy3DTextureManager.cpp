@@ -14,6 +14,8 @@ TOY3D_BEGIN_NAMESPACE
 
     TextureManager::~TextureManager()
     {
+        mPtrArray->destroy();
+        delete mPtrArray;
     }
 
     TextureManager* TextureManager::getInstance() 
@@ -147,12 +149,16 @@ TOY3D_BEGIN_NAMESPACE
         return;
     }
 
-    /*
-    void TextureManager::destroyTexture(Texture *tex)
+    void TextureManager::destoryTexture(Texture *tex)
     {
+        Uint texid;
+        mPtrArray->remove((TPointer)tex);
+        texid = tex->getTextureID();
+        deleteTextureFromGpu(&texid, 1);
+        delete tex;
+
         return;
     }
-    */
 
     void TextureManager::destroyAllTextures()
     {
@@ -169,8 +175,7 @@ TOY3D_BEGIN_NAMESPACE
             //mPtrArray->setElement(NULL, length);
         }
         
-        mPtrArray->destroy();
-        delete mPtrArray;
+        mPtrArray->clearAll();
 
         return;
     }
