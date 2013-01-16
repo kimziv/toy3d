@@ -84,6 +84,10 @@ TOY3D_BEGIN_NAMESPACE
     Bool TPtrArray::insert(TPointer ptr, Uint index)
     {
         Bool rv;
+
+        if(index>mLength)
+            return FALSE;
+
         rv = moveBackward(index);
         if(FALSE==rv)
             return FALSE;
@@ -211,7 +215,7 @@ TOY3D_BEGIN_NAMESPACE
             mPtr = (TPointer *)realloc(mPtr, mAllocLen*sizeof(TPointer));
             if( !mPtr )
             {
-                TOY3D_TIPS("Failed to realloc memory for TPtrArray.\n");
+                //TOY3D_TIPS("Failed to realloc memory for TPtrArray.\n");
                 return FALSE;
             }
 
@@ -226,8 +230,8 @@ TOY3D_BEGIN_NAMESPACE
         Uint i, length;
         Bool rv;
 
-        /* if the index is greater than the actual number of elements */
-        if(index>=mLength)
+        /* The index is out of the actual rank at leat 2.*/
+        if(index>mLength)
         {
             length = index - mLength + 1;
             rv = expand(length);
