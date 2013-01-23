@@ -1,5 +1,7 @@
 #summary Texture Related modules
 
+=资源管理策略=
+
 = TextureManager =
 
 TextureManager 设计成  Singleton
