@@ -2,6 +2,13 @@
 
 =资源管理策略=
 
+= Texture =
+{{{
+class Texture{
+
+}
+}}}
+
 = TextureManager =
 
 TextureManager 设计成  Singleton
