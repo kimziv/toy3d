@@ -41,19 +41,32 @@ public:
 
 TextureManager 设计成  Singleton
 
-基本原则
+基本原则：
+* 用户设置最大可用显存和内存。引擎会根据消耗来维护当前可用内存和显存。
+* 用户创建Texture对象后，由TextureManager负责维护，TextureManager类会建立一个指针数组来存储这些纹理对象。在需要使用纹理数据的地方，调用相关接口执行生成、加载、卸载或者删除操作。
+* 纹理分为常用和普通两个级别，如果可用空间足够，常用纹理会常驻在内存和显存中。
+* 纹理的替换规则。
+
+    当设置的可用内存和显存足够时，纹理可以被直接加载和生成。
+    当显存或内存已满，需要先卸载或删除内存或显存中的一部分数据。如果存在非常用的纹理则优先操作，如果全部是常用纹理则按照LRU执行。
+    此处为了管理方便，使用两个数组，分别记录已经加载和已经生成的纹理，且元素索引根据使用时间的先后从低到高，执行操作时，也将保证元素的先后顺序。
 
 类定义 TextureManager.h：
 
 {{{
 
+enum TextureManageRule {
+    T3D_LRU,
+    T3D_FIFO
+}
+
 class TextureManager {
 
 protected:
-        static TextureManager* mInstance;
+    static TextureManager* mInstance;
 
 public:
-        static TextureManager* getInstance();
+    static TextureManager* getInstance();
         
         TextureManager();
         ~TextureManager();
