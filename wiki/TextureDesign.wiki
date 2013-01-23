@@ -22,16 +22,17 @@ class Texture {
 private:
     int mT3DTexID;
     int mTexID;
+    bool mIsUsing;
     char *pFileName;
     ImageInfo *pImageInfo;
     TextureState mState;
     TextureParameter mParam;
 
 public:
-    void load();
-    void unload();
-    void generate();
-    void delete(int texid);
+    void load(...);
+    void unload(...);
+    void generate(...);
+    void degenerate(...);
     void setParameter(...);
 }
 
@@ -62,21 +63,34 @@ TextureManager 设计成  Singleton
 
 {{{
 
+/*
 enum TextureManageRule {
     T3D_LRU,
     T3D_FIFO
 }
+*/
 
 class TextureManager {
 
 protected:
     static TextureManager* mInstance;
+    TextureManager();
 
 public:
     static TextureManager* getInstance();
-        
-        TextureManager();
-        ~TextureManager();
+    ~TextureManager();
+
+    //bool setManageRule(TextureManageRule tmr);
+    Texture* createTexture(...);
+    void loadTexture(...);
+    void generateTexture(...);
+    void degenerateTexture(...);
+    void destroy(...);
+    void destroyAll();
+
+    Texture* getTexture(int texid);
+    bool isTextureUsing(int texid);
+    
 
 };
 
