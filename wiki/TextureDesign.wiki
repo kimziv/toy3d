@@ -4,14 +4,44 @@
 
 = Texture =
 {{{
-class Texture{
+enum TextureState {
+    UNLOADED,
+    LOADED,
+    UNGENERATED,
+    GENERATED
+};
 
+typdef sttuct _TextureParameter {
+    TextureParameterName paraName;
+    TextureParameterVal paraVal;
+    TextureDataType dataType;
+    PixelFormat format;
+}TextureParameter;
+
+class Texture {
+private:
+    int mT3DTexID;
+    int mTexID;
+    char *pFileName;
+    ImageInfo *pImageInfo;
+    TextureState mState;
+    TextureParameter mParam;
+
+public:
+    void load();
+    void unload();
+    void generate();
+    void delete(int texid);
+    void setParameter(...);
 }
+
 }}}
 
 = TextureManager =
 
 TextureManager 设计成  Singleton
+
+基本原则
 
 类定义 TextureManager.h：
 
