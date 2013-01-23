@@ -5,10 +5,10 @@
 = Texture =
 {{{
 enum TextureState {
-    UNLOADED,
-    LOADED,
-    UNGENERATED,
-    GENERATED
+    T3D_UNLOADED,
+    T3D_LOADED,
+    T3D_UNGENERATED,//this state maybe unnecessary. 
+    T3D_GENERATED
 };
 
 typdef sttuct _TextureParameter {
@@ -83,12 +83,14 @@ public:
     //bool setManageRule(TextureManageRule tmr);
     Texture* createTexture(...);
     void loadTexture(...);
+    void unloadTexture(...);
     void generateTexture(...);
     void degenerateTexture(...);
     void destroy(...);
     void destroyAll();
 
     Texture* getTexture(int texid);
+    TextureState getTextureState(int texid);
     bool isTextureUsing(int texid);
     
 
@@ -152,5 +154,31 @@ void init ()
     mesh->setTextureId (texture->getId());
       
 }
+
+void startRendering (Entity entity)
+{
+    //entity-待绘制对象，假定其中数据已经设置好
+    Texture *tex;
+    TextureState ts;
+    TextureManager tm;
+
+    tex = entity.getMaterial().getTexture();
+    ts = tm.getTextureState(tex);
+    if(T3D_UNLOADED==ts)
+    {
+        tm.loadTexture(tex);
+        tm.generateTexture(tex);
+    }
+    else if(T3D_LOADED==ts)
+    {
+        tm.generateTexture(tex);
+    }
+
+    //render
+    ...
+
+    return;
+}
+
 
 }}}
