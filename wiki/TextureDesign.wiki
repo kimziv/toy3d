@@ -75,8 +75,10 @@ class TextureManager {
 protected:
     static TextureManager* mInstance;
     TextureManager();
-    Uint mCurrentVRAM;
-    Uint mCurrentRAM;
+    Uint mMaxVMemory;
+    Uint mMaxMemory;
+    Uint mCurrentVM;
+    Uint mCurrentM;
     TPtrArray *mTextures;
     TPrtArray *mLoadedTexid;
     TPtrArray *mGenTexid;
