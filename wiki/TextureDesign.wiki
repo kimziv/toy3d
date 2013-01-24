@@ -7,7 +7,7 @@
 enum TextureState {
     T3D_UNLOADED,
     T3D_LOADED,
-    T3D_UNGENERATED,//this state maybe unnecessary. 
+    //T3D_UNGENERATED,//this state maybe unnecessary. 
     T3D_GENERATED
 };
 
@@ -184,9 +184,8 @@ void startRendering (Entity entity)
     if(T3D_UNLOADED==ts)
     {
         tm.loadTexture(tex);
-        tm.generateTexture(tex);
     }
-    else if(T3D_LOADED==ts)
+    if(T3D_LOADED==ts)
     {
         tm.generateTexture(tex);
     }
