@@ -151,15 +151,25 @@ void init ()
 {
    //world,camera, shaderprogram
    ...
+    Entity *entity;
+    Material *mat;
+
    //create texture
    Texture *texture = TextureManager::getInstance()->createTextureByFile("leaf.tga");
 
-    //Create mesh and set texture id
+    mat = MaterialManager::getInstance()->createMaterial();
+    mat->setShaderProgram (shaderProgram);
+    mat->setTexture(tex);
+
+    //Create mesh and
     Mesh *mesh = world->createMesh();
     mesh->setVertices (vertices, VERTEX_COUNT);
-    mesh->setRenderMode (TOY3D_TRIANGLE_STRIP);^M
-    mesh->setTextureId (texture->getId());
-      
+    mesh->setRenderMode (TOY3D_TRIANGLE_STRIP);
+    mesh->setUVs( uvs, VERTEX_COUNT);
+
+    entity = world->createEntity();
+    entity->setMesh(mesh);
+    entity->setMaterial (mat);
 }
 
 void startRendering (Entity entity)
