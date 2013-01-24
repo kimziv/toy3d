@@ -25,8 +25,8 @@ TOY3D_BEGIN_NAMESPACE
     public:
 
         Bool loadTexture(const char *pFileNmae);
-        Bool createTexture(ImageInfo *pImageInfo);
-        Bool createTexture(unsigned  char *pImageData, Uint width, Uint height, Uint bpp);
+        //Bool createTexture(ImageInfo *pImageInfo);
+        //Bool createTexture(unsigned  char *pImageData, Uint width, Uint height, Uint bpp);
         void setTexture(Texture* tex);
         void setShaderProgram (ShaderProgram *prog);
 

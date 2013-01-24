@@ -231,7 +231,7 @@ TOY3D_BEGIN_NAMESPACE
         Bool rv;
 
         /* The index is out of the actual rank at leat 2.*/
-        if(index>mLength)
+        if(index>= mLength)
         {
             length = index - mLength + 1;
             rv = expand(length);
