@@ -9,7 +9,7 @@
  * ResourceManager保存 resource 的载入、卸载优先顺序，即置换策略
  * ResourceManager自己定义内存、显存预算，载入/卸载Resource时更新这些预算值
 
-TextureManager
+=TextureManager=
 
 基本原则：
 
