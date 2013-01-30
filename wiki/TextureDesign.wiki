@@ -3,11 +3,11 @@
 =资源管理策略=
  * 所有ResourceManager都使用单例模式(Singleton)
  * 每个Resource有唯一的 Name
+ * Resource类自己实现载入和卸载操作
  * Resource必须在一段时间不使用时被删除
- * ResourceManager 管理资源池
- * ResourceManager 保存 resource 的载入、卸载优先顺序
- * ResourceManager 自己定义内存预算，载入/卸载时改变这个内存预算值
- * Resource 类负责载入和卸载， ResourceManager 负责创建和删除
+ * ResourceManager管理资源池，负责对应Resource的创建和删除
+ * ResourceManager保存 resource 的载入、卸载优先顺序，即置换策略
+ * ResourceManager自己定义内存、显存预算，载入/卸载Resource时更新这些预算值
 
 TextureManager
 
