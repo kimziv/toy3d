@@ -19,7 +19,7 @@
  * 5 ResourceManager负责维护内存、显存预算
 并根据实际情况维护这些预算值。
 
-==Texture类==
+==纹理==
 纹理的操作分为加载、生成、销毁、卸载。
 
 ==TextureManager实现==
