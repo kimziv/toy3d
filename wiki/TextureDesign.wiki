@@ -180,50 +180,92 @@ class Texture
 
 = TextureManager =
 
-类定义 TextureManager.h：
+类定义 TextureManager.h:
 
 {{{
 
-/*
-enum TextureManageRule {
-    T3D_LRU,
-    T3D_FIFO
-}
-*/
+//TextureManager.h
+class TextureManager
+{
 
-class TextureManager {
+    enum TextureManageRule
+    {
+        T3D_LRU,
+        T3D_FIFO
+    };
 
-protected:
-    static TextureManager* mInstance;
-    TextureManager();
-    Uint mMaxVMemory;
-    Uint mMaxMemory;
-    Uint mCurrentVM;
-    Uint mCurrentM;
-    TPtrArray *mTextures;
-    TPrtArray *mLoadedTexid;
-    TPtrArray *mGenTexid;
+    private:
+        TextureManager();
+        static TextureManager* mInstance;
+        
+        TPtrArray *mPtrArray;
 
-public:
-    static TextureManager* getInstance();
-    ~TextureManager();
+        Uint mMemory;        /* the budget of memory */
+        Uint mVMemory;       /* the budget of memory on vedio card */
+        Uint mMemoryRest;    /* the rest of usable memory */
+        Uint mVMemoryRest;   /* the rest of usable vedio card memory */
 
-    //bool setManageRule(TextureManageRule tmr);
-    Texture* createTexture(...);
-    void loadTexture(...);
-    void unloadTexture(...);
-    void generateTexture(...);
-    void degenerateTexture(...);
-    void destroy(...);
-    void destroyAll();
+        char mDirName[MAX_NAME_LEN_BIG]; /* used for the files created by the constructor.*/
 
-    Texture* getTexture(int texid);
-    TextureState getTextureState(int texid);
-    bool isTextureUsing(int texid);
-    
+        //TextureManageRule mTMRule;
 
+        /*
+         * Fixme: Maybe the function should be privided in class Texture.
+         */
+        void deleteTextureFromGpu(Uint *texids, Uint count);
+
+    protected:
+
+    public:
+        ~TextureManager();
+        static TextureManager* getInstance();
+
+        void setMemoryBudget(Uint value);  /* memory budget, unit MB */
+        void setVMemoryBudget(Uint value); /* video card memory budget, unit MB */
+
+        void setDirtory(char *pDirName);
+
+        //void setTextureManagerRule(TextureManageRule rule = T3D_LRU);
+
+        void create(char *pName);
+        void create(char *pName, char *pResFileName, Bool isResident = FALSE);
+
+        /*
+         * Create a texture with tht state TOY3D_LOADED.
+         * Attentions:
+         * The information will be saved as *.tex in the directory mDirName.
+         * So if you use the interface,
+         * you should have the permissions to read and right the hardware.
+         */
+        const char* create(unsigned char *pImageData,Uint width, Uint height, Uint bytesPerPixel);
+
+        Bool load(char *pName);
+        //Bool load(Texture *pTexture);
+        /* Reload all the textures which have been loaded. */
+        Bool reload();
+
+        Bool unload(char *pName);
+        //Bool unload(Texture *pTexture);
+        Bool unload(Uint idleLevel); /* It works, when the idleLevel is greater than 0 only. */
+
+        Bool generate(char *pName);
+        //Bool generate(Texture *pTexture);
+
+        Bool degenerate(char *pName);
+        //Bool degenerate(Texture *pTexture);
+        Bool degenerate(Uint idleLevel); /* It works, when the idleLevel is greater than 0 only. */
+
+        /* If the texture which you want to remove is being used, it will return false. */
+        Bool remove(char *pName);
+        //Bool remove(Texture *pTexture);
+        /* If some of the texturesis being used, it will return false. */
+        Bool removeAll();
+
+        Bool removeFiles();
+
+        const Uint getRestOfMemory() const;
+        const Uint getRestOfVMemory() const;
 };
-
 
 }}}
 
@@ -267,55 +309,100 @@ TextureManager::~TextureManager ()
 
 {{{
 
-void init ()
 
-{
-   //world,camera, shaderprogram
-   ...
-    Entity *entity;
-    Material *mat;
+//Examples
 
-   //create texture
-   Texture *texture = TextureManager::getInstance()->createTextureByFile("leaf.tga");
+//You can use the TextureManager and Texture by the following ways.
+//1st
+Bool test(){
+    Bool rv;
+    Texture *texture = NULL;
+    char textureName[MAX_NAME_LEN_BIG];
+    Uint idleLevel;
 
-    mat = MaterialManager::getInstance()->createMaterial();
-    mat->setShaderProgram (shaderProgram);
-    mat->setTexture(tex);
+    TextureManager::getInstance().setMemoryBudget(256);
+    TextureManager::getInstance().setMemoryBudget(256);
+    TextureManager::getInstance().setDirtory("E:\\test");
 
-    //Create mesh and
-    Mesh *mesh = world->createMesh();
-    mesh->setVertices (vertices, VERTEX_COUNT);
-    mesh->setRenderMode (TOY3D_TRIANGLE_STRIP);
-    mesh->setUVs( uvs, VERTEX_COUNT);
-
-    entity = world->createEntity();
-    entity->setMesh(mesh);
-    entity->setMaterial (mat);
-}
-
-void startRendering (Entity entity)
-{
-    //entity-待绘制对象，假定其中数据已经设置好
-    Texture *tex;
-    TextureState ts;
-    TextureManager tm;
-
-    tex = entity.getMaterial().getTexture();
-    ts = tm.getTextureState(tex);
-    if(T3D_UNLOADED==ts)
-    {
-        tm.loadTexture(tex);
-    }
-    if(T3D_LOADED==ts)
-    {
-        tm.generateTexture(tex);
-    }
-
-    //render
+    strncpy(textureName, "E:\\test\\picture1.tga", MAX_NAME_LEN_BIG);
+    texture = TextureManager::getInstance()->create(textureName);
+    strncpy(textureName, "E:\\test\\picture2.tga", MAX_NAME_LEN_BIG);
+    texture = TextureManager::getInstance()->create(textureName);
     ...
 
-    return;
+    //and you could load and generate the textures by the pointer when you use it.
+    //Attention, textureName is a texture name which you know.
+    if( TOY3D_LOADED == texture.getLoadingState() )
+    {
+        rv = TextureManager::getInstance()->load(textureName);
+        if( True != rv )
+            return False;
+    }
+    if( TOY3D_LOADED == texture.getLoadingState() )
+    {
+        rv = TextureManager::getInstance()->generate(textureName);
+        if( True != rv )
+            return False;
+    }
+
+    //Here is what you do by the textures.
+    ......
+
+    //If you want to unload or degenerate some textures in order to spare some memory/v-memory,
+    //You can operate one texture by this.
+    TextureManager::getInstance()->degenerate(textureName);
+    TextureManager::getInstance()->unload(textureName);
+
+    //And you can also operate some textures at a time as follows.
+    idleLevel = 5;
+    TextureManager::getInstance()->degenerate(idleLevel);
+    TextureManager::getInstance()->unload(idleLevel);
+
+    //When you finish what you want to do, you can remove the textures.
+    //You can remove one and repeat the operation by this.
+    rv = TextureManager::getInstance()->remove(textureName);
+    if( True != rv )
+    {
+        return False;
+    }
+
+    //And you could remove all at a time as follows.
+    rv = TextureManager::getInstance()->removeAll();
+    if( True != rv )
+    {
+        return False;
+    }
+
 }
 
+//2st
+Bool test(){
+    Bool rv;
+    Texture *texture = NULL;
+    char textureName[MAX_NAME_LEN_BIG];
+    Uint idleLevel;
+
+    unsigned char *pImageData;
+    Uint width;
+    Uint height;
+    Uint bytesPerPixel;
+    char *pFileName;
+
+    TextureManager::getInstance().setMemoryBudget(256);
+    TextureManager::getInstance().setMemoryBudget(256);
+    TextureManager::getInstance().setDirtory("E:\\test");
+
+    pImageData = ...
+    width = ...
+    height = ...
+    bytesPerPixel = ...
+
+    //You create a texture as follows.
+    //Attentions: the texture created by this interface is in the state TOY3D_LOADED.
+    pFileName = TextureManager::getInstance()->create(pImageData, width, height, bytesPerPixel);
+    
+    //You could do the other operation the same as the 1st way.
+    ...
+}
 
 }}}
