@@ -1,5 +1,17 @@
 #summary Texture Related modules
 
+=一个例子=
+
+{{{
+
+MaterialPtr mMat = MaterialManager::getSingleton().create( fileName, groupName, false );
+
+  Pass *mPass = mMat->getTechnique(0)->getPass(0);
+  mPass->setAlphaRejectSettings( CMPF_GREATER, 150 );
+  mPass->setCullingMode( CULL_NONE );
+  TextureUnitState *texState = mMat->getTechnique(0)->getPass(0)->createTextureUnitState( “xue.jpg” );
+
+}}}
 
 =纹理的载入=
 
