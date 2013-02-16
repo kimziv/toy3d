@@ -21,10 +21,17 @@ RenderSystem::_setTextureUnitSettings(texUnit, TextureUnitState* tl)
     _setTexture (texUnit, tex);
     _setTextureCoordSet(texUnit, tl.getTextureCoordSet());
     _setTextureFiltering(texUnit, 
-            tl.FT_MIN, 
-            FT_MAG, 
-            FT_MIP);
-    _setTextureLayerAnisotropy(texUnit, );
+            tl.getTexureFiltering(FT_MIN), 
+            tl.getTexureFiltering(FT_MAG), 
+            tl.getTexureFiltering(FT_MIP));
+    _setTextureLayerAnisotropy(texUnit, tl.getTextureAnisotropy());
+    _setTextureMipMapBias(texUnit, tl.getTextureMipmapsBias());
+    _setTextureBlendMode(texUnit, tl.getColourBlendMode());
+    _setTextureBlendMode(texUnit, tl.getAlphaBlendMode());
+    _setTextureXXXX....
+
+
+
 }
 
 
