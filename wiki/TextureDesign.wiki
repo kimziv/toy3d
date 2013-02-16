@@ -1,7 +1,11 @@
 #summary Texture Related modules
 
 
-=纹理的组织=
+=纹理的载入=
+
+
+
+=纹理的绘制=
 
 由外往里剖析
 
