@@ -13,6 +13,10 @@ MaterialPtr mMat = MaterialManager::getSingleton().create( fileName, groupName, 
 
 }}}
 
+textureArray
+
+ogre sample : texture array
+
 =纹理的载入=
 
 {{{
