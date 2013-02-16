@@ -1,5 +1,37 @@
 #summary Texture Related modules
 
+
+=纹理的组织=
+
+由外往里剖析
+
+
+{{{
+
+void SceneManager::renderOneObject ()
+{
+    for (all texture unit state) {
+        renderer->setTextureUnitSettings (unit, pTex);
+    }
+}
+
+RenderSystem::_setTextureUnitSettings(texUnit, TextureUnitState* tl)
+{
+    tex = tl._getTexturePtr();
+    _setTexture (texUnit, tex);
+    _setTextureCoordSet(texUnit, tl.getTextureCoordSet());
+    _setTextureFiltering(texUnit, 
+            tl.FT_MIN, 
+            FT_MAG, 
+            FT_MIP);
+    _setTextureLayerAnisotropy(texUnit, );
+}
+
+
+}}}
+
+
+
 =资源管理策略=
 ==Resource==
  * 1 每个Resource有唯一的Name 
