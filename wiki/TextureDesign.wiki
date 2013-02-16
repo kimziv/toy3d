@@ -3,6 +3,42 @@
 
 =纹理的载入=
 
+{{{
+
+class Pass
+{
+    vector<TextureUinit*> mTextureUnitStates;
+
+    TextureUnitState* createTextureUnitState ();
+    TextureUnitState* createTextureUnitState (string name， unsigned short texCoordSet);
+    void addTextureUnitState (TextureUnitState *state);
+    TextureUnitState* getTextureUnitState (index);
+    TextureUnitState* getTextureUnitState (name);
+        
+}
+
+
+
+class TextureUnitState 
+{
+ 
+    vector<string>  mFrames;
+ 
+    vector<Texture*> mFramesPtrs;
+ 
+
+
+    void setTextureName (name);
+
+    void setTexture(Texture* tex);
+
+}
+ 
+
+
+
+
+}}}
 
 
 =纹理的绘制=
