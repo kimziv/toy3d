@@ -1,5 +1,10 @@
 #summary Texture Related modules
 
+=参考资源=
+ * [http://graphics.stanford.edu/papers/texture_prefetch/texture_prefetch_down.pdf Prefetching in a Texture Cache Architecture]
+ 
+
+
 =todolist=
 
  * 将 TextureUnitState,TextureManager,Texture 集成进来
