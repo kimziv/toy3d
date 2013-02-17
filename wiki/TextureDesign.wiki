@@ -1,12 +1,10 @@
 #summary Texture Related modules
 
-=ToDoList=
+=todolist=
 
-将 TextureUnitState,TextureManager,Texture 集成进来
+ * 将 TextureUnitState,TextureManager,Texture 集成进来
 
-
-实现动态纹理作为验证
-http://blog.csdn.net/programrookie/article/details/4552447
+ * [实现动态纹理作为验证 http://blog.csdn.net/programrookie/article/details/4552447]
 
 
 
