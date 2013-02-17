@@ -1,34 +1,27 @@
 #summary Texture Related modules
 
-=一个例子=
+=使用样例=
 
 {{{
 
-MaterialPtr mMat = MaterialManager::getSingleton().create( fileName, groupName, false );
-
-  Pass *mPass = mMat->getTechnique(0)->getPass(0);
-  mPass->setAlphaRejectSettings( CMPF_GREATER, 150 );
-  mPass->setCullingMode( CULL_NONE );
-  TextureUnitState *texState = mMat->getTechnique(0)->getPass(0)->createTextureUnitState( “xue.jpg” );
+  Material *mat = MaterialManager::getInstance()->createMaterial();
+  mat->setShader(shaderProgram);
+  //mat->setTexture(tex);   /* old job*/
+  
+  mMat->createTextureUnitState( “xue.jpg” );
 
 }}}
 
-textureArray
 
-ogre sample : texture array
-
-=纹理的载入=
+=TextureUnitState/TextureManager/Texture=
 
 {{{
 
-class Pass
+class Material
 {
     vector<TextureUinit*> mTextureUnitStates;
 
-    TextureUnitState* createTextureUnitState ();
-    TextureUnitState* createTextureUnitState (string name， unsigned short texCoordSet);
-    void addTextureUnitState (TextureUnitState *state);
-    TextureUnitState* getTextureUnitState (index);
+    TextureUnitState* createTextureUnitState (name);
     TextureUnitState* getTextureUnitState (name);
         
 }
@@ -36,18 +29,10 @@ class Pass
 
 
 class TextureUnitState 
-{
+{  
+    PtrArray mTexturePtrs;
  
-    vector<string>  mFrames;
- 
-    vector<Texture*> mFramesPtrs;
- 
-
-
     void setTextureName (name);
-
-    void setTexture(Texture* tex);
-
 }
  
 
@@ -55,7 +40,7 @@ class TextureUnitState
 class TextureManager 
 {
  
-    ResourceMap  map;
+    Map  mTexturePtrMap;
 
     size_t mMemoryBudget;  //in bytes
     size_t mMemoryUsage;   //in bytes
@@ -67,15 +52,15 @@ class TextureManager
  
 
 
-    Resource* create (name);  //create a new blank resource, but does not immediately load it
+    Texture* create (name);  //create a new blank resource, but does not immediately load it
  
-    Resource* getByName (name);  
+    Texture* getByName (name);  
 
 
-    Resource* createOrRetrieve(name);   //getByName return NULL, then call create
+    Texture* createOrRetrieve(name);   //getByName return NULL, then call create
 
 
-    void remove(Resource* r);   //unload and remove from list
+    void remove(Texture* tex);   //unload and remove from list
  
     void remove (name);
  
@@ -142,34 +127,23 @@ class Texture
     void freeInternalResources ();   //delete opengl texture
 
 }
- 
-
-
-
-
-
-
-
-
 
 }}}
 
 
-=纹理的绘制=
-
-由外往里剖析
+=SceneManager= 
 
 
 {{{
 
-void SceneManager::renderOneObject ()
+void World::renderOneObject ()
 {
-    for (all texture unit state) {
-        renderer->setTextureUnitSettings (unit, pTex);
+    for (all textureUnitState in Material) {
+        mRenderer->setTextureUnitSettings (unit, pTex);
     }
 }
 
-RenderSystem::_setTextureUnitSettings(texUnit, TextureUnitState* tl)
+void Renderer::_setTextureUnitSettings(texUnit, TextureUnitState* tl)
 {
     tex = tl._getTexturePtr();
     _setTexture (texUnit, tex);
