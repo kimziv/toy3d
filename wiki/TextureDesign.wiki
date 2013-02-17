@@ -139,7 +139,7 @@ class Texture
 }}}
 
 
-=SceneManager= 
+=World/Renderer= 
 
 
 {{{
@@ -170,7 +170,7 @@ void Renderer::_setTextureUnitSettings(texUnit, TextureUnitState* tl)
 
 }
 
-GLES2RenderSystem::_setTexture (stage, enabled, texPtr)
+void Renderer::_setTexture (stage, enabled, texPtr)
 {
     activateGLTextureUnit(stage);
 
