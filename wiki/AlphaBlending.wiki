@@ -29,6 +29,11 @@ void Material::setSceneBlending(srcFactor, dstFactor, op)
     mAlphaBlending = true;
 }
 
+class Renderer
+{
+   void enableBlending (bool flag);
+}
+
 
 void Renderer::setSceneBlending(src, dst, op)
 {
@@ -46,6 +51,10 @@ void World::renderSingleObject (RenderOperation *ro, Material *mat, Real worldMa
                                    );
     }
 
+    mRenderer.render(op);
+
+    if (mat->hasAlphaBlending())
+        mRenderer.disableBlending ();
 }
 
 
