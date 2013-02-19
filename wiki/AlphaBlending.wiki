@@ -33,4 +33,4 @@ void Renderer::setSceneBlending(src, dst, op)
 
 =Reference=
 
- * [http://www.cnitblog.com/buf/archive/2011/07/27/74877.html OGRE Texture Blending 纹理混合]
+ * [http://www.cnitblog.com/buf/archive/2011/07/27/74877.html OGRE Texture Blending 纹理混合]  3张图3个 texture unit
