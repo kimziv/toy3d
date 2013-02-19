@@ -7,13 +7,33 @@
 
 = 使用样例 =
 
+{{{
+}}}
+
 = 设计 =
 
 {{{
 
+class Material {
+    bool mAlphaBlending;
+};
+
+void Material::setSceneBlending(srcFactor, dstFactor, op)
+{
+
+    mAlphaBlending = true;
+}
+
+
+void Renderer::setSceneBlending(src, dst, op)
+{
+   gl...
+}
+
+
 void World::renderSingleObject (RenderOperation *ro, Material *mat, Real worldMatrix[16], Real viewMatrix[16], Real projMatrix[16])
 {
-    if (mat->hasSceneBlending()){
+    if (mat->hasAlphaBlending()){
         //绘制之后如何清除？
         mRenderer.setSceneBlending(mat->getSourceBlenderFactor(),
                                    mat->getDestBlendFactor(),
@@ -23,10 +43,7 @@ void World::renderSingleObject (RenderOperation *ro, Material *mat, Real worldMa
 
 }
 
-void Renderer::setSceneBlending(src, dst, op)
-{
-   gl...
-}
+
 
 
 }}}
