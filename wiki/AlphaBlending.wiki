@@ -11,7 +11,7 @@
 
     Material *mat = MaterialManager::getInstance()->createMaterial();
     ...
-    mat->setSceneBlending(BLEND_SRC_ALPHA, BLEND_ONE_MINUS_SRC_ALPHA);
+    mat->setSceneBlending(T3D_BLEND_SRC_ALPHA, BLEND_ONE_MINUS_SRC_ALPHA);
 
 }}}
 
@@ -21,32 +21,34 @@
     enum BlendingFactor
     {
         ...
+        T3D_
     }
 
     enum BlendingMode
     {
         ...
+        T3D_
     };
 
-    typedef struct _BLENDING
+    typedef struct _BlendingInfo
     {
         BlendingFactor srcFactor;
         BlendingFactor dstFactor;
         BlendingMode   mode;
-    }BlendingOp;
+    }BlendingInfo;
 
 class Material {
     Material()
     {
         ...
-        mAlphaBlending = FALSE;
+        bool mAlphaBlending = FALSE;
     }
 
     bool mAlphaBlending;     /* default value : false */
-    BlendingOp mBlendingOp;
+    BlendingInfo mBlendingInfo;
 
     void setSceneBlending(BlendingFactor srcFactor, BlendingFactor destFactor, BlendingMode mode = BLEND_ADD);
-    void getBlendingOp();
+    BlendingInfo* getBlendingInfo();
 };
 
 void Material::void setSceneBlending(BlendingFactor srcFactor, BlendingFactor destFactor, BlendingMode mode)
@@ -55,10 +57,7 @@ void Material::void setSceneBlending(BlendingFactor srcFactor, BlendingFactor de
     mBlendingOp.destFactor = destFactor;
     mBlendingOp.mode = mode;
 
-    if(mBlendingOp.srcFactor == BLEND_ONE && mBlendingOp.destFactor == BLEND_ZERO)
-        mAlphaBlending = FALSE;
-    else
-        mAlphaBlending = TRUE;
+    mAlphaBlending = TRUE;
 
     return;
 }
