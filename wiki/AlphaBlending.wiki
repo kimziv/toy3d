@@ -18,27 +18,102 @@
 = 设计 =
 
 {{{
+    enum BlendingFactor
+    {
+        ...
+    }
+
+    enum BlendingMode
+    {
+        ...
+    };
+
+    typedef struct _BLENDING
+    {
+        BlendingFactor srcFactor;
+        BlendingFactor dstFactor;
+        BlendingMode   mode;
+    }BlendingOp;
 
 class Material {
-    bool mAlphaBlending;
+    Material()
+    {
+        ...
+        mAlphaBlending = FALSE;
+    }
+
+    bool mAlphaBlending;     /* default value : false */
+    BlendingOp mBlendingOp;
+
+    void setSceneBlending(BlendingFactor srcFactor, BlendingFactor destFactor, BlendingMode mode = BLEND_ADD);
+    void getBlendingOp();
 };
 
-void Material::setSceneBlending(srcFactor, dstFactor, op)
+void Material::void setSceneBlending(BlendingFactor srcFactor, BlendingFactor destFactor, BlendingMode mode)
 {
+    mBlendingOp.srcFactor = srcFactor;
+    mBlendingOp.destFactor = destFactor;
+    mBlendingOp.mode = mode;
 
-    mAlphaBlending = true;
+    if(mBlendingOp.srcFactor == BLEND_ONE && mBlendingOp.destFactor == BLEND_ZERO)
+        mAlphaBlending = FALSE;
+    else
+        mAlphaBlending = TRUE;
+
+    return;
 }
 
 class Renderer
 {
-   void enableBlending (bool flag);
+    void enableBlending (bool flag);
+    void setSceneBlending(BlendingOp blendingOp);
 }
 
-
-void Renderer::setSceneBlending(src, dst, op)
+void Renderer::enableBlending (bool flag)
 {
-   gl...
+    if(flag)
+        glEnable(GL_BLEND);
+    else
+        glDisable(GL_BLEND);
+
+    return;
 }
+
+//void Renderer::setSceneBlending(src, dst, op)
+//{
+//   gl...
+//}
+void Renderer::setSceneBlending(BlendingOp blending)
+{
+    int srcfactor, destfactor, mode;
+    switch(blendingOp.srcFactor)
+    {
+        case xx:
+            srcfactor = GL_...
+            break;
+        ...
+    }
+    switch(blendingOp.destFactor)
+    {
+        case xx:
+            destfactor = GL_...
+            break;
+        ...
+    }
+    switch(blendingOp.mode)
+    {
+        case xx:
+            mode = GL_...
+            break;
+        ...
+    }
+
+    glBlendFunc(srcfactor, destfactor);
+    glBlendEquation(mode);
+
+    return;
+}
+
 
 
 void World::renderSingleObject (RenderOperation *ro, Material *mat, Real worldMatrix[16], Real viewMatrix[16], Real projMatrix[16])
