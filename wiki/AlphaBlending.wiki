@@ -11,15 +11,26 @@
 
 {{{
 
-void World::renderSingleObject ()
+void World::renderSingleObject (RenderOperation *ro, Material *mat, Real worldMatrix[16], Real viewMatrix[16], Real projMatrix[16])
 {
-    if ()
+    if (mat->hasSceneBlending()){
+        //绘制之后如何清除？
+        mRenderer.setSceneBlending(mat->getSourceBlenderFactor(),
+                                   mat->getDestBlendFactor(),
+                                   mat->getSceneBlendingOperation()
+                                   );
+    }
+
 }
 
 void Renderer::setSceneBlending(src, dst, op)
 {
+   gl...
 }
 
 
-
 }}}
+
+=Reference=
+
+ * [http://www.cnitblog.com/buf/archive/2011/07/27/74877.html OGRE Texture Blending 纹理混合]
