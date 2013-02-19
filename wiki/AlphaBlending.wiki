@@ -11,7 +11,7 @@
 
     Material *mat = MaterialManager::getInstance()->createMaterial();
     ...
-    mat->setSceneBlending(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    mat->setSceneBlending(BLEND_SRC_ALPHA, BLEND_ONE_MINUS_SRC_ALPHA);
 
 }}}
 
