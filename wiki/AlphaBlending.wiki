@@ -1,0 +1,25 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+增加 alpha 混合支持
+
+
+= 使用样例 =
+
+= 设计 =
+
+{{{
+
+void World::renderSingleObject ()
+{
+    if ()
+}
+
+void Renderer::setSceneBlending(src, dst, op)
+{
+}
+
+
+
+}}}
