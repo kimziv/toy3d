@@ -8,6 +8,11 @@
 = 使用样例 =
 
 {{{
+
+    Material *mat = MaterialManager::getInstance()->createMaterial();
+    ...
+    mat->setSceneBlending(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 }}}
 
 = 设计 =
