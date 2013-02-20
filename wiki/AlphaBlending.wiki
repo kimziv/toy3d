@@ -180,7 +180,7 @@ Uint Renderer::getBlendMode(BlendingMode mode)
         return GL_MAX;
     }
 
-    return GL_FUNC_ADD;
+    return GL_ADD;
 }
 
 void World::renderSingleObject (RenderOperation *ro, Material *mat, Real worldMatrix[16], Real viewMatrix[16], Real projMatrix[16])
