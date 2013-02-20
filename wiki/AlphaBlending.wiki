@@ -20,22 +20,45 @@
 {{{
     enum BlendingFactor
     {
-        ...
-        T3D_
-    }
+        /* Blending Factor Dest */
+        T3D_ZERO,
+        T3D_ONE,
+        T3D_SRC_COLOR,
+        T3D_ONE_MINUS_SRC_COLOR,
+        T3D_SRC_ALPHA,
+        T3D_ONE_MINUS_SRC_ALPHA,
+        T3D_DST_ALPHA,
+        T3D_ONE_MINUS_DST_ALPHA,
 
+        /* Blending Factor Src */
+        /* T3D_ZERO */
+        /* T3D_ONE */
+        T3D_DST_COLOR,
+        T3D_ONE_MINUS_DST_COLOR,
+        T3D_SRC_ALPHA_SATURATE,
+        /* T3D_SRC_ALPHA */
+        /* T3D_ONE_MINUS_SRC_ALPHA */
+        /* T3D_DST_ALPHA */
+        /* T3D_ONE_MINUS_DST_ALPHA */
+    };
+    
     enum BlendingMode
     {
-        ...
-        T3D_
+        T3D_ADD,
+        T3D_SUBTRACT,
+        T3D_SUBTRACT_REVERSE,
+        T3D_MIN,
+        T3D_MAX
     };
 
+    /*
     typedef struct _BlendingInfo
     {
         BlendingFactor srcFactor;
-        BlendingFactor dstFactor;
+        BlendingFactor destFactor;
         BlendingMode   mode;
-    }BlendingInfo;
+    }BlendingInfo
+    */
 
 class Material {
     Material()
@@ -45,10 +68,17 @@ class Material {
     }
 
     bool mAlphaBlending;     /* default value : false */
-    BlendingInfo mBlendingInfo;
+    //BlendingInfo mBlendingInfo;
+    BlendingFactor mSrcFactor;
+    BlendingFactor mDestFactor;
+    BlendingMode   mMode;
 
-    void setSceneBlending(BlendingFactor srcFactor, BlendingFactor destFactor, BlendingMode mode = BLEND_ADD);
-    BlendingInfo* getBlendingInfo();
+
+    void setSceneBlending(BlendingFactor srcFactor, BlendingFactor destFactor, BlendingMode mode = T3D_ADD);
+    //BlendingInfo* getBlendingInfo();
+    const BlendingFactor getSrcBlendFactor() const;
+    const BlendingFactor getDestBlendFactor() const;
+    const BlendingMode getBlendMode() const;
 };
 
 void Material::void setSceneBlending(BlendingFactor srcFactor, BlendingFactor destFactor, BlendingMode mode)
@@ -62,10 +92,32 @@ void Material::void setSceneBlending(BlendingFactor srcFactor, BlendingFactor de
     return;
 }
 
+const Bool Material::hasAlphaBlending() const
+{
+    return (const Bool)mAlphaBlending;
+}
+
+const BlendingFactor Material::getSrcBlendFactor() const
+{
+    return (const BlendingFactor)mSrcFactor;
+}
+
+const BlendingFactor Material::getDestBlendFactor() const
+{
+    return (const BlendingFactor)mDestFactor;
+}
+
+const BlendingMode Material::getBlendMode() const
+{
+    return (const BlendingMode)mMode;
+}
+
+
 class Renderer
 {
     void enableBlending (bool flag);
-    void setSceneBlending(BlendingOp blendingOp);
+    //void setSceneBlending(BlendingInfo blendingInfo);
+    void setSceneBlending(BlendingFactor srcFactor,BlendingFactor destFactor, BlendingMode mode);
 }
 
 void Renderer::enableBlending (bool flag)
@@ -82,53 +134,54 @@ void Renderer::enableBlending (bool flag)
 //{
 //   gl...
 //}
-void Renderer::setSceneBlending(BlendingOp blending)
+void Renderer::setSceneBlending(BlendingFactor t3dSrcFactor, BlendingFactor t3dDestFactor, BlendingMode t3dMode)
 {
-    int srcfactor, destfactor, mode;
-    switch(blendingOp.srcFactor)
+    int srcFactor, destFactor, mode;
+
+    switch(t3dSrcFactor)
     {
-        case xx:
-            srcfactor = GL_...
-            break;
-        ...
-    }
-    switch(blendingOp.destFactor)
-    {
-        case xx:
-            destfactor = GL_...
-            break;
-        ...
-    }
-    switch(blendingOp.mode)
-    {
-        case xx:
-            mode = GL_...
-            break;
-        ...
+    case T3D_ZERO:
+        srcFactor = GL_ZERO;
+        break;
     }
 
-    glBlendFunc(srcfactor, destfactor);
+    switch(t3dDestFactor)
+    {
+    case T3D_ZERO:
+        destFactor = GL_ZERO;
+        break;
+    }
+
+    switch(t3dMode)
+    {
+    case T3D_ADD:
+        mode = GL_ADD;
+        break;
+    }
+
+    glBlendFunc(srcFactor, destFactor);
     glBlendEquation(mode);
 
     return;
 }
 
 
-
 void World::renderSingleObject (RenderOperation *ro, Material *mat, Real worldMatrix[16], Real viewMatrix[16], Real projMatrix[16])
 {
     if (mat->hasAlphaBlending()){
+        mRenderer.enableBlending(TRUE);
         //绘制之后如何清除？
-        mRenderer.setSceneBlending(mat->getSourceBlenderFactor(),
+        mRenderer.setSceneBlending(mat->getSourceBlendFactor(),
                                    mat->getDestBlendFactor(),
-                                   mat->getSceneBlendingOperation()
+                                   mat->getBlendMode()
                                    );
     }
 
     mRenderer.render(op);
 
     if (mat->hasAlphaBlending())
-        mRenderer.disableBlending ();
+        mRenderer.enableBlending(FALSE);
+        //mRenderer.disableBlending ();
 }
 
 
