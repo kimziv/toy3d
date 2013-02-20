@@ -41,7 +41,7 @@ class Material {
     Material()
     {
         ...
-        bool mAlphaBlending = FALSE;
+        mAlphaBlending = FALSE;
     }
 
     bool mAlphaBlending;     /* default value : false */
@@ -53,9 +53,9 @@ class Material {
 
 void Material::void setSceneBlending(BlendingFactor srcFactor, BlendingFactor destFactor, BlendingMode mode)
 {
-    mBlendingOp.srcFactor = srcFactor;
-    mBlendingOp.destFactor = destFactor;
-    mBlendingOp.mode = mode;
+    mSrcFactor = srcFactor;
+    mDestFactor = destFactor;
+    mMode = mode;
 
     mAlphaBlending = TRUE;
 
