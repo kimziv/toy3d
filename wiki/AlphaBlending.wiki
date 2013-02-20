@@ -51,14 +51,6 @@
         T3D_MAX
     };
 
-    /*
-    typedef struct _BlendingInfo
-    {
-        BlendingFactor srcFactor;
-        BlendingFactor destFactor;
-        BlendingMode   mode;
-    }BlendingInfo
-    */
 
 class Material {
     Material()
@@ -68,14 +60,12 @@ class Material {
     }
 
     bool mAlphaBlending;     /* default value : false */
-    //BlendingInfo mBlendingInfo;
     BlendingFactor mSrcFactor;
     BlendingFactor mDestFactor;
     BlendingMode   mMode;
 
 
     void setSceneBlending(BlendingFactor srcFactor, BlendingFactor destFactor, BlendingMode mode = T3D_ADD);
-    //BlendingInfo* getBlendingInfo();
     const BlendingFactor getSrcBlendFactor() const;
     const BlendingFactor getDestBlendFactor() const;
     const BlendingMode getBlendMode() const;
@@ -116,8 +106,13 @@ const BlendingMode Material::getBlendMode() const
 class Renderer
 {
     void enableBlending (bool flag);
-    //void setSceneBlending(BlendingInfo blendingInfo);
     void setSceneBlending(BlendingFactor srcFactor,BlendingFactor destFactor, BlendingMode mode);
+
+    /* convert blenging factor to the value which the hardware support. */
+    Uint getBlendFactor(BlendingFactor srcFactor);
+
+    /* convert blenging mode to the value which the hardware support. */
+    Uint getBlendMode(BlendingMode mode);
 }
 
 void Renderer::enableBlending (bool flag)
@@ -130,47 +125,68 @@ void Renderer::enableBlending (bool flag)
     return;
 }
 
-//void Renderer::setSceneBlending(src, dst, op)
-//{
-//   gl...
-//}
-void Renderer::setSceneBlending(BlendingFactor t3dSrcFactor, BlendingFactor t3dDestFactor, BlendingMode t3dMode)
+void Renderer::setSceneBlending(BlendingFactor srcFactor,BlendingFactor destFactor, BlendingMode mode)
 {
-    int srcFactor, destFactor, mode;
-
-    switch(t3dSrcFactor)
-    {
-    case T3D_ZERO:
-        srcFactor = GL_ZERO;
-        break;
-    }
-
-    switch(t3dDestFactor)
-    {
-    case T3D_ZERO:
-        destFactor = GL_ZERO;
-        break;
-    }
-
-    switch(t3dMode)
-    {
-    case T3D_ADD:
-        mode = GL_ADD;
-        break;
-    }
-
-    glBlendFunc(srcFactor, destFactor);
-    glBlendEquation(mode);
+    glBlendFunc(getBlendFactor(srcFactor), getBlendFactor(destFactor));
+    glBlendEquation(getBlendMode(mode));
 
     return;
 }
 
+Uint Renderer::getBlendFactor(BlendingFactor factor)
+{
+    switch(factor)
+    {
+    case T3D_ONE:
+        return GL_ONE;
+    case T3D_ZERO:
+        return GL_ZERO;
+    case T3D_DST_COLOR:
+        return GL_DST_COLOR;
+    case T3D_SRC_COLOR:
+        return GL_SRC_COLOR;
+    case T3D_ONE_MINUS_DST_COLOR:
+        return GL_ONE_MINUS_DST_COLOR;
+    case T3D_ONE_MINUS_SRC_COLOR:
+        return GL_ONE_MINUS_SRC_COLOR;
+    case T3D_DST_ALPHA:
+        return GL_DST_ALPHA;
+    case T3D_SRC_ALPHA:
+        return GL_SRC_ALPHA;
+    case T3D_ONE_MINUS_DST_ALPHA:
+        return GL_ONE_MINUS_DST_ALPHA;
+    case T3D_ONE_MINUS_SRC_ALPHA:
+        return GL_ONE_MINUS_SRC_ALPHA;
+    case T3D_SRC_ALPHA_SATURATE:
+        return GL_SRC_ALPHA_SATURATE;
+    }
+
+    return GL_ONE;
+}
+
+Uint Renderer::getBlendMode(BlendingMode mode)
+{
+    switch(mode)
+    {
+    case T3D_ADD:
+        return GL_FUNC_ADD;
+    case T3D_SUBTRACT:
+        return GL_FUNC_SUBTRACT;
+    case T3D_REVERSE_SUBTRACT:
+        return GL_FUNC_REVERSE_SUBTRACT;
+    case T3D_MIN:
+        return GL_MIN_EXT;
+    case T3D_MAX:
+        return GL_MAX;
+    }
+
+    return GL_FUNC_ADD;
+}
 
 void World::renderSingleObject (RenderOperation *ro, Material *mat, Real worldMatrix[16], Real viewMatrix[16], Real projMatrix[16])
 {
     if (mat->hasAlphaBlending()){
         mRenderer.enableBlending(TRUE);
-        //绘制之后如何清除？
         mRenderer.setSceneBlending(mat->getSourceBlendFactor(),
                                    mat->getDestBlendFactor(),
                                    mat->getBlendMode()
@@ -181,7 +197,6 @@ void World::renderSingleObject (RenderOperation *ro, Material *mat, Real worldMa
 
     if (mat->hasAlphaBlending())
         mRenderer.enableBlending(FALSE);
-        //mRenderer.disableBlending ();
 }
 
 
