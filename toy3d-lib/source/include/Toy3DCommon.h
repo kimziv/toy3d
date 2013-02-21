@@ -49,8 +49,9 @@ extern "C" {
 //#define MAX_SHADER_PROGRAM_PARAMS_COUNT 8
 
 
-//max length of parameter name
+//max length of name
 #define MAX_NAME_LEN        32
+#define MAX_NAME_LEN_BIG    128
 
 #define MATRIX_4x4_SIZE     16
 
@@ -179,6 +180,47 @@ extern "C" {
         Uint bpp;                  /* bytes per pixel */
     }ImageInfo;
 
+    enum BlendingFactor
+    {
+        /* Blending Factor Dest */
+        T3D_ZERO,
+        T3D_ONE,
+        T3D_SRC_COLOR,
+        T3D_ONE_MINUS_SRC_COLOR,
+        T3D_SRC_ALPHA,
+        T3D_ONE_MINUS_SRC_ALPHA,
+        T3D_DST_ALPHA,
+        T3D_ONE_MINUS_DST_ALPHA,
+
+        /* Blending Factor Src */
+        /* T3D_ZERO */
+        /* T3D_ONE */
+        T3D_DST_COLOR,
+        T3D_ONE_MINUS_DST_COLOR,
+        T3D_SRC_ALPHA_SATURATE,
+        /* T3D_SRC_ALPHA */
+        /* T3D_ONE_MINUS_SRC_ALPHA */
+        /* T3D_DST_ALPHA */
+        /* T3D_ONE_MINUS_DST_ALPHA */
+    };
+    
+    enum BlendingMode
+    {
+        T3D_ADD,
+        T3D_SUBTRACT,
+        T3D_REVERSE_SUBTRACT,
+        T3D_MIN,
+        T3D_MAX
+    };
+
+    /*
+    typedef struct _BlendingInfo
+    {
+        BlendingFactor srcFactor;
+        BlendingFactor destFactor;
+        BlendingMode   mode;
+    }BlendingInfo;
+    */
 
 
 

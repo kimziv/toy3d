@@ -9,6 +9,7 @@ TOY3D_BEGIN_NAMESPACE
     {
         mShaderProgram = NULL;
         mTexture = NULL;
+        mAlphaBlending = FALSE;
     }
 
 
@@ -95,6 +96,44 @@ TOY3D_BEGIN_NAMESPACE
     {
         return (const Texture*)mTexture;
     }
+
+    void Material::enableBlending(Bool flag)
+    {
+        mAlphaBlending = flag;
+        return;
+    }
+
+    void Material::setSceneBlending(BlendingFactor srcFactor,
+        BlendingFactor destFactor, BlendingMode mode)
+    {
+        mSrcFactor = srcFactor;
+        mDestFactor = destFactor;
+        mMode = mode;
+
+        mAlphaBlending = TRUE;
+        return;
+    }
+
+    const Bool Material::hasAlphaBlending() const
+    {
+        return (const Bool)mAlphaBlending;
+    }
+
+    const BlendingFactor Material::getSrcBlendFactor() const
+    {
+        return (const BlendingFactor)mSrcFactor;
+    }
+
+    const BlendingFactor Material::getDestBlendFactor() const
+    {
+        return (const BlendingFactor)mDestFactor;
+    }
+
+    const BlendingMode Material::getBlendMode() const
+    {
+        return (const BlendingMode)mMode;
+    }
+
 
 
 TOY3D_END_NAMESPACE

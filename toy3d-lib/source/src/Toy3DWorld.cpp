@@ -30,7 +30,20 @@ TOY3D_BEGIN_NAMESPACE
         mRenderer.updateAutoUniform (&mAutoParamDataSource);
         mRenderer.updateCustUniform ();
 
+        if(mat->hasAlphaBlending())
+        {
+            mRenderer.enableBlending(TRUE);
+            //mRenderer.setSceneBlending(mat->getBlendingOp());
+            mRenderer.setSceneBlending(
+                mat->getSrcBlendFactor(),mat->getDestBlendFactor(), mat->getBlendMode());
+        }
+
         mRenderer.render (ro);
+
+        if(mat->hasAlphaBlending())
+        {
+            mRenderer.enableBlending(FALSE);
+        }
 
         return;
     } 
@@ -58,6 +71,7 @@ TOY3D_BEGIN_NAMESPACE
 
         mRenderer.setViewPort (0,0, mWidth, mHeight);
         mRenderer.beginFrame();
+        mRenderer.setBackColor (mBackColorRed, mBackColorGreen, mBackColorBlue, mBackColorAlpha);
 
         for (i = 0; i < mEntityCount; i++) {
 
