@@ -35,6 +35,9 @@ ADD_SUBDIRECTORY(rectangle)
 ADD_SUBDIRECTORY(multi_rect)
 ADD_SUBDIRECTORY(texture)
 ADD_SUBDIRECTORY(testDataStruct)
+ADD_SUBDIRECTORY(textureCapacityTest)
+ADD_SUBDIRECTORY(blending)
+
 
 
 
