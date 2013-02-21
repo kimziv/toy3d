@@ -39,6 +39,11 @@ TOY3D_BEGIN_NAMESPACE
 
         size = count * 3 * sizeof(Real);
         mVertices = (Real*)malloc(size);
+        if(NULL==mVertices)
+        {
+            TOY3D_TIPS("Error: Failed to alloc memory for vertices array.\n");
+            return;
+        }
         memcpy (mVertices, pVertices, size);
 
        return;
@@ -62,14 +67,20 @@ TOY3D_BEGIN_NAMESPACE
         }
         else if(mVertexCount!=count)
         {
-            TOY3D_TIPS("Error: colors' count doesn't agree with existing data.");
+            TOY3D_TIPS("Error: colors' count doesn't agree with existing data.\n");
             return;
         }
 
+        //Fix me: the '4' should be a value which set by user.
         size = mVertexCount * 4 * sizeof(Real);
-        mUVs = (Real*)malloc(size);
+        mColors = (Real*)malloc(size);
+        if(NULL==mColors)
+        {
+            TOY3D_TIPS("Error: Failed to alloc memory for color array.\n");
+            return;
+        }
         memcpy (mColors, pColors, size);
-        
+
         return;
     }
 
@@ -97,6 +108,11 @@ TOY3D_BEGIN_NAMESPACE
         
         size = mVertexCount * 2 * sizeof(Real);
         mUVs = (Real*)malloc(size);
+        if(NULL==mUVs)
+        {
+            TOY3D_TIPS("Error: Failed to alloc memory for uv array.\n");
+            return;
+        }
         memcpy (mUVs, pUVs, size);
         
         return;
@@ -125,7 +141,12 @@ TOY3D_BEGIN_NAMESPACE
         }
 
         size = mVertexCount * 3 * sizeof(Real);
-        mUVs = (Real*)malloc(size);
+        mNormals = (Real*)malloc(size);
+        if(NULL==mNormals)
+        {
+            TOY3D_TIPS("Error: Failed to alloc memory for normal array.\n");
+            return;
+        }
         memcpy(mNormals, pNormals, size);
 
         return;

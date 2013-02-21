@@ -46,8 +46,19 @@ TOY3D_BEGIN_NAMESPACE
         void updateAutoUniform (AutoParamDataSource *autoDataSource);
         void updateCustUniform ();
 
+        /* Blending Operation */
+        void enableBlending(Bool flag);
+        //void setSceneBlending(BlendingInfo blendingInfo);
+        void setSceneBlending(BlendingFactor srcFactor,
+            BlendingFactor destFactor, BlendingMode mode);
+
     private:
         Uint setRenderMode(RenderMode mode);
+
+        /* convert blenging factor to the value which the hardware support. */
+        Uint getBlendFactor(BlendingFactor srcFactor);
+        /* convert blenging mode to the value which the hardware support. */
+        Uint getBlendMode(BlendingMode mode);
     };
 
 
