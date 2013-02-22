@@ -117,7 +117,7 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
             glVertexAttribPointer( index, 3, GL_FLOAT, 0, 0, pTempR );
             glEnableVertexAttribArray( index );
         }
-        
+
         glDrawArrays( mode, 0,  ro->getVerticesCount() );
 
         return;
