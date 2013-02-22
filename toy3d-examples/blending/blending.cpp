@@ -73,10 +73,50 @@ Real color2[VERTEX_COUNT * 4] = {
 
 void display()
 {
-    //glDisable(GL_DITHER);
-    //glDisable(GL_CULL_FACE);
-    //glHint(GL_GENERATE_MIPMAP_HINT,GL_NICEST);
+    Bool flag = FALSE;
+
+#if 1
+    //glShadeModel(GL_SMOOTH);
+    glEnable(GL_BLEND);
+    glDisable(GL_DEPTH_TEST);
+    //glEnable(GL_POINT_SMOOTH);
+    glEnable(GL_LINE_SMOOTH);
+    //glEnable(GL_POLYGON_SMOOTH);
+    //glHint( GL_POINT_SMOOTH_HINT, GL_NICEST);
+    glHint( GL_LINE_SMOOTH_HINT, GL_NICEST);
+    //glHint( GL_POLYGON_SMOOTH_HINT, GL_NICEST);
+    //glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+    //glLineWidth(1.5);
+
+#endif
+
+    //Anti-aliasing
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);    
+
+#if 0
+    GLint bufs, samples;
+
+    glGetIntegerv(GL_SAMPLE_BUFFERS, &bufs);
+    glGetIntegerv(GL_SAMPLES, &samples);
+    if( (1==bufs) && (1<samples) )
+    {
+        flag = TRUE;
+        glEnable(GL_MULTISAMPLE);
+        glSampleCoverage(GL_SAMPLE_ALPHA_TO_COVERAGE, GL_FALSE);
+    }
+    else
+    {
+        printf("Multi-sample is   forbidded.\n");
+    }
+    //glSampleCoverage(1.0f, GL_TRUE);
+    //glLineWidth(1.3f);
+#endif
+
     world->startRendering (); 
+
+    //if(flag)
+    //    glDisable(GL_MULTISAMPLE);
 
 	glFlush();
     glutSwapBuffers ();
@@ -197,6 +237,7 @@ void keyboard(unsigned char key, int x, int y){
 int main(int argc, char** argv){
 
 	glutInit(&argc, argv);
+    //glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGB|GLUT_MULTISAMPLE);
   	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
   	glutInitWindowSize(WINDOW_W, WINDOW_H);
   	glutInitWindowPosition(0,0);
@@ -214,8 +255,6 @@ int main(int argc, char** argv){
         printf("OpenGL 2.0 not supported\n");
         exit(1);
     }
-
-
 
   	init();
   	glutMainLoop();
