@@ -35,11 +35,11 @@ class TextureUnitState
     void setTextureName (name);
 }
  
-
+}}}
 
 =TextureManager/Texture=
 
-
+{{{
 
 class TextureManager 
 {
