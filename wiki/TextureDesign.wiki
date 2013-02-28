@@ -12,6 +12,105 @@
  * [http://blog.csdn.net/programrookie/article/details/4552447 实现动态纹理作为验证]
 
 
+=TextureManager/Texture=
+
+备份处理
+
+{{{
+
+class TextureManager 
+{
+ 
+    Map  mTexturePtrMap;
+
+    size_t mMemoryBudget;  //in bytes
+    size_t mMemoryUsage;   //in bytes
+ 
+
+    void setMemoryBudget ();
+    size_t getMemoryBudget();
+    size_t getMemoryUsage ();
+ 
+
+
+    Texture* create (name);  //create a new blank resource, but does not immediately load it
+ 
+    Texture* getByName (name);  
+
+
+    Texture* createOrRetrieve(name);   //getByName return NULL, then call create
+
+
+    void remove(Texture* tex);   //unload and remove from list
+ 
+    void remove (name);
+ 
+
+
+    void removeAll();
+ 
+    void removeUnreferencedResources();
+ 
+
+
+    void unload (name);  //not removed, simply free up their memory
+ 
+
+    void unloadAll();
+ 
+    void reloadAll();
+ 
+    unloadUnreferencedResource();
+ 
+    reloadUnreferencedResource();
+    
+
+
+    bool resoureExist(name);
+ 
+
+    Texture* prepare (name, );  //load images only, not opengl object
+ 
+
+    Texture* load (name, numMipmaps, ...); //load into openg object.
+ 
+    Texture* loadImage(name, Image &img, ...);
+ 
+    Texture* loadRawData (name, width, height, format, ...); 
+
+    Texture* createManal(name, w, h, d, rgba, ....);
+ 
+}
+ 
+class Texture
+{
+ 
+    GLuint mTextureID;
+ 
+    vector <Image> mLoadedImages;
+ 
+
+    void prepare();  //load image file to image
+ 
+    void load();
+ 
+
+
+    void unload();   // call freeInternalResources
+ 
+
+    void loadImage(Image& img);     //generate gl texture object
+ 
+    void loadRawData(w, h, format, data);     //generate gl texture object
+ 
+
+    void createInternalResources ();  //generate gl texture object
+    void freeInternalResources ();   //delete opengl texture
+
+}
+
+}}}
+
 
 
 
