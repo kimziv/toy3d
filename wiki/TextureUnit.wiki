@@ -146,8 +146,6 @@ class TextureManager
     size_t getMemoryBudget();
     size_t getMemoryUsage ();
  
-
-
     Texture* create (name);  //create a new blank resource, but does not immediately load it
  
     Texture* getByName (name);  
@@ -229,7 +227,6 @@ class Texture
 
 =World/Renderer= 
 
-
 {{{
 class Renderer 
 {
@@ -249,72 +246,51 @@ private:
     int  getRealTextureParameterVal(TextureParameterVal val);
 }
 
-void World::renderOneObject ()
+void Renderer::setTextureUnitSettings(Uint unit, TextureUnitState *texUnitState)
 {
-/*
-    for (all textureUnitState in Material) {
-        mRenderer->setTextureUnitSettings (unit, pTex);
-    }
-*/
-    Uint i, count = 0;
-    TextureUnitState *texUnits;
-    texUnits = mat->getAllTextureUnitStates(&count);
+    Uint target;
+    Uint parameterName;
+    int  parameterVal;
+    Uint count, i;
+    Texture *tex;
 
-    ...
-    for(i=0; i<count; i++)
+    /* active the texture unit */
+    glActiveTexture( getRealTextureUnit(unit) );
+
+    /* get the target */
+    target = getRealTextureTarget(texUnitState->getTextureTarget());
+
+    /* set parameters */
+    parameterName = getRealTextureParameterName(T3D_TEXTURE_MAG_FILTER);
+    parameterVal = getRealTextureParameterVal(
+        texUnitState->getTextureParameterVal(T3D_TEXTURE_MAG_FILTER));
+    glTexParameteri(target, parameterName, parameterVal);
+
+    parameterName = getRealTextureParameterName(T3D_TEXTURE_MIN_FILTER);
+    parameterVal = getRealTextureParameterVal(
+        texUnitState->getTextureParameterVal(T3D_TEXTURE_MIN_FILTER));
+    glTexParameteri(target, parameterName, parameterVal);
+
+    parameterName = getRealTextureParameterName(T3D_TEXTURE_WRAP_S);
+    parameterVal = getRealTextureParameterVal(
+        texUnitState->getTextureParameterVal(T3D_TEXTURE_WRAP_S));
+    glTexParameteri(target, parameterName, parameterVal);
+
+    parameterName = getRealTextureParameterName(T3D_TEXTURE_WRAP_T);
+    parameterVal = getRealTextureParameterVal(
+        texUnitState->getTextureParameterVal(T3D_TEXTURE_WRAP_T));
+    glTexParameteri(target, parameterName, parameterVal);
+
+    /* bind each texture */
+    tex = texUnitState->getAllTextures(&count);
+    for(i=0;i<count;i++)
     {
-        mRenderer.setTextureUnitSettings(i, texUnits);
-        texUnits++;
+        glBindTexture(target, tex->getTextureID());
+        tex++;
     }
-    ...
 
+    return;
 }
-
-    void Renderer::setTextureUnitSettings(Uint unit, TextureUnitState* texUnitState)
-    {
-        Uint target;
-        Uint parameterName;
-        int  parameterVal;
-        Uint count, i;
-        Texture *tex;
-
-        /* active the texture unit */
-        glActiveTexture( getRealTextureUnit(unit) );
-
-        /* get the target */
-        target = getRealTextureTarget(texUnitState->getTextureTarget());
-
-        /* set parameters */
-        parameterName = getRealTextureParameterName(T3D_TEXTURE_MAG_FILTER);
-        parameterVal = getRealTextureParameterVal(
-            texUnitState->getTextureParameterVal(T3D_TEXTURE_MAG_FILTER));
-        glTexParameteri(target, parameterName, parameterVal);
-
-        parameterName = getRealTextureParameterName(T3D_TEXTURE_MIN_FILTER);
-        parameterVal = getRealTextureParameterVal(
-            texUnitState->getTextureParameterVal(T3D_TEXTURE_MIN_FILTER));
-        glTexParameteri(target, parameterName, parameterVal);
-
-        parameterName = getRealTextureParameterName(T3D_TEXTURE_WRAP_S);
-        parameterVal = getRealTextureParameterVal(
-            texUnitState->getTextureParameterVal(T3D_TEXTURE_WRAP_S));
-        glTexParameteri(target, parameterName, parameterVal);
-
-        parameterName = getRealTextureParameterName(T3D_TEXTURE_WRAP_T);
-        parameterVal = getRealTextureParameterVal(
-            texUnitState->getTextureParameterVal(T3D_TEXTURE_WRAP_T));
-        glTexParameteri(target, parameterName, parameterVal);
-
-        /* bind each texture */
-        tex = texUnitState->getAllTextures(&count);
-        for(i=0;i<count;i++)
-        {
-            glBindTexture(target, tex->getTextureID());
-            tex++;
-        }
-
-        return;
-    }
 
 /*
 void Renderer::_setTextureUnitSettings(texUnit, TextureUnitState* tl)
@@ -340,5 +316,24 @@ void Renderer::_setTexture (stage, enabled, texPtr)
 }
 */
 
+void World::renderOneObject ()
+{
+/*
+    for (all textureUnitState in Material) {
+        mRenderer->setTextureUnitSettings (unit, pTex);
+    }
+*/
+    Uint i, count = 0;
+    TextureUnitState *texUnits;
+    texUnits = mat->getAllTextureUnitStates(&count);
+
+    ...
+    for(i=0; i<count; i++)
+    {
+        mRenderer.setTextureUnitSettings(i, texUnits);
+        texUnits++;
+    }
+    ...
+}
 
 }}}
