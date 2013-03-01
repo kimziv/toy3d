@@ -26,28 +26,113 @@
 
 class Material
 {
-    vector<TextureUinit*> mTextureUnitStates;
+    TPtrArray      mTextureUnitStates;
+    Bool           mAlphaBlending;
+    BlendingFactor mSrcFactor;
+    BlendingFactor mDestFactor;
+    BlendingMode   mMode;
 
-    TextureUnitState* createTextureUnitState (name);
-    TextureUnitState* getTextureUnitState (name);
-        
+    Bool searchTextureUnitState(char *name) const;
+    TextureUnitState* createTextureUnitState(char *name);
+    TextureUnitState* getTextureUnitState(char *name);
+    TextureUnitState* getAllTextureUnitStates(Uint *count);
 }
 
+enum TextureTarget
+{
+    T3D_TEXTURE_1D,
+    T3D_TEXTURE_2D,
+    T3D_TEXTURE_3D
+};
 
+enum TextureParameterName
+{
+    T3D_TEXTURE_MAG_FILTER,
+    T3D_TEXTURE_MIN_FILTER,
+    T3D_TEXTURE_WRAP_S,
+    T3D_TEXTURE_WRAP_T
+};
 
+enum TextureParameterVal
+{
+    /* The following parameters are applicable to T3D_TEXTURE_MAG_FILTER. */
+    T3D_NEAREST,
+    T3D_LINEAR,
+
+    /* The following parameters are applicable to T3D_TEXTURE_MAG_FILTER and T3D_TEXTURE_MIN_FILTER. */
+    T3D_NEAREST_MIPMAP_NEAREST,
+    T3D_LINEAR_MIPMAP_NEAREST,
+    T3D_NEAREST_MIPMAP_LINEAR,
+    T3D_LINEAR_MIPMAP_LINEAR,
+
+    /* The following parameters are applicable to T3D_TEXTURE_WRAP_S and T3D_TEXTURE_WRAP_T. */
+    T3D_CLAMP,
+    T3D_REPEAT,
+    T3D_MIRRORED_REPEAT
+};
+
+/*
+typedef struct _TextureParameter
+{
+    TextureTarget       target;
+    TextureParameterVal texMinFilter;
+    TextureParameterVal texMagFilter;
+    TextureParameterVal texWrapS;
+    TextureParameterVal texWrapT;
+}TextureParameter;
+*/
+
+class TextureUnitState
+{
+private:
+    char             mName[MAX_NAME_LEN];
+    TPtrArray        *mTextures;
+    //TextureParameter mTexParameter;
+    TextureTarget       mTarget;
+    TextureParameterVal mTexMinFilter;
+    TextureParameterVal mTexMagFilter;
+    TextureParameterVal mTexWrapS;
+    TextureParameterVal mTexWrapT;
+
+protected:
+
+public:
+    TextureUnitState();
+    TextureUnitState(char *name);
+    ~TextureUnitState();
+
+    void setName(char *name);
+
+    void setTexture(char *name);
+    void setTexture(Texture *pTexture);
+    void removeTexture(Texture *pTexture);
+
+    const Uint getTextureCount() const;
+    Texture* getAllTextures(Uint *count);
+
+    void setTextureTarget(TextureTarget target);
+    void setTextureParameter(TextureParameterName name, TextureParameterVal val);
+
+    TextureTarget getTextureTarget();
+    TextureParameterVal getTextureParameterVal(TextureParameterName name);
+
+};
+
+/*
 class TextureUnitState 
 {  
     PtrArray mTexturePtrs;
  
     void setTextureName (name);
 }
+*/
  
 }}}
 
 =TextureManager/Texture=
 
 {{{
-
+//此部分暂未作改变
 class TextureManager 
 {
  
@@ -146,14 +231,92 @@ class Texture
 
 
 {{{
+class Renderer 
+{
+    void setTextureUnitSettings( Uint unit, TextureUnitState *texUnitState);
+
+private:
+    Uint getRealRenderMode(RenderMode mode);
+
+    /* convert blenging factor to the value which the hardware support. */
+    Uint getRealBlendFactor(BlendingFactor srcFactor);
+    /* convert blenging mode to the value which the hardware support. */
+    Uint getRealBlendMode(BlendingMode mode);
+
+    Uint getRealTextureUnit(Uint texUnit);
+    Uint getRealTextureTarget(TextureTarget target);
+    Uint getRealTextureParameterName(TextureParameterName name);
+    int  getRealTextureParameterVal(TextureParameterVal val);
+}
 
 void World::renderOneObject ()
 {
+/*
     for (all textureUnitState in Material) {
         mRenderer->setTextureUnitSettings (unit, pTex);
     }
+*/
+    Uint i, count = 0;
+    TextureUnitState *texUnits;
+    texUnits = mat->getAllTextureUnitStates(&count);
+
+    ...
+    for(i=0; i<count; i++)
+    {
+        mRenderer.setTextureUnitSettings(i, texUnits);
+        texUnits++;
+    }
+    ...
+
 }
 
+    void Renderer::setTextureUnitSettings(Uint unit, TextureUnitState* texUnitState)
+    {
+        Uint target;
+        Uint parameterName;
+        int  parameterVal;
+        Uint count, i;
+        Texture *tex;
+
+        /* active the texture unit */
+        glActiveTexture( getRealTextureUnit(unit) );
+
+        /* get the target */
+        target = getRealTextureTarget(texUnitState->getTextureTarget());
+
+        /* set parameters */
+        parameterName = getRealTextureParameterName(T3D_TEXTURE_MAG_FILTER);
+        parameterVal = getRealTextureParameterVal(
+            texUnitState->getTextureParameterVal(T3D_TEXTURE_MAG_FILTER));
+        glTexParameteri(target, parameterName, parameterVal);
+
+        parameterName = getRealTextureParameterName(T3D_TEXTURE_MIN_FILTER);
+        parameterVal = getRealTextureParameterVal(
+            texUnitState->getTextureParameterVal(T3D_TEXTURE_MIN_FILTER));
+        glTexParameteri(target, parameterName, parameterVal);
+
+        parameterName = getRealTextureParameterName(T3D_TEXTURE_WRAP_S);
+        parameterVal = getRealTextureParameterVal(
+            texUnitState->getTextureParameterVal(T3D_TEXTURE_WRAP_S));
+        glTexParameteri(target, parameterName, parameterVal);
+
+        parameterName = getRealTextureParameterName(T3D_TEXTURE_WRAP_T);
+        parameterVal = getRealTextureParameterVal(
+            texUnitState->getTextureParameterVal(T3D_TEXTURE_WRAP_T));
+        glTexParameteri(target, parameterName, parameterVal);
+
+        /* bind each texture */
+        tex = texUnitState->getAllTextures(&count);
+        for(i=0;i<count;i++)
+        {
+            glBindTexture(target, tex->getTextureID());
+            tex++;
+        }
+
+        return;
+    }
+
+/*
 void Renderer::_setTextureUnitSettings(texUnit, TextureUnitState* tl)
 {
     tex = tl._getTexturePtr();
@@ -168,17 +331,14 @@ void Renderer::_setTextureUnitSettings(texUnit, TextureUnitState* tl)
     _setTextureBlendMode(texUnit, tl.getColourBlendMode());
     _setTextureBlendMode(texUnit, tl.getAlphaBlendMode());
     _setTextureXXXX....
-
-
-
 }
 
 void Renderer::_setTexture (stage, enabled, texPtr)
 {
     activateGLTextureUnit(stage);
-
     glBindTexture(texPtr);
-    
 }
+*/
+
 
 }}}
