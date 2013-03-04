@@ -49,7 +49,6 @@ TOY3D_BEGIN_NAMESPACE
         const BlendingFactor getDestBlendFactor() const;
         const BlendingMode getBlendMode() const;
 
-
     };
 
 

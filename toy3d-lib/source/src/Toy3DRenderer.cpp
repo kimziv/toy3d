@@ -406,8 +406,8 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
         case T3D_LINEAR_MIPMAP_LINEAR:
             return GL_LINEAR_MIPMAP_LINEAR;
 
-        case T3D_CLAMP:
-            return GL_CLAMP;
+        case T3D_CLAMP_TO_EDGE:
+            return GL_CLAMP_TO_EDGE;
 
         case T3D_REPEAT:
             return GL_REPEAT;
@@ -418,10 +418,6 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
         
         return GL_NEAREST;
     }
-
-
-
-
 
     Uint Renderer::getBlendFactor(BlendingFactor factor)
     {
