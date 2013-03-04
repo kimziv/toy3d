@@ -42,9 +42,9 @@ Real vertices[VERTEX_COUNT * 3] = {
 };
 
 Real color[VERTEX_COUNT * 4] = {
-    1.0f, 0.0f, 0.0f, 0.6f,
-    1.0f, 0.0f, 0.0f, 0.6f,
-    1.0f, 0.0f, 0.0f, 0.6f
+    1.0f, 0.0f, 0.0f, 0.4f,
+    1.0f, 0.0f, 0.0f, 0.4f,
+    1.0f, 0.0f, 0.0f, 0.4f
 };
 
 Real vertices1[VERTEX_COUNT * 3] = {
@@ -54,21 +54,21 @@ Real vertices1[VERTEX_COUNT * 3] = {
 };
 
 Real color1[VERTEX_COUNT * 4] = {
-    0.0f, 1.0f, 0.0f, 0.6f,
-    0.0f, 1.0f, 0.0f, 0.6f,
-    0.0f, 1.0f, 0.0f, 0.6f
+    0.0f, 1.0f, 0.0f, 0.4f,
+    0.0f, 1.0f, 0.0f, 0.4f,
+    0.0f, 1.0f, 0.0f, 0.4f
 };
 
 Real vertices2[VERTEX_COUNT * 3] = {
     0.0f, -1.5f, 0.0f,
-    -0.5f,-0.5f, 0.0f,
-    0.5f, -0.5f, 0.0f
+    0.5f, -0.5f, 0.0f,
+    -0.5f,-0.5f, 0.0f
 };
 
 Real color2[VERTEX_COUNT * 4] = {
-    1.0f, 0.0f, 0.0f, 0.6f,
-    1.0f, 0.0f, 0.0f, 0.6f,
-    1.0f, 0.0f, 0.0f, 0.6f
+    1.0f, 0.0f, 0.0f, 0.4f,
+    1.0f, 0.0f, 0.0f, 0.4f,
+    1.0f, 0.0f, 0.0f, 0.4f
 };
 
 void display()
@@ -78,21 +78,25 @@ void display()
 #if 1
     //glShadeModel(GL_SMOOTH);
     glEnable(GL_BLEND);
-    glDisable(GL_DEPTH_TEST);
+    //glDisable(GL_DEPTH_TEST);
+    //glDisable(GL_CULL_FACE);
+    //glFrontFace(GL_CCW);
     //glEnable(GL_POINT_SMOOTH);
-    glEnable(GL_LINE_SMOOTH);
-    //glEnable(GL_POLYGON_SMOOTH);
+    //glEnable(GL_LINE_SMOOTH);
+    glEnable(GL_POLYGON_SMOOTH);
     //glHint( GL_POINT_SMOOTH_HINT, GL_NICEST);
-    glHint( GL_LINE_SMOOTH_HINT, GL_NICEST);
-    //glHint( GL_POLYGON_SMOOTH_HINT, GL_NICEST);
+    //glHint( GL_LINE_SMOOTH_HINT, GL_NICEST);
+    glHint( GL_POLYGON_SMOOTH_HINT, GL_NICEST);
     //glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
     //glLineWidth(1.5);
 
 #endif
 
     //Anti-aliasing
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);    
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    //glEnable(GL_SAMPLE_ALPHA_TO_COVERAGE);
+    //glSampleCoverage(GL_SAMPLE_ALPHA_TO_COVERAGE, GL_FALSE);
 
 #if 0
     GLint bufs, samples;
@@ -165,7 +169,8 @@ void init()
     //mat->setSceneBlending(T3D_DST_COLOR, T3D_SRC_COLOR); //Error?
     //mat->setSceneBlending(T3D_ONE, T3D_ZERO);
     //mat->enableBlending(TRUE);
-    mat->setSceneBlending(T3D_SRC_ALPHA, T3D_ONE_MINUS_SRC_ALPHA);
+    //mat->setSceneBlending(T3D_SRC_ALPHA, T3D_ONE_MINUS_SRC_ALPHA);
+    //T3D_SRC_ALPHA_SATURATE
 
     mat1 = MaterialManager::getInstance()->createMaterial();
     mat1->setShaderProgram (shaderProgram);
@@ -238,7 +243,7 @@ int main(int argc, char** argv){
 
 	glutInit(&argc, argv);
     //glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGB|GLUT_MULTISAMPLE);
-  	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
+  	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB|GLUT_DEPTH);
   	glutInitWindowSize(WINDOW_W, WINDOW_H);
   	glutInitWindowPosition(0,0);
   	glutCreateWindow("blending");
