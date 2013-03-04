@@ -152,6 +152,8 @@ bool init()
     shaderProgram->bindShaderParameters(params);
 
     Texture *tex = TextureManager::getInstance()->createTextureByFile(TEXTURE_FILE);
+    //unsigned char *temp = generateColorData(64, 64,4);
+    //Texture *tex = TextureManager::getInstance()->createTexture(temp, 64, 64, 4);
 
     Material *mat = MaterialManager::getInstance()->createMaterial();
     mat->setShaderProgram (shaderProgram);
