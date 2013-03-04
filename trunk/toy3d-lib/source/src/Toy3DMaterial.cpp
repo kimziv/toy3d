@@ -10,8 +10,7 @@ TOY3D_BEGIN_NAMESPACE
         mShaderProgram = NULL;
         mTextureUnitStates = new TPtrArray();
         mTextureUnitStates->create();
-        //mTexture = NULL;
-        //mAlphaBlending = FALSE;
+        mAlphaBlending = FALSE;
     }
 
 
@@ -30,6 +29,7 @@ TOY3D_BEGIN_NAMESPACE
         */
         mShaderProgram = NULL;
         mTextureUnitStates->destroy();
+        DELETEANDNULL(mTextureUnitStates);
         //mTexture = NULL;
     }
 
@@ -161,8 +161,6 @@ TOY3D_BEGIN_NAMESPACE
 
     TextureUnitState* Material::getTextureUnitState(char *name)
     {
-        Uint i, count;
-        TextureUnitState *texUS;
         if(!name)
             return NULL;
 

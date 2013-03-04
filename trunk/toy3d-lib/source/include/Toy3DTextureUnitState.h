@@ -37,8 +37,8 @@ enum TextureParameterVal
     T3D_LINEAR_MIPMAP_LINEAR,
 
     /* The following parameters are applicable to T3D_TEXTURE_WRAP_S and T3D_TEXTURE_WRAP_T. */
-    T3D_CLAMP,
     T3D_REPEAT,
+    T3D_CLAMP_TO_EDGE,
     T3D_MIRRORED_REPEAT
 };
 

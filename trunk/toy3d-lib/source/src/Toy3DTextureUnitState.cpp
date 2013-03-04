@@ -12,8 +12,8 @@ TOY3D_BEGIN_NAMESPACE
         mTarget = T3D_TEXTURE_2D;
         mTexMinFilter = T3D_LINEAR;
         mTexMagFilter = T3D_LINEAR;
-        mTexWrapS = T3D_CLAMP;
-        mTexWrapT = T3D_CLAMP;
+        mTexWrapS = T3D_CLAMP_TO_EDGE;
+        mTexWrapT = T3D_CLAMP_TO_EDGE;
 
         return;
     }
@@ -37,8 +37,8 @@ TOY3D_BEGIN_NAMESPACE
         mTarget       = T3D_TEXTURE_2D;
         mTexMinFilter = T3D_LINEAR;
         mTexMagFilter = T3D_LINEAR;
-        mTexWrapS     = T3D_CLAMP;
-        mTexWrapT     = T3D_CLAMP;
+        mTexWrapS     = T3D_CLAMP_TO_EDGE;
+        mTexWrapT     = T3D_CLAMP_TO_EDGE;
 
         return;
     }
