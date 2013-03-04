@@ -10,7 +10,11 @@ AutoParamEntry::AutoParamEntry(AutoConstanType theType, char *theName )
 {
     type = theType;
     index = 0;
-    strncpy( (char *)name, (char *)theName, MAX_NAME_LEN);
+    if(strlen(theName)>MAX_NAME_LEN)
+        strncpy((char *)name, (char *)theName, MAX_NAME_LEN);
+    else
+        strncpy((char *)name, (char *)theName, strlen(theName));
+    name[strlen(name)] = '\0';
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -19,7 +23,11 @@ AttrParamEntry::AttrParamEntry(AttrConstantType theType, char *theName )
 {
     type = theType;
     index = 0;
-    strncpy( (char *)name, (char *)theName, MAX_NAME_LEN);
+    if(strlen(theName)>MAX_NAME_LEN)
+        strncpy((char *)name, (char *)theName, MAX_NAME_LEN);
+    else
+        strncpy((char *)name, (char *)theName, strlen(theName));
+    name[strlen(name)] = '\0';
 }
 
 
@@ -28,7 +36,11 @@ AttrParamEntry::AttrParamEntry(AttrConstantType theType, char *theName )
 IntParamEntry::IntParamEntry(CustUniformConstanType theType, char *theName, int theVal)
 {
     type = theType;
-    strncpy( (char *)name, (char *)theName, MAX_NAME_LEN);
+    if(strlen(theName)>MAX_NAME_LEN)
+        strncpy((char *)name, (char *)theName, MAX_NAME_LEN);
+    else
+        strncpy((char *)name, (char *)theName, strlen(theName));
+    name[strlen(name)] = '\0';
     value = theVal;
     index = 0;
 }
@@ -36,7 +48,11 @@ IntParamEntry::IntParamEntry(CustUniformConstanType theType, char *theName, int 
 RealParamEntry::RealParamEntry(CustUniformConstanType theType, char *theName, Real theVal)
 {
     type = theType;
-    strncpy( (char *)name, (char *)theName, MAX_NAME_LEN);
+    if(strlen(theName)>MAX_NAME_LEN)
+        strncpy((char *)name, (char *)theName, MAX_NAME_LEN);
+    else
+        strncpy((char *)name, (char *)theName, strlen(theName));
+    name[strlen(name)] = '\0';
     value = theVal;
     index = 0;
 }
@@ -626,6 +642,7 @@ const char* ShaderProgramParams::getCustRealConstName( Uint position )
     return (const char *)pTemp->name;
 }
 
+/*
 //-1->no constant exist
 int ShaderProgramParams::getSampler2DValue()
 {
@@ -642,6 +659,7 @@ int ShaderProgramParams::getSampler2DValue()
 
     return TOY3D_ERROR;
 }
+*/
 /* Custom Uniform Parameter Methods -------------------------------end   */
 
 

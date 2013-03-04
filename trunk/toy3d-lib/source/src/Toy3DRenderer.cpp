@@ -51,7 +51,6 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
-
     void Renderer::endFrame()
     {
     }
@@ -69,7 +68,7 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
             return;
         }
 
-        mode = setRenderMode(ro->getRenderMode());
+        mode = getRealRenderMode(ro->getRenderMode());
         if (!mode)
         {
             TOY3D_TIPS("Error: no RenderMode data.\n");
@@ -165,48 +164,7 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
         return;
     }
 
-/*
-    void Renderer::setDepthTest(Uint flag, Uint funcMode)
-    {
-        //temp testing
-        glClearDepth(1.0f);
-        glEnable(GL_DEPTH_TEST);
-        glDepthFunc(GL_LEQUAL);
-        return;
-    }
-
-    void Renderer::setBlend(Uint flag, Uint srcMode, Uint dstMode)
-    {
-        return;
-    }
-*/
-
-    void Renderer::setTexture(const Texture *tex)
-    {
-        int texUnit;
-        if(tex)
-        {
-            glEnable(GL_TEXTURE_2D);
-            texUnit = mCurrentShaderProgram->getShaderParameters()->getSampler2DValue();
-            if(TOY3D_ERROR==texUnit)
-            {
-                TOY3D_TIPS("You didn't set texture unit, use texture unit 0.\n");
-                texUnit = 0;
-            }
-            else if(texUnit>MAX_TEXTURE_UNIT)
-            {
-                TOY3D_TIPS("Warning: texture unit is beyond the supported scope, use texture unit 0.\n");
-                texUnit = 0;
-            }
-
-            glActiveTexture(gTextureUnit[texUnit]);
-            glBindTexture (GL_TEXTURE_2D, tex->getTextureID());
-        } 
-
-        return;
-    }
-
-    Uint Renderer::setRenderMode(RenderMode mode)
+    Uint Renderer::getRealRenderMode(RenderMode mode)
     {
         Uint glMode;
 
@@ -281,13 +239,58 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
     void Renderer::setSceneBlending(
         BlendingFactor srcFactor, BlendingFactor destFactor, BlendingMode mode)
     {
-        glBlendFunc(getBlendFactor(srcFactor), getBlendFactor(destFactor));
-        glBlendEquation(getBlendMode(mode));
+        glBlendFunc(getRealBlendFactor(srcFactor), getRealBlendFactor(destFactor));
+        glBlendEquation(getRealBlendMode(mode));
 
         return;
     }
 
-    Uint Renderer::getBlendFactor(BlendingFactor factor)
+    void Renderer::setTextureUnitSettings(Uint unit, TextureUnitState* texUnitState)
+    {
+        Uint target;
+        Uint parameterName;
+        int  parameterVal;
+        Uint count, i;
+        const Texture *tex;
+
+        /* active the texture unit */
+        glActiveTexture( getRealTextureUnit(unit) );
+
+        /* get the target */
+        target = getRealTextureTarget(texUnitState->getTextureTarget());
+
+        /* set parameters */
+        parameterName = getRealTextureParameterName(T3D_TEXTURE_MAG_FILTER);
+        parameterVal = getRealTextureParameterVal(
+            texUnitState->getTextureParameter(T3D_TEXTURE_MAG_FILTER));
+        glTexParameteri(target, parameterName, parameterVal);
+
+        parameterName = getRealTextureParameterName(T3D_TEXTURE_MIN_FILTER);
+        parameterVal = getRealTextureParameterVal(
+            texUnitState->getTextureParameter(T3D_TEXTURE_MIN_FILTER));
+        glTexParameteri(target, parameterName, parameterVal);
+
+        parameterName = getRealTextureParameterName(T3D_TEXTURE_WRAP_S);
+        parameterVal = getRealTextureParameterVal(
+            texUnitState->getTextureParameter(T3D_TEXTURE_WRAP_S));
+        glTexParameteri(target, parameterName, parameterVal);
+
+        parameterName = getRealTextureParameterName(T3D_TEXTURE_WRAP_T);
+        parameterVal = getRealTextureParameterVal(texUnitState->getTextureParameter(T3D_TEXTURE_WRAP_T));
+        glTexParameteri(target, parameterName, parameterVal);
+
+        /* bind each texture */
+        tex = texUnitState->getAllTextures(&count);
+        for(i=0;i<count;i++)
+        {
+            glBindTexture(target, tex->getTextureID());
+            tex++;
+        }
+
+        return;
+    }
+
+    Uint Renderer::getRealBlendFactor(BlendingFactor factor)
     {
         switch(factor)
         {
@@ -318,7 +321,7 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
         return GL_ONE;
     }
     
-    Uint Renderer::getBlendMode(BlendingMode mode)
+    Uint Renderer::getRealBlendMode(BlendingMode mode)
     {
         switch(mode)
         {
@@ -333,8 +336,90 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
         case T3D_MAX:
             return GL_MAX;
         }
-
+        
         return GL_FUNC_ADD;
     }
 
+    int Renderer::getRealTextureUnit(Uint texUnit)
+    {
+        if(texUnit>MAX_TEXTURE_UNIT)
+            return -1;
+        return gTextureUnit[texUnit];
+    }
+
+    Uint Renderer::getRealTextureTarget(TextureTarget target)
+    {
+        switch(target)
+        {
+        case T3D_TEXTURE_1D:
+            return GL_TEXTURE_1D;
+
+        case T3D_TEXTURE_2D:
+            return GL_TEXTURE_2D;
+
+        case T3D_TEXTURE_3D:
+            return GL_TEXTURE_3D;
+        }
+
+        return GL_TEXTURE_2D;
+    }
+
+    Uint Renderer::getRealTextureParameterName(TextureParameterName name)
+    {
+        switch(name)
+        {
+        case T3D_TEXTURE_MIN_FILTER:
+            return GL_TEXTURE_MIN_FILTER;
+
+        case T3D_TEXTURE_MAG_FILTER:
+            return GL_TEXTURE_MAG_FILTER;
+
+        case T3D_TEXTURE_WRAP_S:
+            return GL_TEXTURE_WRAP_S;
+
+        case T3D_TEXTURE_WRAP_T:
+            return GL_TEXTURE_WRAP_T;
+        }
+
+        return GL_TEXTURE_MIN_FILTER;
+    }
+
+    int  Renderer::getRealTextureParameterVal(TextureParameterVal val)
+    {
+        switch(val)
+        {
+        case T3D_NEAREST:
+            return GL_NEAREST;
+            
+        case T3D_LINEAR:
+            return GL_LINEAR;
+            
+        case T3D_NEAREST_MIPMAP_NEAREST:
+            return GL_NEAREST_MIPMAP_NEAREST;
+            
+        case T3D_LINEAR_MIPMAP_NEAREST:
+            return GL_LINEAR_MIPMAP_NEAREST;
+
+        case T3D_NEAREST_MIPMAP_LINEAR:
+            return GL_NEAREST_MIPMAP_LINEAR;
+
+        case T3D_LINEAR_MIPMAP_LINEAR:
+            return GL_LINEAR_MIPMAP_LINEAR;
+
+        case T3D_CLAMP:
+            return GL_CLAMP;
+
+        case T3D_REPEAT:
+            return GL_REPEAT;
+
+        case T3D_MIRRORED_REPEAT:
+            return GL_MIRRORED_REPEAT;
+        }
+        
+        return GL_NEAREST;
+    }
+
+
+
 TOY3D_END_NAMESPACE
+

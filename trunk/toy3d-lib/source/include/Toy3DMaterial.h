@@ -4,7 +4,7 @@
 
 #include "Toy3DCommon.h"
 #include "Toy3DShaderProgram.h"
-#include "Toy3DTexture.h"
+#include "Toy3DTextureUnitState.h"
 
 
 TOY3D_BEGIN_NAMESPACE
@@ -12,36 +12,38 @@ TOY3D_BEGIN_NAMESPACE
     class Material 
     {
     private:
-        Texture *mTexture;
+        //Texture *mTexture;
         ShaderProgram* mShaderProgram;
+        TPtrArray*     mTextureUnitStates;
 
-        Bool mAlphaBlending;
-        //BlendingInfo mBlendingInfo;
+        Bool           mAlphaBlending;
         BlendingFactor mSrcFactor;
         BlendingFactor mDestFactor;
         BlendingMode   mMode;
 
+        Bool searchTextureUnitState(char *name) const;
 
     public:
         Material();
         ~Material();
 
-    public:
-
-        Bool loadTexture(const char *pFileNmae);
+        //Bool loadTexture(const char *pFileNmae);
         //Bool createTexture(ImageInfo *pImageInfo);
         //Bool createTexture(unsigned  char *pImageData, Uint width, Uint height, Uint bpp);
-        void setTexture(Texture* tex);
+
+        TextureUnitState* createTextureUnitState(char *name);
+        Bool addTextureUnitState(TextureUnitState *texUnitState);
+        TextureUnitState* getTextureUnitState(char *name);
+        TextureUnitState* getAllTextureUnitStates(Uint *count);
+
         void setShaderProgram (ShaderProgram *prog);
-            
-        const Texture* getTexture();
         ShaderProgram* getShaderProgram ();
 
-        void enableBlending(Bool flag);
+        const Bool hasAlphaBlending() const;
+
         void setSceneBlending(BlendingFactor srcFactor,
             BlendingFactor destFactor, BlendingMode mode = T3D_ADD);
-        const Bool hasAlphaBlending() const;
-        //BlendingInfo getBlendingInfo();
+
         const BlendingFactor getSrcBlendFactor() const;
         const BlendingFactor getDestBlendFactor() const;
         const BlendingMode getBlendMode() const;

@@ -19,7 +19,7 @@ TOY3D_BEGIN_NAMESPACE
     {
     public:
         AutoConstanType type;
-        char name[MAX_NAME_LEN];
+        char name[MAX_NAME_LEN+1];
         Uint  index;
         
         //AutoConstEntry(AutoConstantType theType, Uchar *theName, Uint theIndex);
@@ -31,7 +31,7 @@ TOY3D_BEGIN_NAMESPACE
     {
     public:
         AttrConstantType type;
-        char name[MAX_NAME_LEN];
+        char name[MAX_NAME_LEN+1];
         Uint  index;
         
         //AutoConstEntry(AutoConstantType theType, Uchar *theName, Uint theIndex);
@@ -42,7 +42,7 @@ TOY3D_BEGIN_NAMESPACE
     {
     public:
         CustUniformConstanType type;
-        char name[MAX_NAME_LEN];
+        char name[MAX_NAME_LEN+1];
         //int  value[CUSTOM_UNIT_SIZE];
         int  value;
         Uint index;
@@ -54,7 +54,7 @@ TOY3D_BEGIN_NAMESPACE
     {
     public:
         CustUniformConstanType type;
-        char name[MAX_NAME_LEN];
+        char name[MAX_NAME_LEN+1];
         //Real value[CUSTOM_UNIT_SIZE];
         Real value;
         Uint index;
@@ -130,7 +130,7 @@ TOY3D_BEGIN_NAMESPACE
             Uint getCustRealCount();
             const char* getCustIntConstName( Uint position );
             const char* getCustRealConstName( Uint position );
-            int getSampler2DValue();
+            //int getSampler2DValue();
             /* Custom Parameter Methods -------------------------------end   */
 
 

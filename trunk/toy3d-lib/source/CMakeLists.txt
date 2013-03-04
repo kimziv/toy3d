@@ -21,6 +21,7 @@
 		include/Toy3DTexture.h
 		include/Toy3DTextureManager.h
 		include/Toy3DPtrArray.h
+		include/Toy3DTextureUnitState.h
 	)
 
 	set(SOURCE_FILES
@@ -42,6 +43,7 @@
 		src/Toy3DTexture.cpp
 		src/Toy3DTextureManager.cpp
 		src/Toy3DPtrArray.cpp
+		src/Toy3DTextureUnitState.cpp
 	)
 
 	include_directories(
