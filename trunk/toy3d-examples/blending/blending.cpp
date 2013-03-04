@@ -30,7 +30,7 @@ using namespace TOY3D;
 
 //global
 World *world = NULL;
-Bool blendingFlag = TRUE;
+//Bool blendingFlag = TRUE;
 Material *mat, *mat1, *mat2;
 
 
@@ -73,7 +73,7 @@ Real color2[VERTEX_COUNT * 4] = {
 
 void display()
 {
-    Bool flag = FALSE;
+    //Bool flag = FALSE;
 
 #if 1
     //glShadeModel(GL_SMOOTH);
@@ -180,7 +180,6 @@ void init()
     mat2->setShaderProgram (shaderProgram);
     mat2->setSceneBlending(T3D_SRC_ALPHA, T3D_ONE_MINUS_SRC_ALPHA);
 
-
     Entity *entity = world->createEntity();
     entity->setMesh (mesh);
     entity->setMaterial (mat);
@@ -220,10 +219,10 @@ void keyboard(unsigned char key, int x, int y){
     //blending flag
     case 'B':
     case 'b':
-        blendingFlag = !blendingFlag;
-        mat->enableBlending(blendingFlag);
-        mat2->enableBlending(blendingFlag);
-        mat2->enableBlending(blendingFlag);
+        //blendingFlag = !blendingFlag;
+        //mat->enableBlending(blendingFlag);
+        //mat2->enableBlending(blendingFlag);
+        //mat2->enableBlending(blendingFlag);
         break;
 
     //blending factor setting, s/S for src factor, and d/D for dst factor

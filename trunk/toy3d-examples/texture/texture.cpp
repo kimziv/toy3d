@@ -121,7 +121,7 @@ bool init()
     world = new World ();
     printf("pointer world: %d.\n", world);
     world->setSize(width, height);
-    world->setBackColor (1.0, 0.0, 1.0, 1.0);
+    world->setBackColor (1.0, 1.0, 1.0, 1.0);
 
     camera = world->createCamera ("camera1");
 
@@ -156,13 +156,24 @@ bool init()
 
     Material *mat = MaterialManager::getInstance()->createMaterial();
     mat->setShaderProgram (shaderProgram);
-    mat->setTexture(tex);
+    //mat->setSceneBlending(T3D_SRC_ALPHA, T3D_ONE_MINUS_SRC_ALPHA, T3D_ADD);
+    TextureUnitState *texUS;
+    texUS = mat->createTextureUnitState("TexUnit1");
+    if(!texUS)
+    {
+        TOY3D_TIPS("Error: createTextureUnitState failed.\n");
+        return FALSE;
+    }
+
+    texUS->setTexture(tex);
+    texUS->setTextureTarget(T3D_TEXTURE_2D);
+    texUS->setTextureParameter(T3D_LINEAR, T3D_LINEAR, T3D_CLAMP_TO_EDGE, T3D_CLAMP_TO_EDGE);
+    //mat->setTexture(tex);
 
     Mesh* mesh = MeshManager::getInstance()->createMesh();
     mesh->setRenderMode (TOY3D_TRIANGLE_STRIP);
     mesh->setVertices (vertices, VERTEX_COUNT);
     mesh->setUVs( uvs, VERTEX_COUNT);
-
 
     entity = world->createEntity();
     entity->setMesh(mesh);
