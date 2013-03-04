@@ -26,14 +26,14 @@
 
 class Material
 {
+private:
     TPtrArray      mTextureUnitStates;
-    Bool           mAlphaBlending;
-    BlendingFactor mSrcFactor;
-    BlendingFactor mDestFactor;
-    BlendingMode   mMode;
 
     Bool searchTextureUnitState(char *name) const;
+
+public:
     TextureUnitState* createTextureUnitState(char *name);
+    Bool addTextureUnitState(TextureUnitState *texUnitState);
     TextureUnitState* getTextureUnitState(char *name);
     TextureUnitState* getAllTextureUnitStates(Uint *count);
 }
@@ -71,23 +71,12 @@ enum TextureParameterVal
     T3D_MIRRORED_REPEAT
 };
 
-/*
-typedef struct _TextureParameter
-{
-    TextureTarget       target;
-    TextureParameterVal texMinFilter;
-    TextureParameterVal texMagFilter;
-    TextureParameterVal texWrapS;
-    TextureParameterVal texWrapT;
-}TextureParameter;
-*/
-
 class TextureUnitState
 {
 private:
     char             mName[MAX_NAME_LEN];
     TPtrArray        *mTextures;
-    //TextureParameter mTexParameter;
+
     TextureTarget       mTarget;
     TextureParameterVal mTexMinFilter;
     TextureParameterVal mTexMagFilter;
