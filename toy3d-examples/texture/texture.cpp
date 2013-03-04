@@ -125,7 +125,6 @@ bool init()
 
     camera = world->createCamera ("camera1");
 
-
     //shader
     ShaderProgram *shaderProgram = ShaderProgramManager::getInstance()->createShaderProgram();
     shaderProgram->loadShaderSource (SHADER_VERT_FILE, SHADER_FRAG_FILE);

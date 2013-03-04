@@ -48,6 +48,16 @@ TOY3D_BEGIN_NAMESPACE
             texUnits++;
         }
 
+
+        if(mat->hasAlphaBlending())
+        {
+            mRenderer.enableBlending(TRUE);
+            //mRenderer.setSceneBlending(mat->getBlendingOp());^M
+            mRenderer.setSceneBlending(
+                mat->getSrcBlendFactor(),mat->getDestBlendFactor(), mat->getBlendMode());
+        }
+
+
         mRenderer.render (ro);
 
         if(mat->hasAlphaBlending())

@@ -23,6 +23,7 @@ TOY3D_BEGIN_NAMESPACE
 
         TextureUnitState* searchTextureUnitState(char *name) const;
 
+
     public:
         Material();
         ~Material();
@@ -47,6 +48,7 @@ TOY3D_BEGIN_NAMESPACE
         const BlendingFactor getSrcBlendFactor() const;
         const BlendingFactor getDestBlendFactor() const;
         const BlendingMode getBlendMode() const;
+
 
     };
 
