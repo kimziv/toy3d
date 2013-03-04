@@ -21,7 +21,7 @@ TOY3D_BEGIN_NAMESPACE
         BlendingFactor mDestFactor;
         BlendingMode   mMode;
 
-        Bool searchTextureUnitState(char *name) const;
+        TextureUnitState* searchTextureUnitState(char *name) const;
 
     public:
         Material();
