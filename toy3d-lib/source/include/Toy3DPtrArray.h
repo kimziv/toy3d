@@ -63,6 +63,7 @@ TOY3D_BEGIN_NAMESPACE
          *   and you will get NULL pointer when the index is out of bound.
          */
         TPointer getElement(Uint index); 
+        TPointer getAllElements(Uint *count);
         const Uint getLength(); 
         const Uint getAllocLength(); 
         

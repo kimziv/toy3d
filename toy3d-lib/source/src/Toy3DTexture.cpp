@@ -19,8 +19,8 @@ TOY3D_BEGIN_NAMESPACE
         glBindTexture(GL_TEXTURE_2D, mTextureID );
 
         //set parameter
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+        //glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+        //glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
 
         if(image->mBpp==BPP_3)
         {

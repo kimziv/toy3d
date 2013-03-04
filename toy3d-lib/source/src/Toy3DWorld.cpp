@@ -1,6 +1,7 @@
 
 
 #include "Toy3DWorld.h"
+#include "Toy3DTextureUnitState.h"
 #include "Toy3DMath.h"
 
 TOY3D_BEGIN_NAMESPACE
@@ -15,20 +16,23 @@ TOY3D_BEGIN_NAMESPACE
     {
     }
 
-
-
     void World::renderOneObject (RenderOperation *ro, Material *mat, 
             Real worldMatrix[16], Real viewMatrix[16], Real projMatrix[16])      
     {
+        Uint i, count = 0;
+        TextureUnitState *texUnits;
+
         mRenderer.bindShaderProgram(mat->getShaderProgram());
        
         mAutoParamDataSource.setWorldMatrix (worldMatrix); 
         mAutoParamDataSource.setViewMatrix (viewMatrix); 
         mAutoParamDataSource.setProjectionMatrix (projMatrix); 
-        mRenderer.setTexture(mat->getTexture());
+        //mRenderer.setTexture(mat->getTexture());
 
         mRenderer.updateAutoUniform (&mAutoParamDataSource);
         mRenderer.updateCustUniform ();
+
+        texUnits = mat->getAllTextureUnitStates(&count);
 
         if(mat->hasAlphaBlending())
         {
@@ -36,6 +40,12 @@ TOY3D_BEGIN_NAMESPACE
             //mRenderer.setSceneBlending(mat->getBlendingOp());
             mRenderer.setSceneBlending(
                 mat->getSrcBlendFactor(),mat->getDestBlendFactor(), mat->getBlendMode());
+        }
+
+        for(i=0; i<count; i++)
+        {
+            mRenderer.setTextureUnitSettings(i, texUnits);
+            texUnits++;
         }
 
         mRenderer.render (ro);
@@ -52,7 +62,6 @@ TOY3D_BEGIN_NAMESPACE
 
     void World::startRendering ()
     {
-
         RenderOperation *ro = NULL;
         Uint i = 0;
         Material *mat = NULL;

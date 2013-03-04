@@ -6,7 +6,7 @@
 #include "Toy3DRenderOperation.h"
 #include "Toy3DShaderProgram.h"
 #include "Toy3DAutoParamDataSource.h"
-#include "Toy3DTexture.h"
+#include "Toy3DTextureUnitState.h"
 
 TOY3D_BEGIN_NAMESPACE
 
@@ -39,26 +39,33 @@ TOY3D_BEGIN_NAMESPACE
         void setViewPort(Uint x, Uint y, Uint width, Uint height);
 
         //void setDepthTest(Uint flag, Uint funcMode);
-        //void setBlend(Uint flag, Uint srcMode, Uint dstMode);
-        
-        void setTexture(const Texture* tex);
+
+        //void setTexture(const Texture* tex);
 
         void updateAutoUniform (AutoParamDataSource *autoDataSource);
         void updateCustUniform ();
 
-        /* Blending Operation */
+        /* blending operation switch*/
         void enableBlending(Bool flag);
-        //void setSceneBlending(BlendingInfo blendingInfo);
         void setSceneBlending(BlendingFactor srcFactor,
             BlendingFactor destFactor, BlendingMode mode);
 
+        void setTextureUnitSettings( Uint unit, TextureUnitState *texUnitState);
+
     private:
-        Uint setRenderMode(RenderMode mode);
+        Uint getRealRenderMode(RenderMode mode);
 
         /* convert blenging factor to the value which the hardware support. */
-        Uint getBlendFactor(BlendingFactor srcFactor);
+        Uint getRealBlendFactor(BlendingFactor srcFactor);
         /* convert blenging mode to the value which the hardware support. */
-        Uint getBlendMode(BlendingMode mode);
+        Uint getRealBlendMode(BlendingMode mode);
+
+        int getRealTextureUnit(Uint texUnit);/* return -1 while out of bound */
+        Uint getRealTextureTarget(TextureTarget target);
+        Uint getRealTextureParameterName(TextureParameterName name);
+        int  getRealTextureParameterVal(TextureParameterVal val);
+
+
     };
 
 

@@ -8,8 +8,10 @@ TOY3D_BEGIN_NAMESPACE
     Material::Material() 
     {
         mShaderProgram = NULL;
-        mTexture = NULL;
-        mAlphaBlending = FALSE;
+        mTextureUnitStates = new TPtrArray();
+        mTextureUnitStates->create();
+        //mTexture = NULL;
+        //mAlphaBlending = FALSE;
     }
 
 
@@ -27,7 +29,8 @@ TOY3D_BEGIN_NAMESPACE
         }
         */
         mShaderProgram = NULL;
-        mTexture = NULL;
+        mTextureUnitStates->destroy();
+        //mTexture = NULL;
     }
 
     /*
@@ -77,30 +80,22 @@ TOY3D_BEGIN_NAMESPACE
     }
     */
 
-    void Material::setShaderProgram (ShaderProgram *prog)
-    {
-       mShaderProgram = prog; 
-    }
 
+/*
     void Material::setTexture (Texture *tex)
     {
         mTexture = tex;
+    }
+*/
+
+    void Material::setShaderProgram (ShaderProgram *prog)
+    {
+        mShaderProgram = prog; 
     }
 
     ShaderProgram* Material::getShaderProgram ()
     {
         return mShaderProgram; 
-    }
-
-    const Texture* Material::getTexture()
-    {
-        return (const Texture*)mTexture;
-    }
-
-    void Material::enableBlending(Bool flag)
-    {
-        mAlphaBlending = flag;
-        return;
     }
 
     void Material::setSceneBlending(BlendingFactor srcFactor,
@@ -109,31 +104,79 @@ TOY3D_BEGIN_NAMESPACE
         mSrcFactor = srcFactor;
         mDestFactor = destFactor;
         mMode = mode;
-
+        
         mAlphaBlending = TRUE;
         return;
     }
-
+    
     const Bool Material::hasAlphaBlending() const
     {
         return (const Bool)mAlphaBlending;
     }
-
+    
     const BlendingFactor Material::getSrcBlendFactor() const
     {
         return (const BlendingFactor)mSrcFactor;
     }
-
+    
     const BlendingFactor Material::getDestBlendFactor() const
     {
         return (const BlendingFactor)mDestFactor;
     }
-
+    
     const BlendingMode Material::getBlendMode() const
     {
         return (const BlendingMode)mMode;
     }
 
+    TextureUnitState* Material::createTextureUnitState(char *name)
+    {
+        TextureUnitState *texUS;
+
+        texUS = new TextureUnitState(name);
+        if(!texUS)
+            return NULL;
+
+        if( mTextureUnitStates->append(texUS) )
+            return texUS;
+        
+        DELETEANDNULL(texUS);
+        return NULL;
+    }
+
+    Bool Material::addTextureUnitState(TextureUnitState *texUnitState)
+    {
+        if(texUnitState)
+        {
+            if( mTextureUnitStates->append(texUnitState) )
+                return TRUE;
+        }
+
+        return FALSE;
+    }
+
+    TextureUnitState* Material::getTextureUnitState(char *name)
+    {
+        Uint i, count;
+        TextureUnitState *texUS;
+        if(!name)
+            return NULL;
+
+        count = mTextureUnitStates->getLength();
+        for(i=0;i<count;i++)
+        {
+            texUS = (TextureUnitState *)mTextureUnitStates->getElement(i);
+            if(strcmp(name, texUS->getName()))
+                return texUS;
+        }
+
+        return NULL;
+    }
+
+    TextureUnitState* Material::getAllTextureUnitStates(Uint *count)
+    {
+        return (TextureUnitState* )(mTextureUnitStates->getAllElements(count));
+    }
 
 
 TOY3D_END_NAMESPACE

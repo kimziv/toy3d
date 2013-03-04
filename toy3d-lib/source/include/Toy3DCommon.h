@@ -50,8 +50,8 @@ extern "C" {
 
 
 //max length of name
-#define MAX_NAME_LEN        32
-#define MAX_NAME_LEN_BIG    128
+#define MAX_NAME_LEN        31
+#define MAX_NAME_LEN_BIG    127
 
 #define MATRIX_4x4_SIZE     16
 
