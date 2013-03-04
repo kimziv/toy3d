@@ -213,14 +213,9 @@ extern "C" {
         T3D_MAX
     };
 
-    /*
-    typedef struct _BlendingInfo
-    {
-        BlendingFactor srcFactor;
-        BlendingFactor destFactor;
-        BlendingMode   mode;
-    }BlendingInfo;
-    */
+    
+
+
 
 
 

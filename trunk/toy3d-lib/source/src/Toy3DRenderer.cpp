@@ -421,5 +421,60 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
 
 
 
+
+
+    Uint Renderer::getBlendFactor(BlendingFactor factor)
+    {
+        switch(factor)
+        {
+        case T3D_ONE:
+            return GL_ONE;
+        case T3D_ZERO:
+            return GL_ZERO;
+        case T3D_DST_COLOR:
+            return GL_DST_COLOR;
+        case T3D_SRC_COLOR:
+            return GL_SRC_COLOR;
+        case T3D_ONE_MINUS_DST_COLOR:
+            return GL_ONE_MINUS_DST_COLOR;
+        case T3D_ONE_MINUS_SRC_COLOR:
+            return GL_ONE_MINUS_SRC_COLOR;
+        case T3D_DST_ALPHA:
+            return GL_DST_ALPHA;
+        case T3D_SRC_ALPHA:
+            return GL_SRC_ALPHA;
+        case T3D_ONE_MINUS_DST_ALPHA:
+            return GL_ONE_MINUS_DST_ALPHA;
+        case T3D_ONE_MINUS_SRC_ALPHA:
+            return GL_ONE_MINUS_SRC_ALPHA;
+        case T3D_SRC_ALPHA_SATURATE:
+            return GL_SRC_ALPHA_SATURATE;
+        }
+        
+        return GL_ONE;
+    }
+
+
+    Uint Renderer::getBlendMode(BlendingMode mode)
+    {
+        switch(mode)
+        {
+        case T3D_ADD:
+            return GL_FUNC_ADD;
+        case T3D_SUBTRACT:
+            return GL_FUNC_SUBTRACT;
+        case T3D_REVERSE_SUBTRACT:
+            return GL_FUNC_REVERSE_SUBTRACT;
+        case T3D_MIN:
+            return GL_MIN_EXT;
+        case T3D_MAX:
+            return GL_MAX;
+        }
+
+        return GL_FUNC_ADD;
+    }
+
+
+
 TOY3D_END_NAMESPACE
 
