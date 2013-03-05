@@ -25,13 +25,8 @@ TOY3D_BEGIN_NAMESPACE
 
         if(name)
         {
-            if(strlen(name)>MAX_NAME_LEN)
-                strncpy(mName, name, MAX_NAME_LEN);
-            else
-                strncpy(mName, name, strlen(name));
+            strncpy(mName, name, MAX_NAME_LEN);
         }
-        //else
-        //    strncpy(mName, "", MAX_NAME_LEN);
         mName[strlen(mName)] = '\0';
 
         mTarget       = T3D_TEXTURE_2D;
@@ -54,10 +49,7 @@ TOY3D_BEGIN_NAMESPACE
     {
         if(name)
         {
-            if(strlen(name)>MAX_NAME_LEN)
-                strncpy(mName, name, MAX_NAME_LEN);
-            else
-                strncpy(mName, name, strlen(name));
+            strncpy(mName, name, MAX_NAME_LEN);
         }
 
         mName[strlen(mName)] = '\0';

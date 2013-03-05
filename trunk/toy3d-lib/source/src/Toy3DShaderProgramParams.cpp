@@ -10,10 +10,7 @@ AutoParamEntry::AutoParamEntry(AutoConstanType theType, char *theName )
 {
     type = theType;
     index = 0;
-    if(strlen(theName)>MAX_NAME_LEN)
-        strncpy((char *)name, (char *)theName, MAX_NAME_LEN);
-    else
-        strncpy((char *)name, (char *)theName, strlen(theName));
+    strncpy((char *)name, (char *)theName, MAX_NAME_LEN);
     name[strlen(name)] = '\0';
 }
 
@@ -23,10 +20,8 @@ AttrParamEntry::AttrParamEntry(AttrConstantType theType, char *theName )
 {
     type = theType;
     index = 0;
-    if(strlen(theName)>MAX_NAME_LEN)
-        strncpy((char *)name, (char *)theName, MAX_NAME_LEN);
-    else
-        strncpy((char *)name, (char *)theName, strlen(theName));
+
+    strncpy((char *)name, (char *)theName, MAX_NAME_LEN);
     name[strlen(name)] = '\0';
 }
 
@@ -36,10 +31,7 @@ AttrParamEntry::AttrParamEntry(AttrConstantType theType, char *theName )
 IntParamEntry::IntParamEntry(CustUniformConstanType theType, char *theName, int theVal)
 {
     type = theType;
-    if(strlen(theName)>MAX_NAME_LEN)
-        strncpy((char *)name, (char *)theName, MAX_NAME_LEN);
-    else
-        strncpy((char *)name, (char *)theName, strlen(theName));
+    strncpy((char *)name, (char *)theName, MAX_NAME_LEN);
     name[strlen(name)] = '\0';
     value = theVal;
     index = 0;
@@ -48,11 +40,10 @@ IntParamEntry::IntParamEntry(CustUniformConstanType theType, char *theName, int 
 RealParamEntry::RealParamEntry(CustUniformConstanType theType, char *theName, Real theVal)
 {
     type = theType;
-    if(strlen(theName)>MAX_NAME_LEN)
-        strncpy((char *)name, (char *)theName, MAX_NAME_LEN);
-    else
-        strncpy((char *)name, (char *)theName, strlen(theName));
+
+    strncpy((char *)name, (char *)theName, MAX_NAME_LEN);
     name[strlen(name)] = '\0';
+
     value = theVal;
     index = 0;
 }
