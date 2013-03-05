@@ -7,6 +7,7 @@ TOY3D_BEGIN_NAMESPACE
 
 //Maybe need to modify according to the actual situation of the hardware.
 #define MAX_TEXTURE_UNIT 32
+/*
 static int gTextureUnit[MAX_TEXTURE_UNIT] = {
     GL_TEXTURE0, GL_TEXTURE1, GL_TEXTURE2,GL_TEXTURE3, GL_TEXTURE4,
     GL_TEXTURE5, GL_TEXTURE6, GL_TEXTURE7, GL_TEXTURE8, GL_TEXTURE9,
@@ -15,6 +16,7 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
     GL_TEXTURE20, GL_TEXTURE21, GL_TEXTURE22, GL_TEXTURE23, GL_TEXTURE24,
     GL_TEXTURE25, GL_TEXTURE26, GL_TEXTURE27, GL_TEXTURE28, GL_TEXTURE29,
     GL_TEXTURE30, GL_TEXTURE31};
+    */
 
 //////////////////////////////////////////////////////////////////////////
 //Renderer
@@ -23,6 +25,9 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
     {
  
         mCurrentShaderProgram = NULL;
+
+        mTexUnit0 = GL_TEXTURE0;
+        mTexUnitCapacity = MAX_TEXTURE_UNIT;
 
         //MvGl2DemoMatrixIdentity( mProjectionMatrix );
         //MvGl2DemoMatrixIdentity( mViewMatrix );
@@ -257,7 +262,7 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
         glActiveTexture( getRealTextureUnit(unit) );
 
         /* get the target */
-        target = getRealTextureTarget(texUnitState->getTextureTarget());
+        target = getRealTextureType(texUnitState->getTextureTarget());
 
         /* set parameters */
         parameterName = getRealTextureParameterName(T3D_TEXTURE_MAG_FILTER);
@@ -340,14 +345,15 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
         return GL_FUNC_ADD;
     }
 
-    int Renderer::getRealTextureUnit(Uint texUnit)
+    Uint Renderer::getRealTextureUnit(Uint texUnit)
     {
-        if(texUnit>MAX_TEXTURE_UNIT)
+        if(texUnit>=MAX_TEXTURE_UNIT)
             return -1;
-        return gTextureUnit[texUnit];
+        //return gTextureUnit[texUnit];
+        return (mTexUnit0+texUnit);
     }
 
-    Uint Renderer::getRealTextureTarget(TextureTarget target)
+    Uint Renderer::getRealTextureType(TextureType target)
     {
         switch(target)
         {

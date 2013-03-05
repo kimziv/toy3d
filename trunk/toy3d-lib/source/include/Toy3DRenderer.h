@@ -20,6 +20,8 @@ TOY3D_BEGIN_NAMESPACE
         Real mWorldMatrix[MATRIX_4x4_SIZE];
 
         ShaderProgram* mCurrentShaderProgram;
+        Uint mTexUnit0;
+        Uint mTexUnitCapacity;
 
     public:
 		Renderer ();
@@ -62,8 +64,8 @@ TOY3D_BEGIN_NAMESPACE
         /* convert blenging mode to the value which the hardware support. */
         Uint getRealBlendMode(BlendingMode mode);
 
-        int getRealTextureUnit(Uint texUnit);/* return -1 while out of bound */
-        Uint getRealTextureTarget(TextureTarget target);
+        Uint getRealTextureUnit(Uint texUnit);/* return -1 while out of bound */
+        Uint getRealTextureType(TextureType target);
         Uint getRealTextureParameterName(TextureParameterName name);
         int  getRealTextureParameterVal(TextureParameterVal val);
 
