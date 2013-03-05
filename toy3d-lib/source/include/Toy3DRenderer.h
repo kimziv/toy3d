@@ -54,7 +54,7 @@ TOY3D_BEGIN_NAMESPACE
         void setSceneBlending(BlendingFactor srcFactor,
             BlendingFactor destFactor, BlendingMode mode);
 
-        void setTextureUnitSettings( Uint unit, TextureUnitState *texUnitState);
+        void setTextureUnitSettings(TextureUnitState *texUnitState);
 
     private:
         Uint getRealRenderMode(RenderMode mode);
