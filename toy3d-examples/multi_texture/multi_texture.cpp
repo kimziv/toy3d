@@ -20,15 +20,15 @@
 
 
 #ifdef VC6
-#define SHADER_VERT_FILE "C:/Program Files (x86)/TOY3D-EXAMPLES/share/toy3d/multi_texture/multi_texture.glslv"
-#define SHADER_FRAG_FILE "C:/Program Files (x86)/TOY3D-EXAMPLES/share/toy3d/multi_texture/multi_texture.glslf"
-#define TEXTURE_FILE_BACK     "C:/Program Files (x86)/TOY3D-EXAMPLES/share/toy3d/multi_texture/back.tga"
-#define TEXTURE_FILE_LIGHT     "C:/Program Files (x86)/TOY3D-EXAMPLES/share/toy3d/multi_texture/light.tga"
+#define SHADER_VERT_FILE   "C:/Program Files (x86)/TOY3D-EXAMPLES/share/toy3d/multi_texture/multi_texture.glslv"
+#define SHADER_FRAG_FILE   "C:/Program Files (x86)/TOY3D-EXAMPLES/share/toy3d/multi_texture/multi_texture.glslf"
+#define TEXTURE_FILE_BACK  "C:/Program Files (x86)/TOY3D-EXAMPLES/share/toy3d/multi_texture/back.tga"
+#define TEXTURE_FILE_LIGHT "C:/Program Files (x86)/TOY3D-EXAMPLES/share/toy3d/multi_texture/light.tga"
 #else 
-#define SHADER_VERT_FILE "/usr/local/share/toy3d/multi_texture/multi_texture.glslv"
-#define SHADER_FRAG_FILE "/usr/local/share/toy3d/multi_texture/multi_texture.glslf"
-#define TEXTURE_FILE_BACK     "/usr/local/share/toy3d/multi_texture/back.tga"
-#define TEXTURE_FILE_LIGHT     "/usr/local/share/toy3d/multi_texture/light.tga"
+#define SHADER_VERT_FILE   "/usr/local/share/toy3d/multi_texture/multi_texture.glslv"
+#define SHADER_FRAG_FILE   "/usr/local/share/toy3d/multi_texture/multi_texture.glslf"
+#define TEXTURE_FILE_BACK  "/usr/local/share/toy3d/multi_texture/back.tga"
+#define TEXTURE_FILE_LIGHT "/usr/local/share/toy3d/multi_texture/light.tga"
 #endif
 
 
@@ -57,34 +57,6 @@ Real uvs[VERTEX_COUNT * 2] = {
     1.0f,1.0f, 1.0f,0.0f, 0.0f,1.0f
 };
 
-//Bpp muset be 3 or 4.
-unsigned char* generateColorData(int w, int h, int bpp)
-{
-    unsigned char *buf = NULL;
-    int length, i, j, c;
-
-    length = w * h * bpp;
-    buf = (unsigned char *)malloc(length);
-    if( !buf )
-        return 0;
-    memset(buf, 0, length);
-    
-    for(i = 0; i < h; i ++)
-    {
-        for(j = 0; j < w; j++)
-        {
-            c = ( ((i&0x8)==0) ^ ((j&0x8)==0) ) * 255;
-            *(buf+i*h*bpp+j*bpp) = (Uchar)c;
-            *(buf+i*h*bpp+j*bpp + 1) = (Uchar)c;
-            *(buf+i*h*bpp+j*bpp + 2) = (Uchar)c;
-            if(bpp==BPP_4)
-                *(buf+i*h*bpp+j*bpp + 3) = (Uchar)255;
-        }
-    }
-
-    return buf;
-}
-
 
 void display()
 {
@@ -112,7 +84,7 @@ void changeSize( int w, int h )
 }
 
 
-bool init()
+Bool init()
 {
     int   width = WINDOW_W, height = WINDOW_H;
     //int   texid;
@@ -129,20 +101,24 @@ bool init()
 
     //shader
     ShaderProgram *shaderProgram = ShaderProgramManager::getInstance()->createShaderProgram();
-    shaderProgram->loadShaderSource (SHADER_VERT_FILE, SHADER_FRAG_FILE);
-    printf("shaderProgram id: %d\n", shaderProgram->getShaderProgramID());
+    if( !shaderProgram->loadShaderSource (SHADER_VERT_FILE, SHADER_FRAG_FILE) )
+    {
+        TOY3D_TIPS("Error: loadShaderSource failed.\n");
+        return FALSE;
+    }
+    //printf("shaderProgram id: %d\n", shaderProgram->getShaderProgramID());
 
 
     ShaderProgramParams *params = ShaderProgramManager::getInstance()->createShaderProgramParams();
-/*
+
     //shader auto constant
     params->setNamedAutoConstant (TOY3D_ACT_PROJECTION_MATRIX, "proj_mat");
     params->setNamedAutoConstant (TOY3D_ACT_VIEW_MATRIX, "view_mat");
     params->setNamedAutoConstant (TOY3D_ACT_WORLD_MATRIX, "world_mat");
-*/
+
     //shader attributes
-    params->setNamedAttrConstant(TOY3D_ATTR_VERTEX, "vPosition");
-    params->setNamedAttrConstant(TOY3D_ATTR_UV, "v_texCoord");
+    params->setNamedAttrConstant(TOY3D_ATTR_VERTEX, "a_position");
+    params->setNamedAttrConstant(TOY3D_ATTR_UV, "a_texCoord");
 
     //shader custom constant
     params->setNamedCustUniformConstant(TOY3D_CUST_SAMPLER2D, "s_baseMap", texUnitId1);
@@ -189,11 +165,8 @@ bool init()
     texUS_light->setTextureType(T3D_TEXTURE_2D);
     texUS_light->setTextureParameter(T3D_LINEAR, T3D_LINEAR, T3D_CLAMP_TO_EDGE, T3D_CLAMP_TO_EDGE);
 
-
-    mat->addTextureUnitState (texUS_back);
-    mat->addTextureUnitState (texUS_light);
-
-
+    //mat->addTextureUnitState (texUS_back);
+    //mat->addTextureUnitState (texUS_light);
 
     Mesh* mesh = MeshManager::getInstance()->createMesh();
     mesh->setRenderMode (TOY3D_TRIANGLE_STRIP);
@@ -269,9 +242,9 @@ int main(int argc, char** argv){
         exit(1);
     }
 
-    bool rv;
+    Bool rv;
   	rv = init();
-    if(rv==false)
+    if(rv==FALSE)
         return 0;
 
   	glutMainLoop();

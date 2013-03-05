@@ -165,6 +165,7 @@ bool init()
         return FALSE;
     }
 
+    texUS->setID(texUnit);
     texUS->setTexture(tex);
     texUS->setTextureType(T3D_TEXTURE_2D);
     texUS->setTextureParameter(T3D_LINEAR, T3D_LINEAR, T3D_CLAMP_TO_EDGE, T3D_CLAMP_TO_EDGE);
