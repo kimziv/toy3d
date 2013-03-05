@@ -88,7 +88,7 @@ TOY3D_BEGIN_NAMESPACE
         return;
     }
 
-    void TextureUnitState::setTextureTarget(TextureTarget target)
+    void TextureUnitState::setTextureType(TextureType target)
     {
         mTarget = target;
         return;
@@ -132,7 +132,7 @@ TOY3D_BEGIN_NAMESPACE
         return (const char *)mName;
     }
 
-    TextureTarget TextureUnitState::getTextureTarget()
+    TextureType TextureUnitState::getTextureTarget()
     {
         return mTarget;
     }

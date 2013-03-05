@@ -135,8 +135,8 @@ extern "C" {
     {
         TOY3D_ACT_WORLD_MATRIX,
         TOY3D_ACT_VIEW_MATRIX, 
-        TOY3D_ACT_PROJECTION_MATRIX,
-        TOY3D_ACT_SAMPLER2D
+        TOY3D_ACT_PROJECTION_MATRIX
+        //TOY3D_ACT_SAMPLER2D
     };
 
     enum AttrConstantType

@@ -8,7 +8,7 @@
 
 TOY3D_BEGIN_NAMESPACE
 
-enum TextureTarget
+enum TextureType
 {
     T3D_TEXTURE_1D,
     T3D_TEXTURE_2D,
@@ -59,7 +59,7 @@ private:
     char             mName[MAX_NAME_LEN+1];
     TPtrArray        *mTextures;
     //TextureParameter mTexParameter;
-    TextureTarget       mTarget;
+    TextureType       mTarget;
     TextureParameterVal mTexMinFilter;
     TextureParameterVal mTexMagFilter;
     TextureParameterVal mTexWrapS;
@@ -78,13 +78,13 @@ public:
     void setTexture(Texture *pTexture);
     void removeTexture(Texture *pTexture);
 
-    void setTextureTarget(TextureTarget target);
+    void setTextureType(TextureType target);
     void setTextureParameter(TextureParameterName name, TextureParameterVal val);
     void setTextureParameter(TextureParameterVal minFilterVal,
         TextureParameterVal magFilterVal,TextureParameterVal wrapSVal, TextureParameterVal wrapTVal);
 
     const char* getName();
-    TextureTarget getTextureTarget();
+    TextureType getTextureTarget();
     TextureParameterVal getTextureParameter(TextureParameterName name);
     void getTextureParameter(TextureParameterVal minFilterVal,
         TextureParameterVal magFilterVal,TextureParameterVal wrapSVal, TextureParameterVal wrapTVal);
