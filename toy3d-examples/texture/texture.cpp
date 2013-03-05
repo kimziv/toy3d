@@ -143,7 +143,7 @@ bool init()
     params->setNamedAttrConstant(TOY3D_ATTR_UV, "vTexture");
 
     //shader custom constant
-    limit = 0.3f;
+    limit = 0.1f;
     printf("limit = %f.\n", limit);
     params->setNamedCustUniformConstant(TOY3D_CUST_REAL1, "limit", limit);
     params->setNamedCustUniformConstant(TOY3D_CUST_SAMPLER2D, "sampler2d", texUnit);
@@ -166,7 +166,7 @@ bool init()
     }
 
     texUS->setTexture(tex);
-    texUS->setTextureTarget(T3D_TEXTURE_2D);
+    texUS->setTextureType(T3D_TEXTURE_2D);
     texUS->setTextureParameter(T3D_LINEAR, T3D_LINEAR, T3D_CLAMP_TO_EDGE, T3D_CLAMP_TO_EDGE);
     //mat->setTexture(tex);
 
