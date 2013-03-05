@@ -37,6 +37,7 @@ ADD_SUBDIRECTORY(texture)
 #ADD_SUBDIRECTORY(testDataStruct)
 ADD_SUBDIRECTORY(blending)
 #ADD_SUBDIRECTORY(textureCapacityTest)
+ADD_SUBDIRECTORY(multi_texture)
 
 
 
