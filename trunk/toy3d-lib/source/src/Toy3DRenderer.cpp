@@ -250,19 +250,20 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
         return;
     }
 
-    void Renderer::setTextureUnitSettings(Uint unit, TextureUnitState* texUnitState)
+    void Renderer::setTextureUnitSettings(TextureUnitState* texUnitState)
     {
         Uint target;
         Uint parameterName;
         int  parameterVal;
-        Uint count, i;
+        Uint count, i, unit;
         const Texture *tex;
 
         /* active the texture unit */
+        unit = texUnitState->getID();
         glActiveTexture( getRealTextureUnit(unit) );
 
         /* get the target */
-        target = getRealTextureType(texUnitState->getTextureTarget());
+        target = getRealTextureType(texUnitState->getTextureType());
 
         /* set parameters */
         parameterName = getRealTextureParameterName(T3D_TEXTURE_MAG_FILTER);

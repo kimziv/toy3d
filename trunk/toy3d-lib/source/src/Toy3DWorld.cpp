@@ -29,9 +29,6 @@ TOY3D_BEGIN_NAMESPACE
         mAutoParamDataSource.setProjectionMatrix (projMatrix); 
         //mRenderer.setTexture(mat->getTexture());
 
-        mRenderer.updateAutoUniform (&mAutoParamDataSource);
-        mRenderer.updateCustUniform ();
-
         texUnits = mat->getAllTextureUnitStates(&count);
 
         if(mat->hasAlphaBlending())
@@ -44,9 +41,12 @@ TOY3D_BEGIN_NAMESPACE
 
         for(i=0; i<count; i++)
         {
-            mRenderer.setTextureUnitSettings(i, texUnits);
+            mRenderer.setTextureUnitSettings(texUnits);
             texUnits++;
         }
+
+        mRenderer.updateAutoUniform (&mAutoParamDataSource);
+        mRenderer.updateCustUniform ();
 
         mRenderer.render (ro);
 

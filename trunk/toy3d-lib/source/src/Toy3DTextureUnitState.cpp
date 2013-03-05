@@ -9,7 +9,7 @@ TOY3D_BEGIN_NAMESPACE
         //strncpy(mName, "", MAX_NAME_LEN);
         mName[strlen(mName)] = '\0';
 
-        mTarget = T3D_TEXTURE_2D;
+        mType = T3D_TEXTURE_2D;
         mTexMinFilter = T3D_LINEAR;
         mTexMagFilter = T3D_LINEAR;
         mTexWrapS = T3D_CLAMP_TO_EDGE;
@@ -29,7 +29,7 @@ TOY3D_BEGIN_NAMESPACE
         }
         mName[strlen(mName)] = '\0';
 
-        mTarget       = T3D_TEXTURE_2D;
+        mType       = T3D_TEXTURE_2D;
         mTexMinFilter = T3D_LINEAR;
         mTexMagFilter = T3D_LINEAR;
         mTexWrapS     = T3D_CLAMP_TO_EDGE;
@@ -54,6 +54,12 @@ TOY3D_BEGIN_NAMESPACE
 
         mName[strlen(mName)] = '\0';
 
+        return;
+    }
+
+    void TextureUnitState::setID(Uint id)
+    {
+        mUnitID = id;
         return;
     }
 
@@ -82,7 +88,7 @@ TOY3D_BEGIN_NAMESPACE
 
     void TextureUnitState::setTextureType(TextureType target)
     {
-        mTarget = target;
+        mType = target;
         return;
     }
 
@@ -124,9 +130,14 @@ TOY3D_BEGIN_NAMESPACE
         return (const char *)mName;
     }
 
-    TextureType TextureUnitState::getTextureTarget()
+    const Uint TextureUnitState::getID()
     {
-        return mTarget;
+        return mUnitID;
+    }
+
+    TextureType TextureUnitState::getTextureType()
+    {
+        return mType;
     }
 
     TextureParameterVal TextureUnitState::getTextureParameter(TextureParameterName name)

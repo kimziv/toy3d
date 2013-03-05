@@ -56,10 +56,11 @@ typedef struct _TextureParameter
 class TextureUnitState
 {
 private:
-    char             mName[MAX_NAME_LEN+1];
-    TPtrArray        *mTextures;
-    //TextureParameter mTexParameter;
-    TextureType       mTarget;
+    char       mName[MAX_NAME_LEN+1];
+    Uint       mUnitID;
+    TPtrArray  *mTextures;
+
+    TextureType         mType;
     TextureParameterVal mTexMinFilter;
     TextureParameterVal mTexMagFilter;
     TextureParameterVal mTexWrapS;
@@ -73,6 +74,7 @@ public:
     ~TextureUnitState();
 
     void setName(char *name);
+    void setID(Uint id);
 
     void setTexture(char *name);
     void setTexture(Texture *pTexture);
@@ -84,7 +86,8 @@ public:
         TextureParameterVal magFilterVal,TextureParameterVal wrapSVal, TextureParameterVal wrapTVal);
 
     const char* getName();
-    TextureType getTextureTarget();
+    const Uint getID();
+    TextureType getTextureType();
     TextureParameterVal getTextureParameter(TextureParameterName name);
     void getTextureParameter(TextureParameterVal minFilterVal,
         TextureParameterVal magFilterVal,TextureParameterVal wrapSVal, TextureParameterVal wrapTVal);
