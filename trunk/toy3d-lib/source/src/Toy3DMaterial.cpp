@@ -167,21 +167,26 @@ TOY3D_BEGIN_NAMESPACE
         return searchTextureUnitState(name);
     }
 
-    TextureUnitState* Material::getAllTextureUnitStates(Uint *count)
+    Uint Material::getTextureUnitStateSize()
     {
-        return (TextureUnitState* )(mTextureUnitStates->getAllElements(count));
+        return mTextureUnitStates->getLength();
+    }
+
+    TextureUnitState* Material::getTextureUnitStates(Uint index)
+    {
+        return (TextureUnitState*)(mTextureUnitStates->getElement(index));
     }
 
     TextureUnitState* Material::searchTextureUnitState(char *name) const
     {
         Uint i, count;
-        TextureUnitState *texUS;
+        TextureUnitState *texUS = NULL;
 
         count = mTextureUnitStates->getLength();
         for(i=0;i<count;i++)
         {
             texUS = (TextureUnitState *)mTextureUnitStates->getElement(i);
-            if(strcmp(name, texUS->getName()))
+            if( !strncmp(name, texUS->getName(), MAX_NAME_LEN))
                 return texUS;
         }
 

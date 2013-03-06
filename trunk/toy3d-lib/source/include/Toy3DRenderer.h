@@ -20,7 +20,6 @@ TOY3D_BEGIN_NAMESPACE
         Real mWorldMatrix[MATRIX_4x4_SIZE];
 
         ShaderProgram* mCurrentShaderProgram;
-        Uint mTexUnit0;
         Uint mTexUnitCapacity;
 
     public:

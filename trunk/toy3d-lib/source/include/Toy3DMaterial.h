@@ -34,8 +34,9 @@ TOY3D_BEGIN_NAMESPACE
 
         TextureUnitState* createTextureUnitState(char *name);
         Bool addTextureUnitState(TextureUnitState *texUnitState);
+        Uint getTextureUnitStateSize();
         TextureUnitState* getTextureUnitState(char *name);
-        TextureUnitState* getAllTextureUnitStates(Uint *count);
+        TextureUnitState* getTextureUnitStates(Uint index);
 
         void setShaderProgram (ShaderProgram *prog);
         ShaderProgram* getShaderProgram ();

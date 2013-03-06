@@ -151,11 +151,13 @@ TOY3D_BEGIN_NAMESPACE
         return mPtr[index];
     }
 
-    TPointer TPtrArray::getAllElements(Uint *count)
+    /*
+    TPointer* TPtrArray::getAllElements(Uint *count)
     {
         *count = getLength();
-        return mPtr[0];
+        return mPtr;
     }
+    */
 
     const Uint TPtrArray::getLength()
     {

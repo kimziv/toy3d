@@ -176,10 +176,15 @@ TOY3D_BEGIN_NAMESPACE
     {
         return mTextures->getLength();
     }
-    
-    const Texture* TextureUnitState::getAllTextures(Uint *count)
+
+    Uint TextureUnitState::getTextureSize()
     {
-        return (const Texture *)(mTextures->getAllElements(count));
+        return mTextures->getLength();
+    }
+
+    const Texture* TextureUnitState::getTextures(Uint index)
+    {
+        return (const Texture *)(mTextures->getElement(index));
     }
 
 

@@ -25,8 +25,6 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
     {
  
         mCurrentShaderProgram = NULL;
-
-        mTexUnit0 = GL_TEXTURE0;
         mTexUnitCapacity = MAX_TEXTURE_UNIT;
 
         //MvGl2DemoMatrixIdentity( mProjectionMatrix );
@@ -286,11 +284,11 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
         glTexParameteri(target, parameterName, parameterVal);
 
         /* bind each texture */
-        tex = texUnitState->getAllTextures(&count);
+        count = texUnitState->getTextureSize();
         for(i=0;i<count;i++)
         {
+            tex = texUnitState->getTextures(i);
             glBindTexture(target, tex->getTextureID());
-            tex++;
         }
 
         return;
@@ -351,7 +349,7 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
         if(texUnit>=MAX_TEXTURE_UNIT)
             return -1;
         //return gTextureUnit[texUnit];
-        return (mTexUnit0+texUnit);
+        return (GL_TEXTURE0+texUnit);
     }
 
     Uint Renderer::getRealTextureType(TextureType target)

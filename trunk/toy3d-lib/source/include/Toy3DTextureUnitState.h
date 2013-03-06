@@ -94,7 +94,8 @@ public:
 
     Uint getTextureCount();
     //const Texture* getTextures(char *name);
-    const Texture* getAllTextures(Uint *count);
+    Uint getTextureSize();
+    const Texture* getTextures(Uint index);
 };
 
 
