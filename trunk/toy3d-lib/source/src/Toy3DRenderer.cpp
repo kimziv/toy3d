@@ -344,86 +344,6 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
         return GL_FUNC_ADD;
     }
 
-    Uint Renderer::getRealTextureUnit(Uint texUnit)
-    {
-        if(texUnit>=MAX_TEXTURE_UNIT)
-            return -1;
-        //return gTextureUnit[texUnit];
-        return (GL_TEXTURE0+texUnit);
-    }
-
-    Uint Renderer::getRealTextureType(TextureType target)
-    {
-        switch(target)
-        {
-        case T3D_TEXTURE_1D:
-            return GL_TEXTURE_1D;
-
-        case T3D_TEXTURE_2D:
-            return GL_TEXTURE_2D;
-
-        case T3D_TEXTURE_3D:
-            return GL_TEXTURE_3D;
-        }
-
-        return GL_TEXTURE_2D;
-    }
-
-    Uint Renderer::getRealTextureParameterName(TextureParameterName name)
-    {
-        switch(name)
-        {
-        case T3D_TEXTURE_MIN_FILTER:
-            return GL_TEXTURE_MIN_FILTER;
-
-        case T3D_TEXTURE_MAG_FILTER:
-            return GL_TEXTURE_MAG_FILTER;
-
-        case T3D_TEXTURE_WRAP_S:
-            return GL_TEXTURE_WRAP_S;
-
-        case T3D_TEXTURE_WRAP_T:
-            return GL_TEXTURE_WRAP_T;
-        }
-
-        return GL_TEXTURE_MIN_FILTER;
-    }
-
-    int  Renderer::getRealTextureParameterVal(TextureParameterVal val)
-    {
-        switch(val)
-        {
-        case T3D_NEAREST:
-            return GL_NEAREST;
-            
-        case T3D_LINEAR:
-            return GL_LINEAR;
-            
-        case T3D_NEAREST_MIPMAP_NEAREST:
-            return GL_NEAREST_MIPMAP_NEAREST;
-            
-        case T3D_LINEAR_MIPMAP_NEAREST:
-            return GL_LINEAR_MIPMAP_NEAREST;
-
-        case T3D_NEAREST_MIPMAP_LINEAR:
-            return GL_NEAREST_MIPMAP_LINEAR;
-
-        case T3D_LINEAR_MIPMAP_LINEAR:
-            return GL_LINEAR_MIPMAP_LINEAR;
-
-        case T3D_CLAMP_TO_EDGE:
-            return GL_CLAMP_TO_EDGE;
-
-        case T3D_REPEAT:
-            return GL_REPEAT;
-
-        case T3D_MIRRORED_REPEAT:
-            return GL_MIRRORED_REPEAT;
-        }
-        
-        return GL_NEAREST;
-    }
-
     Uint Renderer::getBlendFactor(BlendingFactor factor)
     {
         switch(factor)
@@ -475,6 +395,85 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
         return GL_FUNC_ADD;
     }
 
+    Uint Renderer::getRealTextureUnit(Uint texUnit)
+    {
+        if(texUnit>=MAX_TEXTURE_UNIT)
+            return 0;
+        //return gTextureUnit[texUnit];
+        return (GL_TEXTURE0+texUnit);
+    }
+    
+    Uint Renderer::getRealTextureType(TextureType target)
+    {
+        switch(target)
+        {
+        case T3D_TEXTURE_1D:
+            return GL_TEXTURE_1D;
+            
+        case T3D_TEXTURE_2D:
+            return GL_TEXTURE_2D;
+            
+        case T3D_TEXTURE_3D:
+            return GL_TEXTURE_3D;
+        }
+        
+        return GL_TEXTURE_2D;
+    }
+    
+    Uint Renderer::getRealTextureParameterName(TextureParameterName name)
+    {
+        switch(name)
+        {
+        case T3D_TEXTURE_MIN_FILTER:
+            return GL_TEXTURE_MIN_FILTER;
+            
+        case T3D_TEXTURE_MAG_FILTER:
+            return GL_TEXTURE_MAG_FILTER;
+            
+        case T3D_TEXTURE_WRAP_S:
+            return GL_TEXTURE_WRAP_S;
+            
+        case T3D_TEXTURE_WRAP_T:
+            return GL_TEXTURE_WRAP_T;
+        }
+        
+        return GL_TEXTURE_MIN_FILTER;
+    }
+    
+    Uint Renderer::getRealTextureParameterVal(TextureParameterVal val)
+    {
+        switch(val)
+        {
+        case T3D_NEAREST:
+            return GL_NEAREST;
+            
+        case T3D_LINEAR:
+            return GL_LINEAR;
+            
+        case T3D_NEAREST_MIPMAP_NEAREST:
+            return GL_NEAREST_MIPMAP_NEAREST;
+            
+        case T3D_LINEAR_MIPMAP_NEAREST:
+            return GL_LINEAR_MIPMAP_NEAREST;
+            
+        case T3D_NEAREST_MIPMAP_LINEAR:
+            return GL_NEAREST_MIPMAP_LINEAR;
+            
+        case T3D_LINEAR_MIPMAP_LINEAR:
+            return GL_LINEAR_MIPMAP_LINEAR;
+            
+        case T3D_CLAMP_TO_EDGE:
+            return GL_CLAMP_TO_EDGE;
+            
+        case T3D_REPEAT:
+            return GL_REPEAT;
+            
+        case T3D_MIRRORED_REPEAT:
+            return GL_MIRRORED_REPEAT;
+        }
+        
+        return GL_NEAREST;
+    }
 
 
 TOY3D_END_NAMESPACE

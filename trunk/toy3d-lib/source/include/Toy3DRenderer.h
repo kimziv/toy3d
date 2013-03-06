@@ -46,8 +46,6 @@ TOY3D_BEGIN_NAMESPACE
         void updateAutoUniform (AutoParamDataSource *autoDataSource);
         void updateCustUniform ();
 
-
-
         /* blending operation switch*/
         void enableBlending(Bool flag);
         void setSceneBlending(BlendingFactor srcFactor,
@@ -63,18 +61,15 @@ TOY3D_BEGIN_NAMESPACE
         /* convert blenging mode to the value which the hardware support. */
         Uint getRealBlendMode(BlendingMode mode);
 
-        Uint getRealTextureUnit(Uint texUnit);/* return -1 while out of bound */
-        Uint getRealTextureType(TextureType target);
-        Uint getRealTextureParameterName(TextureParameterName name);
-        int  getRealTextureParameterVal(TextureParameterVal val);
-
-
-
         /* convert blenging factor to the value which the hardware support. */
         Uint getBlendFactor(BlendingFactor srcFactor);
         /* convert blenging mode to the value which the hardware support. */
         Uint getBlendMode(BlendingMode mode);
 
+        Uint getRealTextureUnit(Uint texUnit);
+        Uint getRealTextureType(TextureType target);
+        Uint getRealTextureParameterName(TextureParameterName name);
+        Uint getRealTextureParameterVal(TextureParameterVal val);
     };
 
 

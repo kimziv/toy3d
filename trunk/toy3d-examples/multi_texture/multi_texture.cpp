@@ -129,11 +129,9 @@ Bool init()
     Texture *tex_back = TextureManager::getInstance()->createTextureByFile(TEXTURE_FILE_BACK);
     Texture *tex_light = TextureManager::getInstance()->createTextureByFile(TEXTURE_FILE_LIGHT);
 
-
     Material *mat = MaterialManager::getInstance()->createMaterial();
     mat->setShaderProgram (shaderProgram);
     //mat->setSceneBlending(T3D_SRC_ALPHA, T3D_ONE_MINUS_SRC_ALPHA, T3D_ADD);
-
 
     //create tex unit 1 for back.tga
     TextureUnitState *texUS_back;
