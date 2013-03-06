@@ -20,7 +20,7 @@ TOY3D_BEGIN_NAMESPACE
             Real worldMatrix[16], Real viewMatrix[16], Real projMatrix[16])      
     {
         Uint i, count = 0;
-        TextureUnitState *texUnits;
+        TextureUnitState *texUnits = NULL;
 
         mRenderer.bindShaderProgram(mat->getShaderProgram());
        
@@ -29,7 +29,8 @@ TOY3D_BEGIN_NAMESPACE
         mAutoParamDataSource.setProjectionMatrix (projMatrix); 
         //mRenderer.setTexture(mat->getTexture());
 
-        texUnits = mat->getAllTextureUnitStates(&count);
+        mRenderer.updateAutoUniform (&mAutoParamDataSource);
+        mRenderer.updateCustUniform ();
 
         if(mat->hasAlphaBlending())
         {
@@ -39,14 +40,12 @@ TOY3D_BEGIN_NAMESPACE
                 mat->getSrcBlendFactor(),mat->getDestBlendFactor(), mat->getBlendMode());
         }
 
+        count = mat->getTextureUnitStateSize();
         for(i=0; i<count; i++)
         {
+            texUnits = mat->getTextureUnitStates(i);
             mRenderer.setTextureUnitSettings(texUnits);
-            texUnits++;
         }
-
-        mRenderer.updateAutoUniform (&mAutoParamDataSource);
-        mRenderer.updateCustUniform ();
 
         mRenderer.render (ro);
 
@@ -57,7 +56,6 @@ TOY3D_BEGIN_NAMESPACE
 
         return;
     } 
-
 
 
     void World::startRendering ()
