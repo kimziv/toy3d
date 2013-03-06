@@ -221,7 +221,8 @@ class Texture
 {{{
 class Renderer 
 {
-    void setTextureUnitSettings( Uint unit, TextureUnitState *texUnitState);
+    void setTextureUnitSettings(TextureUnitState *texUnitState);
+
 
 private:
     Uint getRealRenderMode(RenderMode mode);
@@ -232,98 +233,69 @@ private:
     Uint getRealBlendMode(BlendingMode mode);
 
     Uint getRealTextureUnit(Uint texUnit);
-    Uint getRealTextureTarget(TextureTarget target);
+    Uint getRealTextureType(TextureType target);
     Uint getRealTextureParameterName(TextureParameterName name);
-    int  getRealTextureParameterVal(TextureParameterVal val);
+    Uint  getRealTextureParameterVal(TextureParameterVal val);
 }
 
-void Renderer::setTextureUnitSettings(Uint unit, TextureUnitState *texUnitState)
+void Renderer::setTextureUnitSettings(TextureUnitState* texUnitState)
 {
     Uint target;
     Uint parameterName;
     int  parameterVal;
-    Uint count, i;
-    Texture *tex;
+    Uint count, i, unit;
+    const Texture *tex;
 
     /* active the texture unit */
+    unit = texUnitState->getID();
     glActiveTexture( getRealTextureUnit(unit) );
 
     /* get the target */
-    target = getRealTextureTarget(texUnitState->getTextureTarget());
+    target = getRealTextureType(texUnitState->getTextureType());
 
     /* set parameters */
     parameterName = getRealTextureParameterName(T3D_TEXTURE_MAG_FILTER);
-    parameterVal = getRealTextureParameterVal(
-        texUnitState->getTextureParameterVal(T3D_TEXTURE_MAG_FILTER));
+    parameterVal = getRealTextureParameterVal(texUnitState->getTextureParameterVal(T3D_TEXTURE_MAG_FILTER));
     glTexParameteri(target, parameterName, parameterVal);
 
     parameterName = getRealTextureParameterName(T3D_TEXTURE_MIN_FILTER);
-    parameterVal = getRealTextureParameterVal(
-        texUnitState->getTextureParameterVal(T3D_TEXTURE_MIN_FILTER));
+    parameterVal = getRealTextureParameterVal(texUnitState->getTextureParameterVal(T3D_TEXTURE_MIN_FILTER));
     glTexParameteri(target, parameterName, parameterVal);
 
     parameterName = getRealTextureParameterName(T3D_TEXTURE_WRAP_S);
-    parameterVal = getRealTextureParameterVal(
-        texUnitState->getTextureParameterVal(T3D_TEXTURE_WRAP_S));
+    parameterVal = getRealTextureParameterVal(texUnitState->getTextureParameterVal(T3D_TEXTURE_WRAP_S));
     glTexParameteri(target, parameterName, parameterVal);
 
     parameterName = getRealTextureParameterName(T3D_TEXTURE_WRAP_T);
-    parameterVal = getRealTextureParameterVal(
-        texUnitState->getTextureParameterVal(T3D_TEXTURE_WRAP_T));
+    parameterVal = getRealTextureParameterVal(texUnitState->getTextureParameterVal(T3D_TEXTURE_WRAP_T));
     glTexParameteri(target, parameterName, parameterVal);
 
     /* bind each texture */
-    tex = texUnitState->getAllTextures(&count);
+    count = texUnitState->getTextureSize();
     for(i=0;i<count;i++)
     {
+        tex = texUnitState->getTextures(i);
         glBindTexture(target, tex->getTextureID());
-        tex++;
     }
 
     return;
 }
 
-/*
-void Renderer::_setTextureUnitSettings(texUnit, TextureUnitState* tl)
-{
-    tex = tl._getTexturePtr();
-    _setTexture (texUnit, tex);
-    _setTextureCoordSet(texUnit, tl.getTextureCoordSet());
-    _setTextureFiltering(texUnit, 
-            tl.getTexureFiltering(FT_MIN), 
-            tl.getTexureFiltering(FT_MAG), 
-            tl.getTexureFiltering(FT_MIP));
-    _setTextureLayerAnisotropy(texUnit, tl.getTextureAnisotropy());
-    _setTextureMipMapBias(texUnit, tl.getTextureMipmapsBias());
-    _setTextureBlendMode(texUnit, tl.getColourBlendMode());
-    _setTextureBlendMode(texUnit, tl.getAlphaBlendMode());
-    _setTextureXXXX....
-}
-
-void Renderer::_setTexture (stage, enabled, texPtr)
-{
-    activateGLTextureUnit(stage);
-    glBindTexture(texPtr);
-}
-*/
-
 void World::renderOneObject ()
 {
-/*
-    for (all textureUnitState in Material) {
-        mRenderer->setTextureUnitSettings (unit, pTex);
-    }
-*/
     Uint i, count = 0;
-    TextureUnitState *texUnits;
+    TextureUnitState *texUnits = NULL;
     texUnits = mat->getAllTextureUnitStates(&count);
 
     ...
+    count = mat->getTextureUnitStateSize();
     for(i=0; i<count; i++)
     {
-        mRenderer.setTextureUnitSettings(i, texUnits);
-        texUnits++;
+        texUnits = mat->getTextureUnitStates(i);
+        mRenderer.setTextureUnitSettings(texUnits);
     }
+
+    mRenderer.render (ro);
     ...
 }
 
