@@ -3,10 +3,10 @@
 = 简介 =
 
 主要思路:   
- - glCopyTexImage：把 framebuffer 的东西拷贝到纹理
- - Pbuffer  
- - FBO
- - PBO
+ * glCopyTexImage：把 framebuffer 的东西拷贝到纹理
+ * Pbuffer  
+ * FBO
+ * PBO
 
 目前流行用 FBO。
 
