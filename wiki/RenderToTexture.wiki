@@ -2,12 +2,22 @@
 
 = 简介 =
 
+主要思路:   
+ - glCopyTexImage：把 framebuffer 的东西拷贝到纹理
+ - Pbuffer  
+ - FBO
+ - PBO
+
+目前流行用 FBO。
+
+参考资源1
 
 
 
-= Details =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
+
+= Reference =
+
+  * [http://blog.csdn.net/Nhsoft/article/details/1105309 OpenGL 中的 Render To Texture] 
   * Headings, paragraphs, and lists
   * Automatic links to other wiki pages
