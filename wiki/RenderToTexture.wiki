@@ -19,3 +19,4 @@
 = Reference =
 
   * [http://blog.csdn.net/Nhsoft/article/details/1105309 OpenGL 中的 Render To Texture] 
+  * [http://processors.wiki.ti.com/index.php/Render_to_Texture_with_OpenGL_ES Render to Texture with OpenGL ES]
