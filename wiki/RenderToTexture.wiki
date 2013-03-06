@@ -19,5 +19,3 @@
 = Reference =
 
   * [http://blog.csdn.net/Nhsoft/article/details/1105309 OpenGL 中的 Render To Texture] 
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
