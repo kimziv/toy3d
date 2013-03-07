@@ -24,7 +24,8 @@
     glBindFramebuffer(GL_FRAMEBUFFER, fboId);
 
 
-     /* Draw base layer texture */
+    /* Draw base layer texture */
+    glFramebufferTexture2D(...);
     
     //attach base layer texture
     glFrameBufferAttach (base_layer_texture);
