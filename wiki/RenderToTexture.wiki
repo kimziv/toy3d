@@ -32,7 +32,7 @@
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     
-    draw two textures
+    //draw two textures
     ...
 
 
