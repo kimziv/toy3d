@@ -133,7 +133,7 @@ void GLES2RenderSystem::_setRenderTarget(RenderTarget *target)
 }
 
 
-viod RenderSystem::_setViewPort (Viewport *vp)
+viod GLES2RenderSystem::_setViewPort (Viewport *vp)
 {
 
     if (!vp){
