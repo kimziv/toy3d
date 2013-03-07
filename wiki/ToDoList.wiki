@@ -1,6 +1,15 @@
 #summary Here is our todo lists.
 
 
+=纹理=
+
+ * 渲染到纹理
+ * 地图的渲染架构
+  # 渲染到不同层
+  # 层之间做混合
+ * glCompressedTexture
+
+
 = features =
  * animation
  * light/material
@@ -14,12 +23,6 @@
  * 游动的鱼
 
 
-=纹理=
-
- * 渲染到纹理
- * 地图的渲染架构
-  # 渲染到不同层
-  # 层之间做混合
 
 
 =通用部分=
