@@ -60,6 +60,42 @@
 {{{
 
 
+    class GLES2RTTManager : public Singleton<GLES2RTTManager>
+    {
+        public:
+            virtual ~GLES2RTTManager();
+
+            virtual RenderTexture *createRenderTexture(const String &name, const GLES2SurfaceDesc &target, bool writeGamma, uint fsaa) = 0;
+
+             /** Check if a certain format is usable as rendertexture format
+            */
+            virtual bool checkFormat(PixelFormat format) = 0;
+
+            /** Bind a certain render target.
+            */
+            virtual void bind(RenderTarget *target) = 0;
+
+            /** Unbind a certain render target. This is called before binding another RenderTarget, and
+                before the context is switched. It can be used to do a copy, or just be a noop if direct
+                binding is used.
+            */
+            virtual void unbind(RenderTarget *target) = 0;
+
+
+            /** Create a multi render target
+            */
+            virtual MultiRenderTarget* createMultiRenderTarget(const String & name);
+
+            /** Get the closest supported alternative format. If format is supported, returns format.
+            */
+            virtual PixelFormat getSupportedAlternative(PixelFormat format);
+    };
+
+
+
+
+
+
 void GLES2RenderSystem::_setRenderTarget(RenderTarget *target)
 {
 
