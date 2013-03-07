@@ -89,7 +89,7 @@ class GLES2RTTManager : public Singleton<GLES2RTTManager>
         /** Get the closest supported alternative format. If format is supported, returns format.
         */
         virtual PixelFormat getSupportedAlternative(PixelFormat format);
-    };
+};
 
 
 
