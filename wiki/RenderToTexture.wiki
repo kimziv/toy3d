@@ -22,18 +22,35 @@
     // set rendering destination to FBO
     glBindFramebuffer(GL_FRAMEBUFFER, fboId);
 
+
+     /* Draw base layer texture */
+    
+    //attach base layer texture
+    glFrameBufferAttach (base_layer_texture);
+
     // clear buffers
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // draw a scene to a texture directly
     draw();
+
+
+    /* Draw road layer texture */
+
+    //attach road layer texture
+    glFrameBufferAttach (road_layer_texture);
+
+    // clear buffers
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    draw();
+
 
     // unbind FBO
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     
-    //draw two textures
-    ...
+    //draw two textures  on two screen
+     ...
 
 
 }}}
