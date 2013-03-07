@@ -1,6 +1,19 @@
 #summary Here is our todo lists.
 
 
+= features =
+ * animation
+ * light/material
+ * 统一模型格式解析
+ * 光引擎
+
+
+=animation=
+ * 支持动画
+ * coverflow
+ * 游动的鱼
+
+
 =纹理=
 
  * 渲染到纹理
@@ -28,11 +41,6 @@
 
 
 
-= features =
- * animation
- * light/material
- * 统一模型格式解析
- * 光引擎
 
 
 = 参考 =
