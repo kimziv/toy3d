@@ -17,8 +17,9 @@
 
 
 {{{
+    GLint fboId;
+    glGenFramebuffers(1, &fboId);
 
-    ...
     // set rendering destination to FBO
     glBindFramebuffer(GL_FRAMEBUFFER, fboId);
 
@@ -52,6 +53,7 @@
     //draw two textures  on two screen
      ...
 
+    glDeleteFramebuffers(1, &fboId);
 
 }}}
 
