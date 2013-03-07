@@ -13,6 +13,31 @@
 参考资源1
 
 
+=基本流程=
+
+
+{{{
+
+    ...
+    // set rendering destination to FBO
+    glBindFramebuffer(GL_FRAMEBUFFER, fboId);
+
+    // clear buffers
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    // draw a scene to a texture directly
+    draw();
+
+    // unbind FBO
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+    
+    draw two textures
+    ...
+
+
+}}}
+
 
 
 
