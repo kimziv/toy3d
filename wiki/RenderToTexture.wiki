@@ -55,7 +55,36 @@
 
 }}}
 
+=OGRE 设计=
 
+{{{
+
+viod RenderSystem::_setViewPort (Viewport *vp)
+{
+
+    if (!vp){
+        mActiveViewport = NULL;
+        _setRenderTarget (NULL);
+    }
+    else if (vp != mActiveViewport || vp->_isUpdated()) {
+
+        RenderTarget *target;
+        target = vp->getTarget();
+        _setRenderTarget(target);
+        mActiveViewport = vp;
+
+        ... 
+        glViewport (x, y,w, h);
+        glScissor (x, y, w, h);
+        ....
+
+
+    }
+
+
+}
+
+}}}
 
 
 = Reference =
