@@ -208,6 +208,28 @@ void SceneManager::manualRender(Renderable* rend, const Pass* pass, Viewport* vp
 }}}
 
 
+RenderTarget 
+ # 接收渲染结果
+ # 创建维护 Viewport
+ # 一个 Viewport 对应一个 Camera和一个 RenderTarget
+ # 一个 Camera 对应一个 Viewport
+ # 一个 RenderTarget 可拥有对个 Viewport
+
+{{{
+
+
+class RenderTarget 
+{
+    ViewportList mViewportList;
+
+    Viewport* addViewport (Camera *cam, int ZOrder, float f, t, w, h);
+
+
+}
+
+}}}
+
+
 = Reference =
 
   * [http://blog.csdn.net/Nhsoft/article/details/1105309 OpenGL 中的 Render To Texture] 
