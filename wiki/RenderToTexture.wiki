@@ -298,3 +298,4 @@ class RenderTarget
   * [http://www.songho.ca/opengl/gl_fbo.html opengl FBO]
   * [http://blog.csdn.net/leonwei/article/details/5740728 OGRE 渲染到纹理]
   * [http://www.zwqxin.com/archives/opengl/learn-fbo.html 学一学VBO]
+  * [http://blog.csdn.net/chengxu0921/article/details/4761387 OGRE demo_render_to_texture解析]
