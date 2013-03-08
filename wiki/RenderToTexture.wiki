@@ -229,6 +229,15 @@ class RenderTarget
 
 }}}
 
+=样例=
+
+可做的样例：
+ # 镜面反射效果
+ # 地图
+
+样例的实现：
+ # 2个 camera
+
 
 = Reference =
 
