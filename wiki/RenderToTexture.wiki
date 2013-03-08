@@ -252,6 +252,8 @@ t->setProjectiveTexturing(true, mReflectCam);
 
 rttTex->addListener(this);
 
+//set materila to entity
+mPlaneEnt->setMaterialName("RttMat");
 
 }}}
 
