@@ -246,9 +246,7 @@ t = mat->getTechnique(0)->getPass(0)->createTextureUnitState("RttTex");
 // Blend with base texture
 
 t->setColourOperationEx(LBX_BLEND_MANUAL, LBS_TEXTURE, LBS_CURRENT,
-
             ColourValue::White,  ColourValue::White, 0.25);
-
 t->setTextureAddressingMode(TextureUnitState::TAM_CLAMP);
 t->setProjectiveTexturing(true, mReflectCam);
 
