@@ -280,6 +280,24 @@ class RenderTarget
 }}}
 
 
+=toy3d 设计=
+
+
+主循环
+
+{{{
+
+    // update all targets but don't swap buffers
+    mActiveRenderer->_updateAllRenderTargets(false);
+
+    // block for final swap                                      
+    mActiveRenderer->
+            _swapAllRenderTargetBuffers(mActiveRenderer->getWaitForVerticalBlank());
+
+}}}
+
+
+
 
 =样例=
 
