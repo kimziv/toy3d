@@ -310,14 +310,16 @@ class RenderTarget
 
 }}}
 
-
+RenderSystem 保存 target
+ # 按一定的顺序对 render target 进行 update
+ # render texture 在 render buffer 之前
 
 
 =样例=
 
 可做的样例：
  # 镜面反射效果
- # 地图
+ # 地图 
 
 样例的实现：
  # 2个 camera
