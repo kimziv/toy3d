@@ -287,12 +287,20 @@ class RenderTarget
 
 {{{
 
-    // update all targets but don't swap buffers
-    mActiveRenderer->_updateAllRenderTargets(false);
 
-    // block for final swap                                      
-    mActiveRenderer->
+    while(stop)
+        renderOneFrame();
+
+  
+
+    void renderOneFrame() {
+        // update all targets but don't swap buffers
+        mActiveRenderer->_updateAllRenderTargets(false);
+
+        // block for final swap                                      
+        mActiveRenderer->
             _swapAllRenderTargetBuffers(mActiveRenderer->getWaitForVerticalBlank());
+    }
 
 }}}
 
