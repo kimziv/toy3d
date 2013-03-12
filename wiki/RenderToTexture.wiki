@@ -292,6 +292,8 @@ class RenderTarget
 {{{
 
 
+    mActiveRenderer->_initRenderTargets();
+    
     while(stop)
         renderOneFrame();
 
