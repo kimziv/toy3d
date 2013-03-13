@@ -175,7 +175,8 @@ void World::renderScene ()
 
     mRenderer->begin();
     
-    render content
+    //render content
+    renderVisibleObjects();
 
     mRender->end();
 }
