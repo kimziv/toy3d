@@ -64,6 +64,8 @@ public:
     void updateAllRenderTargets(bool swapBuffers = true);
     //swap all buffer
     void swapAllRenderTargetBuffers();
+
+    void setViewport (Viewport *vp);
 };
 
 void Renderer::updateAllRenderTargets(bool swapBuffers)
@@ -81,6 +83,13 @@ void Renderer::swapAllRenderTargetBuffers()
         target->swapBuffers();
 }
 
+
+void Renderer::setViewport (Viewport *vp)
+{
+
+    
+
+}
 
 }}}
 
@@ -170,8 +179,12 @@ class World
 
 }
 
-void World::renderScene ()
+void World::renderScene (Camera *camera, Viewport *vp)
 {
+
+    mRenderer->setViewport (vp);
+
+    mAutoParamDataSource->......
 
     mRenderer->begin();
     
