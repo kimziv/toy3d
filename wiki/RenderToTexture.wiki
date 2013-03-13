@@ -66,6 +66,14 @@ public:
     void _swapAllRenderTargetBuffers();
 };
 
+void Renderer::updateAllRenderTargets(bool swapBuffers)
+{
+
+    for (rende target array)
+        target->update(swapBuffers);
+
+}
+
 }}}
 
 
