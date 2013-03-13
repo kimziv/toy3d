@@ -12,29 +12,40 @@
 
 {{{
 
+void display()
+{
+    //fixme: where init targets
+    world->renderOneFrame();
 
-    mActiveRenderer->_initRenderTargets();
-    
-    while(stop)
-        renderOneFrame();
-
-  
-
-    void renderOneFrame() {
-        // update all targets but don't swap buffers
-        mActiveRenderer->_updateAllRenderTargets(false);
-
-        // block for final swap                                      
-        mActiveRenderer->
-            _swapAllRenderTargetBuffers(mActiveRenderer->getWaitForVerticalBlank());
-    }
-
+ 
 }}}
 
 RenderSystem 保存 target
  # 按一定的顺序对 render target 进行 update
  # render texture 在 render buffer 之前
 
+==World==
+
+{{{
+
+class World
+{
+    void renderOneFrame();
+
+}
+
+
+void World::renderOneFrame() {
+    // update all targets but don't swap buffers
+    mRenderer->_updateAllRenderTargets(false);
+
+    // block for final swap                                      
+    mActiveRenderer->
+        _swapAllRenderTargetBuffers(mActiveRenderer->getWaitForVerticalBlank());
+}
+
+
+}}}
 
 =样例=
 
