@@ -8,7 +8,7 @@
  # 建筑话到 RTT2
  # 结果把纹理贴到四边形上
 
-主循环
+==主循环==
 
 {{{
 
@@ -46,6 +46,28 @@ void World::renderOneFrame() {
 
 
 }}}
+
+==Renderer==
+
+{{{
+
+class Renderer {
+
+private:
+    RenderTargetArray renderTargets[SIZE];
+    RenderTarget* mActiveRenderTarget;
+    
+
+
+public:
+    void _updateAllRenderTargets(bool swapBuffers = true)
+    void _swapAllRenderTargetBuffers();
+};
+
+}}}
+
+
+
 
 =样例=
 
