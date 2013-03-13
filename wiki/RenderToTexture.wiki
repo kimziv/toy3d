@@ -85,6 +85,29 @@ void Renderer::swapAllRenderTargetBuffers()
 }}}
 
 
+==RenderTarget==
+
+{{{
+
+class RenderTarget {
+
+public:
+    void update(bool swap);
+
+};
+
+void RenderTarget::update(bool swap)
+{
+
+    for (viewport array)
+        viewport->update()
+
+
+    if (swap)
+        swapBuffers();
+}
+
+}}}
 
 
 =样例=
