@@ -92,8 +92,40 @@ void Renderer::setViewport (Viewport *vp)
     
 }
 
-void Renderer::setTarget()
+void Renderer::setTarget(RenderTarget *target)
 {
+
+    // Unbind current frame buffer object
+    if(mActiveRenderTarget && mRTTManager)
+        mRTTManager->unbind(mActiveRenderTarget);
+
+    mActiveRenderTarget = target;
+    if (target)
+    {
+        // Switch context if different from current one
+        GLES2Context *newContext = 0;
+        target->getCustomAttribute("GLCONTEXT", &newContext);
+        if (newContext && mCurrentContext != newContext)
+            {
+                _switchContext(newContext);
+            }
+
+        // Check the FBO's depth buffer status
+        GLES2DepthBuffer *depthBuffer = static_cast<GLES2DepthBuffer*>(target->getDepthBuffer());
+
+        if( target->getDepthBufferPool() != DepthBuffer::POOL_NO_DEPTH &&
+                (!depthBuffer || depthBuffer->getGLContext() != mCurrentContext ) )
+        {
+            // Depth is automatically managed and there is no depth buffer attached to this RT
+            // or the Current context doesn't match the one this Depth buffer was created with
+            setDepthBufferFor( target );
+        }
+
+        // Bind frame buffer object
+        mRTTManager->bind(target);
+    }
+
+
 }
 
 }}}
