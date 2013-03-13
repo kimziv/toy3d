@@ -1,5 +1,52 @@
 #summary One-sentence summary of this page.
 
+
+=toy3d 设计=
+
+如何过滤出该画的对象？
+ # 道路画到 RTT1
+ # 建筑话到 RTT2
+ # 结果把纹理贴到四边形上
+
+主循环
+
+{{{
+
+
+    mActiveRenderer->_initRenderTargets();
+    
+    while(stop)
+        renderOneFrame();
+
+  
+
+    void renderOneFrame() {
+        // update all targets but don't swap buffers
+        mActiveRenderer->_updateAllRenderTargets(false);
+
+        // block for final swap                                      
+        mActiveRenderer->
+            _swapAllRenderTargetBuffers(mActiveRenderer->getWaitForVerticalBlank());
+    }
+
+}}}
+
+RenderSystem 保存 target
+ # 按一定的顺序对 render target 进行 update
+ # render texture 在 render buffer 之前
+
+
+=样例=
+
+可做的样例：
+ # 镜面反射效果
+ # 地图 
+
+样例的实现：
+ # 2个 camera
+
+
+
 = 简介 =
 
 主要思路:   
@@ -11,6 +58,9 @@
 目前流行用 FBO。
 
 参考资源1
+
+
+
 
 
 =FBO基本渲染流程=
@@ -279,50 +329,6 @@ class RenderTarget
 
 }}}
 
-
-=toy3d 设计=
-
-如何过滤出该画的对象？
- # 道路画到 RTT1
- # 建筑话到 RTT2
- # 结果把纹理贴到四边形上
-
-主循环
-
-{{{
-
-
-    mActiveRenderer->_initRenderTargets();
-    
-    while(stop)
-        renderOneFrame();
-
-  
-
-    void renderOneFrame() {
-        // update all targets but don't swap buffers
-        mActiveRenderer->_updateAllRenderTargets(false);
-
-        // block for final swap                                      
-        mActiveRenderer->
-            _swapAllRenderTargetBuffers(mActiveRenderer->getWaitForVerticalBlank());
-    }
-
-}}}
-
-RenderSystem 保存 target
- # 按一定的顺序对 render target 进行 update
- # render texture 在 render buffer 之前
-
-
-=样例=
-
-可做的样例：
- # 镜面反射效果
- # 地图 
-
-样例的实现：
- # 2个 camera
 
 
 = Reference =
