@@ -87,8 +87,13 @@ void Renderer::swapAllRenderTargetBuffers()
 void Renderer::setViewport (Viewport *vp)
 {
 
+    RenderTarget *target = vp->getTarget();
+    setTarget(target);
     
+}
 
+void Renderer::setTarget()
+{
 }
 
 }}}
