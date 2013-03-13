@@ -66,6 +66,7 @@ public:
     void swapAllRenderTargetBuffers();
 
     void setViewport (Viewport *vp);
+    void setTarget(RenderTarget *target);
 };
 
 void Renderer::updateAllRenderTargets(bool swapBuffers)
