@@ -120,6 +120,10 @@ void RenderTarget::update(bool swap)
 
 class Viewport 
 {
+private:
+    Camera* mCamera;
+
+public:
     void update();
 }
 
