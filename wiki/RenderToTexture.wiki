@@ -60,7 +60,9 @@ private:
 
 
 public:
-    void _updateAllRenderTargets(bool swapBuffers = true)
+    //update all targets
+    void _updateAllRenderTargets(bool swapBuffers = true);
+    //swap all buffer
     void _swapAllRenderTargetBuffers();
 };
 
