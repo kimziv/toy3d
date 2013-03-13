@@ -36,6 +36,7 @@ class World
 
 
 void World::renderOneFrame() {
+
     // update all targets but don't swap buffers
     mRenderer->updateAllRenderTargets(false);
 
