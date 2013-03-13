@@ -131,11 +131,59 @@ void Viewport::update()
 {
 
     if (mCamera)
-        mCamera->renderScence();
+        mCamera->renderScence(this);
 
 }
 
 }}}
+
+
+==Camera==
+
+{{{
+
+Camera
+{
+
+    void renderScene(Viewport *vp);
+
+}
+
+void Camera::renderScene(Viewport *vp)
+{
+
+    //render scene
+    mWorld->renderScene(this, vp);
+
+
+}
+
+}}}
+
+==World==
+
+{{{
+
+class World
+{
+    void renderScene(Camera *camera, Viewport *vp);
+
+}
+
+void World::renderScene ()
+{
+
+    mRenderer->begin();
+    
+    render content
+
+    mRender->end();
+}
+
+
+
+}}}
+
 
 =样例=
 
