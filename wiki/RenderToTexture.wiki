@@ -61,9 +61,9 @@ private:
 
 public:
     //update all targets
-    void _updateAllRenderTargets(bool swapBuffers = true);
+    void updateAllRenderTargets(bool swapBuffers = true);
     //swap all buffer
-    void _swapAllRenderTargetBuffers();
+    void swapAllRenderTargetBuffers();
 };
 
 void Renderer::updateAllRenderTargets(bool swapBuffers)
@@ -73,6 +73,14 @@ void Renderer::updateAllRenderTargets(bool swapBuffers)
         target->update(swapBuffers);
 
 }
+
+
+void Renderer::swapAllRenderTargetBuffers()
+{
+    for (rende target array)
+        target->swapBuffers();
+}
+
 
 }}}
 
