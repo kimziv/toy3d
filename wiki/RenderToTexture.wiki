@@ -41,8 +41,7 @@ void World::renderOneFrame() {
     mRenderer->updateAllRenderTargets(false);
 
     // block for final swap                                      
-    mActiveRenderer->
-        _swapAllRenderTargetBuffers();
+    mRenderer->swapAllRenderTargetBuffers();
 }
 
 
