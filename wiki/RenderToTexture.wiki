@@ -185,6 +185,22 @@ void World::renderScene ()
 
 }}}
 
+==RTTManager==
+
+{{{
+
+class RTTManager::public Singleton<GLES2RTTManager>
+{
+
+    RenderTexture *createRenderTexture();
+    void bind();
+    void unbind();
+    
+
+}
+
+}}}
+
 
 =样例=
 
