@@ -91,6 +91,9 @@ void Renderer::swapAllRenderTargetBuffers()
 
 class RenderTarget {
 
+private:
+   array viewports[MAX_SIZE];
+
 public:
     void update(bool swap);
 
@@ -109,6 +112,9 @@ void RenderTarget::update(bool swap)
 
 }}}
 
+
+
+==Viewport==
 
 =样例=
 
