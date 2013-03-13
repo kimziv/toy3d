@@ -116,6 +116,23 @@ void RenderTarget::update(bool swap)
 
 ==Viewport==
 
+{{{
+
+class Viewport 
+{
+    void update();
+}
+
+void Viewport::update()
+{
+
+    if (mCamera)
+        mCamera->renderScence();
+
+}
+
+}}}
+
 =样例=
 
 可做的样例：
