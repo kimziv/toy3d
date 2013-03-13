@@ -334,3 +334,4 @@ RenderSystem 保存 target
   * [http://www.zwqxin.com/archives/opengl/learn-fbo.html 学一学VBO]
   * [http://blog.csdn.net/chengxu0921/article/details/4761387 OGRE demo_render_to_texture解析]
   * [http://www.lihuasoft.net/article/show.php?id=4865 OGRE的主要渲染流程]
+  * [http://blog.csdn.net/qq18052887/article/details/5438864 Ogre设计模式分析-观察者模式]
