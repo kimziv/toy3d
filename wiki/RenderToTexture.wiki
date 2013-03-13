@@ -37,11 +37,11 @@ class World
 
 void World::renderOneFrame() {
     // update all targets but don't swap buffers
-    mRenderer->_updateAllRenderTargets(false);
+    mRenderer->updateAllRenderTargets(false);
 
     // block for final swap                                      
     mActiveRenderer->
-        _swapAllRenderTargetBuffers(mActiveRenderer->getWaitForVerticalBlank());
+        _swapAllRenderTargetBuffers();
 }
 
 
