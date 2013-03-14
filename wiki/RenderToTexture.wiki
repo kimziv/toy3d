@@ -21,6 +21,7 @@ void display()
 {
     //fixme: where init targets
     world->renderOneFrame();
+    swap();
 
  
 }}}
@@ -45,8 +46,6 @@ void World::renderOneFrame() {
     // update all targets but don't swap buffers
     mRenderer->updateAllRenderTargets(false);
 
-    // block for final swap                                      
-    mRenderer->swapAllRenderTargetBuffers();
 }
 
 
@@ -63,16 +62,13 @@ private:
     RenderTarget* mActiveRenderTarget;
     
 
-
 public:
     //update all targets
     void updateAllRenderTargets(bool swapBuffers = true);
-    //swap all buffer
-    void swapAllRenderTargetBuffers();
-
     void setViewport (Viewport *vp);
     void setTarget(RenderTarget *target);
 };
+
 
 void Renderer::updateAllRenderTargets(bool swapBuffers)
 {
