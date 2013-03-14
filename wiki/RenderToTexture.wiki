@@ -23,9 +23,14 @@ RenderWindow* mWindow = NULL;
 
 void init()
 {
+    //create camera
     camera = world->createCamera("Camera1");
     camera->setPosition(x, y, z);
     camera->lookAt();
+
+    //create viewports
+    Viewport *vp = mWindow->addViewport (camera);
+    vp->.... 
 
 
 }
