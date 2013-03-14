@@ -41,7 +41,8 @@ void display()
 {
     //fixme: where init targets
     world->renderOneFrame();
-    swap();
+    
+    glutSwapBuffers ();
 
  
 }}}
