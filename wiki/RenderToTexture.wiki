@@ -79,13 +79,6 @@ void Renderer::updateAllRenderTargets(bool swapBuffers)
 }
 
 
-void Renderer::swapAllRenderTargetBuffers()
-{
-    for (rende target array)
-        target->swapBuffers();
-}
-
-
 void Renderer::setViewport (Viewport *vp)
 {
 
