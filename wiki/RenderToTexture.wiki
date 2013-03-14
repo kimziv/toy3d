@@ -171,8 +171,13 @@ class Viewport
 {
 private:
     Camera* mCamera;
+    RenderTarget *mTarget;
+
+    Real mLeft, mTop, mWidth, mHeight;
 
 public:
+    Viewport (Camera *camera, RenderTarget *target, 
+              Real left, Real top, Real width, Real height);
     void update();
 }
 
