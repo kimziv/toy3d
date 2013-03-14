@@ -17,6 +17,21 @@
 
 {{{
 
+World *world = NULL
+Camera *camera = NULL;
+RenderWindow* mWindow = NULL;
+
+void init()
+{
+    camera = world->createCamera("Camera1");
+    camera->setPosition(x, y, z);
+    camera->lookAt();
+
+
+}
+
+
+
 void display()
 {
     //fixme: where init targets
