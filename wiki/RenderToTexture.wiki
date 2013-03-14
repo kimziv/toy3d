@@ -3,10 +3,15 @@
 
 =toy3d 设计=
 
+==现存的问题==
+
 如何过滤出该画的对象？
  # 道路画到 RTT1
  # 建筑话到 RTT2
  # 结果把纹理贴到四边形上
+
+
+
 
 ==主循环==
 
@@ -133,6 +138,14 @@ void Renderer::setTarget(RenderTarget *target)
 
 
 ==RenderTarget==
+
+RenderTarget 
+ # 接收渲染结果
+ # 创建维护 Viewport
+ # 一个 Viewport 对应一个 Camera和一个 RenderTarget
+ # 一个 Camera 对应一个 Viewport
+ # 一个 RenderTarget 可拥有对个 Viewport
+
 
 {{{
 
