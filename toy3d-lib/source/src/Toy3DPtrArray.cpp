@@ -40,8 +40,7 @@ TOY3D_BEGIN_NAMESPACE
     Bool TPtrArray::remove(TPointer ptr)
     {
         Uint i;
-        Uint length = mLength-1;
-        for(i=0; i<length; i++)
+        for(i=0; i<mLength; i++)
         {
             if(mPtr[i]==ptr)
             {
