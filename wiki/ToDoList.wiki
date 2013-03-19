@@ -4,6 +4,7 @@
 =当前=
  * 观察者模式在引擎中的应用，如 frame listener, target listerer 等
  * FBO  render target
+ * 显示文字
 
 =纹理=
 
