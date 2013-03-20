@@ -27,6 +27,11 @@ OGRE引擎FrameListener.h中定义的一个类。FrameListener定义如下：
 
         virtual bool frameStarted(const FrameEvent& evt) { return true; }
 
+        //Called after all render targets have had their rendering commands 
+            issued, but before render windows have been asked to flip their 
+            buffers over
+        virtual bool frameRenderingQueued(const FrameEvent& evt)
+
         // 帧渲染之后的事件处理方法
 
         virtual bool frameEnded(const FrameEvent& evt) { return true; }
