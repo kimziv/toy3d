@@ -7,4 +7,4 @@
 
 
 = Reference =
- * [OGRE 中]
+ * [http://hi.baidu.com/hy469680890/item/f771d8159c31b8453a176e79 OGRE中的ExampleFrameListener类详解]
