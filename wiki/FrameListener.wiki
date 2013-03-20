@@ -6,9 +6,11 @@
  * TargetListener
 
 
-= FrameLister =
+= FrameListener =
 
 参考文档1
+
+== OGRE 中的 FrameListener==
 
 OGRE 中定义了了 FrameListener，应用在使用时重载自己的 listener
 
@@ -36,6 +38,16 @@ OGRE引擎FrameListener.h中定义的一个类。FrameListener定义如下：
 }}}
 
 OGRE引擎在渲染过程中的每一帧之前调用frameStarted方法，而之后会调用frameEnded方法，通过这种方式，可以在渲染期间对场景物体（包括摄象机）进行移动、缩放等控制，当然也可以完成其它的处理。
+
+
+
+==OGRE中的ExampleFrameListener类==
+
+ExampleFrameListener类派生自FrameListener类，主要作用是监听系统输入，并对场景做出控制反应。对于非控制性的变化（如自动的动画），其状态更新也可以由ExampleFrameListener完成。
+
+
+
+
 
 
 = Reference =
