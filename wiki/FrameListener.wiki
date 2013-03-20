@@ -10,6 +10,15 @@
 
 参考文档1
 
+
+renderOneFrame 函数流程：
+ * 执行所有FrameListener的frameStarted()；
+ * 更新所有渲染目标(不交换buffer)；
+ * 执行所有FrameListener的frameRenderingQueued()；
+ * 交换所有渲染目标buffer；
+ * 执行所有FrameListener的frameEnded()；
+
+
 == OGRE 中的 FrameListener==
 
 OGRE 中定义了了 FrameListener，应用在使用时重载自己的 listener
