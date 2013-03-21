@@ -1,53 +1,44 @@
 #summary Here is our todo lists.
 
 
-=当前=
+
+=待完善、bugs=
+
+ * entity array 等都加名字
+ * world 里的 camera 是个对象，需要支持对个，并存指针
+
+
+=Toy3D 引擎=
  * FBO  render target
  * 观察者模式在引擎中的应用，如 frame listener, target listerer 等
  * 支持动画
  * 资源管理   http://www.ogre3d.org/tikiwiki/tiki-index.php?page=Resources+and+ResourceManagers 
  * Texture/TextureManager 接口的整理，load unload 
  * 显示文字
-
-=纹理=
-
- * 渲染到纹理
- * 地图的渲染架构
-  # 渲染到不同层
-  # 层之间做混合
  * glCompressedTexture
 
 
-= features =
- * animation
- * light/material
- * 统一模型格式解析
- * 光引擎
+=通用数据结构=
+
+ * map 
 
 
-=animation=
- * 支持动画
+=应用、例子=
+ * 地图渲染：FBO， layer, shader based blending
+ * imageViewer 放到 examples 里
  * coverflow
  * 游动的鱼
 
 
 
 
-=通用部分=
-
- * 基础数据结构设计，如list，map 之类的
- * world 里的 camera 是个对象，需要支持对个，并存指针
- * world 里的 entity 数组
-
-
-=资源管理部分=
+=未确定=
  * destroy resource 分散在各个 manager，用户需要逐个 manager 的调 create/destroy 函数
  * 当释放 manager 的某一个资源时，数组中间会空出来
  * ogre 设计了 ResourceGroupManager，将各个 manager 聚拢起来，参考 OGRE/Samples
  * 无法索引、查找资源
  * 每个 manager 调用 destroy 很繁琐
  * 各个 manager 开放给用户还是包到某个类里
- * 设计一个通用list，取代指针数组
  * Resource父类、ResouceManager 父类
 
 
