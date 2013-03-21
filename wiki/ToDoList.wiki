@@ -13,7 +13,7 @@
  * 观察者模式在引擎中的应用，如 frame listener, target listerer 等
  * 资源管理   http://www.ogre3d.org/tikiwiki/tiki-index.php?page=Resources+and+ResourceManagers 
  * Texture/TextureManager 接口的整理，load unload 
- * 支持动画
+ * 支持动画  http://www.ogre3d.org/tikiwiki/tiki-index.php?page=Intermediate+Tutorial+1&structure=Tutorials
  * 显示文字
  * glCompressedTexture
 
