@@ -2,9 +2,10 @@
 
 
 =当前=
+ * FBO  render target
  * 观察者模式在引擎中的应用，如 frame listener, target listerer 等
  * 支持动画
- * FBO  render target
+ * 资源管理   http://www.ogre3d.org/tikiwiki/tiki-index.php?page=Resources+and+ResourceManagers 
  * Texture/TextureManager 接口的整理，load unload 
  * 显示文字
 
