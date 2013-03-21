@@ -89,3 +89,4 @@ ExampleFrameListener类派生自FrameListener类，主要作用是监听系统�
 
 = Reference =
  * [http://hi.baidu.com/hy469680890/item/f771d8159c31b8453a176e79 OGRE中的ExampleFrameListener类详解]
+ * [http://www.ogre3d.org/tikiwiki/tiki-index.php?page=Intermediate+Tutorial+7&structure=Tutorials RenderTarget listener]
