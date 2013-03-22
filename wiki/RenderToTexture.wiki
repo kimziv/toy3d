@@ -63,6 +63,8 @@ class World
     RenderWindow* createRenderwindow ();
     RenderTexture* createRenderTexture ();
 
+    void renderScene (Camera *camera, Viewport *vp);
+
 
 }
 
@@ -77,6 +79,15 @@ void World::renderOneFrame() {
 RenderWindow* World::createRenderWindow ()
 {
     return mRenderer.createRenderWindow();
+}
+
+void World::renderScene (Camera* camera, Viewport *vp)
+{
+    ... ...
+    mCurrentViewport = vp;
+    mRenderer.setViewport (vp);
+    ...
+    render visible objects.
 }
 
 }}}
