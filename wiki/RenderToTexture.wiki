@@ -76,11 +76,7 @@ void World::renderOneFrame() {
 
 RenderWindow* World::createRenderWindow ()
 {
-    RenderWindow *win = new RenderWindow();
-    attachRenderTarget ((RenderTarget &) *win);
-
-    
-
+    return mRenderer.createRenderWindow();
 }
 
 }}}
@@ -104,6 +100,9 @@ public:
 
     void attachRenderTarget (RenderTarget &target);
     RenderTarget *detachRenderTarget (name);
+
+    RenderWindow* createRenderWindow ();
+    RenderTexture* createRenderTexture ();
 };
 
 
@@ -159,6 +158,16 @@ void Renderer::setTarget(RenderTarget *target)
 
 
 }
+
+RenderWindow* Renderer::createRenderWindow ()
+{
+    RenderWindow *win = new RenderWindow();
+    attachRenderTarget ((RenderTarget &) *win);
+
+    
+
+}
+
 
 }}}
 
