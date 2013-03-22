@@ -131,6 +131,8 @@ void Renderer::setViewport (Viewport *vp)
 
     RenderTarget *target = vp->getTarget();
     setTarget(target);
+
+    glViewport (vp->x, vp->y, vp->w, vp->h );
     
 }
 
