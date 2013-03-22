@@ -28,6 +28,8 @@ void init()
     camera->setPosition(x, y, z);
     camera->lookAt();
 
+    mWindow = world->createRenderWindow ();
+
     //create viewports
     Viewport *vp = mWindow->addViewport (camera);
     vp->.... 
@@ -58,6 +60,9 @@ RenderSystem 保存 target
 class World
 {
     void renderOneFrame();
+    RenderWindow* createRenderwindow ();
+    RenderTexture* createRenderTexture ();
+
 
 }
 
@@ -69,6 +74,14 @@ void World::renderOneFrame() {
 
 }
 
+RenderWindow* World::createRenderWindow ()
+{
+    RenderWindow *win = new RenderWindow();
+    attachRenderTarget ((RenderTarget &) *win);
+
+    
+
+}
 
 }}}
 
