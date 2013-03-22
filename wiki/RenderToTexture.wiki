@@ -101,6 +101,9 @@ public:
     void updateAllRenderTargets(bool swapBuffers = true);
     void setViewport (Viewport *vp);
     void setTarget(RenderTarget *target);
+
+    void attachRenderTarget (RenderTarget &target);
+    RenderTarget *detachRenderTarget (name);
 };
 
 
