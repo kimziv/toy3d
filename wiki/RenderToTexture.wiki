@@ -31,8 +31,8 @@ void init()
     mWindow = world->createRenderWindow ();
 
     //create viewports
-    Viewport *vp = mWindow->addViewport (camera);
-    vp->.... 
+    Viewport *vp = mWindow->addViewport (camera, left, top, w, h);
+    
 
 
 }
