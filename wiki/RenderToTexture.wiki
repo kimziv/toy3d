@@ -72,7 +72,7 @@ class World
 void World::renderOneFrame() {
 
     // update all targets but don't swap buffers
-    mRenderer->updateAllRenderTargets(false);
+    mRenderer->updateAllRenderTargets();
 
 }
 
@@ -105,7 +105,7 @@ private:
 
 public:
     //update all targets
-    void updateAllRenderTargets(bool swapBuffers = true);
+    void updateAllRenderTargets();
     void setViewport (Viewport *vp);
     void setTarget(RenderTarget *target);
 
@@ -117,11 +117,11 @@ public:
 };
 
 
-void Renderer::updateAllRenderTargets(bool swapBuffers)
+void Renderer::updateAllRenderTargets()
 {
 
     for (rende target array)
-        target->update(swapBuffers);
+        target->update();
 
 }
 
@@ -203,22 +203,19 @@ private:
    array viewports[MAX_SIZE];
 
 public:
-    void update(bool swap);
+    void update();
 
     Viewport* addViewport (Camera *cam, float left, float top, float w, float h);
 
 t
 };
 
-void RenderTarget::update(bool swap)
+void RenderTarget::update()
 {
 
     for (viewport array)
         viewport->update()
 
-
-    if (swap)
-        swapBuffers();
 }
 
 }}}
