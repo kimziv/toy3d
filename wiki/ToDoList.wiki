@@ -6,7 +6,7 @@ create window ，默认的 render buffer 如何创建？
 
 =待完善、bugs=
 
- * entity array 等都加名字
+ * entity array 等都加名字，改成 map
  * world 里的 camera 是个对象，需要支持对个，并存指针
 
 
@@ -22,7 +22,7 @@ create window ，默认的 render buffer 如何创建？
 
 =通用数据结构=
 
- * map 
+ * map : 红黑树
 
 
 =应用、例子=
