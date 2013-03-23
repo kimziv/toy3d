@@ -205,6 +205,9 @@ private:
 public:
     void update(bool swap);
 
+    Viewport* addViewport (Camera *cam, float left, float top, float w, float h);
+
+t
 };
 
 void RenderTarget::update(bool swap)
