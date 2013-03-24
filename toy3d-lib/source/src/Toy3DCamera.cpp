@@ -2,15 +2,18 @@
 
 #include "Toy3DCamera.h"
 #include "Toy3DMath.h"
+#include "Toy3DWorld.h"
 
 TOY3D_BEGIN_NAMESPACE
 
-    Camera::Camera() 
+    Camera::Camera(World *world) 
     {
+        mWorld = world;
     }
 
     Camera::~Camera() 
     {
+        
     }
 
 
@@ -144,6 +147,13 @@ TOY3D_BEGIN_NAMESPACE
         m1[15] = 1.0f;
 
         MvGl2DemoMatrixMultiply(m, m1);
+    }
+
+    void Camera::renderScene(Viewport *vp)
+    {
+
+        mWorld->renderScene (this, vp);
+
     }
 
 

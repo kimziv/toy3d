@@ -3,19 +3,22 @@
 #define _TOY3D_CAMERA_H
 
 #include "Toy3DCommon.h"
+//#include "Toy3DWorld.h"
 
 TOY3D_BEGIN_NAMESPACE
 
+    class World;
+    class Viewport;
 
     class Camera 
     {
 	private:
         Real mProjectionMatrix[MATRIX_4x4_SIZE];
         Real mViewMatrix[MATRIX_4x4_SIZE];
-
+        World *mWorld;
 
 	public:
-        Camera();
+        Camera(World *world);
         ~Camera();
 
     public:
@@ -33,6 +36,8 @@ TOY3D_BEGIN_NAMESPACE
         void ortho(Real m[MATRIX_4x4_SIZE], Real l, Real r, Real b, Real t, Real n, Real f);
 
 
+    public:
+        void renderScene(Viewport *vp);
 
     };
 

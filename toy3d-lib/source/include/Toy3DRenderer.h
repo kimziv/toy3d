@@ -7,6 +7,11 @@
 #include "Toy3DShaderProgram.h"
 #include "Toy3DAutoParamDataSource.h"
 #include "Toy3DTextureUnitState.h"
+#include "Toy3DPtrArray.h"
+#include "Toy3DRenderTarget.h"
+#include "Toy3DRenderWindow.h"
+#include "Toy3DRenderTexture.h"
+
 
 TOY3D_BEGIN_NAMESPACE
 
@@ -21,6 +26,7 @@ TOY3D_BEGIN_NAMESPACE
 
         ShaderProgram* mCurrentShaderProgram;
         Uint mTexUnitCapacity;
+
 
     public:
 		Renderer ();
@@ -70,6 +76,23 @@ TOY3D_BEGIN_NAMESPACE
         Uint getRealTextureType(TextureType target);
         Uint getRealTextureParameterName(TextureParameterName name);
         Uint getRealTextureParameterVal(TextureParameterVal val);
+
+    private:
+        TPtrArray *mRenderTargets;
+
+    public:
+        void setViewport(Viewport *vp);
+        void setRenderTarget (RenderTarget *target);
+        
+        void updateAllRenderTargets ();
+
+        RenderWindow* createRenderWindow ();
+        RenderTexture* createRenderTexture ();
+
+        void attachRenderTarget (RenderTarget *target); 
+        void detachRenderTarget (RenderTarget *target); 
+
+
     };
 
 

@@ -8,6 +8,7 @@
 #include <toy3d/Toy3DShaderProgramManager.h>
 #include <toy3d/Toy3DMeshManager.h>
 #include <toy3d/Toy3DMaterialManager.h>
+#include <toy3d/Toy3DRenderWindow.h>
 
 
 
@@ -47,7 +48,8 @@ Real vertices[VERTEX_COUNT * 3] = {
 void display()
 {
 
-    world->startRendering (); 
+    world->renderOneFrame (); 
+    //world->startRendering (); 
 
 	glFlush();
     glutSwapBuffers ();
@@ -85,6 +87,9 @@ void init()
 //    world->setWorldDepth(0, 0);
 
     camera = world->createCamera ("camera1");
+
+    RenderWindow *win = world->createRenderWindow ();
+    win->addViewport (camera, 0, 0, WINDOW_W, WINDOW_H);
 
     ShaderProgram *shaderProgram = ShaderProgramManager::getInstance()->createShaderProgram();
     shaderProgram->loadShaderSource (SHADER_VERT_FILE, SHADER_FRAG_FILE);
