@@ -38,6 +38,7 @@ ADD_SUBDIRECTORY(texture)
 ADD_SUBDIRECTORY(blending)
 #ADD_SUBDIRECTORY(textureCapacityTest)
 ADD_SUBDIRECTORY(multi_texture)
+ADD_SUBDIRECTORY(imageviewer)
 
 
 

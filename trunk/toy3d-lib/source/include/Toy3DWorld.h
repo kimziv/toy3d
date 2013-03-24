@@ -26,10 +26,9 @@ TOY3D_BEGIN_NAMESPACE
         Entity *mEntities[MAX_ENTITY_COUNT];
         Uint mEntityCount;
 
-        Camera              mCamera;
+        Camera*             mCamera;
 //        ShaderProgram       *mShaderProgram;
         AutoParamDataSource mAutoParamDataSource;
-        Renderer            mRenderer;
 
         Real mWorldMatrix[MATRIX_4x4_SIZE];
 
@@ -57,6 +56,20 @@ TOY3D_BEGIN_NAMESPACE
         void setWorldBlend( Uint flag, Uint srcMode, Uint dstMode );
 
         void rotate (Real x, Real y, Real z);
+
+
+        void renderScene (Camera* camera, Viewport *vp);
+
+        //Shoud be in root class
+    private:        
+        Renderer            mRenderer;
+
+    public:
+        void renderOneFrame ();
+        RenderWindow* createRenderWindow ();
+        RenderTexture* createRenderTexture ();
+
+
 	};
 
 

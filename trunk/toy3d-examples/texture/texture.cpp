@@ -87,7 +87,8 @@ unsigned char* generateColorData(int w, int h, int bpp)
 void display()
 {
 
-    world->startRendering (); 
+    world->renderOneFrame (); 
+    //world->startRendering (); 
 
 	glFlush();
     glutSwapBuffers();
@@ -124,6 +125,8 @@ bool init()
     world->setBackColor (1.0, 1.0, 1.0, 1.0);
 
     camera = world->createCamera ("camera1");
+    RenderWindow *win = world->createRenderWindow ();
+    win->addViewport (camera, 0, 0, width, height);
 
     //shader
     ShaderProgram *shaderProgram = ShaderProgramManager::getInstance()->createShaderProgram();

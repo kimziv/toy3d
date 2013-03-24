@@ -32,7 +32,6 @@ using namespace TOY3D;
 World *world = NULL;
 
 
-
 Real vertices[VERTEX_COUNT * 3] = {
     0.0f, 0.5f, 0.0f,
     -0.5f,  -0.5f, 0.0f,
@@ -55,6 +54,7 @@ void init()
     world = new World ();
     world->setSize(WINDOW_W, WINDOW_H);
     world->setBackColor (1.0, 1.0, 1.0, 1.0);  //white back color
+
 
     ShaderProgram *shaderProgram = ShaderProgramManager::getInstance()->createShaderProgram();
     shaderProgram->loadShaderSource (SHADER_VERT_FILE, SHADER_FRAG_FILE);

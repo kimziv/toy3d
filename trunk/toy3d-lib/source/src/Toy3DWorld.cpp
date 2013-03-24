@@ -10,10 +10,15 @@ TOY3D_BEGIN_NAMESPACE
     {
         mEntityCount = 0;
         MvGl2DemoMatrixIdentity( mWorldMatrix );
+
+        mCamera = NULL;
+
     }
 
     World::~World()
     {
+        if (mCamera)
+            delete mCamera;
     }
 
     void World::renderOneObject (RenderOperation *ro, Material *mat, 
@@ -92,8 +97,10 @@ TOY3D_BEGIN_NAMESPACE
             MvGl2DemoMatrixCopy (worldMatrix, mWorldMatrix);
             MvGl2DemoMatrixMultiply (worldMatrix, entityMatrix);
 
-            mCamera.getViewMatrix(viewMatrix);
-            mCamera.getProjectionMatrix(projMatrix);
+            if (mCamera) {
+                mCamera->getViewMatrix(viewMatrix);
+                mCamera->getProjectionMatrix(projMatrix);
+            }
 
             renderOneObject (ro, mat, worldMatrix, viewMatrix, projMatrix);
 
@@ -183,7 +190,8 @@ TOY3D_BEGIN_NAMESPACE
     { 
         //FIXME:  need multiple cameras 
         
-        return &mCamera; 
+        mCamera = new Camera (this);
+        return mCamera; 
     } 
 
 
@@ -253,6 +261,82 @@ TOY3D_BEGIN_NAMESPACE
       
         return;
     }
+
+    void World::renderScene (Camera *camera, Viewport *vp)
+    {
+
+        RenderOperation *ro = NULL;
+        Uint i = 0;
+        Material *mat = NULL;
+
+        Real entityMatrix[MATRIX_4x4_SIZE];
+ 
+        Real worldMatrix[MATRIX_4x4_SIZE]; 
+        Real viewMatrix[MATRIX_4x4_SIZE]; 
+        Real projMatrix[MATRIX_4x4_SIZE]; 
+
+        if( mEntityCount == 0)
+        {
+            TOY3D_TIPS("At least create one Entity please.\n");
+            return;
+        }
+
+        mRenderer.setViewport (vp);
+        //mRenderer.setViewPort (0,0, mWidth, mHeight);
+
+        mRenderer.beginFrame();
+        mRenderer.setBackColor (mBackColorRed, mBackColorGreen, mBackColorBlue, mBackColorAlpha);
+
+        for (i = 0; i < mEntityCount; i++) {
+
+            ro = new RenderOperation ();
+
+            mEntities[i]->getRenderOperation (ro);
+
+            mat = mEntities[i]->getMaterial();
+
+            mEntities[i]->getModelMatrix (entityMatrix);
+            MvGl2DemoMatrixCopy (worldMatrix, mWorldMatrix);
+            MvGl2DemoMatrixMultiply (worldMatrix, entityMatrix);
+
+            if (camera) {
+                camera->getViewMatrix(viewMatrix);
+                camera->getProjectionMatrix(projMatrix);
+            }
+
+            renderOneObject (ro, mat, worldMatrix, viewMatrix, projMatrix);
+
+            delete ro;
+        }
+
+        mRenderer.endFrame();
+
+    }
+
+    void World::renderOneFrame ()
+    {
+        mRenderer.updateAllRenderTargets ();
+    }
+
+    RenderWindow* World::createRenderWindow ()
+    {
+        RenderWindow *win = NULL;
+
+        win = mRenderer.createRenderWindow();
+
+        return win;
+    }
+
+    RenderTexture* World::createRenderTexture ()
+    {
+        RenderTexture *rt = NULL;
+
+        rt = mRenderer.createRenderTexture();
+
+        return rt;
+
+    }
+
 
 
 TOY3D_END_NAMESPACE

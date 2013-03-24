@@ -48,7 +48,8 @@ Real vertices[VERTEX_COUNT * 3] = {
 void display()
 {
 
-    world->startRendering (); 
+    world->renderOneFrame (); 
+    //world->startRendering (); 
 
 	glFlush();
     glutSwapBuffers ();
@@ -85,6 +86,8 @@ Bool init()
     world->setBackColor (1.0, 1.0, 0.0, 1.0);
 
     camera = world->createCamera ("camera1");
+    RenderWindow *win = world->createRenderWindow ();
+    win->addViewport (camera, 0, 0, WINDOW_W, WINDOW_H);
 
     ShaderProgram *shaderProgram = ShaderProgramManager::getInstance()->createShaderProgram();
     shaderProgram->loadShaderSource (SHADER_VERT_FILE, SHADER_FRAG_FILE);

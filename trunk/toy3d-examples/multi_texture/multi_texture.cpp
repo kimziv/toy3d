@@ -61,7 +61,8 @@ Real uvs[VERTEX_COUNT * 2] = {
 void display()
 {
 
-    world->startRendering (); 
+    world->renderOneFrame (); 
+    //world->startRendering (); 
 
 	glFlush();
     glutSwapBuffers();
@@ -98,6 +99,8 @@ Bool init()
     world->setBackColor (1.0, 1.0, 1.0, 1.0);
 
     camera = world->createCamera ("camera1");
+    RenderWindow *win = world->createRenderWindow ();
+    win->addViewport (camera, 0, 0, width, height);
 
     //shader
     ShaderProgram *shaderProgram = ShaderProgramManager::getInstance()->createShaderProgram();

@@ -29,10 +29,24 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
 
         //MvGl2DemoMatrixIdentity( mProjectionMatrix );
         //MvGl2DemoMatrixIdentity( mViewMatrix );
+
+        mRenderTargets = new TPtrArray();
+        mRenderTargets->create ();
     }
 
     Renderer::~Renderer() 
     {
+        if (mRenderTargets) {
+            for (int i = 0; i < mRenderTargets->getLength(); i++)
+            {
+                RenderTarget *target = (RenderTarget*)mRenderTargets->getElement(i);
+                delete target;
+            }
+            mRenderTargets->destroy();
+            delete mRenderTargets;
+            
+        }
+   
     }
 
     void Renderer:: bindShaderProgram(ShaderProgram *prog)
@@ -474,6 +488,60 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
         
         return GL_NEAREST;
     }
+
+
+    void Renderer::setViewport (Viewport *vp)
+    {
+        RenderTarget *target = vp->getTarget();
+        
+        //fixme: set target
+        //setTarget(target);
+
+        glViewport (vp->getLeft(), vp->getTop(), vp->getWidth(),  vp->getHeight());
+
+        return;
+
+    }
+
+
+
+    void Renderer::setRenderTarget (RenderTarget *target)
+    {
+        return;
+    }
+        
+        
+    void Renderer::updateAllRenderTargets ()
+    {
+        for (int i = 0; i < mRenderTargets->getLength(); i++) {
+            RenderTarget* target = (RenderTarget*)mRenderTargets->getElement (i);
+            target->update();
+        }
+    }
+    
+    RenderWindow* Renderer::createRenderWindow ()
+    {
+        RenderWindow *win = new RenderWindow ();
+        attachRenderTarget ((RenderTarget*)win);
+
+        return win;
+    }
+
+    RenderTexture* Renderer::createRenderTexture ()
+    {
+        return NULL;
+    }
+
+    void Renderer::attachRenderTarget (RenderTarget *target)
+    {
+        mRenderTargets->append (target);
+    }
+
+    void Renderer::detachRenderTarget (RenderTarget *target)
+    {
+        mRenderTargets->remove (target); 
+    }
+
 
 
 TOY3D_END_NAMESPACE
