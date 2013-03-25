@@ -10,6 +10,29 @@
  # 建筑话到 RTT2
  # 结果把纹理贴到四边形上
 
+==FBO RenderTexture==
+
+RenderTexture 继承自 RenderTarget
+
+{{{
+
+class RenderTexture : public RenderTarget
+{
+    FrameBufferObject mFB;    
+}
+
+
+
+class FrameBufferObject
+{
+};
+
+
+
+
+
+}}}
+
 
 
 
