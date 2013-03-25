@@ -12,6 +12,8 @@
 
 ==FBO RenderTexture==
 
+Here is Guo's section
+
 RenderTexture 继承自 RenderTarget
 
 {{{
