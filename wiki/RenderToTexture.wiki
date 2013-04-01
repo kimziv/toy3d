@@ -239,7 +239,7 @@ RenderTarget
  # 创建维护 Viewport
  # 一个 Viewport 对应一个 Camera和一个 RenderTarget
  # 一个 Camera 对应一个 Viewport
- # 一个 RenderTarget 可拥有对个 Viewport
+ # 一个 RenderTarget 可拥有对个 Viewport，此功能在游戏中可用于多人对战时的分屏显示
 
 
 {{{
