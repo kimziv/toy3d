@@ -37,7 +37,7 @@ private:
 
 public:
     FrameBufferObject (FBOManager *manager);
-    void bind()
+    void bind();
 
 };
 
