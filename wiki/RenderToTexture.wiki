@@ -17,41 +17,87 @@
 RenderTexture 继承自 RenderTarget
 
 {{{
+    enum BufferFormat
+    {
+        TOY3D_FRAMEBUFFER,
+        TOY3D_RENDERBUFFER
+    };
 
-class RenderTexture : public RenderTarget
-{
-    FrameBufferObject mFB;    
-}
+    class RenderTexture : RenderTarget
+    {
+	private:
+        FrameBufferObject *mFbo;
+        //RenderBuffer      *mRbf;
+        Texture           *mTexture;
 
+        /* You can get width and height from the mTexture after the class Texture modified. */
 
+    public:
+		RenderTexture();
+        ~RenderTexture();
 
-class FrameBufferObject
-{
+        /* This function should be modified after the class Texture modified. */
+        createTexture(Uint width, Uint height, Uint bytesPerPixel);
+        /* bind fbo, and bind textue to fbo */
+        void bind();
+	};
 
-private:
+    class FrameBufferObject
+    {
+    private:
+        //FBOManager *mManager;
+        Uint mFbo;
+        Uint mRbo;
+        Uint mTexture;
+        //Uint mStencil;
 
-    FBOManager *mManager;
-    Uint mFB;
+        initialize ();
+        finalize();
 
-    initialize ();
+    public:
+        FrameBufferObject(BufferFormat bfFormat);
+        ~FrameBufferObject();
 
-public:
-    FrameBufferObject (FBOManager *manager);
-    void bind();
+        void bind();
+        void unbind();
 
-};
+        void attachDepthBuffer(Uint rboid);
+        void detachDepthBuffer();
 
-class FBOManager 
-{
-public:
-    FBOManager();
-    ~FBOManager();
+        void attachTexture(Uint texture);
+        void detachTexture();
 
-    void bind(RenderTarget *target);
+        void checkStatus();
 
-};
+        Uint getFboid() const;
+    };
 
+    class RenderBuffer
+    {
+    private:
+        Uint mRboid;
 
+    public:
+        enum RenderBufferFormat
+        {
+            TOY3D_DEPTH_COMPONENT16//GL_DEPTH_COMPONENT16
+        };
+
+        RenderBuffer(BufferFormat bfFormat, RenderBufferFormat rbfFormat, Uint width, Uint height);
+        ~RenderBuffer();
+
+        Uint getRenderBufferID() const;
+    }
+/*
+    class FBOManager  
+    {
+    public:
+        FBOManager();
+        ~FBOManager();
+
+        void bind(RenderTarget *target);
+    };
+*/
 
 
 
