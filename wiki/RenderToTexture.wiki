@@ -27,15 +27,26 @@
 
 {{{
 
-void World::createRenderTexture (Texture *tex)
+Bool World::createRenderTexture (Texture *tex)
 {
     mRenderer.createRenderTexture(tex);
 }
 
-void Renderer:createRenderTexture(Texture *tex)
+Bool Renderer:createRenderTexture(Texture *tex)
 {
-   new RenderTexture (tex);
+   RenderTexture *rt = new RenderTexture ();
+   Bool ret = rt->init (tex);
+   if (!ret)
+       delete rt;
+    
    
+}
+
+void Renderer::setRenderTarget(RenderTarget *target)
+{
+    mActiveRenderTarget->unbind();    
+    target->bind();
+    mActiveRenderTarget = target;
 }
 
 }}}
@@ -65,11 +76,15 @@ RenderTexture 继承自 RenderTarget
         void bind();
     };
 
-    RenderTexture::RenderTexture (Texture *tex)
+    RenderTexture::RenderTexture (){}
+
+    Bool RenderTexture::init (Texture *tex)
+
     {
         mFBO.bind();
         mFBO.attachTexture (tex->getId());
         mFBO.attachDepthBuffer(tex->getWidth(), tex->getHeight());
+        return mFBO.checkStatus();
     }
 
     class FrameBufferObject
