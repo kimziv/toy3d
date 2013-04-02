@@ -153,22 +153,7 @@ RenderTexture 继承自 RenderTarget
     }
 
 
-    class RenderBuffer
-    {
-    private:
-        Uint mRboid;
 
-    public:
-        enum RenderBufferFormat
-        {
-            TOY3D_DEPTH_COMPONENT16//GL_DEPTH_COMPONENT16
-        };
-
-        RenderBuffer(BufferFormat bfFormat, RenderBufferFormat rbfFormat, Uint width, Uint height);
-        ~RenderBuffer();
-
-        Uint getRenderBufferID() const;
-    }
 
 
 
