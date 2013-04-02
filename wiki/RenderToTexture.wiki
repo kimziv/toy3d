@@ -70,10 +70,10 @@ RenderTexture 继承自 RenderTarget
         RenderTexture();
         ~RenderTexture();
 
-        /* This function should be modified after the class Texture modified. */
-        createTexture(Uint width, Uint height, Uint bytesPerPixel);
-        /* bind fbo, and bind textue to fbo */
+        void  init(Texture *tex);
+        
         void bind();
+        void unbind();
     };
 
     RenderTexture::RenderTexture (){}
@@ -85,6 +85,11 @@ RenderTexture 继承自 RenderTarget
         mFBO.attachTexture (tex->getId());
         mFBO.attachDepthBuffer(tex->getWidth(), tex->getHeight());
         return mFBO.checkStatus();
+    }
+
+    void RenderTexture::bind()
+    {
+        mFBO.bind();
     }
 
     class FrameBufferObject
@@ -139,7 +144,10 @@ RenderTexture 继承自 RenderTarget
        glXXXX
     }   
 
-
+    void FrameBufferObject::unbind()
+    {
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    }
 
 
     class RenderBuffer
@@ -158,16 +166,7 @@ RenderTexture 继承自 RenderTarget
 
         Uint getRenderBufferID() const;
     }
-/*
-    class FBOManager  
-    {
-    public:
-        FBOManager();
-        ~FBOManager();
 
-        void bind(RenderTarget *target);
-    };
-*/
 
 
 
