@@ -52,7 +52,6 @@ void Renderer::setRenderTarget(RenderTarget *target)
 }}}
 
 
-*Here is Guo's section*
 
 RenderTexture 继承自 RenderTarget
 
