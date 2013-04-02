@@ -12,6 +12,35 @@
 
 ==FBO RenderTexture==
 
+例子代码：
+
+{{{
+   Texture *tex = TexturemManager:createTexture (RGBA, w, h);
+
+   RenderTexture* rt = world->createRenderTexture(tex);
+   rt->addViewport (camera, l, t, w, h);
+
+}}}
+
+
+外围代码：
+
+{{{
+
+void World::createRenderTexture (Texture *tex)
+{
+    mRenderer.createRenderTexture(tex);
+}
+
+void Renderer:createRenderTexture(Texture *tex)
+{
+   new RenderTexture (tex);
+   
+}
+
+}}}
+
+
 *Here is Guo's section*
 
 RenderTexture 继承自 RenderTarget
@@ -21,7 +50,7 @@ RenderTexture 继承自 RenderTarget
     class RenderTexture : RenderTarget
     {
 	private:
-        FrameBufferObject mFbo;
+        FrameBufferObject mFBO;
         
 
         /* You can get width and height from the mTexture after the class Texture modified. */
@@ -34,28 +63,30 @@ RenderTexture 继承自 RenderTarget
         createTexture(Uint width, Uint height, Uint bytesPerPixel);
         /* bind fbo, and bind textue to fbo */
         void bind();
-	};
+    };
+
+    RenderTexture::RenderTexture (Texture *tex)
+    {
+        mFBO.bind();
+        mFBO.attachTexture (tex->getId());
+        mFBO.attachDepthBuffer(tex->getWidth(), tex->getHeight());
+    }
 
     class FrameBufferObject
     {
     private:
-        //FBOManager *mManager;
-        Uint mFbo;
-        Uint mRbo;
-        Uint mTexture;
-        //Uint mStencil;
 
-        initialize ();
-        finalize();
+        Uint mFBOId;
+
 
     public:
-        FrameBufferObject(BufferFormat bfFormat);
+        FrameBufferObject();
         ~FrameBufferObject();
 
         void bind();
         void unbind();
 
-        void attachDepthBuffer(Uint rboid);
+        void attachDepthBuffer(Uint w, Uint h);
         void detachDepthBuffer();
 
         void attachTexture(Uint texture);
@@ -65,6 +96,36 @@ RenderTexture 继承自 RenderTarget
 
         Uint getFboid() const;
     };
+
+    FrameBufferObject::FrameBufferObject ()
+    {
+        //create fbo
+        glGenFraXXXXX..
+    }
+
+    FrameBufferObject::~FrameBufferObject ()
+    {
+        //create fbo
+        glDeleteFraXXXXX.
+    }
+
+    void FrameBufferObject::bind()
+    {
+        glBindFramebuffer(GL_FRAMEBUFFER, fboId);
+    }
+
+ 
+    void FrameBufferObject::attachTexture(Uint id)
+    {
+    }
+
+    void FrameBufferObject::attachDepthBuffer(w, h)
+    {
+       glXXXX
+    }   
+
+
+
 
     class RenderBuffer
     {
