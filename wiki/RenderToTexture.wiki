@@ -17,23 +17,17 @@
 RenderTexture 继承自 RenderTarget
 
 {{{
-    enum BufferFormat
-    {
-        TOY3D_FRAMEBUFFER,
-        TOY3D_RENDERBUFFER
-    };
 
     class RenderTexture : RenderTarget
     {
 	private:
-        FrameBufferObject *mFbo;
-        //RenderBuffer      *mRbf;
-        Texture           *mTexture;
+        FrameBufferObject mFbo;
+        
 
         /* You can get width and height from the mTexture after the class Texture modified. */
 
     public:
-		RenderTexture();
+        RenderTexture();
         ~RenderTexture();
 
         /* This function should be modified after the class Texture modified. */
