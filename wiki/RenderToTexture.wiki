@@ -108,7 +108,7 @@ RenderTexture 继承自 RenderTarget
 
         void attachDepthBuffer(Uint w, Uint h);
 
-        void attachTexture(Uint texture);
+        void attachTexture(Uint textureId);
 
         void checkStatus();
 
