@@ -96,6 +96,7 @@ RenderTexture 继承自 RenderTarget
     private:
 
         Uint mFBOId;
+        int mRBOId;
 
 
     public:
@@ -106,10 +107,8 @@ RenderTexture 继承自 RenderTarget
         void unbind();
 
         void attachDepthBuffer(Uint w, Uint h);
-        void detachDepthBuffer();
 
         void attachTexture(Uint texture);
-        void detachTexture();
 
         void checkStatus();
 
@@ -118,13 +117,18 @@ RenderTexture 继承自 RenderTarget
 
     FrameBufferObject::FrameBufferObject ()
     {
+        mRBOid = -1;
         //create fbo
         glGenFraXXXXX..
     }
 
     FrameBufferObject::~FrameBufferObject ()
     {
-        //create fbo
+        //delete rbo
+        if (mRBOid >= 0)
+            glDeleteRenderbuffers(1, &mRBOid);
+
+        //delete fbo
         glDeleteFraXXXXX.
     }
 
