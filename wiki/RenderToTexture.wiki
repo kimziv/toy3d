@@ -69,7 +69,7 @@ RenderTexture 继承自 RenderTarget
         RenderTexture();
         ~RenderTexture();
 
-        void  init(Texture *tex);
+        void init(Texture *tex);
         
         void bind();
         void unbind();
