@@ -1,0 +1,42 @@
+#summary Toy3D 中用的 listener，如 framelistener, targetlistenter 等
+
+= 观察者模式 =
+
+C语言中的回调函数
+
+
+= FrameListener =
+
+给用户提供机会在开始每一帧之前和之后做一些事情，比如设置 set entity visible
+
+{{{
+
+bool renderOneFrame ()
+{
+    fireFrameStarted();   //user implemnet it to do something
+ 
+    updateAllRenderTargets();
+
+    fireFrameEnded();     //user implement it to do something
+}
+    
+}}}
+
+= target listener =
+
+给用户提供机会在update每一个 target 之前和之后做一些事情，比如在多个 shader 间切换
+
+
+{{{
+
+void RenderTarget::update()
+{
+
+    firePreUpdate()
+
+    updateAllViewports();
+
+    firePostUpdate()
+}
+
+}}}
