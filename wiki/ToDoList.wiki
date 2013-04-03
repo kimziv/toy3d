@@ -1,8 +1,9 @@
 #summary Here is our todo lists.
 
-ubuntu 升级  http://joseph.yy.blog.163.com/blog/static/50973959201111552210877/   
 
-create window ，默认的 render buffer 如何创建？
+观察者模式
+ * 修改 entity 状态，如 setVisible   (framelistener)
+ * 修改 mat 的 shaderprogram (target listener)
 
 =待完善、bugs=
  * World 里 camera 组要以数组保存、
