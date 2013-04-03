@@ -5,7 +5,7 @@
 C语言中的回调函数
 
 
-= FrameListener =
+= Frame Listener =
 
 给用户提供机会在开始每一帧之前和之后做一些事情，比如设置 set entity visible
 
