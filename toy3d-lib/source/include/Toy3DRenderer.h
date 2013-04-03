@@ -25,7 +25,7 @@ TOY3D_BEGIN_NAMESPACE
         Real mWorldMatrix[MATRIX_4x4_SIZE];
 
         ShaderProgram* mCurrentShaderProgram;
-        Uint mTexUnitCapacity;
+        //Uint mTexUnitCapacity;
 
 
     public:
@@ -79,6 +79,7 @@ TOY3D_BEGIN_NAMESPACE
 
     private:
         TPtrArray *mRenderTargets;
+        RenderTarget *mActiveRenderTarget;
 
     public:
         void setViewport(Viewport *vp);
@@ -87,7 +88,7 @@ TOY3D_BEGIN_NAMESPACE
         void updateAllRenderTargets ();
 
         RenderWindow* createRenderWindow ();
-        RenderTexture* createRenderTexture ();
+        RenderTexture* createRenderTexture (Texture *tex);
 
         void attachRenderTarget (RenderTarget *target); 
         void detachRenderTarget (RenderTarget *target); 

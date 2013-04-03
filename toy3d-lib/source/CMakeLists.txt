@@ -50,7 +50,7 @@
 		src/Toy3DTextureUnitState.cpp
 		src/Toy3DRenderTarget.cpp
 		src/Toy3DRenderWindow.cpp
-		#src/Toy3DRenderTexture.cpp
+		src/Toy3DRenderTexture.cpp
 		src/Toy3DViewport.cpp
 	)
 
