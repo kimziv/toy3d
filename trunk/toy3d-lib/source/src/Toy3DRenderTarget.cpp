@@ -14,38 +14,42 @@ TOY3D_BEGIN_NAMESPACE
     RenderTarget::~RenderTarget()
     {
         // Delete viewports
-        for (int i = 0; i < mViewportList->getLength(); i++)
+        for (Uint i = 0; i < mViewportList->getLength(); i++)
         {
             Viewport *vp = (Viewport*)mViewportList->getElement(i);
-            delete vp;
+            DELETEANDNULL(vp);
         }
 
         mViewportList->destroy();
-        delete mViewportList;
-
+        DELETEANDNULL(mViewportList);
     }
-
-
-
 
     Viewport* RenderTarget::addViewport(Camera* cam, Uint left, Uint top ,
         Uint width , Uint height)
     {
-
         Viewport* vp = new Viewport(cam, this, left, top, width, height);
 
         mViewportList->append((void*)vp);
-
 
         return vp;
     }
 
     void RenderTarget::update ()
     {
-        for (int i = 0; i < mViewportList->getLength(); i++){
+        for (Uint i = 0; i < mViewportList->getLength(); i++){
             Viewport *vp = (Viewport*)mViewportList->getElement(i);
             vp->update();
         }
+    }
+
+    void RenderTarget::bind()
+    {
+        return;
+    }
+
+    void RenderTarget::unbind()
+    {
+        return;
     }
 
 

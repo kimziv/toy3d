@@ -14,13 +14,11 @@ TOY3D_BEGIN_NAMESPACE
 
     protected:
 
-
     public:
         RenderWindow ();
         ~RenderWindow ();
 
     public:
-
 
     };
 

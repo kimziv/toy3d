@@ -12,21 +12,19 @@ TOY3D_BEGIN_NAMESPACE
 
     class RenderTarget
     {
-
     protected:
         TPtrArray *mViewportList;
 
 
     public:
-        RenderTarget ();
-        virtual ~RenderTarget ();
+        RenderTarget();
+        virtual ~RenderTarget();
 
-    public:
         virtual void update ();
         virtual Viewport* addViewport(Camera* cam, Uint left, Uint top, Uint width, Uint height);
 
-
-
+        virtual void bind();
+        virtual void unbind();
     };
 
 

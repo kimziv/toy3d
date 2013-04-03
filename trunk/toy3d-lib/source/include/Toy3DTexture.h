@@ -135,9 +135,13 @@ class Texture
     class Texture
     {
     private:
-        
-    protected:
         Uint mTextureID;
+        Uint mWidth;
+        Uint mHeight;
+        Uint mBytesPerPixel;
+        //unsigned char *mPixelData;
+
+    protected:
         //char mName[32];
 
     public:
@@ -146,8 +150,13 @@ class Texture
 
         Bool genTexture(Image *image);
         Bool genTexture(unsigned char *pImageData, Uint width, Uint height, Uint bytesPerPixel);
+
         void setParameter();
-        const Uint getTextureID() const;
+
+        Uint getTextureID() const;
+        Uint getWidth() const;
+        Uint getHeight() const;
+        Uint getBytesPerPixel() const;
     };
 
 

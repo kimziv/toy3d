@@ -38,6 +38,11 @@ TOY3D_BEGIN_NAMESPACE
             return FALSE;
         }
 
+        mWidth = image->mWidth;
+        mHeight = image->mHeight;
+        mBytesPerPixel = image->mBpp;
+        //mPixelData = image->mImageData;
+
         return TRUE;
     }
 
@@ -65,13 +70,33 @@ TOY3D_BEGIN_NAMESPACE
             TOY3D_TIPS("Generate texture error : unrecognized Bpp.\n");
             return FALSE;
         }
+
+        mWidth = width;
+        mHeight = height;
+        mBytesPerPixel = bpp;
+        //mPixelData = pImageData;
         
         return TRUE;
     }
 
-    const Uint Texture::getTextureID() const
+    Uint Texture::getTextureID() const
     {
         return (const int)mTextureID;
+    }
+
+    Uint Texture::getWidth() const
+    {
+        return mWidth;
+    }
+
+    Uint Texture::getHeight() const
+    {
+        return mHeight;
+    }
+
+    Uint Texture::getBytesPerPixel() const
+    {
+        return mBytesPerPixel;
     }
 
 

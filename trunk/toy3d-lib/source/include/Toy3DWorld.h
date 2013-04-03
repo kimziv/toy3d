@@ -66,8 +66,8 @@ TOY3D_BEGIN_NAMESPACE
 
     public:
         void renderOneFrame ();
-        RenderWindow* createRenderWindow ();
-        RenderTexture* createRenderTexture ();
+        RenderWindow* createRenderWindow();
+        RenderTexture* createRenderTexture(Texture *tex);
 
 
 	};

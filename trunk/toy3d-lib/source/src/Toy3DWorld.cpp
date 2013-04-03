@@ -327,14 +327,12 @@ TOY3D_BEGIN_NAMESPACE
         return win;
     }
 
-    RenderTexture* World::createRenderTexture ()
+    RenderTexture* World::createRenderTexture(Texture *tex)
     {
         RenderTexture *rt = NULL;
 
-        rt = mRenderer.createRenderTexture();
-
+        rt = mRenderer.createRenderTexture(tex);
         return rt;
-
     }
 
 

@@ -25,7 +25,8 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
     {
  
         mCurrentShaderProgram = NULL;
-        mTexUnitCapacity = MAX_TEXTURE_UNIT;
+        mActiveRenderTarget = NULL;
+        //mTexUnitCapacity = MAX_TEXTURE_UNIT;
 
         //MvGl2DemoMatrixIdentity( mProjectionMatrix );
         //MvGl2DemoMatrixIdentity( mViewMatrix );
@@ -37,7 +38,7 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
     Renderer::~Renderer() 
     {
         if (mRenderTargets) {
-            for (int i = 0; i < mRenderTargets->getLength(); i++)
+            for (Uint i = 0; i < mRenderTargets->getLength(); i++)
             {
                 RenderTarget *target = (RenderTarget*)mRenderTargets->getElement(i);
                 delete target;
@@ -494,8 +495,7 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
     {
         RenderTarget *target = vp->getTarget();
         
-        //fixme: set target
-        //setTarget(target);
+        setRenderTarget(target);
 
         glViewport (vp->getLeft(), vp->getTop(), vp->getWidth(),  vp->getHeight());
 
@@ -507,18 +507,22 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
 
     void Renderer::setRenderTarget (RenderTarget *target)
     {
+        if(mActiveRenderTarget)
+            mActiveRenderTarget->unbind();
+        target->bind();
+        mActiveRenderTarget = target;
+
         return;
     }
-        
-        
+
     void Renderer::updateAllRenderTargets ()
     {
-        for (int i = 0; i < mRenderTargets->getLength(); i++) {
+        for (Uint i = 0; i < mRenderTargets->getLength(); i++) {
             RenderTarget* target = (RenderTarget*)mRenderTargets->getElement (i);
             target->update();
         }
     }
-    
+
     RenderWindow* Renderer::createRenderWindow ()
     {
         RenderWindow *win = new RenderWindow ();
@@ -527,9 +531,19 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
         return win;
     }
 
-    RenderTexture* Renderer::createRenderTexture ()
+    RenderTexture* Renderer::createRenderTexture(Texture *tex)
     {
-        return NULL;
+
+        RenderTexture *rt = new RenderTexture();
+        if(!rt)
+            return NULL;
+
+        Bool ret = rt->init(tex);
+        if(!ret)
+            DELETEANDNULL(rt);
+
+        return rt;
+
     }
 
     void Renderer::attachRenderTarget (RenderTarget *target)
