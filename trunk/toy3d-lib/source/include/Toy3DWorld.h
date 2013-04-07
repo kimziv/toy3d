@@ -62,12 +62,20 @@ TOY3D_BEGIN_NAMESPACE
 
         //Shoud be in root class
     private:        
-        Renderer            mRenderer;
+        Renderer   mRenderer;
+        TPtrArray  mFrameListeners; 
+
+        Bool fireFrameStarted();
+        Bool fireFrameEnded();
+
 
     public:
         void renderOneFrame ();
         RenderWindow* createRenderWindow();
         RenderTexture* createRenderTexture(Texture *tex);
+
+
+        
 
 
 	};

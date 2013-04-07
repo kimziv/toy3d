@@ -1,6 +1,6 @@
 
 
-#include "Toy3dRenderTexture.h"
+#include "Toy3DRenderTexture.h"
 
 
 TOY3D_BEGIN_NAMESPACE

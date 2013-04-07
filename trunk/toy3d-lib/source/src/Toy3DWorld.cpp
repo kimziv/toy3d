@@ -3,6 +3,7 @@
 #include "Toy3DWorld.h"
 #include "Toy3DTextureUnitState.h"
 #include "Toy3DMath.h"
+#include "Toy3DFrameListener.h"
 
 TOY3D_BEGIN_NAMESPACE
 
@@ -13,12 +14,16 @@ TOY3D_BEGIN_NAMESPACE
 
         mCamera = NULL;
 
+        mFrameListeners.create();
+
     }
 
     World::~World()
     {
         if (mCamera)
             delete mCamera;
+
+        mFrameListeners.destroy();
     }
 
     void World::renderOneObject (RenderOperation *ro, Material *mat, 
@@ -315,7 +320,16 @@ TOY3D_BEGIN_NAMESPACE
 
     void World::renderOneFrame ()
     {
+
+        if(fireFrameStarted() == FALSE)
+            return;
+
         mRenderer.updateAllRenderTargets ();
+
+        fireFrameEnded();
+
+        return;
+
     }
 
     RenderWindow* World::createRenderWindow ()
@@ -335,6 +349,29 @@ TOY3D_BEGIN_NAMESPACE
         return rt;
     }
 
+
+    Bool World::fireFrameStarted()
+    {
+        for (int i = 0; i < mFrameListeners.getLength(); i++) {
+            FrameListener *fl = (FrameListener*)mFrameListeners.getElement(i);
+            if(fl->frameStarted() == FALSE)
+                return FALSE;
+        }
+
+        return TRUE;
+    }
+
+    Bool World::fireFrameEnded()
+    {
+        for (int i = 0; i < mFrameListeners.getLength(); i++) {
+            FrameListener *fl = (FrameListener*)mFrameListeners.getElement(i);
+            if(fl->frameEnded() == FALSE)
+                return FALSE;
+        }
+
+        return TRUE;
+
+    }
 
 
 TOY3D_END_NAMESPACE
