@@ -26,6 +26,7 @@
 		include/Toy3DRenderWindow.h
 		include/Toy3DRenderTexture.h
 		include/Toy3DViewport.h
+		include/Toy3DFrameListener.h
 	)
 
 	set(SOURCE_FILES
