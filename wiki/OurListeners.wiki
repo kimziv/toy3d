@@ -5,21 +5,103 @@
 C语言中的回调函数
 
 
+ 
+
 = Frame Listener =
 
 给用户提供机会在开始每一帧之前和之后做一些事情，比如设置 set entity visible
 
+实现方法：
+ * 设计一个基类作为接口
+ * 在 renderOenFrame 里绘制每帧都调用基类的函数
+ * 定义 FrameListener 容器，保存所有注册了的帧监听
+
+
+基类 FrameListener 的设计：
+
 {{{
 
-bool renderOneFrame ()
+class FrameListener
 {
-    fireFrameStarted();   //user implemnet it to do something
+public:
+    virtual bool frameStarted () {return TRUE};
+    virtual bool frameEnded() {return TRUE};
+
+};
+
+}}}
+
+World 中定义 FrameListener 容器
+
+{{{
+
+
+
+}}}
+
+
+renderOneFrame 中的处理：
+
+{{{
+
+
+
+void World::renderOneFrame ()
+{
+
+    if(fireFrameStarted())   //user implemnet it to do something
+        
  
     updateAllRenderTargets();
 
     fireFrameEnded();     //user implement it to do something
 }
+
+bool World::fireFrameStarted ()
+{
+    for (int i = 0; i < mFrameListeners.getLength(); i++) {
+        FrameListerer* fl = mFrameListeners.geElement(i);
+        if(fl->frameStarted())
+            return FALSE;
+    }
+
+    return TRUE;
+}
+
+
+bool World::fireFrameEnded ()
+{
+    for (int i = 0; i < mFrameListeners.getLength(); i++) {
+        FrameListerer* fl = mFrameListeners.geElement(i);
+        if(fl->frameEnded())
+            return FALSE;
+    }
+
+    return TRUE;
+}
+
+
     
+}}}
+
+
+注册和删除 frame listener
+
+
+{{{
+
+void World::addFrameListener:(FrameListener* newListener)
+{
+    mFrameListeners.append (newListener);
+}
+
+
+void World::removeFrameListener:(FrameListener* oldListener)
+{
+    mFrameListeners.append (oldListener);
+}
+
+
 }}}
 
 = target listener =
