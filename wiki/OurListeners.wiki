@@ -35,6 +35,15 @@ World 中定义 FrameListener 容器
 
 {{{
 
+class World
+{ 
+    TPArray mFrameListeners;
+}
+
+World::World()
+{
+    mFrameListeners.create();
+}
 
 
 }}}
