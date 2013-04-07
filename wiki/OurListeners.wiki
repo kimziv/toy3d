@@ -119,6 +119,23 @@ void World::removeFrameListener:(FrameListener* oldListener)
 
 {{{
 
+class myFrameListener: public FrameListener
+{
+    myFrameListener();
+    ~myFrameListener();
+
+    Bool frameStarted();
+    Bool frameEnded () {return true;};
+}
+
+Bool myFrameListener::frameStarted()
+{
+    entity->getMaterial()->setShaderProgram(anotherShader);
+
+    return true;
+}
+
+
 
 
 }}}
