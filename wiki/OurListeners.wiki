@@ -126,15 +126,32 @@ class myApp:plublic FrameListener
 
     void createScene();
     void startRendering();
+    void changeWindowSize (int w, int h);
 
     Bool frameStarted();
     Bool frameEnded ();
 
+    World *mWorld;
     Camera *mCamera;
-    World *world;
+    RenderWindow *mWindow;
+    Entity *mRect;
+
+    Bool isVisible;
+
+    
     
 }
 
+
+void myApp::App ()
+{
+    mWorld = NULL;
+    mCamera = NULL;
+    mRenderWindow = NULL;
+    mRect = NULL;
+    
+    isVisible = true;
+}
 
 
 Bool myApp::frameStarted()
