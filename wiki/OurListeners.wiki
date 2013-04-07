@@ -135,9 +135,6 @@ class myApp:plublic FrameListener
     Camera *mCamera;
     RenderWindow *mWin;
     Entity *mRect;
-
-    Bool isVisible;
-
     
     
 }
@@ -158,6 +155,8 @@ void myApp::createScene ()
     mWorld->new World();
     mWorld->setSize(...);
     mWorld->setBackColor(...);
+
+    mWorld->addFrameListener(this);
   
     mCamera = world->createCamera(...);
 
@@ -167,6 +166,8 @@ void myApp::createScene ()
     ShaderProgram ...
     mesh...
     entity...
+
+    
 
     return;
     
@@ -191,6 +192,22 @@ Bool myApp::frameStarted()
     mRect->setVisible(!isVisible);
 
     return true;
+}
+
+
+
+
+
+====
+
+
+void init()
+{
+    
+}
+
+void render()
+{
 }
 
 
