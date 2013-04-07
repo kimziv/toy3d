@@ -13,8 +13,9 @@ C语言中的回调函数
 
 实现方法：
  * 设计一个基类作为接口
- * 在 renderOenFrame 里绘制每帧都调用基类的函数
  * 定义 FrameListener 容器，保存所有注册了的帧监听
+ * 在 renderOenFrame 里绘制每帧都调用基类的函数
+ * 用户使用时，先基于基类实现自己的 frame listener，然后注册到容器中
 
 
 基类 FrameListener 的设计：
@@ -55,7 +56,7 @@ renderOneFrame 中的处理：
 
 
 
-void World::renderOneFrame ()
+Bool World::renderOneFrame ()
 {
 
     if(fireFrameStarted())   //user implemnet it to do something
@@ -63,7 +64,7 @@ void World::renderOneFrame ()
  
     updateAllRenderTargets();
 
-    fireFrameEnded();     //user implement it to do something
+    return fireFrameEnded();     //user implement it to do something
 }
 
 bool World::fireFrameStarted ()
@@ -109,6 +110,15 @@ void World::removeFrameListener:(FrameListener* oldListener)
 {
     mFrameListeners.append (oldListener);
 }
+
+
+}}}
+
+使用代码样例：
+
+
+{{{
+
 
 
 }}}
