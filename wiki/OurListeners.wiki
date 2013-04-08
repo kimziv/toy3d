@@ -1,5 +1,11 @@
 #summary Toy3D 中用的 listener，如 framelistener, targetlistenter 等
 
+
+=注意=
+
+framelistener 和 rendertarget listener 如何释放？
+
+
 = 观察者模式 =
 
 C语言中的回调函数
