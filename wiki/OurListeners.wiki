@@ -119,7 +119,7 @@ void World::removeFrameListener:(FrameListener* oldListener)
 
 {{{
 
-class myApp:plublic FrameListener
+class myApp:public FrameListener
 {
     myApp()
     ~myApp();
