@@ -5,6 +5,7 @@
 #include "Toy3DCommon.h"
 #include "Toy3DPtrArray.h"
 #include "Toy3DViewport.h"
+#include "Toy3DRenderTargetListener.h"
 
 
 TOY3D_BEGIN_NAMESPACE
@@ -25,6 +26,18 @@ TOY3D_BEGIN_NAMESPACE
 
         virtual void bind();
         virtual void unbind();
+
+    private:
+
+        TPtrArray mListeners;
+
+        virtual void firePreUpdate();
+        virtual void firePostUpdate();
+
+    public:
+        virtual void addListener (RenderTargetListener* listener);
+        virtual void removeListener (RenderTargetListener* listener);
+        virtual void removeAllListeners();
     };
 
 

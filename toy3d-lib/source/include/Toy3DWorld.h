@@ -7,6 +7,7 @@
 #include "Toy3DEntity.h"
 #include "Toy3DRenderer.h"
 #include "Toy3DAutoParamDataSource.h"
+#include "Toy3DFrameListener.h"
 
 
 TOY3D_BEGIN_NAMESPACE
@@ -74,7 +75,9 @@ TOY3D_BEGIN_NAMESPACE
         RenderWindow* createRenderWindow();
         RenderTexture* createRenderTexture(Texture *tex);
 
-
+        void addFrameListener (FrameListener *newListener);
+        void removeFrameListener (FrameListener *oldListener);
+     
         
 
 

@@ -9,7 +9,7 @@ TOY3D_BEGIN_NAMESPACE
     {
         mMesh = NULL;
         mMaterial = NULL;
-        mIsVisible = TRUE;
+        mVisible = TRUE;
         MvGl2DemoMatrixIdentity( mModelMatrix );
     }
 
@@ -74,6 +74,18 @@ TOY3D_BEGIN_NAMESPACE
     {
         return mMaterial;
     }
+
+    void Entity::setVisible(Bool visible)
+    {
+        mVisible =  visible;
+    }
+
+
+    Bool Entity::isVisible()
+    {
+        return mVisible;
+    }
+
 
 
 

@@ -9,6 +9,8 @@ TOY3D_BEGIN_NAMESPACE
         mViewportList = new TPtrArray();
         mViewportList->create();
 
+        mListeners.create();
+
     }
 
     RenderTarget::~RenderTarget()
@@ -22,6 +24,9 @@ TOY3D_BEGIN_NAMESPACE
 
         mViewportList->destroy();
         DELETEANDNULL(mViewportList);
+
+       
+        mListeners.destroy();
     }
 
     Viewport* RenderTarget::addViewport(Camera* cam, Uint left, Uint top ,
@@ -50,6 +55,47 @@ TOY3D_BEGIN_NAMESPACE
     void RenderTarget::unbind()
     {
         return;
+    }
+
+    void RenderTarget::firePreUpdate()
+    {
+        for (int i = 0; i < mListeners.getLength(); i++) {
+            RenderTargetListener *listener = (RenderTargetListener*)mListeners.getElement(i);
+            listener->preRenderTargetUpdate();
+        }
+
+    }
+
+    void RenderTarget::firePostUpdate()
+    {
+        for (int i = 0; i < mListeners.getLength(); i++) {
+            RenderTargetListener *listener = (RenderTargetListener*)mListeners.getElement(i);
+            listener->postRenderTargetUpdate();
+        }
+
+    }
+
+
+
+    void RenderTarget::addListener(RenderTargetListener* listener)
+    {
+        mListeners.append((void*)listener);
+    }
+
+    void RenderTarget::removeListener(RenderTargetListener* listener)
+    {
+        mListeners.remove((void*)listener);
+    }
+
+
+    void RenderTarget::removeAllListeners()
+    {
+         //remove from array. user free the 
+         for (int i = mListeners.getLength() - 1; i>=0; i--) {
+            RenderTargetListener *listener = (RenderTargetListener*)mListeners.getElement(i);
+            mListeners.remove(listener);
+        }
+       
     }
 
 
