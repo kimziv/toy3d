@@ -18,7 +18,7 @@ TOY3D_BEGIN_NAMESPACE
         Mesh* mMesh;
         Material* mMaterial;
         ShaderProgram* mShaderProgram;
-        Bool mIsVisible;
+        Bool mVisible;
 
         Real mModelMatrix[MATRIX_4x4_SIZE]; 
 
@@ -39,6 +39,9 @@ TOY3D_BEGIN_NAMESPACE
 
         void getRenderOperation(RenderOperation* ro);
         void getModelMatrix (Real matrix[MATRIX_4x4_SIZE]);
+
+        void setVisible(Bool visible);
+        Bool isVisible();
 
 
     };

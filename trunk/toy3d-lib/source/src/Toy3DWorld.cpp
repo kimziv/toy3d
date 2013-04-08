@@ -3,7 +3,7 @@
 #include "Toy3DWorld.h"
 #include "Toy3DTextureUnitState.h"
 #include "Toy3DMath.h"
-#include "Toy3DFrameListener.h"
+
 
 TOY3D_BEGIN_NAMESPACE
 
@@ -91,6 +91,10 @@ TOY3D_BEGIN_NAMESPACE
         mRenderer.setBackColor (mBackColorRed, mBackColorGreen, mBackColorBlue, mBackColorAlpha);
 
         for (i = 0; i < mEntityCount; i++) {
+
+
+            if (mEntities[i]->isVisible() == FALSE)
+                continue;
 
             ro = new RenderOperation ();
 
@@ -294,6 +298,9 @@ TOY3D_BEGIN_NAMESPACE
 
         for (i = 0; i < mEntityCount; i++) {
 
+            if (mEntities[i]->isVisible() == FALSE)
+                continue;
+
             ro = new RenderOperation ();
 
             mEntities[i]->getRenderOperation (ro);
@@ -372,6 +379,20 @@ TOY3D_BEGIN_NAMESPACE
         return TRUE;
 
     }
+
+
+
+    void World::addFrameListener (FrameListener *newListener)
+    {
+        mFrameListeners.append(newListener);
+    }
+
+    //NOTICE: only remove from array,  user free the pointer 
+    void World::removeFrameListener (FrameListener *oldListener)
+    {
+        mFrameListeners.remove(oldListener);
+    }
+
 
 
 TOY3D_END_NAMESPACE
