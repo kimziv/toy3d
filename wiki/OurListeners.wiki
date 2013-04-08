@@ -162,6 +162,7 @@ void myApp::createScene ()
 
     mWin = world->createRenderWindow();
     mWin->addViewport (camera, 0,0, w, h);
+   
     
     ShaderProgram ...
     mesh...
@@ -287,6 +288,41 @@ void RenderTarget::firePostUpdate()
     for (all target listeners)
         tl->postRenderTargetUpate()
 
+}
+
+
+}}}
+
+
+使用样例
+
+{{{
+class MyApp : public RenderTargetListener
+{
+
+    void createScene();
+    void preRenderTargetUpdate();
+    void postRenderTargetUpdate();
+
+    World *mWorld;
+    Entity *mEntity;
+    
+}
+
+void MyApp::createScene ()
+{
+    create world, camera, shader, entity, render window, render texture
+    ...
+    renderTexture->addListener(this);
+}
+
+void MyApp::preRenderTargetUpdate()
+{
+    entity->getMaterial->setShader(newShader);
+}
+
+void MyApp::postRenderTargetUpdate()
+{
 }
 
 
