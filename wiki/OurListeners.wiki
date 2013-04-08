@@ -114,7 +114,7 @@ void World::addFrameListener:(FrameListener* newListener)
 
 void World::removeFrameListener:(FrameListener* oldListener)
 {
-    mFrameListeners.append (oldListener);
+    mFrameListeners.remove (oldListener);
 }
 
 
