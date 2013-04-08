@@ -223,8 +223,47 @@ void render()
 
 给用户提供机会在update每一个 target 之前和之后做一些事情，比如在多个 shader 间切换
 
+基本思路如 frame listener 类似，实现方法：
+ * 设计一个基类作为接口
+ * 在World中定义 FrameListener 容器，保存所有注册了的帧监听
+ * 在 RenderTarget 中每次 update 之前、之后都调用基类的函数
+ * 用户使用时，先基于基类实现自己的 target listener，然后注册到容器中
+
+
 
 {{{
+
+class RenderTargetListener
+{
+public:
+    virtual ~RenderTargetListener() {}
+    virtual void preRenderTargetUpdate() {}
+    virtual void postRenderTargetUpdate() {}
+    virtual void preViewportUpdate() {}
+    virtual void postViewportUpdate() {}
+    virtual void viewportAdded() {}
+    virtual void viewportRemoved() {}
+}
+
+
+class RenderTarget
+{
+private:
+    TPtrArray mListeners;
+
+
+    /* Internal function */
+    virtual void firePreUpdate();
+    virtual void firePostUpdate();
+
+
+public:
+    virtual void addListener (RenderTargetListener * listener);
+    virtual void removeListener (RenderTargetListener *listener);
+    virtual void removeAllListeners (void);
+}
+
+
 
 void RenderTarget::update()
 {
@@ -235,5 +274,20 @@ void RenderTarget::update()
 
     firePostUpdate()
 }
+
+
+void RenderTarget:;firePreUpdate()
+{
+    for (all target listeners)
+        tl->preRenderTargetUpate()
+}
+
+void RenderTarget::firePostUpdate()
+{
+    for (all target listeners)
+        tl->postRenderTargetUpate()
+
+}
+
 
 }}}
