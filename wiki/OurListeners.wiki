@@ -225,7 +225,7 @@ void render()
 
 基本思路如 frame listener 类似，实现方法：
  * 设计一个基类作为接口
- * 在World中定义 FrameListener 容器，保存所有注册了的帧监听
+ * 在 RenderTarget 中定义 FrameListener 容器，保存所有注册了的帧监听
  * 在 RenderTarget 中每次 update 之前、之后都调用基类的函数
  * 用户使用时，先基于基类实现自己的 target listener，然后注册到容器中
 
