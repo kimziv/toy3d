@@ -1,7 +1,7 @@
 #summary Toy3D 中用的 listener，如 framelistener, targetlistenter 等
 
 
-=注意=
+=遗留问题=
 
 framelistener 和 rendertarget listener 如何释放？
 
@@ -15,7 +15,11 @@ C语言中的回调函数
 
 = Frame Listener =
 
+==需求==
+
 给用户提供机会在开始每一帧之前和之后做一些事情，比如设置 set entity visible
+
+==设计与实现==
 
 实现方法：
  * 设计一个基类作为接口
@@ -120,7 +124,7 @@ void World::removeFrameListener:(FrameListener* oldListener)
 
 }}}
 
-使用代码样例：
+==使用样例==
 
 
 {{{
@@ -201,15 +205,14 @@ Bool myApp::frameStarted()
     return true;
 }
 
-
-
-
-
 ====
 
+MyApp *myApp;
 
 void init()
 {
+    myApp = new MyApp();
+    ....
     
 }
 
@@ -218,17 +221,15 @@ void render()
 }
 
 
-
-
-
-
-
-
 }}}
 
 = target listener =
 
+==需求==
 给用户提供机会在update每一个 target 之前和之后做一些事情，比如在多个 shader 间切换
+
+
+==设计与实现==
 
 基本思路如 frame listener 类似，实现方法：
  * 设计一个基类作为接口
@@ -300,7 +301,7 @@ void RenderTarget::firePostUpdate()
 }}}
 
 
-使用样例
+==使用样例==
 
 {{{
 class MyApp : public RenderTargetListener
