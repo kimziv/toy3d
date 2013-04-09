@@ -1,4 +1,4 @@
-#summary 增加entity，重构引擎
+#summary 引入 Material, texture，类分割更完善
 
 
 =遗留问题=
