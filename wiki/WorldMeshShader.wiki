@@ -1,4 +1,4 @@
-#summary toy3d 的做小实现.
+#summary toy3d 的最小实现.
 
 
 = sample code =
