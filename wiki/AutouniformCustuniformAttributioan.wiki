@@ -1,4 +1,4 @@
-#summary 重构 autouniform , custom uniform, attribution 的处理
+#summary autouniform , custom uniform, attribution 的处理
 
 = 概念 =
 
@@ -8,6 +8,7 @@
   # auto uniform:
   # custom uniform : 需要用户set
 
+=设计与实现=
 
 
 {{{
@@ -29,7 +30,7 @@ void ShaderProgramParams::setCustUniform (const char* name, Uint value)
 
 }}}
 
-用户
+=使用样例=
 
 {{{
 
@@ -54,10 +55,3 @@ void ShaderProgramParams::setCustUniform (const char* name, Uint value)
 
 
 
-
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
