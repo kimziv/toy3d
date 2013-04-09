@@ -1,4 +1,4 @@
-#summary autouniform , custom uniform, attribution 的处理
+#summary autouniform , custom uniform, attribution 模块的设计
 
 = 概念 =
 
@@ -52,6 +52,4 @@ void ShaderProgramParams::setCustUniform (const char* name, Uint value)
 
 
 }}}
-
-
 
