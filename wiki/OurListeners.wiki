@@ -3,6 +3,9 @@
 
 =遗留问题=
 
+多个 target listener 如何与 myapp 关联？
+target listener 里的 pre/post 接口访问 entity
+
 framelistener 和 rendertarget listener 如何释放？
 
 
