@@ -336,3 +336,75 @@ void MyApp::postRenderTargetUpdate()
 }}}
 
 =OGRE frame listener 研究=
+
+== OGRE 中的 FrameListener==
+
+OGRE 中定义了了 FrameListener，应用在使用时重载自己的 listener
+
+OGRE引擎FrameListener.h中定义的一个类。FrameListener定义如下：
+
+{{{
+    class _OgreExport FrameListener
+
+    {       
+
+    public:
+
+        // 帧渲染之前的事件处理方法
+
+        virtual bool frameStarted(const FrameEvent& evt) { return true; }
+
+        //Called after all render targets have had their rendering commands 
+            issued, but before render windows have been asked to flip their 
+            buffers over
+        virtual bool frameRenderingQueued(const FrameEvent& evt)
+
+        // 帧渲染之后的事件处理方法
+
+        virtual bool frameEnded(const FrameEvent& evt) { return true; }
+
+        virtual ~FrameListener() {}         
+
+    };
+
+}}}
+
+OGRE引擎在渲染过程中的每一帧之前调用frameStarted方法，而之后会调用frameEnded方法，通过这种方式，可以在渲染期间对场景物体（包括摄象机）进行移动、缩放等控制，当然也可以完成其它的处理。
+
+
+{{{
+
+class ExampleFrameListener : public FrameListener
+{
+    ExampleFrameListener(RenderWindow* win, Camera* cam, 
+                         bool bufferedKeys = false, bool bufferedMouse = false,
+                         bool bufferedJoy = false )
+
+
+    virtual ~ExampleFrameListener();
+
+    bool frameStarted (FrameEvent &evt);
+    bool frameEnded (FrameEvent &evt);
+
+    
+}
+
+}}}
+
+
+
+ExampleFrameListener 的 frameStarted函数的主要功能是根据键盘和鼠标输入情况控制摄象机，其实你可以在实际应用的时候，在派生你自己的myFrameListener后，重新实现frameStarted函数，让其控制某些3D物体的自动动画、自动运动等。当然不要忘了还要让新的frameStarted函数调用基类ExampleFrameListener类中的frameStarted函数，不然你的键盘和鼠标控制功能就全部丢失了
+
+
+==OGRE中的ExampleFrameListener类==
+
+ExampleFrameListener类派生自FrameListener类，主要作用是监听系统输入，并对场景做出控制反应。对于非控制性的变化（如自动的动画），其状态更新也可以由ExampleFrameListener完成。
+
+
+
+
+
+
+= Reference =
+ * [http://hi.baidu.com/hy469680890/item/f771d8159c31b8453a176e79 OGRE中的ExampleFrameListener类详解]
+ * [http://www.ogre3d.org/tikiwiki/tiki-index.php?page=Intermediate+Tutorial+7&structure=Tutorials RenderTarget listener]
