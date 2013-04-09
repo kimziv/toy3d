@@ -8,7 +8,6 @@
 =待完善、bugs=
  * World 里 camera 组要以数组保存、
  * camera 里增加成员变量 name
- * entity 加接口 setVisible,只绘制 visible 的entity
  * entity array 等都加名字，改成 map
  * world 里的 camera 是个对象，需要支持对个，并存指针
 
@@ -21,6 +20,7 @@
  * 支持动画  http://www.ogre3d.org/tikiwiki/tiki-index.php?page=Intermediate+Tutorial+1&structure=Tutorials
  * 显示文字
  * glCompressedTexture
+ * 渲染队列
 
 
 =通用数据结构=
