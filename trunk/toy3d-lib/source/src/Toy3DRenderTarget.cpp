@@ -41,10 +41,14 @@ TOY3D_BEGIN_NAMESPACE
 
     void RenderTarget::update ()
     {
+        firePreUpdate();
+
         for (Uint i = 0; i < mViewportList->getLength(); i++){
             Viewport *vp = (Viewport*)mViewportList->getElement(i);
             vp->update();
         }
+
+        firePostUpdate();
     }
 
     void RenderTarget::bind()
