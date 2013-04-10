@@ -306,6 +306,8 @@ void RenderTarget::firePostUpdate()
 
 ==使用样例==
 
+一个 listener
+
 {{{
 class MyApp : public RenderTargetListener
 {
@@ -333,6 +335,27 @@ void MyApp::preRenderTargetUpdate()
 
 void MyApp::postRenderTargetUpdate()
 {
+}
+
+
+}}}
+
+多个 listener的情况
+ * 以地图为例
+ * 设 2 个 render texture，一个 render window
+ * 道路部分画在 render texture 1，building 部分画在 render texture2
+
+{{{
+
+class RoadUpdate: public RenderTargetListener
+{
+    draw road
+}
+
+
+class BuildingUpdate: public RenderTargetListener
+{
+    draw building
 }
 
 
