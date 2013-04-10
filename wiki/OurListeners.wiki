@@ -351,17 +351,21 @@ class RoadUpdateListener: public RenderTargetListener
 {
     void preRenderTargetUpdate();
     void postRenderTargetUpdate();
+
+    World* mWorld;
 }
 
 void RoadUpdateListener::preRenderTargetUpdate()
 {
     world->getEntity("roadXXX")->setVisible(true);
+
+    World *mWorld;
 }
 
 
 void RoadUpdateListener::postRenderTargetUpdate()
 {
-    world->getEntity("roadXXX")->setVisible(false);
+    mWorld->getEntity("roadXXX")->setVisible(false);
     
 }
 
