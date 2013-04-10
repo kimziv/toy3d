@@ -347,17 +347,57 @@ void MyApp::postRenderTargetUpdate()
 
 {{{
 
-class RoadUpdate: public RenderTargetListener
+class RoadUpdateListener: public RenderTargetListener
 {
-    draw road
+    void preRenderTargetUpdate();
+    void postRenderTargetUpdate();
+}
+
+void RoadUpdateListener::preRenderTargetUpdate()
+{
+    world->getEntity("roadXXX")->setVisible(true);
 }
 
 
-class BuildingUpdate: public RenderTargetListener
+void RoadUpdateListener::postRenderTargetUpdate()
 {
-    draw building
+    world->getEntity("roadXXX")->setVisible(false);
+    
 }
 
+
+class BuildingUpdateListener: public RenderTargetListener
+{
+    void preRenderTargetUpdate();
+    void postRenderTargetUpdate();
+}
+
+class MyApp
+{
+
+    void createScene();
+  
+private:
+    RoadUpdateListener *mRoadListener;
+    BuildingUpdateListener *mBuildingListener;
+
+}
+
+
+void MyApp::createScene()
+{
+    Texture *roadTex =  TextureManager->create();
+    Texture *buildingTex =  TextureManager->create();
+
+    RenderTexture *roadRT = world->createRenderTexture (roadTex);
+    RenderTexture *buildingRT = world->createRenderTexture (buildingTex);
+
+    mRoadListener = new RoadUpdateListener (world);
+    mBuildingListener = new BuildingUpdateListener (world);
+
+    raodRT->addListener(mRoadListener);
+    buildingRT->addListener(mBuildingListener); 
+}
 
 }}}
 
