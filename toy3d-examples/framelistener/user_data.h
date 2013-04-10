@@ -16,8 +16,8 @@ extern "C" {
 #define SHADER_VERT_FILE "C:/Program Files (x86)/TOY3D-EXAMPLES/share/toy3d/framelistener/framelistener.glslv"
 #define SHADER_FRAG_FILE "C:/Program Files (x86)/TOY3D-EXAMPLES/share/toy3d/framelistener/framelistener.glslf"
 #else
-#define SHADER_VERT_FILE "/usr/local/share/toy3d/rectangle/framelistener.glslv"
-#define SHADER_FRAG_FILE "/usr/local/share/toy3d/rectangle/framelistener.glslf"
+#define SHADER_VERT_FILE "/usr/local/share/toy3d/framelistener/framelistener.glslv"
+#define SHADER_FRAG_FILE "/usr/local/share/toy3d/framelistener/framelistener.glslf"
 #endif
     
 
