@@ -11,7 +11,7 @@ endif(WIN32)
 set(CORELIBS ${GLUT_LIBRARY} ${OPENGL_LIBRARY} ${PLATFORM_LIBS})
 
 
-add_executable (fbo fbo.cpp)
+add_executable (fbo fbo.cpp myapp.cpp)
 target_link_libraries (fbo toy3d ${CORELIBS})
 
 
