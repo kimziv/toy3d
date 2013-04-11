@@ -542,6 +542,9 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
         if(!ret)
             DELETEANDNULL(rt);
 
+        attachRenderTarget ((RenderTarget*)rt);
+
+
         return rt;
 
     }
