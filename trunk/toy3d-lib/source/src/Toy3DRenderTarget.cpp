@@ -15,8 +15,9 @@ TOY3D_BEGIN_NAMESPACE
 
     RenderTarget::~RenderTarget()
     {
+        Uint length = mViewportList->getLength();
         // Delete viewports
-        for (Uint i = 0; i < mViewportList->getLength(); i++)
+        for (Uint i = 0; i < length; i++)
         {
             Viewport *vp = (Viewport*)mViewportList->getElement(i);
             DELETEANDNULL(vp);
@@ -41,9 +42,10 @@ TOY3D_BEGIN_NAMESPACE
 
     void RenderTarget::update ()
     {
+        Uint length = mViewportList->getLength();
         firePreUpdate();
 
-        for (Uint i = 0; i < mViewportList->getLength(); i++){
+        for (Uint i = 0; i < length; i++){
             Viewport *vp = (Viewport*)mViewportList->getElement(i);
             vp->update();
         }
@@ -63,7 +65,9 @@ TOY3D_BEGIN_NAMESPACE
 
     void RenderTarget::firePreUpdate()
     {
-        for (int i = 0; i < mListeners.getLength(); i++) {
+        Uint length = mListeners.getLength();
+        for (Uint i = 0; i < length; i++)
+        {
             RenderTargetListener *listener = (RenderTargetListener*)mListeners.getElement(i);
             listener->preRenderTargetUpdate();
         }
@@ -72,14 +76,14 @@ TOY3D_BEGIN_NAMESPACE
 
     void RenderTarget::firePostUpdate()
     {
-        for (int i = 0; i < mListeners.getLength(); i++) {
+        Uint length = mListeners.getLength();
+        for (Uint i = 0; i < length; i++)
+        {
             RenderTargetListener *listener = (RenderTargetListener*)mListeners.getElement(i);
             listener->postRenderTargetUpdate();
         }
 
     }
-
-
 
     void RenderTarget::addListener(RenderTargetListener* listener)
     {
@@ -94,12 +98,12 @@ TOY3D_BEGIN_NAMESPACE
 
     void RenderTarget::removeAllListeners()
     {
-         //remove from array. user free the 
-         for (int i = mListeners.getLength() - 1; i>=0; i--) {
+        //remove from array. user free the 
+        for (int i = mListeners.getLength() - 1; i>=0; i--)
+        {
             RenderTargetListener *listener = (RenderTargetListener*)mListeners.getElement(i);
             mListeners.remove(listener);
         }
-       
     }
 
 
