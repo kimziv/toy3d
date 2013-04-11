@@ -38,16 +38,15 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
     Renderer::~Renderer() 
     {
         if (mRenderTargets) {
-            for (Uint i = 0; i < mRenderTargets->getLength(); i++)
+            Uint length = mRenderTargets->getLength();
+            for (Uint i = 0; i < length; i++)
             {
                 RenderTarget *target = (RenderTarget*)mRenderTargets->getElement(i);
                 delete target;
             }
             mRenderTargets->destroy();
             delete mRenderTargets;
-            
         }
-   
     }
 
     void Renderer:: bindShaderProgram(ShaderProgram *prog)
@@ -517,7 +516,10 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
 
     void Renderer::updateAllRenderTargets ()
     {
-        for (Uint i = 0; i < mRenderTargets->getLength(); i++) {
+        RenderTarget* target = NULL;
+        Uint length = mRenderTargets->getLength();
+
+        for (Uint i = 0; i < length; i++) {
             RenderTarget* target = (RenderTarget*)mRenderTargets->getElement (i);
             target->update();
         }
@@ -543,7 +545,6 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
             DELETEANDNULL(rt);
 
         attachRenderTarget ((RenderTarget*)rt);
-
 
         return rt;
 

@@ -359,7 +359,8 @@ TOY3D_BEGIN_NAMESPACE
 
     Bool World::fireFrameStarted()
     {
-        for (int i = 0; i < mFrameListeners.getLength(); i++) {
+        Uint length = mFrameListeners.getLength();
+        for (Uint i = 0; i < length; i++) {
             FrameListener *fl = (FrameListener*)mFrameListeners.getElement(i);
             if(fl->frameStarted() == FALSE)
                 return FALSE;
@@ -370,7 +371,8 @@ TOY3D_BEGIN_NAMESPACE
 
     Bool World::fireFrameEnded()
     {
-        for (int i = 0; i < mFrameListeners.getLength(); i++) {
+        Uint length = mFrameListeners.getLength();
+        for (Uint i = 0; i < length; i++) {
             FrameListener *fl = (FrameListener*)mFrameListeners.getElement(i);
             if(fl->frameEnded() == FALSE)
                 return FALSE;
