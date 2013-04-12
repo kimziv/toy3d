@@ -43,13 +43,16 @@ public:
     Camera *mCamera;
     Entity *mEntity;
 
-    RenderTexture *mRTex;
-    RenderWindow  *mWin;
 
 private:
     ShaderProgram *mShaderWin, *mShaderTex;
+    RenderTexture *mRTex;
+    RenderWindow  *mWin;
 
-    void initShader(ShaderProgram *pShader1, ShaderProgram *pShader2);
+    Mesh *mMesh_tex;
+    Mesh *mMesh_win;
+
+    void initShader(ShaderProgram *pShaderTex, ShaderProgram *pShaderWin);
 };
 
 
