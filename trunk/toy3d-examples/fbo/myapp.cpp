@@ -5,17 +5,29 @@
 TOY3D_BEGIN_NAMESPACE
 
 
-#define VERTEX_COUNT  6    
+#define VERTEX_COUNT_RECT 6
+#define VERTEX_COUNT_TRI  3
 
 
-Real vertices[VERTEX_COUNT * 3] = {
-    -1.0f, -1.0f, 0.0f,
-    1.0f,  -1.0f, 0.0f,
-    -1.0f,  1.0f, 0.0f,
+Real vertices_rect[VERTEX_COUNT_RECT * 3] = {
+    -2.0f, -2.0f, 0.0f,
+    2.0f,  -2.0f, 0.0f,
+    -2.0f,  2.0f, 0.0f,
         
-    1.0f,  1.0f, 0.0f,
-    1.0f, -1.0f, 0.0f,
-    -1.0f, 1.0f, 0.0f
+    2.0f,  2.0f, 0.0f,
+    2.0f, -2.0f, 0.0f,
+    -2.0f, 2.0f, 0.0f
+};
+
+Real vertices_triangle[VERTEX_COUNT_TRI * 3] = {
+    0.0f, 1.0f, 0.0f,
+    -1.0f,  -1.0f, 0.0f,
+    1.0f, -1.0f,  0.0f,
+};
+
+Real uvs[VERTEX_COUNT_RECT * 2] = {
+    0.0f,0.0f, 1.0f,0.0f, 0.0f,1.0f,
+    1.0f,1.0f, 1.0f,0.0f, 0.0f,1.0f
 };
 
 Real angle_y = 0.0f;
@@ -28,6 +40,8 @@ MyApp::MyApp()
     mCamera = NULL;
     mShaderWin = NULL;
     mShaderTex = NULL;
+    mMesh_win = NULL;
+    mMesh_tex = NULL;
 }
 
 MyApp::~MyApp()
@@ -60,7 +74,7 @@ Bool MyApp::createScene()
     //creat the shader for rendering texture
     mShaderTex = ShaderProgramManager::getInstance()->createShaderProgram();
 
-    initShader(mShaderWin, mShaderTex);
+    initShader(mShaderTex, mShaderWin);
 
 
     //create a texture, a RenderTexture
@@ -82,17 +96,22 @@ Bool MyApp::createScene()
     mWin->addViewport(mCamera, 0, 0, width, height);
 
 
-    Mesh* mesh = MeshManager::getInstance()->createMesh();
-    mesh->setRenderMode (TOY3D_TRIANGLE_STRIP);
-    mesh->setVertices (vertices, VERTEX_COUNT);
-    
+    mMesh_win = MeshManager::getInstance()->createMesh();
+    mMesh_win->setRenderMode (TOY3D_TRIANGLE_STRIP);
+    mMesh_win->setVertices (vertices_rect, VERTEX_COUNT_RECT);
+    mMesh_win->setUVs( uvs, VERTEX_COUNT_RECT);
+
+    mMesh_tex = MeshManager::getInstance()->createMesh();
+    mMesh_tex->setRenderMode (TOY3D_TRIANGLE_STRIP);
+    mMesh_tex->setVertices (vertices_triangle, VERTEX_COUNT_TRI);
+
     Material *mat = MaterialManager::getInstance()->createMaterial();
     mat->setShaderProgram (mShaderTex);
     printf("Working Shader : Rendering Texture.\n\n");
 
     //Entity
     mEntity = mWorld->createEntity();
-    mEntity->setMesh(mesh);
+    mEntity->setMesh(mMesh_tex);
     mEntity->setMaterial(mat);
 
 
@@ -123,12 +142,12 @@ void MyApp::changeWindowSize(int w, int h)
     return;
 }
 
-void MyApp::initShader(ShaderProgram *pShader1, ShaderProgram *pShader2)
+void MyApp::initShader(ShaderProgram *pShaderTex, ShaderProgram *pShaderWin)
 {
     int   texUnit = 0;
     ShaderProgramParams *params = NULL;
 
-    pShader1->loadShaderSource (SHADER_VERT_FILE, SHADER_FRAG_FILE_WIN);
+    pShaderTex->loadShaderSource (SHADER_VERT_FILE, SHADER_FRAG_FILE_TEX);
     params = ShaderProgramManager::getInstance()->createShaderProgramParams();
     //uniforms
     params->setNamedAutoConstant (TOY3D_ACT_PROJECTION_MATRIX, "proj_mat");
@@ -137,10 +156,10 @@ void MyApp::initShader(ShaderProgram *pShader1, ShaderProgram *pShader2)
     //attributes
     params->setNamedAttrConstant (TOY3D_ATTR_VERTEX, "vPosition");
 
-    pShader1->bindShaderParameters(params);
+    pShaderTex->bindShaderParameters(params);
 
 
-    pShader2->loadShaderSource (SHADER_VERT_FILE, SHADER_FRAG_FILE_WIN);
+    pShaderWin->loadShaderSource (SHADER_VERT_FILE, SHADER_FRAG_FILE_WIN);
     params = ShaderProgramManager::getInstance()->createShaderProgramParams();
     //uniforms
     params->setNamedAutoConstant (TOY3D_ACT_PROJECTION_MATRIX, "proj_mat");
@@ -148,16 +167,19 @@ void MyApp::initShader(ShaderProgram *pShader1, ShaderProgram *pShader2)
     params->setNamedAutoConstant (TOY3D_ACT_WORLD_MATRIX, "world_mat");
     //attributes
     params->setNamedAttrConstant (TOY3D_ATTR_VERTEX, "vPosition");
+    params->setNamedAttrConstant (TOY3D_ATTR_UV, "vTexture");
     //shader custom constant
     params->setNamedCustUniformConstant(TOY3D_CUST_SAMPLER2D, "sampler2d", texUnit);
 
-    pShader2->bindShaderParameters(params);
+    pShaderWin->bindShaderParameters(params);
 
     return;
 }
 
 void MyApp::preRenderTargetUpdate()
 {
+    mWorld->setBackColor(1, 0, 0, 0);
+    mEntity->setMesh(mMesh_tex);
     mEntity->getMaterial()->setShaderProgram(mShaderTex);
     printf("Working Shader : Rendering Texture.\n\n");
     return;
@@ -165,6 +187,8 @@ void MyApp::preRenderTargetUpdate()
 
 void MyApp::postRenderTargetUpdate()
 {
+    mWorld->setBackColor(0, 0, 1, 1);
+    mEntity->setMesh(mMesh_win);
     mEntity->getMaterial()->setShaderProgram(mShaderWin);
     printf("Working Shader : Rendering Window.\n\n");
     return;
