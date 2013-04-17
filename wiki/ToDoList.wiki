@@ -1,9 +1,6 @@
 #summary Here is our todo lists.
 
 
-观察者模式
- * 修改 entity 状态，如 setVisible   (framelistener)
- * 修改 mat 的 shaderprogram (target listener)
 
 =待完善、bugs=
  * World 里 camera 组要以数组保存、
@@ -21,6 +18,7 @@
  * 显示文字
  * glCompressedTexture
  * 渲染队列
+ * terrain paging   http://www.ogre3d.org/tikiwiki/tiki-index.php?page=Terrain&structure=Libraries
 
 
 =通用数据结构=
