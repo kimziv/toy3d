@@ -1,6 +1,43 @@
 #summary add RTT support to toy3d.
 
 
+=change window size=
+
+改变窗口大小时，图形无法自适应
+
+lib部分
+
+{{{
+
+class RenderTarget {
+
+    Viewport* getViewport(Uint index);
+};
+
+class Viewport {
+    void setWidht(Uint);
+    void setHeight(Uint);
+};
+
+}}}
+
+
+example 部分
+
+{{{
+
+void changeSize(int w, int h)
+{
+    Viewport *vp = win->getViewport (0);
+    vp->setWidth(width);
+    vp->setHeight(height);
+
+}
+
+
+}}}
+
+
 =toy3d 设计=
 
 ==现存的问题==
