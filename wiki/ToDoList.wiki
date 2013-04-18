@@ -19,6 +19,7 @@
  * glCompressedTexture
  * 渲染队列
  * terrain paging   http://www.ogre3d.org/tikiwiki/tiki-index.php?page=Terrain&structure=Libraries
+ * paging 算法不一定适用于图片管理。大规模场景已经存在，只是漫游问题，大规模图片只是纹理管理，可能模型都不用改变
 
 
 =通用数据结构=
