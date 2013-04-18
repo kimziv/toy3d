@@ -31,7 +31,29 @@ TOY3D_BEGIN_NAMESPACE
         }
     }
 
+    void Viewport::setLeft(Uint left)
+    {
+        mLeft = left;
+        return;
+    }
 
+    void Viewport::setTop(Uint top)
+    {
+        mTop = top;
+        return;
+    }
+
+    void Viewport::setWidth(Uint width)
+    {
+        mWidth = width;
+        return;
+    }
+
+    void Viewport::setHeight(Uint height)
+    {
+        mHeight = height;
+        return;
+    }
 
 
 TOY3D_END_NAMESPACE

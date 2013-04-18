@@ -1,6 +1,7 @@
 
 
 #include <toy3d/Toy3DCommon.h>
+/*
 #include <toy3d/Toy3DWorld.h>
 #include <toy3d/Toy3DTexture.h>
 #include <toy3d/Toy3DTextureManager.h>
@@ -11,7 +12,7 @@
 #include <toy3d/Toy3DShaderProgramManager.h>
 #include <toy3d/Toy3DMeshManager.h>
 #include <toy3d/Toy3DMaterialManager.h>
-
+*/
 
 
 #include "myapp.h"

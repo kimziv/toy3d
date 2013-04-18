@@ -106,6 +106,10 @@ TOY3D_BEGIN_NAMESPACE
         }
     }
 
+    Viewport* RenderTarget::getViewport(Uint index) const
+    {
+        return (Viewport *)mViewportList->getElement(index);
+    }
 
 
 TOY3D_END_NAMESPACE

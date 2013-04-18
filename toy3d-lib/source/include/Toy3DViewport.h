@@ -32,6 +32,11 @@ TOY3D_BEGIN_NAMESPACE
         inline Uint getWidth () {return mWidth;}
         inline Uint getHeight () {return mHeight;}
 
+        void setLeft(Uint left);
+        void setTop(Uint top);
+        void setWidth(Uint width);
+        void setHeight(Uint height);
+
     public:
         void update ();
 
