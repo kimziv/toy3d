@@ -38,6 +38,7 @@ using namespace TOY3D;
 //global
 World *world = NULL;
 Camera *camera = NULL;
+RenderWindow *win = NULL;
 
 
 Real vertices[VERTEX_COUNT * 3] = {
@@ -88,7 +89,6 @@ void display()
 {
 
     world->renderOneFrame (); 
-    //world->startRendering (); 
 
 	glFlush();
     glutSwapBuffers();
@@ -107,6 +107,12 @@ void changeSize( int w, int h )
     fovy = 60;
     camera->perspective (fovy, aspect, nearz, farz);
     
+
+    Viewport *vp = win->getViewport(0);
+    vp->setWidth (w);
+    vp->setHeight (h);
+
+
     return;
 }
 
@@ -125,7 +131,7 @@ bool init()
     world->setBackColor (1.0, 1.0, 1.0, 1.0);
 
     camera = world->createCamera ("camera1");
-    RenderWindow *win = world->createRenderWindow ();
+    win = world->createRenderWindow ();
     win->addViewport (camera, 0, 0, width, height);
 
     //shader
