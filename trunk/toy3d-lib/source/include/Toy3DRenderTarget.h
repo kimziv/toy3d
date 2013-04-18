@@ -38,6 +38,8 @@ TOY3D_BEGIN_NAMESPACE
         virtual void addListener (RenderTargetListener* listener);
         virtual void removeListener (RenderTargetListener* listener);
         virtual void removeAllListeners();
+
+        Viewport* getViewport(Uint index) const;
     };
 
 

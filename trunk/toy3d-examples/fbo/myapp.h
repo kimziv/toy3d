@@ -17,6 +17,7 @@
 #include <toy3d/Toy3DMaterialManager.h>
 #include <toy3d/Toy3DTexture.h>
 #include <toy3d/Toy3DTextureManager.h>
+#include <toy3d/Toy3DViewport.h>
 
 
 

@@ -66,7 +66,7 @@ Bool MyApp::createScene()
     mWorld = new World ();
     mWorld->setSize(width, height);
     mWorld->setBackColor (1.0, 1.0, 1.0, 1.0);
-    
+
     mCamera = mWorld->createCamera ("camera1");
 
     //creat the shader for rendering window
@@ -129,16 +129,21 @@ void MyApp::startRendering()
 void MyApp::changeWindowSize(int w, int h)
 {
     Real aspect, fovy;
-    Real nearz  = 1.0f;//5.0f;
-    Real farz   = 1000.0f;//60.0f;
-    
+    Real nearz  = 1.0f;
+    Real farz   = 1000.0f;
+    Viewport *vp = NULL;
+
     mWorld->setSize(w, h);
-    
+
     aspect = 1.0 * w / h;
     fovy = 60;
     mCamera->perspective (fovy, aspect, nearz, farz);
     mCamera->lookAt (0.0, 0.0, -5.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
-    
+
+    vp = mWin->getViewport(0);
+    vp->setWidth((Uint)w);
+    vp->setHeight((Uint)h);
+
     return;
 }
 
