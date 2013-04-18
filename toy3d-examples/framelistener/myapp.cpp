@@ -60,10 +60,12 @@ Bool MyApp::createScene()
     
     mWin = mWorld->createRenderWindow ();
     mWin->addViewport (mCamera, 0, 0, width, height);
-    
+
+/*    
     RenderWindow *win = mWorld->createRenderWindow ();
     win->addViewport (mCamera, 0, 0, WINDOW_W, WINDOW_H);
-    
+*/   
+
     ShaderProgram *shaderProgram = ShaderProgramManager::getInstance()->createShaderProgram();
     shaderProgram->loadShaderSource (SHADER_VERT_FILE, SHADER_FRAG_FILE);
     
@@ -117,6 +119,12 @@ void MyApp::changeWindowSize(int w, int h)
     mCamera->perspective (fovy, aspect, nearz, farz);
     mCamera->lookAt (0.0, 0.0, -5.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
     
+
+    Viewport *vp = mWin->getViewport(0);
+    vp->setWidth(w);
+    vp->setHeight(h);
+
+
     return;
 }
 
