@@ -87,8 +87,9 @@ TOY3D_BEGIN_NAMESPACE
         }
 
         mRenderer.setViewPort (0,0, mWidth, mHeight);
-        mRenderer.beginFrame();
+
         mRenderer.setBackColor (mBackColorRed, mBackColorGreen, mBackColorBlue, mBackColorAlpha);
+        mRenderer.beginFrame();
 
         for (i = 0; i < mEntityCount; i++) {
 
