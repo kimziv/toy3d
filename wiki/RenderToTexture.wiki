@@ -1,6 +1,6 @@
 #summary add RTT support to toy3d.
 
-=多个 render texture=
+=多个 render texture，一个FBO=
 
 ==使用样例==
 
