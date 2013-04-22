@@ -1,5 +1,21 @@
 #summary add RTT support to toy3d.
 
+=多个 render texture=
+
+==使用样例==
+
+{{{
+
+    rt1 = world->createRenderTexture(tex1);
+    rt1->addViewport (camera, t, l, w, h);
+
+    rt2 = world->createRenderTexture(tex2)
+    rt2->addViewport (camera, t, l, w, h);
+
+    
+
+}}}
+
 
 =change window size=
 
