@@ -5,7 +5,10 @@
 基本思路： 
  * 一个 FBO，多个 render texture?
  * 多个 FBO，每个 FBO 对应一个 render Texture？
- * FBO 支持多个 color attachment point
+ * FBO 支持多个 color attachment point，即同时画到多个目标上
+ * 用 glFramebufferTexture2D 切换 texture
+
+glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureId, 0);
 
 The reason that a FBO has multiple color attachement points is to allow to render the color buffer to multiple destinations at the same time. 
 
