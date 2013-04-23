@@ -825,9 +825,9 @@ class RenderTarget
 
 = Reference =
 
+  * [http://www.songho.ca/opengl/gl_fbo.html opengl FBO]
   * [http://blog.csdn.net/Nhsoft/article/details/1105309 OpenGL 中的 Render To Texture] 
   * [http://processors.wiki.ti.com/index.php/Render_to_Texture_with_OpenGL_ES Render to Texture with OpenGL ES]
-  * [http://www.songho.ca/opengl/gl_fbo.html opengl FBO]
   * [http://blog.csdn.net/leonwei/article/details/5740728 OGRE 渲染到纹理]
   * [http://www.zwqxin.com/archives/opengl/learn-fbo.html 学一学VBO]
   * [http://blog.csdn.net/chengxu0921/article/details/4761387 OGRE demo_render_to_texture解析]
