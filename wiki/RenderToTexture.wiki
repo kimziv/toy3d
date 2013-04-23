@@ -5,7 +5,11 @@
 基本思路： 
  * 一个 FBO，多个 render texture?
  * 多个 FBO，每个 FBO 对应一个 render Texture？
- * Switching framebuffer-attachable images is much faster than switching between FBOs. FBO provides glFramebufferTexture2D() to switch 2D texture objects, and glFramebufferRenderbuffer() to switch renderbuffer objects.
+ * FBO 支持多个 color attachment point
+
+The reason that a FBO has multiple color attachement points is to allow to render the color buffer to multiple destinations at the same time. 
+
+Switching framebuffer-attachable images is much faster than switching between FBOs. FBO provides glFramebufferTexture2D() to switch 2D texture objects, and glFramebufferRenderbuffer() to switch renderbuffer objects.
 
 
 
