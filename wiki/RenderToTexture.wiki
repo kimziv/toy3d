@@ -16,6 +16,32 @@ Switching framebuffer-attachable images is much faster than switching between FB
 
 
 
+==toy3d lib 部分的修改==
+
+Bool RenderTexture::init()
+{
+    mFBO.init();
+}
+
+Bool RenderTexture::checkStatus()
+{
+    return mFBO.checkStatus();
+}
+
+
+void RenderTexture::attachTexture (Texture *tex)
+{
+    mFBO.attachTexture(tex->getTextureId());
+}
+
+void RenderTexture::attachDepthBuffer(w, h)
+{
+    mFBO.attachDepthBuffer (w, h);
+}
+
+
+
+
 ==使用样例==
 
 {{{
