@@ -16,12 +16,10 @@ extern "C" {
 #define SHADER_VERT_FILE "C:/Program Files (x86)/TOY3D-EXAMPLES/share/toy3d/fbo/fbo.glslv"
 #define SHADER_FRAG_FILE_WIN "C:/Program Files (x86)/TOY3D-EXAMPLES/share/toy3d/fbo/fbo_render_window.glslf"
 #define SHADER_FRAG_FILE_TEX "C:/Program Files (x86)/TOY3D-EXAMPLES/share/toy3d/fbo/fbo_render_texture.glslf"
-#define TEXTURE_FILE     "C:/Program Files (x86)/TOY3D-EXAMPLES/share/toy3d/fbo/leaf.tga"
 #else 
 #define SHADER_VERT_FILE "/usr/local/share/toy3d/fbo/fbo.glslv"
 #define SHADER_FRAG_FILE_WIN "/usr/local/share/toy3d/fbo/fbo_render_window.glslf"
 #define SHADER_FRAG_FILE_TEX "/usr/local/share/toy3d/fbo/fbo_render_texture.glslf"
-#define TEXTURE_FILE     "/usr/local/share/toy3d/fbo/leaf.tga"
 #endif
 
 
