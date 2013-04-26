@@ -39,9 +39,9 @@ ADD_SUBDIRECTORY(blending)
 #ADD_SUBDIRECTORY(textureCapacityTest)
 ADD_SUBDIRECTORY(multi_texture)
 #ADD_SUBDIRECTORY(imageviewer)
-ADD_SUBDIRECTORY(fbo)
 ADD_SUBDIRECTORY(framelistener)
-
+ADD_SUBDIRECTORY(fbo)
+ADD_SUBDIRECTORY(fbo_mini_screen)
 
 
 else ()
