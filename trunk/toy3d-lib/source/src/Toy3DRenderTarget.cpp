@@ -80,7 +80,8 @@ TOY3D_BEGIN_NAMESPACE
         for (Uint i = 0; i < length; i++)
         {
             RenderTargetListener *listener = (RenderTargetListener*)mListeners.getElement(i);
-            listener->postRenderTargetUpdate();
+            if(listener)
+                listener->postRenderTargetUpdate();
         }
 
     }
@@ -102,7 +103,8 @@ TOY3D_BEGIN_NAMESPACE
         for (int i = mListeners.getLength() - 1; i>=0; i--)
         {
             RenderTargetListener *listener = (RenderTargetListener*)mListeners.getElement(i);
-            mListeners.remove(listener);
+            if(listener)
+                mListeners.remove(listener);
         }
     }
 

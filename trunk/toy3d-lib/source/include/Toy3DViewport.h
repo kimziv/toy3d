@@ -17,23 +17,23 @@ TOY3D_BEGIN_NAMESPACE
     protected:
         Camera *mCamera;
         RenderTarget *mTarget;
-        Uint mLeft, mTop, mWidth, mHeight;
+        Uint mLeft, mBottom, mWidth, mHeight;
         
 
     public:
         Viewport(Camera* camera, RenderTarget* target,
-            int left, int top, int width, int height);
+            int left, int bottom, int width, int height);
 
         virtual ~Viewport ();
 
         inline RenderTarget *getTarget () {return mTarget;}
         inline Uint getLeft () {return mLeft;}
-        inline Uint getTop () {return mTop;}
+        inline Uint getBottom () {return mBottom;}
         inline Uint getWidth () {return mWidth;}
         inline Uint getHeight () {return mHeight;}
 
         void setLeft(Uint left);
-        void setTop(Uint top);
+        void setBottom(Uint bottom);
         void setWidth(Uint width);
         void setHeight(Uint height);
 
