@@ -496,7 +496,7 @@ static int gTextureUnit[MAX_TEXTURE_UNIT] = {
         
         setRenderTarget(target);
 
-        glViewport (vp->getLeft(), vp->getTop(), vp->getWidth(),  vp->getHeight());
+        glViewport (vp->getLeft(), vp->getBottom(), vp->getWidth(),  vp->getHeight());
 
         return;
 

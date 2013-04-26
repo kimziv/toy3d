@@ -5,22 +5,19 @@
 TOY3D_BEGIN_NAMESPACE
 
 
-    Viewport::Viewport(Camera* cam, RenderTarget* target, int left, int top, int width, int height)
+    Viewport::Viewport(Camera* cam, RenderTarget* target, int left, int bottom, int width, int height)
         : mCamera(cam)
         , mTarget(target)
         , mLeft(left)
-        , mTop(top)
+        , mBottom(bottom)
         , mWidth(width)
         , mHeight(height)
     {
     }
 
-
-
     Viewport::~Viewport()
     {
     }
-
 
     void Viewport::update(void)
     {
@@ -37,9 +34,9 @@ TOY3D_BEGIN_NAMESPACE
         return;
     }
 
-    void Viewport::setTop(Uint top)
+    void Viewport::setBottom(Uint bottom)
     {
-        mTop = top;
+        mBottom = bottom;
         return;
     }
 
