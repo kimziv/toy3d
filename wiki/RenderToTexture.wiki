@@ -10,7 +10,7 @@
  * 多个 fbo 的支持
 
 
-基本思路： 
+==基本思路==
  * 一个 FBO，多个 render texture?
  * 多个 FBO，每个 FBO 对应一个 render Texture？
  * FBO 支持多个 color attachment point，即同时画到多个目标上
