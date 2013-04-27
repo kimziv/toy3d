@@ -11,8 +11,9 @@
 
 
 ==基本思路==
- * 一个 FBO，多个 render texture?
- * 多个 FBO，每个 FBO 对应一个 render Texture？
+ * 切换 fbo 比在 fbo 内切换 texture 开销多很多，不推荐使用切 fbo
+ * 一个 FBO，attach 上多个 texture，可实现同时画入多个纹理（定义一个render texture）
+ * 一个 FBO，每次 attach 一个 texture，画完后切换纹理，再画，可实现不同纹理画不同内容(定义一个 render texture)
  * FBO 支持多个 color attachment point，即同时画到多个目标上
  * 用 glFramebufferTexture2D 切换 texture
 
