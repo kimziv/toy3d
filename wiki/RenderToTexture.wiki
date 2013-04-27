@@ -54,7 +54,8 @@ void RenderTexture::attachDepthBuffer(w, h)
 
 class RTTManager {
     RenderTexture *createRenderTexture();
-    
+    void bindTarget(target);
+    void unbindTarget (target);
 };
 
 
