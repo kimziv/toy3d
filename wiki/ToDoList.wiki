@@ -3,6 +3,8 @@
 
 
 =待完善、bugs=
+ * 单个 entity 的旋转、缩放、平移
+ * camera 的旋转、缩放、平移
  * World 里 camera 组要以数组保存、
  * camera 里增加成员变量 name
  * entity array 等都加名字，改成 map
