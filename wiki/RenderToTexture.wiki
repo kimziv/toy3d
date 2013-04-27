@@ -38,10 +38,11 @@ Bool RenderTexture::checkStatus()
     return mFBO.checkStatus();
 }
 
-
-void RenderTexture::attachTexture (Texture *tex)
+// if not attached, attach the tex; 
+// if attached, detach old one and attach new one 
+void RenderTexture::attachTexture (Uint colori, Texture *tex)
 {
-    mFBO.attachTexture(tex->getTextureId());
+    mFBO.attachTexture(colori, tex->getTextureId());
 }
 
 void RenderTexture::attachDepthBuffer(w, h)
