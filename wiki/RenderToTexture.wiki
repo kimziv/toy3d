@@ -2,6 +2,14 @@
 
 =多个 render texture=
 
+==需求==
+
+在 render texture 增加如下支持：
+ * 同时画入多个纹理
+ * 不同纹理画不同的内容
+ * 多个 fbo 的支持
+
+
 基本思路： 
  * 一个 FBO，多个 render texture?
  * 多个 FBO，每个 FBO 对应一个 render Texture？
