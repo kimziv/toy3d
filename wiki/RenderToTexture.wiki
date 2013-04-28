@@ -51,12 +51,16 @@ void RenderTexture::attachDepthBuffer(w, h)
     mFBO.attachDepthBuffer (w, h);
 }
 
+void RenderTexture::selectOneBuffer (Uint colori)
+{
+    glDrawBuffer (colori);
+}
 
-class RTTManager {
-    RenderTexture *createRenderTexture();
-    void bindTarget(target);
-    void unbindTarget (target);
-};
+void RenderTexture::selectAllBuffer (Uint count, enum buffers)
+{
+    glDrawBuffers(count, buffers);
+}
+
 
 
 }}}
