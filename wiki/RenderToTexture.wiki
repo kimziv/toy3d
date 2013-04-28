@@ -882,7 +882,8 @@ class RenderTarget
 
 
 = Reference =
-
+  * [http://www.gamedev.net/page/resources/_/technical/opengl/opengl-frame-buffer-object-101-r2331 OpenGL Frame Buffer Object 101]
+  * [http://www.gamedev.net/page/resources/_/technical/opengl/opengl-frame-buffer-object-201-r2333 OpenGL Frame Buffer Object 201]
   * [http://www.songho.ca/opengl/gl_fbo.html opengl FBO]
   * [http://blog.csdn.net/Nhsoft/article/details/1105309 OpenGL 中的 Render To Texture] 
   * [http://processors.wiki.ti.com/index.php/Render_to_Texture_with_OpenGL_ES Render to Texture with OpenGL ES]
