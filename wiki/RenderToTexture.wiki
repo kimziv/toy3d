@@ -51,12 +51,12 @@ void RenderTexture::attachDepthBuffer(w, h)
     mFBO.attachDepthBuffer (w, h);
 }
 
-void RenderTexture::selectOneBuffer (Uint colori)
+void RenderTexture::selectDestination (Uint colori)
 {
     glDrawBuffer (colori);
 }
 
-void RenderTexture::selectAllBuffer (Uint count, enum buffers)
+void RenderTexture::selectMultipleDestination (Uint count, enum buffers)
 {
     glDrawBuffers(count, buffers);
 }
