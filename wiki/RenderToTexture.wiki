@@ -53,7 +53,7 @@ void RenderTexture::attachDepthBuffer(w, h)
 
 void RenderTexture::selectDestination (Uint colori)
 {
-    glDrawBuffer (colori);
+    glDrawBuffer (GL_COLOR_ATTACHMENT0 + colori);
 }
 
 void RenderTexture::selectMultipleDestination (Uint count, enum buffers)
