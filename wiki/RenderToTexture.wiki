@@ -25,7 +25,78 @@ Switching framebuffer-attachable images is much faster than switching between FB
 
 
 
-==toy3d lib 部分的修改==
+==toy3d lib 部分的修改(新版)==
+
+
+{{{
+
+
+class TextureBuffer
+{
+    TextureBuffer (GLenum target, GLuint id, GLint width, GLint height ...);
+    ~TextureBuffer ();
+    void bindToFramebuffer (GLenum attachment);
+
+protected:
+    GLenum mTarget;
+    GLenum mFaceTarget;
+    GLint mFace;
+    GLint mLevel;
+
+};
+
+void TextureBuffer::bindToFramebuffer (GLenum attachment)
+{
+    glFramebufferTexture2D (GL_FRAMEBUFFER, attachment, mFaceTarget, mTexture2D, mLevel);   
+}
+
+class RenderBuffer 
+{
+    RenderBuffer (GLenum format, size_t width, size_t height, ...);
+    virtual ~RenderBuffer();
+
+    void bindToFramebuffer (GLenum attachment, ...);
+
+protected:
+    GLuint mRenderbufferID;
+};
+
+
+RenderBuffer::RenderBuffer()
+{
+    glGenRenderbuffers (1, &mRenderbufferID);
+    GL_CHECK_ERROR;
+    
+    glBindRenderbuffer (GL_RENDERBUFFER, mRenderbufferID);
+    GL_CHECK_ERROR;
+
+    glRenderbufferStorage (GL_RENDERBUFFER， format, width, height);
+    GL_CHECK_ERROR;
+    
+}
+
+
+RenderBuffer::~RenderBuffer()
+{
+    glDeleteRenderbuffers(1, &mRenderbufferID);
+    GL_CHECK_ERROR;
+}
+
+void RenderBuffer::bindToFramebuffer ()
+{
+    glFramebufferRenderbuffer (GL_FRAMEBUFFER, attachment, GL_RENDERBUFFER, mRenderbufferID);
+
+    GL_CHECK_ERROR;
+}
+
+
+}}}
+
+
+
+
+
+==toy3d lib 部分的修改(老版)==
 
 {{{
 
