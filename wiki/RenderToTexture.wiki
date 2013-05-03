@@ -132,6 +132,13 @@ priate:
 
     TextureBuffer mColour [TOY3D_MAX_FBO_ATTACHMENT];
 
+    /** Initialise object.
+        Must be called every time the bindings change.
+        It fails with an exception if :
+        - Attachment point 0 has no binding;
+        - Not all bound surfaces have the same size
+        - Not all bound surfaces have the same internal format
+    */
     void initialise();
     
 
