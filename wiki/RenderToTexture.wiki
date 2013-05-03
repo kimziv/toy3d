@@ -201,11 +201,48 @@ void FrameBufferObject::initialise()
     glBindFramebuffer (GL_FRAMEBUFFER, mFB);
     GL_CHECK_ERROR;
 
-    for ()
+    for (Uint x = 0; x < MAX_ATTACH_POINT; x++)
+    {
+        if (mColour[x]) {
+            if (mColour[x]->getWidth() != width || 
+                mColour[x]->getHeight() != height)
+            {
+                printf (Attachment x has incompatile size. 
+                        It must be of the same as the size of surface 0);
+                return;
+            }
+            if (mColour[x]->getGLFormat() != format)
+            {
+                printf (Attachment has incompatible format);
+                return;
+            }
+            mColour[x]->bindToFramebuffer(GL_COLOR_ATTACHMENT0+x, mColor[x].zoffset);
+          
+        }
+        else {
+            glFramebufferRenderbuffer (GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0+x, GL_RENDERBUFFER, 0);
+            GL_CHECK_ERROR;
+        }
+    }
 
-    
-    
-    
+
+    /// Check status
+    GLuint status;
+    status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+    GL_CHECK_ERROR;
+
+    GL_CHECK_ERROR;
+
+    switch(status)
+    {
+    case GL_FRAMEBUFFER_COMPLETE:
+        // All is good
+        break;
+    case GL_FRAMEBUFFER_UNSUPPORTED:
+         printf("All framebuffer formats with this texture internal format unsupported");
+        default:
+            printf("Framebuffer incomplete or other FBO status error");
+    }    
 }
 
 void FrameBufferObject::bindTexture (Uint attachment, TextureBuffer *bf)
