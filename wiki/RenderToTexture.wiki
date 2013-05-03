@@ -121,13 +121,13 @@ public:
     void attachTexture (Uint attachment, const TextureBuffer *tb);
     void detchTexture (Uint attachment);
 
-    void attachDepthBuffer (DepthBuffer *db);
+    void attachDepthBuffer (RenderBuffer *db);
     void detachDepthBuffer ();
 
     
 priate:
     GLuint mFB;
-    DepthBuffer mDepth;
+    RenderBuffer mDepth;
     RenderBuffer mStencil;
 
     TextureBuffer mColour [TOY3D_MAX_FBO_ATTACHMENT];
