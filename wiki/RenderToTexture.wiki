@@ -322,15 +322,24 @@ class FBOManager
     void unbind (RenderTarget *target) {};
 
 
+    RenderTexture* FBOManager::createRenderTexture (name, TextureBuffer* tb, ...);
     MultiRenderTarget* createMultiRenderTarget (name);
-    Render
+    RenderBuffer* FBOManager::requestRenderBuffer (GLenum format, Uint width, Uint height, ...);  
+    void releaseRenderBuffer (const RenderBuffer* rb);  
+
+private:
+    typedef map<RBFormat, RBRef>::type RenderBufferMap;
+    RenderBufferMap mRenderBufferMap;
+    
+    
 };
 
 void FBOManager::bind (RenderTarget* target)
 {
     FrameBufferObject *fbo = 0;
     fbo = target->getFBO();
-    fbo->bind();jjjjjj
+    fbo->bind();
+
 }
 
 
