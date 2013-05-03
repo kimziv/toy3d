@@ -251,7 +251,7 @@ void FrameBufferObject::bind()
     GL_CHECK_ERROR;
 }
 
-void FrameBufferObject::bindTexture (Uint attachment, TextureBuffer *bf)
+void FrameBufferObject::attachTexture (Uint attachment, TextureBuffer *bf)
 {
     if (attachment < T3D_MAX_ATTACH_POINT)
         return;
@@ -262,7 +262,7 @@ void FrameBufferObject::bindTexture (Uint attachment, TextureBuffer *bf)
         initialise();
 }
 
-void FrameBufferObject::unbindTexture (Uint attachment)
+void FrameBufferObject::detachTexture (Uint attachment)
 {
     if (attachment < T3D_MAX_ATTACH_POINT)
         return;
@@ -272,6 +272,34 @@ void FrameBufferObject::unbindTexture (Uint attachment)
     if (mColour[0])
         initialise();
 
+}
+
+void FrameBufferObject::attachDepthBuffer (RenderBuffer *db)
+{
+    glBindFramebuffer (GL_FRAMEBUFFER, mFB);
+    GL_CHECK_ERROR
+
+    if (db) {
+        db->bindToFramebuffer (GL_DEPTH_ATTACHMENT, 0);
+    }
+    else {
+        //deattach
+        glFramebufferRenderbuffer( GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
+                                          GL_RENDERBUFFER, 0);
+        GL_CHECK_ERROR;
+
+    }
+    
+}
+
+
+void FrameBufferObject::detachDepthBuffer ()
+{
+    glBindFramebuffer(GL_FRAMEBUFFER, mFB);
+    GL_CHECK_ERROR;
+
+    glFramebufferRenderbuffer( GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, 0 );
+    GL_CHECK_ERROR;
 }
 
 
