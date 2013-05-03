@@ -307,6 +307,46 @@ void FrameBufferObject::detachDepthBuffer ()
 }}}
 
 
+FBOManager 设计
+
+{{{
+
+class FBOManager
+{
+    FBOManager ();
+    ～FBOManager();
+
+    void bind (RenderTarget *target);
+
+    // No-op for FBOs
+    void unbind (RenderTarget *target) {};
+
+
+    MultiRenderTarget* createMultiRenderTarget (name);
+    Render
+};
+
+
+}}}
+
+RenderSystem 部分
+
+{{{
+
+void renderer::setRenderTarget (RenderTarget* target)
+{
+    if (mActiveRenderTarget && mRTTManager)
+        mRTTManager->unbind (mActiveRenderTarget);
+
+
+    mActiveRenderTarget = target;
+    mRTTManager->bind(target);
+
+}
+
+}}}
+
+
 ==toy3d lib 部分的修改(老版)==
 
 {{{
