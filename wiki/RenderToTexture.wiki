@@ -28,6 +28,8 @@ Switching framebuffer-attachable images is much faster than switching between FB
 ==toy3d lib 部分的修改(新版)==
 
 
+TextureBuffer 的设计
+
 {{{
 
 
@@ -49,6 +51,13 @@ void TextureBuffer::bindToFramebuffer (GLenum attachment)
 {
     glFramebufferTexture2D (GL_FRAMEBUFFER, attachment, mFaceTarget, mTexture2D, mLevel);   
 }
+
+}}}
+
+
+RenderBuffer 的设计
+
+{{{
 
 class RenderBuffer 
 {
@@ -93,7 +102,24 @@ void RenderBuffer::bindToFramebuffer ()
 }}}
 
 
+frame buffer object 封装
 
+
+{{{
+
+class FrameBufferObject
+{
+public:
+    FrameBufferObject ();
+    ~FrameBufferObject ();
+
+  
+    void bindSurface (Uint attachment, const );
+
+};
+
+
+}}}
 
 
 ==toy3d lib 部分的修改(老版)==
