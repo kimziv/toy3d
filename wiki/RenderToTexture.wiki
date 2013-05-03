@@ -127,10 +127,10 @@ public:
     
 priate:
     GLuint mFB;
-    RenderBuffer mDepth;
-    RenderBuffer mStencil;
+    RenderBuffer* mDepth;
+    RenderBuffer* mStencil;
 
-    TextureBuffer mColour [TOY3D_MAX_FBO_ATTACHMENT];
+    TextureBuffer* mColour [TOY3D_MAX_FBO_ATTACHMENT];
 
     /** Initialise object.
         Must be called every time the bindings change.
@@ -143,6 +143,94 @@ priate:
     
 
 };
+
+FrameBufferObject::FrameBufferObject ()
+{
+    /// Generate framebuffer object
+    glGenFramebuffers(1, &mFB);
+    GL_CHECK_ERROR;
+
+    mDepth = NULL;
+    mStecil = NULL;
+    for (Uint x = 0; x < MAX_ATTACH_POINT; x++)
+    {
+        mColour[x] =NULL;
+    }
+
+}
+
+~FrameBufferObject::FrameBufferObject ()
+{
+    mManager->releaseRenderBuffer (mDepth);
+    mManager->releaseRenderBuffer (mStencil);
+
+    glDeleteFramebuffers (1, &mFB);
+    gl_CHECK_ERROR;
+
+
+
+
+
+}
+
+
+~FrameBufferObject::FrameBufferObject ()
+{
+    mManager->releaseRenderBuffer (mDepth);
+    mManager->releaseRenderBuffer (mStencil);
+
+    glDeleteFramebuffers (1, &mFB);
+    GL_CHECK_ERROR;
+}
+
+void FrameBufferObject::initialise()
+{
+    mManager->releaseRenderBuffer (mDepth);
+    mManager->releaseRenderBuffer (mStencil);
+
+    if (!mColour[0]) {
+        printf (Attachment 0 must have surface attached);
+        return;
+    }
+
+    // Store basic stats
+    Uint width = mColour[0]->getWidth();
+    Uint height = mColour[0]->getHeight();
+    GLuint format = mColour[0]->getGLFormat();
+
+    glBindFramebuffer (GL_FRAMEBUFFER, mFB);
+    GL_CHECK_ERROR;
+
+    for ()
+
+    
+    
+    
+}
+
+void FrameBufferObject::bindTexture (Uint attachment, TextureBuffer *bf)
+{
+    if (attachment < T3D_MAX_ATTACH_POINT)
+        return;
+
+    mColour[attachment] = target;
+
+    if (mColour[0])
+        initialise();
+}
+
+void FrameBufferObject::unbindSurface (Uint attachment)
+{
+    if (attachment < T3D_MAX_ATTACH_POINT)
+        return;
+
+    mColour[attachment] = 0;
+
+    if (mColour[0])
+        initialise();
+
+}
+
 
 
 }}}
