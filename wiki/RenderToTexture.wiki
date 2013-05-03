@@ -131,6 +131,8 @@ priate:
     RenderBuffer mStencil;
 
     TextureBuffer mColour [TOY3D_MAX_FBO_ATTACHMENT];
+
+    void initialise();
     
 
 };
