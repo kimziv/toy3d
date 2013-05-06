@@ -9,6 +9,7 @@ fbo 概念移留问题
  * attach 多个 texture，glDrawBuffer 的使用
  * attach 多个 texture，glDrawBuffers 的使用
  * glDrawBuffer和 glDrawBuffers 在 opengl es 的支持情况
+ * 对于最简单最基本的 shader（如画三角形），不定义 shader 文件，可以正常显示吗？
 
 toy3d 
  * 支持多个 RenderTexture
