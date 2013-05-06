@@ -1,7 +1,19 @@
 #summary add RTT support to toy3d.
 
-=多个 render texture=
 
+=todo list=
+
+fbo 概念
+ * 不 attach depth buffer，是否可以画出结果
+ * attach 上多个 texture（如2个），能否画出结果
+ * attach 多个 texture，glDrawBuffer 的使用
+ * attach 多个 texture，glDrawBuffers 的使用
+ * glDrawBuffer和 glDrawBuffers 在 opengl es 的支持情况
+
+
+
+
+=多个 render texture=
 ==需求==
 
 在 render texture 增加如下支持：
@@ -22,6 +34,65 @@ glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, text
 The reason that a FBO has multiple color attachement points is to allow to render the color buffer to multiple destinations at the same time. 
 
 Switching framebuffer-attachable images is much faster than switching between FBOs. FBO provides glFramebufferTexture2D() to switch 2D texture objects, and glFramebufferRenderbuffer() to switch renderbuffer objects.
+
+
+
+
+
+==toy3d lib 部分的修改(老版)==
+
+{{{
+
+Bool RenderTexture::init()
+{
+    mFBO.init();
+}
+
+Bool RenderTexture::checkStatus()
+{
+    return mFBO.checkStatus();
+}
+
+// if not attached, attach the tex; 
+// if attached, detach old one and attach new one 
+void RenderTexture::attachTexture (Uint colori, Texture *tex)
+{
+    mFBO.attachTexture(colori, tex->getTextureId());
+}
+
+void RenderTexture::attachDepthBuffer(w, h)
+{
+    mFBO.attachDepthBuffer (w, h);
+}
+
+void RenderTexture::selectDestination (Uint colori)
+{
+    glDrawBuffer (GL_COLOR_ATTACHMENT0 + colori);
+}
+
+void RenderTexture::selectMultipleDestination (Uint count, enum buffers)
+{
+    glDrawBuffers(count, buffers);
+}
+
+
+
+}}}
+
+
+==使用样例==
+
+{{{
+
+    rt1 = world->createRenderTexture(tex1);
+    rt1->addViewport (camera, t, l, w, h);
+
+    rt2 = world->createRenderTexture(tex2)
+    rt2->addViewport (camera, t, l, w, h);
+
+    
+
+}}}
 
 
 
@@ -363,60 +434,7 @@ void renderer::setRenderTarget (RenderTarget* target)
 }}}
 
 
-==toy3d lib 部分的修改(老版)==
 
-{{{
-
-Bool RenderTexture::init()
-{
-    mFBO.init();
-}
-
-Bool RenderTexture::checkStatus()
-{
-    return mFBO.checkStatus();
-}
-
-// if not attached, attach the tex; 
-// if attached, detach old one and attach new one 
-void RenderTexture::attachTexture (Uint colori, Texture *tex)
-{
-    mFBO.attachTexture(colori, tex->getTextureId());
-}
-
-void RenderTexture::attachDepthBuffer(w, h)
-{
-    mFBO.attachDepthBuffer (w, h);
-}
-
-void RenderTexture::selectDestination (Uint colori)
-{
-    glDrawBuffer (GL_COLOR_ATTACHMENT0 + colori);
-}
-
-void RenderTexture::selectMultipleDestination (Uint count, enum buffers)
-{
-    glDrawBuffers(count, buffers);
-}
-
-
-
-}}}
-
-
-==使用样例==
-
-{{{
-
-    rt1 = world->createRenderTexture(tex1);
-    rt1->addViewport (camera, t, l, w, h);
-
-    rt2 = world->createRenderTexture(tex2)
-    rt2->addViewport (camera, t, l, w, h);
-
-    
-
-}}}
 
 
 =change window size=
