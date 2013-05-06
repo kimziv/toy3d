@@ -3,7 +3,7 @@
 
 =todo list=
 
-fbo 概念
+fbo 概念移留问题
  * 不 attach depth buffer，是否可以画出结果
  * attach 上多个 texture（如2个），能否画出结果
  * attach 多个 texture，glDrawBuffer 的使用
