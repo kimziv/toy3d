@@ -10,11 +10,12 @@ fbo 概念
  * attach 多个 texture，glDrawBuffers 的使用
  * glDrawBuffer和 glDrawBuffers 在 opengl es 的支持情况
 
-toy3d lib
+toy3d 
  * 支持多个 RenderTexture
  * 支持在一个 fbo 中 switch texture
  * 例子程序 map
 
+hardware buffer 的引入
 
 
 =多个 render texture=
