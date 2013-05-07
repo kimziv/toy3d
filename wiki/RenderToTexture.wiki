@@ -22,6 +22,10 @@ depth buffer 与 texture之间相互独立，无影响。
 
 toy3d 
  * 支持多个 RenderTexture
+
+渲染多个纹理，这个功能无法在一个FBO中一次完成。
+参考 http://stackoverflow.com/questions/7892811/binding-multiple-buffers-in-opengl-es
+
  * 支持在一个 fbo 中 switch texture
  * 例子程序 map
 
