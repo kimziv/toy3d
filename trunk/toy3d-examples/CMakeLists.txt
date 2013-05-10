@@ -42,6 +42,7 @@ ADD_SUBDIRECTORY(multi_texture)
 ADD_SUBDIRECTORY(framelistener)
 ADD_SUBDIRECTORY(fbo)
 ADD_SUBDIRECTORY(fbo_mini_screen)
+ADD_SUBDIRECTORY(fbo_map)
 
 
 else ()

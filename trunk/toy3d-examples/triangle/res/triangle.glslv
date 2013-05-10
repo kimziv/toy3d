@@ -8,4 +8,5 @@ attribute vec4 vPosition;
 void main()
 {
 	gl_Position = vPosition;
+//    gl_Position.y = -gl_Position.y;   //turn down
 }
