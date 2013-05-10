@@ -25,9 +25,9 @@ TOY3D_BEGIN_NAMESPACE
         glDeleteFramebuffers(1, &mFBOId);
     }
 
-    void FrameBufferObject::attachTexture(Uint textureId) 
+    void FrameBufferObject::attachTexture(Uint i, Uint textureId) 
     {
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureId, 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, textureId, 0);
         return;
     }
     
@@ -82,8 +82,8 @@ TOY3D_BEGIN_NAMESPACE
     Bool RenderTexture::init(Texture *tex)
     {
         mFBO.bind();
-        mFBO.attachTexture (tex->getTextureID());
-        mFBO.attachDepthBuffer(tex->getWidth(), tex->getHeight());
+        mFBO.attachTexture (0, tex->getTextureID());
+//        mFBO.attachDepthBuffer(tex->getWidth(), tex->getHeight());
         return mFBO.checkStatus();
     }
 
@@ -98,5 +98,21 @@ TOY3D_BEGIN_NAMESPACE
     }
 
 
+    void RenderTexture::attachTexture(Uint i, Texture *tex)
+    {
+        mFBO.attachTexture (i, tex->getTextureID());
+    }
+
+     void RenderTexture::attachDepthBuffer(Uint w, Uint h)
+    {
+        mFBO.attachDepthBuffer(w, h);
+    }
+
+
+    Bool RenderTexture::checkFBOStatus()
+    {
+        return mFBO.checkStatus();
+    }
+   
 
 TOY3D_END_NAMESPACE

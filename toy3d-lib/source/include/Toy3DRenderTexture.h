@@ -29,7 +29,7 @@ TOY3D_BEGIN_NAMESPACE
         void unbind();
 
         void attachDepthBuffer(Uint w, Uint h);
-        void attachTexture(Uint textureId);
+        void attachTexture(Uint i, Uint textureId);
 
         Bool checkStatus();
 
@@ -53,6 +53,13 @@ TOY3D_BEGIN_NAMESPACE
         Bool init(Texture *tex);
         void bind();
         void unbind();
+
+        void attachTexture(Uint i, Texture *tex);
+        void attachDepthBuffer(Uint w, Uint h);
+        Bool checkFBOStatus();
+
+
+
 	};
 
 
