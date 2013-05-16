@@ -7,6 +7,11 @@ ogre hardware buffer
 
 http://blog.csdn.net/leonwei/article/details/5799770
 
+ogre 中的动画
+
+blog.csdn.net/leonwei/article/details/5819248
+
+
 
 fbo 概念移留问题
  * 不 attach depth buffer，可以画出结果
