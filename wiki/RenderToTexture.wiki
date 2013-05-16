@@ -4,20 +4,10 @@
 =todo list=
 
 fbo 概念移留问题
- * 不 attach depth buffer，是否可以画出结果
-
-depth buffer 与 texture之间相互独立，无影响。
-
- * attach 上多个 texture（如2个），能否画出结果
-
-在attach多个texture时，只有第一个texture有内容。
-
+ * 不 attach depth buffer，可以画出结果
+ * 在attach多个texture时，只有第一个texture有内容。
  * attach 多个 texture，glDrawBuffer,glDrawBuffers  的使用
-
- * glDrawBuffer和 glDrawBuffers 在 opengl es 的支持情况
-
-这两个接口在OpenGL ES 2.0中不支持。
-
+ * glDrawBuffer和 glDrawBuffers 在 opengl es 2.0 中不支持
  * 对于最简单最基本的 shader（如画三角形），不定义 shader 文件，可以正常显示吗？
 
 toy3d 
