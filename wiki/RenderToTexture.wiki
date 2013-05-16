@@ -3,6 +3,11 @@
 
 =todo list=
 
+ogre hardware buffer
+
+http://blog.csdn.net/leonwei/article/details/5799770
+
+
 fbo 概念移留问题
  * 不 attach depth buffer，可以画出结果
  * 在attach多个texture时，只有第一个texture有内容。
