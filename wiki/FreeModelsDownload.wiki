@@ -2,6 +2,4 @@
 
 = 高质量3D模型下载 =
 
-[[http://www.klayge.org/downloads/meshes/][KPlay 网站上高质量3D模型下载]]
-
-
+[http://www.klayge.org/downloads/meshes/ KPlay 网站上高质量3D模型下载]
